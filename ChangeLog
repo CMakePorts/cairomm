@@ -1,0 +1,22 @@
+2005-12-02  Murray Cumming <murrayc@murrayc.com>
+
+	* cairomm/cairomm.h: Put sensible stuff in here, 
+	instead of my copy/paste stuff from libxml++.
+	* cairomm/context.cc:
+	* cairomm/context.h:
+	* cairomm/enums.h:
+	* cairomm/exception.cc:
+	* cairomm/exception.h:
+	* cairomm/fontface.cc:
+	* cairomm/fontface.h:
+	* cairomm/fontoptions.cc:
+	* cairomm/fontoptions.h:
+	* cairomm/path.cc:
+	* cairomm/path.h:
+	* cairomm/pattern.cc:
+	* cairomm/pattern.h:
+	* cairomm/private.cc:
+	* cairomm/private.h:
+	* cairomm/surface.cc:
+	* cairomm/surface.h: Add LGPL comment headings.
+
