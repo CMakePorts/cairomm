@@ -22,4 +22,3 @@ libcairomm_1_0_la_SOURCES = $(cc_sources) $(h_sources_public) $(h_sources_privat
 # Install the headers:
 library_includedir=$(includedir)/cairomm-1.0/cairomm
 library_include_HEADERS = $(h_sources_public)
-

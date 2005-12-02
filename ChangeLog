@@ -1,3 +1,5 @@
+0.2.0:
+
 2005-12-02  Murray Cumming <murrayc@murrayc.com>
 
 	* cairomm/cairomm.h: Put sensible stuff in here, 
