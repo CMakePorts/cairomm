@@ -1,6 +1,13 @@
 2005-12-07  Murray Cumming <murrayc@murrayc.com>
 
 	* cairomm/context.cc:
+	* cairomm/context.h: font_extents(), stroke_extents(), 
+	glyph_extents(), fill_extents(): Add get_ prefix and 	
+	make them const.
+
+2005-12-07  Murray Cumming <murrayc@murrayc.com>
+
+	* cairomm/context.cc:
 	* cairomm/context.h: Add typedef for Matrix, though we 
 	probably want to derive a class with a C++-like matrix 
 	API, with operator overloading.

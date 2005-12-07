@@ -126,8 +126,8 @@ public:
   void show_page();
   bool in_stroke(double x, double y) const;
   bool in_fill(double x, double y) const;
-  void stroke_extents(double& x1, double& y1, double& x2, double& y2) const;
-  void fill_extents(double& x1, double& y1, double& x2, double& y2) const;
+  void get_stroke_extents(double& x1, double& y1, double& x2, double& y2) const;
+  void get_fill_extents(double& x1, double& y1, double& x2, double& y2) const;
   void reset_clip();
   void clip();
   void clip_preserve();
@@ -139,10 +139,10 @@ public:
   void show_text(const std::string& utf8);
   void show_glyphs(const std::vector<Glyph>& glyphs);
   FontFace get_font_face() const;
-  void font_extents(FontExtents& extents);
+  void get_font_extents(FontExtents& extents) const;
   void set_font_face(const FontFace& font_face);
-  void text_extents(const std::string& utf8, TextExtents& extents);
-  void glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents) const;
+  void get_text_extents(const std::string& utf8, TextExtents& extents) const;
+  void get_glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents) const;
   void text_path(const std::string& utf8);
   void glyph_path(const std::vector<Glyph>& glyphs); //TODO: Is this an output parameter?
   Operator get_operator() const;

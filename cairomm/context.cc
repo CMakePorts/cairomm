@@ -381,13 +381,13 @@ bool Context::in_fill(double x, double y) const
   return result;
 }
 
-void Context::stroke_extents(double& x1, double& y1, double& x2, double& y2) const
+void Context::get_stroke_extents(double& x1, double& y1, double& x2, double& y2) const
 {
   cairo_stroke_extents(m_cobject, &x1, &y1, &x2, &y2);
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::fill_extents(double& x1, double& y1, double& x2, double& y2) const
+void Context::get_fill_extents(double& x1, double& y1, double& x2, double& y2) const
 {
   cairo_fill_extents(m_cobject, &x1, &y1, &x2, &y2);
   check_object_status_and_throw_exception(*this);
@@ -460,7 +460,7 @@ FontFace Context::get_font_face() const
   return FontFace(cfontface, false /* does not have reference */);
 }
 
-void Context::font_extents(FontExtents& extents)
+void Context::get_font_extents(FontExtents& extents) const
 {
   cairo_font_extents(m_cobject, &extents);
   check_object_status_and_throw_exception(*this);
@@ -472,13 +472,13 @@ void Context::set_font_face(const FontFace& font_face)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::text_extents(const std::string& utf8, TextExtents& extents)
+void Context::get_text_extents(const std::string& utf8, TextExtents& extents) const
 {
   cairo_text_extents(m_cobject, utf8.c_str(), &extents);
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents) const
+void Context::get_glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents) const
 {
   cairo_glyph_extents(m_cobject, const_cast<cairo_glyph_t*>(&glyphs[0]), glyphs.size(), &extents);
   check_object_status_and_throw_exception(*this);
