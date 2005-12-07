@@ -17,9 +17,53 @@
 
 #include <cairomm/private.h>
 #include <cairomm/exception.h>
+#include <stdexcept>
+#include <iostream>
 
 namespace Cairo
 {
 
+void throw_exception(Status status)
+{
+  switch(status)
+  {
+    case CAIRO_STATUS_NO_MEMORY:
+      throw std::bad_alloc();
+      break;
+
+    // Programmer error
+    case CAIRO_STATUS_INVALID_RESTORE:
+    case CAIRO_STATUS_INVALID_POP_GROUP:
+    case CAIRO_STATUS_NO_CURRENT_POINT:
+    case CAIRO_STATUS_INVALID_MATRIX:
+    //No longer in API?: case CAIRO_STATUS_NO_TARGET_SURFACE:
+    case CAIRO_STATUS_INVALID_STRING:
+    case CAIRO_STATUS_SURFACE_FINISHED:
+    //No longer in API?: case CAIRO_STATUS_BAD_NESTING:
+      throw Cairo::logic_error(status);
+      break;
+
+    // Language binding implementation:
+    case CAIRO_STATUS_NULL_POINTER:
+    case CAIRO_STATUS_INVALID_PATH_DATA:
+    case CAIRO_STATUS_SURFACE_TYPE_MISMATCH:
+      throw Cairo::logic_error(status);
+      break;
+
+    // Other      
+    case CAIRO_STATUS_READ_ERROR:
+    case CAIRO_STATUS_WRITE_ERROR:
+    {
+      //The Cairo language binding advice suggests that these are stream errors 
+      //that should be mapped to their C++ equivalents.
+      const char* error_message = cairo_status_to_string(status);
+      throw std::ios_base::failure( error_message ? error_message : std::string() );
+    }
+    
+    default:
+      throw Cairo::logic_error(status);
+      break;
+  }
+}
 
 } //namespace Cairo

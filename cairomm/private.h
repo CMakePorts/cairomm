@@ -26,11 +26,13 @@
 namespace Cairo
 {
 
+void throw_exception(Status status);
+
 //We inline this because it is called so often.
 inline void check_status_and_throw_exception(Status status)
 {
   if(status != CAIRO_STATUS_SUCCESS)
-    throw exception(status);
+    throw_exception(status); //This part doesn't need to be inline because it would rarely be called.
 }
 
 template<class T>

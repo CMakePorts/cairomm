@@ -19,22 +19,22 @@
 #define __CAIRO_EXCEPTION_H
 
 #include <cairomm/enums.h>
-#include <exception>
+#include <stdexcept>
 
 namespace Cairo
 {
 
 typedef cairo_status_t Status;
 
-/** Base class for all cairo exceptions.
+/** 
  */
-class exception: public std::exception
+class logic_error: public std::logic_error
 {
 public:
-  explicit exception(Status status);
-  virtual ~exception() throw();
+  explicit logic_error(Status status);
+  virtual ~logic_error() throw();
 
-  virtual const char* what() const throw();
+  //virtual const char* what() const throw();
 
 private:
   Status m_status;

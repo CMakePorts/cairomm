@@ -20,19 +20,28 @@
 namespace Cairo
 {
 
-exception::exception(Status status)
-: m_status(status)
+inline static const char* string_or_empty(const char* text)
+{
+  return (text ? text : "");
+}
+
+//TODO: Is it wise to assume that the string is ASCII, as expected by std::logic_error?
+logic_error::logic_error(Status status)
+: std::logic_error( string_or_empty(cairo_status_to_string((cairo_status_t)m_status)) ),
+  m_status(status)
 {
 }
 
-exception::~exception() throw()
+logic_error::~logic_error() throw()
 {}
 
-const char* exception::what() const throw()
+/*
+const char* logic_error::what() const throw()
 {
   //Hopefully this is a const char* to a static string.
   return cairo_status_to_string((cairo_status_t)m_status);
 }
+*/
 
 } //namespace xmlpp
 
