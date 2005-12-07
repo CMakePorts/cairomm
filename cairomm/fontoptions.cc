@@ -25,6 +25,7 @@ FontOptions::FontOptions()
 : m_cobject(0)
 {
   m_cobject = cairo_font_options_create();
+  check_object_status_and_throw_exception(*this);
 }
 
 FontOptions::FontOptions(cairo_font_options_t* cobject, bool take_ownership)
@@ -34,6 +35,8 @@ FontOptions::FontOptions(cairo_font_options_t* cobject, bool take_ownership)
     m_cobject = cobject;
   else
     m_cobject = cairo_font_options_copy(cobject);
+
+  check_object_status_and_throw_exception(*this);
 }
 
 FontOptions::FontOptions(const FontOptions& src)
@@ -43,6 +46,8 @@ FontOptions::FontOptions(const FontOptions& src)
     m_cobject = 0;
   else
     m_cobject = cairo_font_options_copy(src.m_cobject);
+
+  check_object_status_and_throw_exception(*this);
 }
 
 FontOptions::~FontOptions()

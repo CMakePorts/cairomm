@@ -25,6 +25,7 @@ Context::Context(Surface& target)
 : m_cobject(0)
 {
   m_cobject = cairo_create(target.cobj());
+  check_object_status_and_throw_exception(*this);
 }
 
 Context::Context(cairo_t* cobject, bool has_reference)

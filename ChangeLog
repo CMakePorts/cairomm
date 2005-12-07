@@ -1,6 +1,14 @@
 2005-12-07  Murray Cumming <murrayc@murrayc.com>
 
 	* cairomm/context.cc:
+	* cairomm/fontoptions.cc:
+	* cairomm/surface.cc: Check for errors in 
+	constructors, as per the error-handling advice in the 
+	language bindings section of the cairo documentation.
+
+2005-12-07  Murray Cumming <murrayc@murrayc.com>
+
+	* cairomm/context.cc:
 	* cairomm/context.h: Change mask_surface() to 
 	mask() and set_source_surface() to set_source(), 
 	as per the method overloading advice in the 

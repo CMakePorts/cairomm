@@ -73,21 +73,21 @@ Surface& Surface::operator=(const Surface& src)
 Surface Surface::create(Format format, int width, int height)
 {
   cairo_surface_t* cobject = cairo_image_surface_create((cairo_format_t)format, width, height);
-  //Not possible with a static method: check_object_status_and_throw_exception(*this);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
   return Surface(cobject, true /* has reference */);
 }
 
 Surface Surface::create(unsigned char* data, Format format, int width, int height, int stride)
 {
   cairo_surface_t* cobject = cairo_image_surface_create_for_data(data, (cairo_format_t)format, width, height, stride);
-  //Not possible with a static method: check_object_status_and_throw_exception(*this);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
   return Surface(cobject, true /* has reference */);
 }
 
 Surface Surface::create(const Surface& other, Content content, int width, int height)
 {
   cairo_surface_t* cobject = cairo_surface_create_similar(other.m_cobject, (cairo_content_t)content, width, height);
-  //Not possible with a static method: check_object_status_and_throw_exception(*this);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
   return Surface(cobject, true /* has reference */);
 }
 
