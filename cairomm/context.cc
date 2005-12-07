@@ -114,7 +114,7 @@ double alpha)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::set_source_surface(Surface& surface, double x, double y)
+void Context::set_source(Surface& surface, double x, double y)
 {
   cairo_set_source_surface(m_cobject, surface.cobj(), x, y);
   check_object_status_and_throw_exception(*this);
@@ -324,7 +324,7 @@ void Context::mask(Pattern& pattern)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::mask_surface(Surface& surface, double surface_x, double surface_y)
+void Context::mask(Surface& surface, double surface_x, double surface_y)
 {
   cairo_mask_surface(m_cobject, surface.cobj(), surface_x, surface_y);
   check_object_status_and_throw_exception(*this);

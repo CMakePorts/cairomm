@@ -81,7 +81,7 @@ public:
   void set_source(const Pattern& source);
   void set_source_rgb(double red, double green, double blue);
   void set_source_rgba(double red, double green, double blue, double alpha);
-  void set_source_surface(Surface& surface, double x, double y);
+  void set_source(Surface& surface, double x, double y);
   void set_tolerance(double tolerance);
   void set_antialias(Antialias antialias);
   void set_fill_rule(FillRule fill_rule);
@@ -116,7 +116,7 @@ public:
   void paint();
   void paint_with_alpha(double alpha);
   void mask(Pattern& pattern); //Should the source be const?
-  void mask_surface(Surface& surface, double surface_x, double surface_y); //TODO: Should the source be const?
+  void mask(Surface& surface, double surface_x, double surface_y); //TODO: Should the source be const?
   void stroke();
   void stroke_preserve();
   void fill();
