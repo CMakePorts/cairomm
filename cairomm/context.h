@@ -40,6 +40,7 @@ typedef cairo_font_weight_t FontWeight;
 typedef cairo_glyph_t Glyph; //A simple struct.
 typedef cairo_font_extents_t FontExtents; //A simple struct.
 typedef cairo_text_extents_t TextExtents; //A simple struct.
+typedef cairo_matrix_t Matrix; //A simple struct. //TODO: Derive and add operator[] and operator. matrix multiplication?
 
 /** The context is the main object used when drawing with cairo. To draw with cairo, you create a context,  
  * set the target surface, and drawing options for the context, create shapes with methods like move_to() and 
@@ -95,8 +96,8 @@ public:
   void scale(double sx, double sy);
   void rotate(double angle);
   void rotate_deg(double angle);
-  void transform(const cairo_matrix_t &matrix);
-  void set_matrix(const cairo_matrix_t &matrix);
+  void transform(const Matrix& matrix);
+  void set_matrix(const Matrix& matrix);
   void identity_matrix();
   void user_to_device(double& x, double& y);
   void user_to_device_distance(double& dx, double& dy);
@@ -132,8 +133,8 @@ public:
   void clip_preserve();
   void select_font_face (const std::string& family, FontSlant slant, FontWeight weight);
   void set_font_size(double size);
-  void set_font_matrix(const cairo_matrix_t &matrix);
-  void get_font_matrix(cairo_matrix_t &matrix) const;
+  void set_font_matrix(const Matrix& matrix);
+  void get_font_matrix(Matrix& matrix) const;
   void set_font_options(const FontOptions& options);
   void show_text(const std::string& utf8);
   void show_glyphs(const std::vector<Glyph>& glyphs);
@@ -155,7 +156,7 @@ public:
   LineJoin get_line_join() const;
 
   double get_miter_limit() const;
-  void get_matrix(cairo_matrix_t &matrix);
+  void get_matrix(Matrix& matrix);
 
   Surface get_target();
   const Surface get_target() const;

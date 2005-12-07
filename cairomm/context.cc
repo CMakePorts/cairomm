@@ -199,13 +199,13 @@ void Context::rotate_deg(double angle)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::transform(const cairo_matrix_t& matrix)
+void Context::transform(const Matrix& matrix)
 {
   cairo_transform(m_cobject, &matrix);
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::set_matrix(const cairo_matrix_t& matrix)
+void Context::set_matrix(const Matrix& matrix)
 {
   cairo_set_matrix(m_cobject, &matrix);
   check_object_status_and_throw_exception(*this);
@@ -423,13 +423,13 @@ void Context::set_font_size(double size)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::set_font_matrix(const cairo_matrix_t &matrix)
+void Context::set_font_matrix(const Matrix& matrix)
 {
   cairo_set_font_matrix(m_cobject, &matrix);
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::get_font_matrix(cairo_matrix_t &matrix) const
+void Context::get_font_matrix(Matrix& matrix) const
 {
   cairo_get_font_matrix(m_cobject, &matrix);
   check_object_status_and_throw_exception(*this);
@@ -565,7 +565,7 @@ double Context::get_miter_limit() const
   return result;
 }
 
-void Context::get_matrix(cairo_matrix_t &matrix)
+void Context::get_matrix(Matrix& matrix)
 {
   cairo_get_matrix(m_cobject, &matrix);
   check_object_status_and_throw_exception(*this);
