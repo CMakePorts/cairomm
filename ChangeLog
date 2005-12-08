@@ -1,3 +1,10 @@
+2005-12-08  Murray Cumming <murrayc@murrayc.com>
+
+	* cairomm/pattern.cc:
+	* cairomm/pattern.h: Create a hierarchy of pattern 
+	classes, as suggested by the C documentation, because 
+	not all functions are meaningful for all pattern types.
+
 2005-12-07  Murray Cumming <murrayc@murrayc.com>
 
 	* cairomm/context.cc:

@@ -21,6 +21,11 @@
 namespace Cairo
 {
 
+Pattern::Pattern()
+: m_cobject(0)
+{
+}
+
 Pattern::Pattern(cairo_pattern_t* cobject, bool has_reference)
 : m_cobject(0)
 {
@@ -70,47 +75,8 @@ Pattern& Pattern::operator=(const Pattern& src)
   return *this;
 }
 
-Pattern Pattern::create_rgb(double red, double green, double blue)
-{
-  cairo_pattern_t* cobject = cairo_pattern_create_rgb(red, green, blue);
-  return Pattern(cobject, true /* has reference */);
-}
 
-Pattern Pattern::create_rgba(double red, double green, double blue, double alpha)
-{
-  cairo_pattern_t* cobject  = cairo_pattern_create_rgba(red, green, blue, alpha);
-  return Pattern(cobject, true /* has reference */);
-}
 
-Pattern Pattern::create_for_surface(cairo_surface_t *surface)
-{
-  cairo_pattern_t* cobject =  cairo_pattern_create_for_surface(surface);
-  return Pattern(cobject, true /* has reference */);
-}
-
-Pattern Pattern::create_linear(double x0, double y0, double x1, double y1)
-{
-  cairo_pattern_t* cobject =  cairo_pattern_create_linear(x0, y0, x1, y1);
-  return Pattern(cobject, true /* has reference */);
-}
-
-Pattern Pattern::create_radial(double cx0, double cy0, double radius0, double cx1, double cy1, double radius1)
-{
-  cairo_pattern_t* cobject =  cairo_pattern_create_radial(cx0, cy0, radius0, cx1, cy1, radius1);
-  return Pattern(cobject, true /* has reference */);
-}
-
-void Pattern::add_color_stop_rgb(double offset, double red, double green, double blue)
-{
-  cairo_pattern_add_color_stop_rgb(m_cobject, offset, red, green, blue);
-  check_object_status_and_throw_exception(*this);
-}
-
-void Pattern::add_color_stop_rgba(double offset, double red, double green, double blue, double alpha)
-{
-  cairo_pattern_add_color_stop_rgba(m_cobject, offset, red, green, blue, alpha);
-  check_object_status_and_throw_exception(*this);
-}
 
 void Pattern::set_matrix(const cairo_matrix_t &matrix)
 {
@@ -124,30 +90,197 @@ void Pattern::get_matrix(cairo_matrix_t &matrix) const
   check_object_status_and_throw_exception(*this);
 }
 
-void Pattern::set_extend(Extend extend)
+
+
+SolidPattern::SolidPattern(cairo_pattern_t* cobject, bool has_reference)
+: Pattern(cobject, has_reference)
+{
+}
+
+SolidPattern::SolidPattern(const SolidPattern& src)
+: Pattern(src)
+{
+}
+
+SolidPattern::~SolidPattern()
+{
+}
+
+SolidPattern SolidPattern::create_rgb(double red, double green, double blue)
+{
+  cairo_pattern_t* cobject = cairo_pattern_create_rgb(red, green, blue);
+  check_status_and_throw_exception(cairo_pattern_status(cobject)); 
+  return SolidPattern(cobject, true /* has reference */);
+}
+
+SolidPattern SolidPattern::create_rgba(double red, double green, double blue, double alpha)
+{
+  cairo_pattern_t* cobject  = cairo_pattern_create_rgba(red, green, blue, alpha);
+  check_status_and_throw_exception(cairo_pattern_status(cobject));
+  return SolidPattern(cobject, true /* has reference */);
+}
+
+
+SolidPattern& SolidPattern::operator=(const SolidPattern& src)
+{
+  Pattern::operator=(src);
+
+  return *this;
+}
+
+
+SurfacePattern::SurfacePattern(Surface& surface)
+{
+  m_cobject = cairo_pattern_create_for_surface(surface.cobj());
+  check_object_status_and_throw_exception(*this); 
+}
+
+SurfacePattern::SurfacePattern(cairo_pattern_t* cobject, bool has_reference)
+: Pattern(cobject, has_reference)
+{
+}
+
+SurfacePattern::SurfacePattern(const SurfacePattern& src)
+: Pattern(src)
+{
+}
+
+SurfacePattern::~SurfacePattern()
+{
+}
+
+
+SurfacePattern& SurfacePattern::operator=(const SurfacePattern& src)
+{
+  Pattern::operator=(src);
+
+  return *this;
+}
+
+void SurfacePattern::set_extend(Extend extend)
 {
   cairo_pattern_set_extend(m_cobject, (cairo_extend_t)extend);
   check_object_status_and_throw_exception(*this);
 }
 
-Extend Pattern::get_extend() const
+Extend SurfacePattern::get_extend() const
 {
   const Extend result = cairo_pattern_get_extend(m_cobject);
   check_object_status_and_throw_exception(*this);
   return result;
 }
 
-void Pattern::set_filter(Filter filter)
+void SurfacePattern::set_filter(Filter filter)
 {
   cairo_pattern_set_filter(m_cobject, (cairo_filter_t)filter);
   check_object_status_and_throw_exception(*this);
 }
 
-Filter Pattern::get_filter() const
+Filter SurfacePattern::get_filter() const
 {
   Filter result = cairo_pattern_get_filter(m_cobject);
   check_object_status_and_throw_exception(*this);
   return result;
 }
+
+
+
+Gradient::Gradient()
+{
+}
+
+Gradient::Gradient(cairo_pattern_t* cobject, bool has_reference)
+: Pattern(cobject, has_reference)
+{
+}
+
+Gradient::Gradient(const Gradient& src)
+: Pattern(src)
+{
+}
+
+Gradient::~Gradient()
+{
+}
+
+Gradient& Gradient::operator=(const Gradient& src)
+{
+  Pattern::operator=(src);
+
+  return *this;
+}
+
+void Gradient::add_color_stop_rgb(double offset, double red, double green, double blue)
+{
+  cairo_pattern_add_color_stop_rgb(m_cobject, offset, red, green, blue);
+  check_object_status_and_throw_exception(*this);
+}
+
+void Gradient::add_color_stop_rgba(double offset, double red, double green, double blue, double alpha)
+{
+  cairo_pattern_add_color_stop_rgba(m_cobject, offset, red, green, blue, alpha);
+  check_object_status_and_throw_exception(*this);
+}
+
+
+
+LinearGradient::LinearGradient(double x0, double y0, double x1, double y1)
+{
+  m_cobject = cairo_pattern_create_linear(x0, y0, x1, y1);
+  check_object_status_and_throw_exception(*this); 
+}
+
+LinearGradient::LinearGradient(cairo_pattern_t* cobject, bool has_reference)
+: Gradient(cobject, has_reference)
+{
+}
+
+LinearGradient::LinearGradient(const LinearGradient& src)
+: Gradient(src)
+{
+}
+
+LinearGradient::~LinearGradient()
+{
+}
+
+
+LinearGradient& LinearGradient::operator=(const LinearGradient& src)
+{
+  Gradient::operator=(src);
+
+  return *this;
+}
+
+
+RadialGradient::RadialGradient(double cx0, double cy0, double radius0, double cx1, double cy1, double radius1)
+{
+  m_cobject = cairo_pattern_create_radial(cx0, cy0, radius0, cx1, cy1, radius1);
+  check_object_status_and_throw_exception(*this); 
+}
+
+RadialGradient::RadialGradient(cairo_pattern_t* cobject, bool has_reference)
+: Gradient(cobject, has_reference)
+{
+}
+
+RadialGradient::RadialGradient(const RadialGradient& src)
+: Gradient(src)
+{
+}
+
+RadialGradient::~RadialGradient()
+{
+}
+
+
+RadialGradient& RadialGradient::operator=(const RadialGradient& src)
+{
+  Gradient::operator=(src);
+
+  return *this;
+}
+
+
 
 } //namespace Cairo
