@@ -163,7 +163,7 @@ void Context::set_dash(std::valarray<double>& dashes, double offset)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::set_dash()
+void Context::unset_dash()
 {
   cairo_set_dash(m_cobject, 0, 0, 0);
   check_object_status_and_throw_exception(*this);
@@ -187,15 +187,15 @@ void Context::scale(double sx, double sy)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::rotate(double angle)
+void Context::rotate(double angle_radians)
 {
-  cairo_rotate(m_cobject, angle);
+  cairo_rotate(m_cobject, angle_radians);
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::rotate_deg(double angle)
+void Context::rotate_degrees(double angle_degrees)
 {
-  cairo_rotate(m_cobject, angle*M_PI/180.0);
+  cairo_rotate(m_cobject, angle_degrees * M_PI/180.0);
   check_object_status_and_throw_exception(*this);
 }
 
@@ -211,7 +211,7 @@ void Context::set_matrix(const Matrix& matrix)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::identity_matrix()
+void Context::set_identity_matrix()
 {
   cairo_identity_matrix(m_cobject);
   check_object_status_and_throw_exception(*this);
@@ -241,7 +241,7 @@ void Context::device_to_user_distance(double& dx, double& dy)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::new_path()
+void Context::clear_path()
 {
   cairo_new_path(m_cobject);
   check_object_status_and_throw_exception(*this);

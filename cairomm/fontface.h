@@ -53,9 +53,11 @@ public:
   */
   FontFace& operator=(const FontFace& src);
 
-  void *get_user_data(const cairo_user_data_key_t *key);
+  /* Don't wrap these until we know what they are good for.
+  void* get_user_data(const cairo_user_data_key_t *key);
 
   void set_user_data(const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy); //TODO: Use a sigc::slot?
+  */
 
 
   typedef cairo_font_face_t cobject;

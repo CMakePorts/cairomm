@@ -1,0 +1,14 @@
+0.3.0:
+
+* Context:
+  - Change mask_surface() to mask() and
+    set_source_surface() to set_source().
+  - Add typedef for Matrix, but a real Matrix 
+  class would be nice.
+* Pattern: Created hierarchy of classes.
+* Check for errors in constructors.
+* Exception: Rename to logic_error, and throw 
+  std::bad_alloc or std::io_base::failure instead 
+  when appropriate.
+  (Murray Cumming)
+

@@ -90,20 +90,20 @@ public:
   void set_line_cap(LineCap line_cap);
   void set_line_join(LineJoin line_join);
   void set_dash(std::valarray<double>& dashes, double offset);
-  void set_dash();
+  void unset_dash();
   void set_miter_limit(double limit);
   void translate(double tx, double ty);
   void scale(double sx, double sy);
-  void rotate(double angle);
-  void rotate_deg(double angle);
+  void rotate(double angle_radians);
+  void rotate_degrees(double angle_degres);
   void transform(const Matrix& matrix);
   void set_matrix(const Matrix& matrix);
-  void identity_matrix();
+  void set_identity_matrix();
   void user_to_device(double& x, double& y);
   void user_to_device_distance(double& dx, double& dy);
   void device_to_user(double& x, double& y);
   void device_to_user_distance(double& dx, double& dy);
-  void new_path();
+  void clear_path();
   void move_to(double x, double y);
   void line_to(double x, double y);
   void curve_to(double x1, double y1, double x2, double y2, double x3, double y3);
@@ -116,8 +116,8 @@ public:
   void close_path();
   void paint();
   void paint_with_alpha(double alpha);
-  void mask(Pattern& pattern); //Should the source be const?
-  void mask(Surface& surface, double surface_x, double surface_y); //TODO: Should the source be const?
+  void mask(Pattern& pattern);
+  void mask(Surface& surface, double surface_x, double surface_y);
   void stroke();
   void stroke_preserve();
   void fill();
@@ -131,7 +131,7 @@ public:
   void reset_clip();
   void clip();
   void clip_preserve();
-  void select_font_face (const std::string& family, FontSlant slant, FontWeight weight);
+  void select_font_face(const std::string& family, FontSlant slant, FontWeight weight);
   void set_font_size(double size);
   void set_font_matrix(const Matrix& matrix);
   void get_font_matrix(Matrix& matrix) const;
@@ -144,7 +144,7 @@ public:
   void get_text_extents(const std::string& utf8, TextExtents& extents) const;
   void get_glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents) const;
   void text_path(const std::string& utf8);
-  void glyph_path(const std::vector<Glyph>& glyphs); //TODO: Is this an output parameter?
+  void glyph_path(const std::vector<Glyph>& glyphs);
   Operator get_operator() const;
   Pattern get_source() const;
   double get_tolerance() const;
@@ -161,6 +161,7 @@ public:
   Surface get_target();
   const Surface get_target() const;
   
+  //TODO: Copy or reference-count a Path somethow instead of asking the caller to delete it?
   Path* copy_path() const;
   Path* copy_path_flat() const;
 

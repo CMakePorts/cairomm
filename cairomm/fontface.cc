@@ -70,6 +70,7 @@ FontFace& FontFace::operator=(const FontFace& src)
   return *this;
 }
 
+/*
 void* FontFace::get_user_data(const cairo_user_data_key_t *key)
 {
   void* result = cairo_font_face_get_user_data(m_cobject, key);
@@ -82,6 +83,7 @@ void FontFace::set_user_data(const cairo_user_data_key_t* key, void *user_data, 
   const Status status = (Status)cairo_font_face_set_user_data(m_cobject, key, user_data, destroy);
   check_status_and_throw_exception(status);
 }
+*/
 
 
 } //namespace Cairo
