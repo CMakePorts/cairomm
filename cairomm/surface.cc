@@ -21,7 +21,7 @@
 namespace Cairo
 {
 
-Surface::Surface(cairo_surface_t*  cobject, bool has_reference)
+Surface::Surface(cairo_surface_t* cobject, bool has_reference)
 : m_cobject(0)
 {
   if(has_reference)
@@ -30,65 +30,31 @@ Surface::Surface(cairo_surface_t*  cobject, bool has_reference)
     m_cobject = cairo_surface_reference(cobject);
 }
 
-Surface::Surface(const Surface& src)
-{
-  //Reference-counting, instead of copying by value:
-  if(!src.m_cobject)
-    m_cobject = 0;
-  else
-    m_cobject = cairo_surface_reference(src.m_cobject);
-}
-
 Surface::~Surface()
 {
   if(m_cobject)
     cairo_surface_destroy(m_cobject);
 }
 
-
-Surface& Surface::operator=(const Surface& src)
-{
-  //Reference-counting, instead of copying by value:
-
-  if(this == &src)
-    return *this;
-
-  if(m_cobject == src.m_cobject)
-    return *this;
-
-  if(m_cobject)
-  {
-    cairo_surface_destroy(m_cobject);
-    m_cobject = 0;
-  }
-
-  if(!src.m_cobject)
-    return *this;
-
-  m_cobject = cairo_surface_reference(src.m_cobject);
-
-  return *this;
-}
-
-Surface Surface::create(Format format, int width, int height)
+RefPtr<Surface> Surface::create(Format format, int width, int height)
 {
   cairo_surface_t* cobject = cairo_image_surface_create((cairo_format_t)format, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return Surface(cobject, true /* has reference */);
+  return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
 }
 
-Surface Surface::create(unsigned char* data, Format format, int width, int height, int stride)
+RefPtr<Surface> Surface::create(unsigned char* data, Format format, int width, int height, int stride)
 {
   cairo_surface_t* cobject = cairo_image_surface_create_for_data(data, (cairo_format_t)format, width, height, stride);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return Surface(cobject, true /* has reference */);
+  return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
 }
 
-Surface Surface::create(const Surface& other, Content content, int width, int height)
+RefPtr<Surface> Surface::create(const Surface& other, Content content, int width, int height)
 {
   cairo_surface_t* cobject = cairo_surface_create_similar(other.m_cobject, (cairo_content_t)content, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return Surface(cobject, true /* has reference */);
+  return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
 }
 
 void Surface::finish()

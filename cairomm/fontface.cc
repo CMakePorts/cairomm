@@ -30,44 +30,20 @@ FontFace::FontFace(cairo_font_face_t* cobject, bool has_reference)
     m_cobject = cairo_font_face_reference(cobject);
 }
 
-FontFace::FontFace(const FontFace& src)
-{
-  //Reference-counting, instead of copying by value:
-  if(!src.m_cobject)
-    m_cobject = 0;
-  else
-    m_cobject = cairo_font_face_reference(src.m_cobject);
-}
-
 FontFace::~FontFace()
 {
   if(m_cobject)
     cairo_font_face_destroy(m_cobject);
 }
 
-
-FontFace& FontFace::operator=(const FontFace& src)
+void FontFace::reference() const
 {
-  //Reference-counting, instead of copying by value:
+ cairo_font_face_reference(m_cobject);
+}
 
-  if(this == &src)
-    return *this;
-
-  if(m_cobject == src.m_cobject)
-    return *this;
-
-  if(m_cobject)
-  {
-    cairo_font_face_destroy(m_cobject);
-    m_cobject = 0;
-  }
-
-  if(!src.m_cobject)
-    return *this;
-
-  m_cobject = cairo_font_face_reference(src.m_cobject);
-
-  return *this;
+void FontFace::unreference() const
+{
+  cairo_font_face_destroy(m_cobject);
 }
 
 /*

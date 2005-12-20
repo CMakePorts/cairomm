@@ -20,6 +20,7 @@
 
 #include <cairomm/fontoptions.h>
 #include <cairomm/enums.h>
+#include <cairomm/refptr.h>
 #include <cairo/cairo.h>
 
 
@@ -37,34 +38,22 @@ typedef cairo_format_t Format;
  */
 class Surface
 {
-public:
-  Surface();
+protected:
+  //TODO?: Surface(cairo_surface_t *target);
 
-  /** Create a C++ wrapper for the C instance.
+public:
+
+  /** Create a C++ wrapper for the C instance. This C++ instance should then be given to a RefPtr.
    * @param cobject The C instance.
    * @param has_reference Whether we already have a reference. Otherwise, the constructor will take an extra reference.
    */
   explicit Surface(cairo_surface_t* cobject, bool has_reference = false);
 
-  /** Create a second reference to the surface.
-  * Changing this instance will change the original instance.
-  */
-  Surface(const Surface& src);
-
-  //TODO?: Surface(cairo_surface_t *target);
   virtual ~Surface();
 
-  /** Create a second reference to the surface.
-  * Changing this instance will change the original instance.
-  */
-  Surface& operator=(const Surface& src);
-
-  //We use create_*() methods, instead of constructors, because
-  //a) We want to make it clear that these are new instance, not just new references to the same instances.
-  //b) Overloading on parameter types are not always enough to distinguish them.
-  static Surface create(const Surface& other, Content content, int width, int height);
-  static Surface create(Format format, int width, int height);
-  static Surface create(unsigned char* data, Format format, int width, int height, int stride);
+  static RefPtr<Surface> create(const Surface& other, Content content, int width, int height);
+  static RefPtr<Surface> create(Format format, int width, int height);
+  static RefPtr<Surface> create(unsigned char* data, Format format, int width, int height, int stride);
 
   //void write_to_png(const std::string& filename);
   //void write_to_png_stream(cairo_write_func_t write_func, void *closure); //TODO: Use a sigc::slot?
@@ -97,6 +86,9 @@ public:
   inline Status get_status() const
   { return cairo_surface_status(const_cast<cairo_surface_t*>(cobj())); }
   #endif //DOXYGEN_IGNORE_THIS
+
+  void reference() const;
+  void unreference() const;
 
 protected:
   cobject* m_cobject;

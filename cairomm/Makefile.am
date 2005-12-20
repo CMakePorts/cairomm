@@ -2,7 +2,7 @@ SUBDIRS =
 
 INCLUDES = -I$(top_srcdir) @CAIROMM_CFLAGS@
 
-h_sources_public = cairomm.h context.h enums.h fontface.h fontoptions.h path.h pattern.h surface.h exception.h
+h_sources_public = cairomm.h context.h enums.h fontface.h fontoptions.h path.h pattern.h surface.h exception.h refptr.h
 h_sources_private = private.h
 cc_sources = context.cc fontface.cc fontoptions.cc path.cc pattern.cc surface.cc exception.cc
 cc_sources_private = private.cc

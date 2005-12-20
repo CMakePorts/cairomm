@@ -31,27 +31,20 @@ namespace Cairo
  */
 class FontFace
 {
-public:
-  FontFace();
+protected:
 
-  /** Create a C++ wrapper for the C instance.
+  //TODO?: FontFace(cairo_font_face_t *target);
+
+public:
+
+  /** Create a C++ wrapper for the C instance. This C++ instance should then be given to a RefPtr.
    * @param cobject The C instance.
    * @param has_reference Whether we already have a reference. Otherwise, the constructor will take an extra reference.
    */
   explicit FontFace(cairo_font_face_t* cobject, bool has_reference = false);
 
-  /** Create a second reference to the FontFace.
-  * Changing this instance will change the original instance.
-  */
-  FontFace(const FontFace& src);
 
-  //TODO?: FontFace(cairo_font_face_t *target);
   virtual ~FontFace();
-
-  /** Create a second reference to the FontFace.
-  * Changing this instance will change the original instance.
-  */
-  FontFace& operator=(const FontFace& src);
 
   /* Don't wrap these until we know what they are good for.
   void* get_user_data(const cairo_user_data_key_t *key);
@@ -69,6 +62,9 @@ public:
   inline Status get_status() const
   { return cairo_font_face_status(const_cast<cairo_font_face_t*>(cobj())); }
   #endif //DOXYGEN_IGNORE_THIS
+
+  void reference() const;
+  void unreference() const;
 
 protected:
 

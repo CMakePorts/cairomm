@@ -35,48 +35,21 @@ Pattern::Pattern(cairo_pattern_t* cobject, bool has_reference)
     m_cobject = cairo_pattern_reference(cobject);
 }
 
-Pattern::Pattern(const Pattern& src)
-{
-  //Reference-counting, instead of copying by value:
-  if(!src.m_cobject)
-    m_cobject = 0;
-  else
-    m_cobject = cairo_pattern_reference(src.m_cobject);
-}
-
 Pattern::~Pattern()
 {
   if(m_cobject)
     cairo_pattern_destroy(m_cobject);
 }
 
-
-Pattern& Pattern::operator=(const Pattern& src)
+void Pattern::reference() const
 {
-  //Reference-counting, instead of copying by value:
-
-  if(this == &src)
-    return *this;
-
-  if(m_cobject == src.m_cobject)
-    return *this;
-
-  if(m_cobject)
-  {
-    cairo_pattern_destroy(m_cobject);
-    m_cobject = 0;
-  }
-
-  if(!src.m_cobject)
-    return *this;
-
-  m_cobject = cairo_pattern_reference(src.m_cobject);
-
-  return *this;
+ cairo_pattern_reference(m_cobject);
 }
 
-
-
+void Pattern::unreference() const
+{
+  cairo_pattern_destroy(m_cobject);
+}
 
 void Pattern::set_matrix(const cairo_matrix_t &matrix)
 {
@@ -97,42 +70,34 @@ SolidPattern::SolidPattern(cairo_pattern_t* cobject, bool has_reference)
 {
 }
 
-SolidPattern::SolidPattern(const SolidPattern& src)
-: Pattern(src)
-{
-}
-
 SolidPattern::~SolidPattern()
 {
 }
 
-SolidPattern SolidPattern::create_rgb(double red, double green, double blue)
+RefPtr<SolidPattern> SolidPattern::create_rgb(double red, double green, double blue)
 {
   cairo_pattern_t* cobject = cairo_pattern_create_rgb(red, green, blue);
   check_status_and_throw_exception(cairo_pattern_status(cobject)); 
-  return SolidPattern(cobject, true /* has reference */);
+  return RefPtr<SolidPattern>(new SolidPattern(cobject, true /* has reference */));
 }
 
-SolidPattern SolidPattern::create_rgba(double red, double green, double blue, double alpha)
+RefPtr<SolidPattern> SolidPattern::create_rgba(double red, double green, double blue, double alpha)
 {
   cairo_pattern_t* cobject  = cairo_pattern_create_rgba(red, green, blue, alpha);
   check_status_and_throw_exception(cairo_pattern_status(cobject));
-  return SolidPattern(cobject, true /* has reference */);
+  return RefPtr<SolidPattern>(new SolidPattern(cobject, true /* has reference */));
 }
 
 
-SolidPattern& SolidPattern::operator=(const SolidPattern& src)
+SurfacePattern::SurfacePattern(const RefPtr<Surface>& surface)
 {
-  Pattern::operator=(src);
-
-  return *this;
-}
-
-
-SurfacePattern::SurfacePattern(Surface& surface)
-{
-  m_cobject = cairo_pattern_create_for_surface(surface.cobj());
+  m_cobject = cairo_pattern_create_for_surface(surface->cobj());
   check_object_status_and_throw_exception(*this); 
+}
+
+RefPtr<SurfacePattern> SurfacePattern::create(const RefPtr<Surface>& surface)
+{
+  return RefPtr<SurfacePattern>(new SurfacePattern(surface));
 }
 
 SurfacePattern::SurfacePattern(cairo_pattern_t* cobject, bool has_reference)
@@ -140,21 +105,8 @@ SurfacePattern::SurfacePattern(cairo_pattern_t* cobject, bool has_reference)
 {
 }
 
-SurfacePattern::SurfacePattern(const SurfacePattern& src)
-: Pattern(src)
-{
-}
-
 SurfacePattern::~SurfacePattern()
 {
-}
-
-
-SurfacePattern& SurfacePattern::operator=(const SurfacePattern& src)
-{
-  Pattern::operator=(src);
-
-  return *this;
 }
 
 void SurfacePattern::set_extend(Extend extend)
@@ -194,20 +146,8 @@ Gradient::Gradient(cairo_pattern_t* cobject, bool has_reference)
 {
 }
 
-Gradient::Gradient(const Gradient& src)
-: Pattern(src)
-{
-}
-
 Gradient::~Gradient()
 {
-}
-
-Gradient& Gradient::operator=(const Gradient& src)
-{
-  Pattern::operator=(src);
-
-  return *this;
 }
 
 void Gradient::add_color_stop_rgb(double offset, double red, double green, double blue)
@@ -230,26 +170,18 @@ LinearGradient::LinearGradient(double x0, double y0, double x1, double y1)
   check_object_status_and_throw_exception(*this); 
 }
 
+RefPtr<LinearGradient> LinearGradient::create(double x0, double y0, double x1, double y1)
+{
+  return RefPtr<LinearGradient>(new LinearGradient(x0, y0, x1, y1));
+}
+
 LinearGradient::LinearGradient(cairo_pattern_t* cobject, bool has_reference)
 : Gradient(cobject, has_reference)
 {
 }
 
-LinearGradient::LinearGradient(const LinearGradient& src)
-: Gradient(src)
-{
-}
-
 LinearGradient::~LinearGradient()
 {
-}
-
-
-LinearGradient& LinearGradient::operator=(const LinearGradient& src)
-{
-  Gradient::operator=(src);
-
-  return *this;
 }
 
 
@@ -259,13 +191,13 @@ RadialGradient::RadialGradient(double cx0, double cy0, double radius0, double cx
   check_object_status_and_throw_exception(*this); 
 }
 
-RadialGradient::RadialGradient(cairo_pattern_t* cobject, bool has_reference)
-: Gradient(cobject, has_reference)
+RefPtr<RadialGradient> RadialGradient::create(double cx0, double cy0, double radius0, double cx1, double cy1, double radius1)
 {
+  return RefPtr<RadialGradient>(new RadialGradient(cx0, cy0, radius0, cx1, cy1, radius1));
 }
 
-RadialGradient::RadialGradient(const RadialGradient& src)
-: Gradient(src)
+RadialGradient::RadialGradient(cairo_pattern_t* cobject, bool has_reference)
+: Gradient(cobject, has_reference)
 {
 }
 
@@ -274,12 +206,6 @@ RadialGradient::~RadialGradient()
 }
 
 
-RadialGradient& RadialGradient::operator=(const RadialGradient& src)
-{
-  Gradient::operator=(src);
-
-  return *this;
-}
 
 
 

@@ -1,5 +1,25 @@
 2005-12-17  Murray Cumming  <murrayc@murrayc.com>
 
+	* cairomm/Makefile.am:
+	* cairomm/refptr.h: Add shared 
+	reference-counting smartpointer, using 
+	the reference-count in the object. A copy 
+	of the tried and tested glibmm RefPtr.
+	* cairomm/context.cc:
+	* cairomm/context.h:
+	* cairomm/fontface.cc:
+	* cairomm/fontface.h:
+	* cairomm/pattern.cc:
+	* cairomm/pattern.h:
+	* cairomm/surface.cc:
+	* cairomm/surface.h: Make constructors protected 
+	and add public static create() methods that return 
+	instances in RefPtr<>s. This allows reference-counted 
+	objects to be clearly const or non-const, and allows 
+	casting between related types.
+
+2005-12-17  Murray Cumming  <murrayc@murrayc.com>
+
 	* cairomm/context.cc:
 	* cairomm/context.h: Change set_dash(void) to 
 	unset_dash(). Change rotate_deg() to 

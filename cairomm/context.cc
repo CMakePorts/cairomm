@@ -21,11 +21,16 @@
 namespace Cairo
 {
 
-Context::Context(Surface& target)
+Context::Context(const RefPtr<Surface>& target)
 : m_cobject(0)
 {
-  m_cobject = cairo_create(target.cobj());
+  m_cobject = cairo_create(target->cobj());
   check_object_status_and_throw_exception(*this);
+}
+
+RefPtr<Context> Context::create(const RefPtr<Surface>& target)
+{
+  return RefPtr<Context>(new Context(target));
 }
 
 Context::Context(cairo_t* cobject, bool has_reference)
@@ -37,15 +42,6 @@ Context::Context(cairo_t* cobject, bool has_reference)
     m_cobject = cairo_reference(cobject);
 }
 
-Context::Context(const Context& src)
-{
-  //Reference-counting, instead of copying by value:
-  if(!src.m_cobject)
-    m_cobject = 0;
-  else
-    m_cobject = cairo_reference(src.m_cobject);
-}
-
 Context::~Context()
 {
   if(m_cobject)
@@ -53,30 +49,15 @@ Context::~Context()
 }
 
 
-Context& Context::operator=(const Context& src)
+void Context::reference() const
 {
-  //Reference-counting, instead of copying by value:
-
-  if(this == &src)
-    return *this;
-
-  if(m_cobject == src.m_cobject)
-    return *this;
-
-  if(m_cobject)
-  {
-    cairo_destroy(m_cobject);
-    m_cobject = 0;
-  }
-
-  if(!src.m_cobject)
-    return *this;
-
-  m_cobject = cairo_reference(src.m_cobject);
-
-  return *this;
+ cairo_reference(m_cobject);
 }
 
+void Context::unreference() const
+{
+  cairo_destroy(m_cobject);
+}
 
 void Context::save()
 {
@@ -96,9 +77,9 @@ void Context::set_operator(Operator op)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::set_source(const Pattern& source)
+void Context::set_source(const RefPtr<const Pattern>& source)
 {
-  cairo_set_source(m_cobject, const_cast<cairo_pattern_t*>(source.cobj()));
+  cairo_set_source(m_cobject, const_cast<cairo_pattern_t*>(source->cobj()));
   check_object_status_and_throw_exception(*this);
 }
 
@@ -115,9 +96,9 @@ double alpha)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::set_source(Surface& surface, double x, double y)
+void Context::set_source(const RefPtr<Surface>& surface, double x, double y)
 {
-  cairo_set_source_surface(m_cobject, surface.cobj(), x, y);
+  cairo_set_source_surface(m_cobject, surface->cobj(), x, y);
   check_object_status_and_throw_exception(*this);
 }
 
@@ -319,15 +300,15 @@ void Context::paint_with_alpha(double alpha)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::mask(Pattern& pattern)
+void Context::mask(const RefPtr<Pattern>& pattern)
 {
-  cairo_mask(m_cobject, pattern.cobj());
+  cairo_mask(m_cobject, pattern->cobj());
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::mask(Surface& surface, double surface_x, double surface_y)
+void Context::mask(const RefPtr<Surface>& surface, double surface_x, double surface_y)
 {
-  cairo_mask_surface(m_cobject, surface.cobj(), surface_x, surface_y);
+  cairo_mask_surface(m_cobject, surface->cobj(), surface_x, surface_y);
   check_object_status_and_throw_exception(*this);
 }
 
@@ -411,7 +392,7 @@ void Context::clip_preserve()
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::select_font_face (const std::string& family, FontSlant slant, FontWeight weight)
+void Context::select_font_face(const std::string& family, FontSlant slant, FontWeight weight)
 {
   cairo_select_font_face (m_cobject, family.c_str(), (cairo_font_slant_t)slant, (cairo_font_weight_t)weight);
   check_object_status_and_throw_exception(*this);
@@ -453,11 +434,18 @@ void Context::show_glyphs(const std::vector<Glyph>& glyphs)
   check_object_status_and_throw_exception(*this);
 }
 
-FontFace Context::get_font_face() const
+RefPtr<FontFace> Context::get_font_face()
 {
   cairo_font_face_t* cfontface = cairo_get_font_face(m_cobject);
   check_object_status_and_throw_exception(*this);
-  return FontFace(cfontface, false /* does not have reference */);
+  return RefPtr<FontFace>(new FontFace(cfontface, false /* does not have reference */));
+}
+
+RefPtr<const FontFace> Context::get_font_face() const
+{
+  cairo_font_face_t* cfontface = cairo_get_font_face(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return RefPtr<const FontFace>(new FontFace(cfontface, false /* does not have reference */));
 }
 
 void Context::get_font_extents(FontExtents& extents) const
@@ -466,9 +454,9 @@ void Context::get_font_extents(FontExtents& extents) const
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::set_font_face(const FontFace& font_face)
+void Context::set_font_face(const RefPtr<const FontFace>& font_face)
 {
-  cairo_set_font_face(m_cobject, const_cast<cairo_font_face_t*>(font_face.cobj()));
+  cairo_set_font_face(m_cobject, const_cast<cairo_font_face_t*>(font_face->cobj()));
   check_object_status_and_throw_exception(*this);
 }
 
@@ -503,11 +491,18 @@ Operator Context::get_operator() const
   return result;
 }
 
-Pattern Context::get_source() const
+RefPtr<Pattern> Context::get_source()
 {
   cairo_pattern_t* pattern = cairo_get_source(m_cobject);
   check_object_status_and_throw_exception(*this);
-  return Pattern(pattern, false /* does not have reference */);
+  return RefPtr<Pattern>(new Pattern(pattern, false /* does not have reference */));
+}
+
+RefPtr<const Pattern> Context::get_source() const
+{
+  cairo_pattern_t* pattern = cairo_get_source(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return RefPtr<const Pattern>(new Pattern(pattern, false /* does not have reference */));
 }
 
 double Context::get_tolerance() const
@@ -571,18 +566,18 @@ void Context::get_matrix(Matrix& matrix)
   check_object_status_and_throw_exception(*this);
 }
 
-Surface Context::get_target()
-{
-  cairo_surface_t* surface = cairo_get_target(m_cobject);
-  check_object_status_and_throw_exception(*this);
-  return Surface(surface, false /* does not have reference */);
-}
-
-const Surface Context::get_target() const
+RefPtr<Surface> Context::get_target()
 {
   cairo_surface_t* surface = cairo_get_target(const_cast<cairo_t*>(m_cobject));
   check_object_status_and_throw_exception(*this);
-  return Surface(surface, false /* does not have reference */);
+  return RefPtr<Surface>(new Surface(surface, false /* does not have reference */));
+}
+
+RefPtr<const Surface> Context::get_target() const
+{
+  cairo_surface_t* surface = cairo_get_target(const_cast<cairo_t*>(m_cobject));
+  check_object_status_and_throw_exception(*this);
+  return RefPtr<const Surface>(new Surface(surface, false /* does not have reference */));
 }
 
 Path* Context::copy_path() const

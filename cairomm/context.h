@@ -53,36 +53,28 @@ typedef cairo_matrix_t Matrix; //A simple struct. //TODO: Derive and add operato
  */
 class Context
 {
-public:
-  Context();
-  explicit Context(Surface& src);
+protected:
+  explicit Context(const RefPtr<Surface>& target);
 
-  /** Create a C++ wrapper for the C instance.
+public:
+
+  /** Create a C++ wrapper for the C instance. This C++ instance should then be given to a RefPtr.
    * @param cobject The C instance.
    * @param has_reference Whether we already have a reference. Otherwise, the constructor will take an extra reference.
    */
   explicit Context(cairo_t* cobject, bool has_reference = false);
 
-  /** Create a second reference to the context.
-   * Changing this instance will change the original instance.
-   */
-  Context(const Context& src);
+  static RefPtr<Context> create(const RefPtr<Surface>& target);
 
-  //TODO?: Context(cairo_surface_t *target);
   virtual ~Context();
-
-  /** Create a second reference to the context.
-   * Changing this instance will change the original instance.
-   */
-  Context& operator=(const Context& src);
 
   void save();
   void restore();
   void set_operator(Operator op);
-  void set_source(const Pattern& source);
+  void set_source(const RefPtr<const Pattern>& source);
   void set_source_rgb(double red, double green, double blue);
   void set_source_rgba(double red, double green, double blue, double alpha);
-  void set_source(Surface& surface, double x, double y);
+  void set_source(const RefPtr<Surface>& surface, double x, double y);
   void set_tolerance(double tolerance);
   void set_antialias(Antialias antialias);
   void set_fill_rule(FillRule fill_rule);
@@ -116,8 +108,8 @@ public:
   void close_path();
   void paint();
   void paint_with_alpha(double alpha);
-  void mask(Pattern& pattern);
-  void mask(Surface& surface, double surface_x, double surface_y);
+  void mask(const RefPtr<Pattern>& pattern);
+  void mask(const RefPtr<Surface>& surface, double surface_x, double surface_y);
   void stroke();
   void stroke_preserve();
   void fill();
@@ -138,15 +130,17 @@ public:
   void set_font_options(const FontOptions& options);
   void show_text(const std::string& utf8);
   void show_glyphs(const std::vector<Glyph>& glyphs);
-  FontFace get_font_face() const;
+  RefPtr<FontFace> get_font_face();
+  RefPtr<const FontFace> get_font_face() const;
   void get_font_extents(FontExtents& extents) const;
-  void set_font_face(const FontFace& font_face);
+  void set_font_face(const RefPtr<const FontFace>& font_face);
   void get_text_extents(const std::string& utf8, TextExtents& extents) const;
   void get_glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents) const;
   void text_path(const std::string& utf8);
   void glyph_path(const std::vector<Glyph>& glyphs);
   Operator get_operator() const;
-  Pattern get_source() const;
+  RefPtr<Pattern> get_source();
+  RefPtr<const Pattern> get_source() const;
   double get_tolerance() const;
   Antialias get_antialias() const;
   void get_current_point (double& x, double& y) const;
@@ -158,8 +152,8 @@ public:
   double get_miter_limit() const;
   void get_matrix(Matrix& matrix);
 
-  Surface get_target();
-  const Surface get_target() const;
+  RefPtr<Surface> get_target();
+  RefPtr<const Surface> get_target() const;
   
   //TODO: Copy or reference-count a Path somethow instead of asking the caller to delete it?
   Path* copy_path() const;
@@ -176,6 +170,9 @@ public:
   inline Status get_status() const
   { return cairo_status(const_cast<cairo_t*>(cobj())); }
   #endif //DOXYGEN_IGNORE_THIS
+
+  void reference() const;
+  void unreference() const;
 
 protected:
 
