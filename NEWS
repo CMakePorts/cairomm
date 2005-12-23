@@ -1,3 +1,15 @@
+0.4.0:
+
+* Add Cairo::RefPtr<> and use all reference-counted 
+  objects via it. Use the static create() methods 
+  instead of new for these classes.
+* Context:
+  - Change set_dash(void) to unset_dash().
+  - Change rotate_deg() to rotate_degrees().
+  - Change identity_matrix() to set_identity_matrix().\
+  - Change new_path() to clear_path().
+* FontFace: Remove get/set_user_data(), because it seems useless.
+
 0.3.0:
 
 * Context:
