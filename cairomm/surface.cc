@@ -135,4 +135,14 @@ int Surface::get_height() const
   return result;
 }
 
+void Surface::reference() const
+{
+    cairo_surface_reference(m_cobject);
+}
+
+void Surface::unreference() const
+{
+    cairo_surface_destroy(m_cobject);
+}
+
 } //namespace Cairo
