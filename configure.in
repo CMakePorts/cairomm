@@ -99,6 +99,7 @@ AC_OUTPUT(
   cairomm/Makefile
 
   examples/Makefile
+  examples/png_file/Makefile
 
   cairomm-1.0.pc
 )

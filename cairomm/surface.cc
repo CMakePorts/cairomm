@@ -63,7 +63,7 @@ void Surface::finish()
   check_object_status_and_throw_exception(*this);
 }
 
-/* Seems to have been removed from the Cairo API:
+#ifdef CAIRO_HAS_PNG_FUNCTIONS
 Status Surface::write_to_png(const std::string& filename)
 {
   return (Status)cairo_surface_write_to_png(m_cobject, filename.c_str());
@@ -73,7 +73,7 @@ Status Surface::write_to_png_stream(cairo_write_func_t write_func, void *closure
 {
   return (Status)cairo_surface_write_to_png_stream(m_cobject, write_func, closure);
 }
-*/
+#endif
 
 void* Surface::get_user_data(const cairo_user_data_key_t *key)
 {

@@ -55,8 +55,9 @@ public:
   static RefPtr<Surface> create(Format format, int width, int height);
   static RefPtr<Surface> create(unsigned char* data, Format format, int width, int height, int stride);
 
-  //void write_to_png(const std::string& filename);
-  //void write_to_png_stream(cairo_write_func_t write_func, void *closure); //TODO: Use a sigc::slot?
+  Status write_to_png(const std::string& filename);
+  Status write_to_png_stream(cairo_write_func_t write_func, void *closure); //TODO: Use a sigc::slot?
+
   void *get_user_data(const cairo_user_data_key_t *key);
 
   void set_user_data(const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy); //TODO: Use a sigc::slot?

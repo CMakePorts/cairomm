@@ -1,5 +1,5 @@
 #Where to find the header files needed by the source files:
-INCLUDES =  -I$(top_srcdir) @LIBXML_CFLAGS@
+INCLUDES =  -I$(top_srcdir) @CAIROMM_CFLAGS@
 
 #The libraries that the executable needs to link against:
-LIBS = $(top_builddir)/cairomm/cairommm-1.0.la @LIBS@ @LIBXML_LIBS@
+LIBS = $(top_builddir)/cairomm/libcairomm-1.0.la @LIBS@ @CAIROMM_LIBS@

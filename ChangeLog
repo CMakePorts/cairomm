@@ -1,3 +1,15 @@
+2006-01-06  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/surface.cc:
+	* cairomm/surface.h: Added implementation of write_to_png() and
+	write_to_png_stream() when PNG support is available in the base cairo
+	library
+	* examples/png_file/*: Added an example of creating an image surface and
+	saving it to a png image file
+	* examples/Makefile.am: add new example directory to SUBDIRS list
+	* configure.in: added output declaration for examples/png_file/Makefile
+	* examples/makefile.am_fragment: fix leftover libxml boilerplate
+
 2006-01-03  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/surface.cc: added missing implementations for reference() and
