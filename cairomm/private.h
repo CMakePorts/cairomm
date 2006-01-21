@@ -26,10 +26,10 @@
 namespace Cairo
 {
 
-void throw_exception(Status status);
+void throw_exception(ErrorStatus status);
 
 //We inline this because it is called so often.
-inline void check_status_and_throw_exception(Status status)
+inline void check_status_and_throw_exception(ErrorStatus status)
 {
   if(status != CAIRO_STATUS_SUCCESS)
     throw_exception(status); //This part doesn't need to be inline because it would rarely be called.

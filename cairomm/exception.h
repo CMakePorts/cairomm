@@ -24,20 +24,20 @@
 namespace Cairo
 {
 
-typedef cairo_status_t Status;
+typedef cairo_status_t ErrorStatus;
 
 /** 
  */
 class logic_error: public std::logic_error
 {
 public:
-  explicit logic_error(Status status);
+  explicit logic_error(ErrorStatus status);
   virtual ~logic_error() throw();
 
   //virtual const char* what() const throw();
 
 private:
-  Status m_status;
+  ErrorStatus m_status;
 };
 
 } // namespace xmlpp

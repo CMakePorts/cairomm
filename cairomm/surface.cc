@@ -36,59 +36,13 @@ Surface::~Surface()
     cairo_surface_destroy(m_cobject);
 }
 
-RefPtr<Surface> Surface::create(Format format, int width, int height)
-{
-  cairo_surface_t* cobject = cairo_image_surface_create((cairo_format_t)format, width, height);
-  check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
-}
-
-RefPtr<Surface> Surface::create(unsigned char* data, Format format, int width, int height, int stride)
-{
-  cairo_surface_t* cobject = cairo_image_surface_create_for_data(data, (cairo_format_t)format, width, height, stride);
-  check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
-}
-
-RefPtr<Surface> Surface::create(const Surface& other, Content content, int width, int height)
-{
-  cairo_surface_t* cobject = cairo_surface_create_similar(other.m_cobject, (cairo_content_t)content, width, height);
-  check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
-}
-
 void Surface::finish()
 {
   cairo_surface_finish(m_cobject);
   check_object_status_and_throw_exception(*this);
 }
 
-#ifdef CAIRO_HAS_PNG_FUNCTIONS
-Status Surface::write_to_png(const std::string& filename)
-{
-  return (Status)cairo_surface_write_to_png(m_cobject, filename.c_str());
-}
-
-Status Surface::write_to_png_stream(cairo_write_func_t write_func, void *closure)
-{
-  return (Status)cairo_surface_write_to_png_stream(m_cobject, write_func, closure);
-}
-#endif
-
-void* Surface::get_user_data(const cairo_user_data_key_t *key)
-{
-  void* result = cairo_surface_get_user_data(m_cobject, key);
-  check_object_status_and_throw_exception(*this);
-  return result;
-}
-
-void Surface::set_user_data(const cairo_user_data_key_t* key, void *user_data, cairo_destroy_func_t destroy)
-{
-  const Status status = (Status)cairo_surface_set_user_data(m_cobject, key, user_data, destroy);
-  check_status_and_throw_exception(status);
-}
-
-void Surface::get_font_options(FontOptions& options)
+void Surface::get_font_options(FontOptions& options) const
 {
   cairo_font_options_t* cfontoptions = cairo_font_options_create();
   cairo_surface_get_font_options(m_cobject, cfontoptions);
@@ -121,28 +75,287 @@ void Surface::set_device_offset(double x_offset, double y_offset)
   check_object_status_and_throw_exception(*this);
 }
 
-int Surface::get_width() const
+#ifdef CAIRO_HAS_PNG_FUNCTIONS
+void Surface::write_to_png(const std::string& filename)
+{
+  ErrorStatus status = cairo_surface_write_to_png(m_cobject, filename.c_str());
+  check_status_and_throw_exception(status);
+}
+
+void Surface::write_to_png(cairo_write_func_t write_func, void *closure)
+{
+  ErrorStatus status = cairo_surface_write_to_png_stream(m_cobject, write_func, closure);
+  check_status_and_throw_exception(status);
+}
+#endif
+
+void Surface::reference() const
+{
+  cairo_surface_reference(m_cobject);
+}
+
+void Surface::unreference() const
+{
+  cairo_surface_destroy(m_cobject);
+}
+
+RefPtr<Surface> Surface::create(const Surface& other, Content content, int width, int height)
+{
+  cairo_surface_t* cobject = cairo_surface_create_similar(other.m_cobject, (cairo_content_t)content, width, height);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
+}
+
+
+
+ImageSurface::ImageSurface(cairo_surface_t* cobject, bool has_reference)
+: Surface(cobject, has_reference)
+{ }
+
+ImageSurface::~ImageSurface()
+{
+  // surface is destroyed in base class
+}
+
+RefPtr<ImageSurface> ImageSurface::create(Format format, int width, int height)
+{
+  cairo_surface_t* cobject = cairo_image_surface_create((cairo_format_t)format, width, height);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
+}
+
+RefPtr<ImageSurface> ImageSurface::create(unsigned char* data, Format format, int width, int height, int stride)
+{
+  cairo_surface_t* cobject = cairo_image_surface_create_for_data(data, (cairo_format_t)format, width, height, stride);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
+}
+
+#ifdef CAIRO_HAS_PNG_FUNCTIONS
+
+RefPtr<ImageSurface> ImageSurface::create_from_png(std::string filename)
+{
+  cairo_surface_t* cobject = cairo_image_surface_create_from_png(filename.c_str());
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
+}
+
+RefPtr<ImageSurface> ImageSurface::create_from_png(cairo_read_func_t read_func, void *closure)
+{
+  cairo_surface_t* cobject = cairo_image_surface_create_from_png_stream(read_func, closure);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
+}
+
+#endif // CAIRO_HAS_PNG_FUNCTIONS
+
+int ImageSurface::get_width() const
 {
   const int result = cairo_image_surface_get_width(m_cobject);
   check_object_status_and_throw_exception(*this);
   return result;
 }
 
-int Surface::get_height() const
+int ImageSurface::get_height() const
 {
   const int result = cairo_image_surface_get_height(m_cobject);
   check_object_status_and_throw_exception(*this);
   return result;
 }
 
-void Surface::reference() const
+
+#ifdef CAIRO_HAS_XLIB_SURFACE
+
+XlibSurface::XlibSurface(cairo_surface_t* cobject, bool has_reference) :
+    Surface(cobject, has_reference)
+{}
+
+XlibSurface::~XlibSurface()
 {
-    cairo_surface_reference(m_cobject);
+  // surface is destroyed in base class
 }
 
-void Surface::unreference() const
+RefPtr<XlibSurface> XlibSurface::create(Display *dpy, Drawable drawable, Visual *visual, int width, int height)
 {
-    cairo_surface_destroy(m_cobject);
+  cairo_surface_t* cobject = cairo_xlib_surface_create(dpy, drawable, visual, width, height);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
 }
+
+RefPtr<XlibSurface> XlibSurface::create(Display *dpy, Pixmap bitmap, Screen *screen, int width, int height)
+{
+  cairo_surface_t* cobject = cairo_xlib_surface_create_for_bitmap(dpy, bitmap, screen, width, height);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
+}
+
+void XlibSurface::set_size(int width, int height)
+{
+  cairo_xlib_surface_set_size(m_cobject, width, height);
+  check_object_status_and_throw_exception(*this);
+}
+
+void XlibSurface::set_drawable(Drawable drawable, int width, int height)
+{
+  cairo_xlib_surface_set_drawable(m_cobject, drawable, width, height);
+  check_object_status_and_throw_exception(*this);
+}
+
+#endif // CAIRO_HAS_XLIB_SURFACE
+
+
+
+#ifdef CAIRO_HAS_WIN32_SURFACE
+
+Win32Surface::Win32Surface(cairo_surface_t* cobject, bool has_reference) :
+    Surface(cobject, has_reference)
+{}
+
+Win32Surface::~Win32Surface()
+{
+  // surface is destroyed in base class
+}
+
+RefPtr<Win32Surface> Win32Surface::create(HDC hdc)
+{
+  cairo_surface_t* cobject = cairo_win32_surface_create(hdc);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<Win32Surface>(new Win32Surface(cobject, true /* has reference */));
+}
+
+#endif // CAIRO_HAS_WIN32_SURFACE
+
+
+/*******************************************************************************
+ * THE FOLLOWING SURFACE TYPES ARE EXPERIMENTAL AND NOT FULLY SUPPORTED
+ ******************************************************************************/
+
+#ifdef CAIRO_HAS_PDF_SURFACE
+
+PdfSurface::PdfSurface(cairo_surface_t* cobject, bool has_reference) :
+    Surface(cobject, has_reference)
+{}
+
+PdfSurface::~PdfSurface()
+{
+  // surface is destroyed in base class
+}
+
+RefPtr<PdfSurface> PdfSurface::create(std::string filename, double width_in_points, double height_in_points)
+{
+  cairo_surface_t* cobject = cairo_pdf_surface_create(filename.c_str(), width_in_points, height_in_points);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<PdfSurface>(new PdfSurface(cobject, true /* has reference */));
+}
+
+RefPtr<PdfSurface> PdfSurface::create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points)
+{
+  cairo_surface_t* cobject = cairo_pdf_surface_create_for_stream(write_func, closure, width_in_points, height_in_points);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<PdfSurface>(new PdfSurface(cobject, true /* has reference */));
+}
+
+void PdfSurface::set_dpi(double x_dpi, double y_dpi)
+{
+  cairo_pdf_surface_set_dpi(m_cobject, x_dpi, y_dpi);
+  check_object_status_and_throw_exception(*this);
+}
+
+#endif // CAIRO_HAS_PDF_SURFACE
+
+
+
+
+#ifdef CAIRO_HAS_PS_SURFACE
+
+PsSurface::PsSurface(cairo_surface_t* cobject, bool has_reference) :
+    Surface(cobject, has_reference)
+{}
+
+PsSurface::~PsSurface()
+{
+  // surface is destroyed in base class
+}
+
+RefPtr<PsSurface> PsSurface::create(std::string filename, double width_in_points, double height_in_points)
+{
+  cairo_surface_t* cobject = cairo_ps_surface_create(filename.c_str(), width_in_points, height_in_points);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<PsSurface>(new PsSurface(cobject, true /* has reference */));
+}
+
+RefPtr<PsSurface> PsSurface::create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points)
+{
+  cairo_surface_t* cobject = cairo_ps_surface_create_for_stream(write_func, closure, width_in_points, height_in_points);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<PsSurface>(new PsSurface(cobject, true /* has reference */));
+}
+
+void PsSurface::set_dpi(double x_dpi, double y_dpi)
+{
+  cairo_ps_surface_set_dpi(m_cobject, x_dpi, y_dpi);
+  check_object_status_and_throw_exception(*this);
+}
+
+#endif // CAIRO_HAS_PS_SURFACE
+
+
+
+
+#ifdef CAIRO_HAS_SVG_SURFACE
+
+SvgSurface::SvgSurface(cairo_surface_t* cobject, bool has_reference) :
+    Surface(cobject, has_reference)
+{}
+
+SvgSurface::~SvgSurface()
+{
+  // surface is destroyed in base class
+}
+
+RefPtr<SvgSurface> SvgSurface::create(std::string filename, double width_in_points, double height_in_points)
+{
+  cairo_surface_t* cobject = cairo_svg_surface_create(filename.c_str(), width_in_points, height_in_points);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<SvgSurface>(new SvgSurface(cobject, true /* has reference */));
+}
+
+RefPtr<SvgSurface> SvgSurface::create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points)
+{
+  cairo_surface_t* cobject = cairo_svg_surface_create_for_stream(write_func, closure, width_in_points, height_in_points);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<SvgSurface>(new SvgSurface(cobject, true /* has reference */));
+}
+
+void SvgSurface::set_dpi(double x_dpi, double y_dpi)
+{
+  cairo_svg_surface_set_dpi(m_cobject, x_dpi, y_dpi);
+  check_object_status_and_throw_exception(*this);
+}
+
+#endif // CAIRO_HAS_SVG_SURFACE
+
+
+
+
+#ifdef CAIRO_HAS_GLITZ_SURFACE
+
+GlitzSurface::GlitzSurface(cairo_surface_t* cobject, bool has_reference)
+: Surface(cobject, has_reference)
+{ }
+
+GlitzSurface::~GlitzSurface()
+{
+  // surface is destroyed in base class
+}
+
+RefPtr<GlitzSurface> GlitzSurface::create(glitz_surface_t *surface))
+{
+  cairo_surface_t* cobject = cairo_glitz_surface_create(surface);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<GlitzSurface>(new GlitzSurface(cobject, true /* has reference */));
+}
+
+#endif // CAIRO_HAS_GLITZ_SURFACE
 
 } //namespace Cairo

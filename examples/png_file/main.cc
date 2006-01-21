@@ -1,11 +1,12 @@
 #include <string>
 #include <iostream>
-#include <cairomm/cairomm.h>
+#include <cairomm/context.h>
+#include <cairomm/surface.h>
 
 int main(int argc, char** argv)
 {
-    Cairo::RefPtr<Cairo::Surface> surface =
-        Cairo::Surface::create(CAIRO_FORMAT_ARGB32, 600, 400);
+    Cairo::RefPtr<Cairo::ImageSurface> surface =
+        Cairo::ImageSurface::create(CAIRO_FORMAT_ARGB32, 600, 400);
 
     Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
 
@@ -34,7 +35,7 @@ int main(int argc, char** argv)
 
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
 
-    std::string filename = "example_png_file.png";
+    std::string filename = "image.png";
     surface->write_to_png(filename);
 
     std::cout << "Wrote png file \"" << filename << "\"" << std::endl;

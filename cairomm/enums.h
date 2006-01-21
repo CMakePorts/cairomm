@@ -25,7 +25,7 @@ namespace Cairo
 
 #ifndef DOXYGEN_IGNORE_THIS
 //This is only used internally, but it must be in a public header because we inline some methods.
-typedef cairo_status_t Status;
+typedef cairo_status_t ErrorStatus;
 #endif //DOXYGEN_IGNORE_THIS
 
 } // namespace Cairo

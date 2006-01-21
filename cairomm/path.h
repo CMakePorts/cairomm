@@ -50,7 +50,7 @@ public:
   #ifndef DOXYGEN_IGNORE_THIS
   ///For use only by the cairomm implementation.
   //There is no *_status() function for this object:
-  //inline Status get_status() const
+  //inline ErrorStatus get_status() const
   //{ return cairo_path_status(const_cast<cairo_path_t*>(cobj())); }
   #endif //DOXYGEN_IGNORE_THIS
 

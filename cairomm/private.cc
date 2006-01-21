@@ -23,7 +23,7 @@
 namespace Cairo
 {
 
-void throw_exception(Status status)
+void throw_exception(ErrorStatus status)
 {
   switch(status)
   {

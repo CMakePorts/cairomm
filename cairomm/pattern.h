@@ -59,7 +59,7 @@ public:
 
   #ifndef DOXYGEN_IGNORE_THIS
   ///For use only by the cairomm implementation.
-  inline Status get_status() const
+  inline ErrorStatus get_status() const
   { return cairo_pattern_status(const_cast<cairo_pattern_t*>(cobj())); }
   #endif //DOXYGEN_IGNORE_THIS
 

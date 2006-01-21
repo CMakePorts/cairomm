@@ -1,3 +1,23 @@
+2006-01-15  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/surface.cc:
+	* cairomm/surface.h: backwards-incompatible API change for the Surface
+	types.  Cairo::Surface is now a base class for all of the other surface
+	types, and should not be used directly.  New Surface types include
+	ImageSurface, XlibSurface, Win32Surface, PdfSurface, PsSurface,
+	SvgSurface, and GlitzSurface.  
+	Modified Surface::write_to_png() and Surface::write_to_png_stream() so
+	that they throw exceptions like the other functions instead of returning a
+	cairo_status_t value.
+	Added API documentation for all Surface classes and all member functions
+	of the Surface class heirarchy.
+	* examples/png_file/Makefile.am: added generated PNG file to CLEANFILES
+	* examples/png_file/main.cc: updated the PNG example to use the new
+	ImageSurface class instead of using the Surface class directly.
+	* cairomm/*: Renamed the Cairo::Status type to Cairo::ErrorStatus since it
+	conflicts with a #define Status in XLib and is not used exposed in the API
+	anyway.
+
 2006-01-06  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/surface.cc:

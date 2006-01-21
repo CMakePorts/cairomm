@@ -18,10 +18,32 @@
 #ifndef __CAIROMM_SURFACE_H
 #define __CAIROMM_SURFACE_H
 
-#include <cairomm/fontoptions.h>
+#include <string>
 #include <cairomm/enums.h>
+#include <cairomm/exception.h>
+#include <cairomm/fontoptions.h>
 #include <cairomm/refptr.h>
-#include <cairo/cairo.h>
+
+#ifdef CAIRO_HAS_XLIB_SURFACE
+#include <cairo-xlib.h>
+#endif
+#ifdef CAIRO_HAS_WIN32_SURFACE
+#include <cairo-win32.h>
+#endif
+
+// Experimental surfaces
+#ifdef CAIRO_HAS_PDF_SURFACE
+#include <cairo-pdf.h>
+#endif // CAIRO_HAS_PDF_SURFACE
+#ifdef CAIRO_HAS_PS_SURFACE
+#include <cairo-ps.h>
+#endif // CAIRO_HAS_PS_SURFACE
+#ifdef CAIRO_HAS_SVG_SURFACE
+#include <cairo-svg.h>
+#endif // CAIRO_HAS_SVG_SURFACE
+#ifdef CAIRO_HAS_GLITZ_SURFACE
+#include <cairo-glitz.h>
+#endif // CAIRO_HAS_GLITZ_SURFACE
 
 
 namespace Cairo
@@ -30,72 +52,610 @@ namespace Cairo
 typedef cairo_content_t Content;
 typedef cairo_format_t Format;
 
-/** A cairo surface represents an image, either as the destination of a drawing operation or as source when 
- * drawing onto another surface. There are different subtypes of cairo surface for different drawing
- * backends.
+/** A cairo surface represents an image, either as the destination of a drawing
+ * operation or as source when drawing onto another surface. There are
+ * different subtypes of cairo surface for different drawing backends.  This
+ * class is a base class for all subtypes and should not be used directly
  *
- * This is a reference-counted object. The copy constructor creates a second reference to the object, instead of creating an independent copy of the object.
+ * Surfaces are reference-counted objects. The copy constructor creates a
+ * second reference to the object, instead of creating an independent copy of
+ * the object.
  */
 class Surface
+{
+public:
+  /** Create a C++ wrapper for the C instance. This C++ instance should then be
+   * given to a RefPtr.
+   *
+   * @param cobject The C instance.
+   * @param has_reference Whether we already have a reference. Otherwise, the
+   * constructor will take an extra reference.
+   */
+  explicit Surface(cairo_surface_t* cobject, bool has_reference = false);
+
+  virtual ~Surface();
+
+  /** Retrieves the default font rendering options for the surface. This allows
+   * display surfaces to report the correct subpixel order for rendering on
+   * them, print surfaces to disable hinting of metrics and so forth. The
+   * result can then be used with cairo_scaled_font_create().
+   *
+   * @param options 	a FontOptions object into which to store the retrieved
+   * options. All existing values are overwritten
+   */
+  void get_font_options(FontOptions& options) const;
+
+  /** This function finishes the surface and drops all references to external
+   * resources. For example, for the Xlib backend it means that cairo will no
+   * longer access the drawable, which can be freed. After calling
+   * finish() the only valid operations on a surface are getting and setting
+   * user data and referencing and destroying it. Further drawing to the
+   * surface will not affect the surface but will instead trigger a
+   * CAIRO_STATUS_SURFACE_FINISHED error.
+   *
+   * When the Surface is destroyed, cairo will call finish() if it hasn't been
+   * called already, before freeing the resources associated with the Surface.
+   */
+  void finish();
+
+  /** Do any pending drawing for the surface and also restore any temporary
+   * modifications cairo has made to the surface's state. This function must
+   * be called before switching from drawing on the surface with cairo to
+   * drawing on it directly with native APIs. If the surface doesn't support
+   * direct access, then this function does nothing.
+   */
+  void flush();
+
+  /** Tells cairo to consider the data buffer dirty.
+   *
+   * In particular, if you've created an ImageSurface with a data buffer that
+   * you've allocated yourself and you draw to that data buffer using means
+   * other than cairo, you must call mark_dirty() before doing any additional
+   * drawing to that surface with cairo.
+   *
+   * Note that if you do draw to the Surface outside of cairo, you must call
+   * flush() before doing the drawing.
+   */
+  void mark_dirty();
+
+  /** Marks a rectangular area of the given surface dirty.
+   *
+   * @param x 	 X coordinate of dirty rectangle
+   * @param y 	Y coordinate of dirty rectangle
+   * @param width 	width of dirty rectangle
+   * @param height 	height of dirty rectangle
+   */
+  void mark_dirty(int x, int y, int width, int height);
+
+  /** Sets an offset that is added to the device coordinates determined by the
+   * CTM when drawing to surface. One use case for this function is when we
+   * want to create a Surface that redirects drawing for a portion of
+   * an onscreen surface to an offscreen surface in a way that is completely
+   * invisible to the user of the cairo API. Setting a transformation via
+   * cairo_translate() isn't sufficient to do this, since functions like
+   * Cairo::Context::device_to_user() will expose the hidden offset.
+   *
+   * Note that the offset only affects drawing to the surface, not using the
+   * surface in a surface pattern.
+   *
+   * @param x_offset 	the offset in the X direction, in device units
+   * @param y_offset 	the offset in the Y direction, in device units
+   */
+  void set_device_offset(double x_offset, double y_offset);
+
+#ifdef CAIRO_HAS_PNG_FUNCTIONS
+
+  /** Writes the contents of surface to a new file filename as a PNG image.
+   *
+   * \note For this function to be available, cairo must have been compiled
+   * with PNG support
+   *
+   * @param filename	the name of a file to write to
+   */
+  void write_to_png(const std::string& filename);
+
+  /** Writes the Surface to the write function.
+   *
+   * \note For this function to be available, cairo must have been compiled
+   * with PNG support
+   *
+   * @param write_func  The function to be called when the backend needs to
+   * write data to an output stream
+   * @param closure	closure data for the write function
+   */
+  void write_to_png(cairo_write_func_t write_func, void *closure); //TODO: Use a sigc::slot?
+
+#endif // CAIRO_HAS_PNG_FUNCTIONS
+
+
+  /** The underlying C cairo surface type
+   */
+  typedef cairo_surface_t cobject;
+  /** Provides acces to the underlying C cairo surface
+   */
+  inline cobject* cobj() { return m_cobject; }
+  /** Provides acces to the underlying C cairo surface
+   */
+  inline const cobject* cobj() const { return m_cobject; }
+
+  #ifndef DOXYGEN_IGNORE_THIS
+  ///For use only by the cairomm implementation.
+  inline ErrorStatus get_status() const
+  { return cairo_surface_status(const_cast<cairo_surface_t*>(cobj())); }
+
+  void reference() const;
+  void unreference() const;
+  #endif //DOXYGEN_IGNORE_THIS
+
+  /** Create a new surface that is as compatible as possible with an existing
+   * surface. The new surface will use the same backend as other unless that is
+   * not possible for some reason.
+   *
+   * @param other 	an existing surface used to select the backend of the new surface
+   * @param content 	the content for the new surface
+   * @param width 	width of the new surface, (in device-space units)
+   * @param height 	height of the new surface (in device-space units)
+   * @return 	a RefPtr to the newly allocated surface.
+   */
+  static RefPtr<Surface> create(const Surface& other, Content content, int width, int height);
+
+protected:
+  /** The underlying C cairo surface type that is wrapped by this Surface
+   */
+  cobject* m_cobject;
+};
+
+
+/** Image surfaces provide the ability to render to memory buffers either
+ * allocated by cairo or by the calling code. The supported image formats are
+ * those defined in Cairo::Format
+ *
+ * An ImageSurface is the most generic type of Surface and the only one that is
+ * available by default.  You can either create an ImageSurface whose data is
+ * managed by Cairo, or you can create an ImageSurface with a data buffer that
+ * you allocated yourself so that you can have full access to the data.  
+ *
+ * When you create an ImageSurface with your own data buffer, you are free to
+ * examine the results at any point and do whatever you want with it.  Note that
+ * if you modify anything and later want to continue to draw to the surface
+ * with cairo, you must let cairo know via Cairo::Surface::mark_dirty() 
+ *
+ * Note that like all surfaces, an ImageSurface is a reference-counted object
+ * in which the copy constructor creates a second reference to the Surface
+ * instead of creating an independant copy
+ */
+class ImageSurface : public Surface
 {
 protected:
   //TODO?: Surface(cairo_surface_t *target);
 
 public:
 
-  /** Create a C++ wrapper for the C instance. This C++ instance should then be given to a RefPtr.
+  /** Create a C++ wrapper for the C instance. This C++ instance should then be
+   * given to a RefPtr.
    * @param cobject The C instance.
-   * @param has_reference Whether we already have a reference. Otherwise, the constructor will take an extra reference.
+   * @param has_reference Whether we already have a reference. Otherwise, the
+   * constructor will take an extra reference.
    */
-  explicit Surface(cairo_surface_t* cobject, bool has_reference = false);
+  explicit ImageSurface(cairo_surface_t* cobject, bool has_reference = false);
 
-  virtual ~Surface();
+  virtual ~ImageSurface();
 
-  static RefPtr<Surface> create(const Surface& other, Content content, int width, int height);
-  static RefPtr<Surface> create(Format format, int width, int height);
-  static RefPtr<Surface> create(unsigned char* data, Format format, int width, int height, int stride);
-
-  Status write_to_png(const std::string& filename);
-  Status write_to_png_stream(cairo_write_func_t write_func, void *closure); //TODO: Use a sigc::slot?
-
-  void *get_user_data(const cairo_user_data_key_t *key);
-
-  void set_user_data(const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy); //TODO: Use a sigc::slot?
-
-  void get_font_options(FontOptions& options);
-
-  void finish();
-  void flush();
-
-  void mark_dirty();
-  void mark_dirty(int x, int y, int width, int height);
-
-  void set_device_offset(double x_offset, double y_offset);
-
+  /** Gets the width of the ImageSurface in pixels
+   */
   int get_width() const;
+
+  /** Gets the height of the ImageSurface in pixels
+   */
   int get_height() const;
 
-  void create_from_png(const char* filename);
-  void create_from_png_stream(cairo_read_func_t read_func, void *closure);
+  /** Creates an image surface of the specified format and dimensions. The
+   * initial contents of the surface is undefined; you must explicitely clear
+   * the buffer, using, for example, Cairo::Context::rectangle() and
+   * Cairo::Context::fill() if you want it cleared.
+   *
+   * Use this function to create the surface if you don't need access to the
+   * internal data and want cairo to manage it for you.  Since you don't have
+   * access to the internal data, the resulting surface can only be saved to a
+   * PNG image file (if cairo has been compiled with PNG support) or as a
+   * source surface (see Cairo::SurfacePattern).
+   *
+   * @param format 	format of pixels in the surface to create
+   * @param width 	width of the surface, in pixels
+   * @param height 	height of the surface, in pixels
+   * @return 	a RefPtr to the newly created surface.
+   */
+  static RefPtr<ImageSurface> create(Format format, int width, int height);
 
-  typedef cairo_surface_t cobject;
-  inline cobject* cobj() { return m_cobject; }
-  inline const cobject* cobj() const { return m_cobject; }
+  /** Creates an image surface for the provided pixel data. The output buffer
+   * must be kept around until the Surface is destroyed or finish() is called
+   * on the surface. The initial contents of buffer will be used as the inital
+   * image contents; you must explicitely clear the buffer, using, for example,
+   * Cairo::Context::rectangle() and Cairo::Context::fill() if you want it
+   * cleared.
+   *
+   * If you want to be able to manually manipulate or extract the data after
+   * drawing to the surface with Cairo, you should use this function to create
+   * the Surface.  Since you own the internal data, you can do anything you
+   * want with it.
+   *
+   * @param data	a pointer to a buffer supplied by the application in which
+   * to write contents.
+   * @param format	the format of pixels in the buffer
+   * @param width	the width of the image to be stored in the buffer
+   * @param height	the height of the image to be stored in the buffer
+   * @param stride	the number of bytes between the start of rows in the
+   * buffer. Having this be specified separate from width allows for padding at
+   * the end of rows, or for writing to a subportion of a larger image.
+   * @return	a RefPtr to the newly created surface.
+   */
+  static RefPtr<ImageSurface> create(unsigned char* data, Format format, int width, int height, int stride);
 
-  #ifndef DOXYGEN_IGNORE_THIS
-  ///For use only by the cairomm implementation.
-  inline Status get_status() const
-  { return cairo_surface_status(const_cast<cairo_surface_t*>(cobj())); }
-  #endif //DOXYGEN_IGNORE_THIS
+#ifdef CAIRO_HAS_PNG_FUNCTIONS
 
-  void reference() const;
-  void unreference() const;
+  /** Creates a new image surface and initializes the contents to the given PNG
+   * file.  
+   *
+   * \note For this function to be available, cairo must have been compiled
+   * with PNG support.
+   *
+   * @param filename	name of PNG file to load
+   * @return	a RefPtr to the new cairo_surface_t initialized with the
+   * contents of the PNG image file.
+   */
+  static RefPtr<ImageSurface> create_from_png(std::string filename);
 
-protected:
-  cobject* m_cobject;
+  /** Creates a new image surface from PNG data read incrementally via the
+   * read_func function.  
+   *
+   * \note For this function to be available, cairo must have been compiled
+   * with PNG support.
+   *
+   * @param read_func	function called to read the data of the file
+   * @param closure	data to pass to read_func.
+   * @return	a RefPtr to the new cairo_surface_t initialized with the
+   * contents of the PNG image file.
+   */
+  static RefPtr<ImageSurface> create_from_png(cairo_read_func_t read_func, void *closure);
+
+#endif // CAIRO_HAS_PNG_FUNCTIONS
+
 };
+
+
+#ifdef CAIRO_HAS_XLIB_SURFACE
+
+/** An XlibSurface provides a way to render to the X Window System using XLib.
+ * If you want to draw to the screen within an application that uses the X
+ * Window system, you should use this Surface type.
+ *
+ * \note For this surface to be availabe, cairo must have been compiled with
+ * support for XLib Surfaces
+ */
+class XlibSurface : public Surface
+{
+public:
+
+  /** Create a C++ wrapper for the C instance. This C++ instance should then be
+   * given to a RefPtr.
+   *
+   * @param cobject The C instance.
+   * @param has_reference whether we already have a reference. Otherwise, the
+   * constructor will take an extra reference.
+   */
+  explicit XlibSurface(cairo_surface_t* cobject, bool has_reference = false);
+  virtual ~XlibSurface();
+
+  /** Creates an Xlib surface that draws to the given drawable. The way that
+   * colors are represented in the drawable is specified by the provided
+   * visual.
+   *
+   * \note If drawable is a Window, then the function
+   * cairo_xlib_surface_set_size must be called whenever the size of the window
+   * changes.
+   *
+   * @param dpy	an X Display
+   * @param drawable	an X Drawable, (a Pixmap or a Window)
+   * @param visual	the visual to use for drawing to drawable. The depth of the visual must match the depth of the drawable. Currently, only TrueColor visuals are fully supported.
+   * @param width	the current width of drawable.
+   * @param height	the current height of drawable.
+   * @return	A RefPtr to the newly created surface
+   */
+  static RefPtr<XlibSurface> create(Display *dpy, Drawable drawable, Visual *visual, int width, int height);
+
+  /** Creates an Xlib surface that draws to the given bitmap. This will be
+   * drawn to as a CAIRO_FORMAT_A1 object.
+   *
+   * @param dpy	an X Display
+   * @param bitmap	an X Drawable, (a depth-1 Pixmap)
+   * @param screen	the X Screen associated with bitmap
+   * @param width	the current width of bitmap.
+   * @param height	the current height of bitmap.
+   * @return	A RefPtr to the newly created surface
+   */
+  static RefPtr<XlibSurface> create(Display *dpy, Pixmap bitmap, Screen *screen, int width, int height);
+
+  /** Informs cairo of the new size of the X Drawable underlying the surface.
+   * For a surface created for a Window (rather than a Pixmap), this function
+   * must be called each time the size of the window changes. (For a subwindow,
+   * you are normally resizing the window yourself, but for a toplevel window,
+   * it is necessary to listen for ConfigureNotify events.)
+   *
+   * A Pixmap can never change size, so it is never necessary to call this
+   * function on a surface created for a Pixmap.
+   *
+   * @param width	the new width of the surface
+   * @param height	the new height of the surface
+   */
+  void set_size(int width, int height);
+
+  /** Informs cairo of a new X Drawable underlying the surface. The drawable
+   * must match the display, screen and format of the existing drawable or the
+   * application will get X protocol errors and will probably terminate. No
+   * checks are done by this function to ensure this compatibility.
+   *
+   * @param drawable	the new drawable for the surface
+   * @param width	the width of the new drawable
+   * @param height	the height of the new drawable
+   */
+  void set_drawable(Drawable drawable, int width, int height);
+
+};
+
+#endif // CAIRO_HAS_XLIB_SURFACE
+
+
+#ifdef CAIRO_HAS_WIN32_SURFACE
+
+/** A Win32Surface provides a way to render within Microsoft Windows.  If you
+ * want to draw to the screen within a Microsoft Windows application, you
+ * should use this Surface type.
+ *
+ * \note For this Surface to be available, cairo must have been compiled with
+ * Win32 support
+ */
+class Win32Surface : public Surface
+{
+public:
+
+  /** Create a C++ wrapper for the C instance. This C++ instance should then be
+   * given to a RefPtr.
+   *
+   * @param cobject The C instance.
+   * @param has_reference whether we already have a reference. Otherwise, the
+   * constructor will take an extra reference.
+   */
+  explicit Win32Surface(cairo_surface_t* cobject, bool has_reference = false);
+  virtual ~Win32Surface();
+
+  /** Creates a Surface for drawing in Microsoft Windows
+   *
+   * @param hdc
+   * @return    A RefPtr to the newly created surface
+   */
+  static RefPtr<Win32Surface> create(HDC hdc);
+
+};
+
+#endif // CAIRO_HAS_WIN32_SURFACE
+
+
+/*******************************************************************************
+ * THE FOLLOWING SURFACE TYPES ARE EXPERIMENTAL AND NOT FULLY SUPPORTED
+ ******************************************************************************/
+
+#ifdef CAIRO_HAS_PDF_SURFACE
+
+/** A PdfSurface provides a way to render PDF documents from cairo.  This
+ * surface is not rendered to the screen but instead renders the drawing to a
+ * PDF file on disk.
+ *
+ * \note For this Surface to be available, cairo must have been compiled with
+ * PDF support
+ *
+ * \warning This is an experimental surface.  It is not yet marked as a fully
+ * supported surface by the cairo library
+ */
+class PdfSurface : public Surface
+{
+public:
+
+  /** Create a C++ wrapper for the C instance. This C++ instance should then be
+   * given to a RefPtr.
+   *
+   * @param cobject The C instance.
+   * @param has_reference whether we already have a reference. Otherwise, the
+   * constructor will take an extra reference.
+   */
+  explicit PdfSurface(cairo_surface_t* cobject, bool has_reference = false);
+  virtual ~PdfSurface();
+
+  /** Creates a PdfSurface with a specified dimensions that will be saved as
+   * the given filename
+   *
+   * @param filename    The name of the PDF file to save the surface to
+   * @param width_in_points   The width of the PDF document in points
+   * @param height_in_points   The height of the PDF document in points
+   */
+  static RefPtr<PdfSurface> create(std::string filename, double width_in_points, double height_in_points);
+
+  /** Creates a PdfSurface with a specified dimensions that will be written to
+   * the given write function instead of saved directly to disk
+   *
+   * @param write_func  The function to be called when the backend needs to
+   * write data to an output stream
+   * @param closure     closure data for the write function
+   * @param width_in_points   The width of the PDF document in points
+   * @param height_in_points   The height of the PDF document in points
+   */
+  static RefPtr<PdfSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
+
+  /** Sets the resolution of the image in dots per inch
+   *
+   * @param x_dpi   The dpi in the x direction
+   * @param y_dpi    The dpi in the y direction
+   */
+  void set_dpi(double x_dpi, double y_dpi);
+};
+
+#endif  // CAIRO_HAS_PDF_SURFACE
+
+
+#ifdef CAIRO_HAS_PS_SURFACE
+
+/** A PsSurface provides a way to render PostScript documents from cairo.  This
+ * surface is not rendered to the screen but instead renders the drawing to a
+ * PostScript file on disk.
+ *
+ * \note For this Surface to be available, cairo must have been compiled with
+ * PostScript support
+ *
+ * \warning This is an experimental surface.  It is not yet marked as a fully
+ * supported surface by the cairo library
+ */
+class PsSurface : public Surface
+{
+public:
+
+  /** Create a C++ wrapper for the C instance. This C++ instance should then be
+   * given to a RefPtr.
+   *
+   * @param cobject The C instance.
+   * @param has_reference whether we already have a reference. Otherwise, the
+   * constructor will take an extra reference.
+   */
+  explicit PsSurface(cairo_surface_t* cobject, bool has_reference = false);
+  virtual ~PsSurface();
+
+  /** Creates a PsSurface with a specified dimensions that will be saved as the
+   * given filename
+   *
+   * @param filename    The name of the PostScript file to save the surface to
+   * @param width_in_points   The width of the PostScript document in points
+   * @param height_in_points   The height of the PostScript document in points
+   */
+  static RefPtr<PsSurface> create(std::string filename, double width_in_points, double height_in_points);
+
+  /** Creates a PsSurface with a specified dimensions that will be written to
+   * the given write function instead of saved directly to disk
+   *
+   * @param write_func  The function to be called when the backend needs to
+   * write data to an output stream
+   * @param closure     closure data for the write function
+   * @param width_in_points   The width of the PostScript document in points
+   * @param height_in_points   The height of the PostScript document in points
+   */
+  static RefPtr<PsSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
+
+  /** Sets the resolution of the image in dots per inch
+   *
+   * @param x_dpi   The dpi in the x direction
+   * @param y_dpi    The dpi in the y direction
+   */
+  void set_dpi(double x_dpi, double y_dpi);
+
+};
+
+#endif // CAIRO_HAS_PS_SURFACE
+
+
+#ifdef CAIRO_HAS_SVG_SURFACE
+
+/** A SvgSurface provides a way to render Scalable Vector Graphics (SVG) images
+ * from cairo.  This surface is not rendered to the screen but instead renders
+ * the drawing to an SVG file on disk.
+ *
+ * \note For this Surface to be available, cairo must have been compiled with
+ * SVG support
+ *
+ * \warning This is an experimental surface.  It is not yet marked as a fully
+ * supported surface by the cairo library
+ */
+class SvgSurface : public Surface
+{
+public:
+
+  /** Create a C++ wrapper for the C instance. This C++ instance should then be
+   * given to a RefPtr.
+   *
+   * @param cobject The C instance.
+   * @param has_reference whether we already have a reference. Otherwise, the
+   * constructor will take an extra reference.
+   */
+  explicit SvgSurface(cairo_surface_t* cobject, bool has_reference = false);
+  virtual ~SvgSurface();
+
+
+  /** Creates a SvgSurface with a specified dimensions that will be saved as the
+   * given filename
+   *
+   * @param filename    The name of the SVG file to save the surface to
+   * @param width_in_points   The width of the SVG document in points
+   * @param height_in_points   The height of the SVG document in points
+   */
+  static RefPtr<SvgSurface> create(std::string filename, double width_in_points, double height_in_points);
+
+  /** Creates a SvgSurface with a specified dimensions that will be written to
+   * the given write function instead of saved directly to disk
+   *
+   * @param write_func  The function to be called when the backend needs to
+   * write data to an output stream
+   * @param closure     closure data for the write function
+   * @param width_in_points   The width of the SVG document in points
+   * @param height_in_points   The height of the SVG document in points
+   */
+  static RefPtr<SvgSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
+
+  /** Sets the resolution of the image in dots per inch
+   *
+   * @param x_dpi   The dpi in the x direction
+   * @param y_dpi    The dpi in the y direction
+   */
+  void set_dpi(double x_dpi, double y_dpi);
+};
+
+#endif // CAIRO_HAS_SVG_SURFACE
+
+
+#ifdef CAIRO_HAS_GLITZ_SURFACE
+
+/** A GlitzSurface provides a way to render to the X Window System using Glitz.
+ * This provides a way to use OpenGL-accelerated graphics from cairo.  If you
+ * want to use hardware-accelerated graphics within the X Window system, you
+ * should use this Surface type.
+ *
+ * \note For this Surface to be available, cairo must have been compiled with
+ * Glitz support
+ *
+ * \warning This is an experimental surface.  It is not yet marked as a fully
+ * supported surface by the cairo library
+ */
+class GlitzSurface : public Surface
+{
+
+public:
+
+  /** Create a C++ wrapper for the C instance. This C++ instance should then be
+   * given to a RefPtr.
+   *
+   * @param cobject The C instance.
+   * @param has_reference whether we already have a reference. Otherwise, the
+   * constructor will take an extra reference.
+   */
+  explicit GlitzSurface(cairo_surface_t* cobject, bool has_reference = false);
+
+  virtual ~GlitzSurface();
+
+  /** Creates a new GlitzSurface
+   *
+   * @param surface  a glitz surface type
+   */
+  static RefPtr<GlitzSurface> create(glitz_surface_t *surface);
+
+};
+
+#endif // CAIRO_HAS_GLITZ_SURFACE
 
 } // namespace Cairo
 
 #endif //__CAIROMM_SURFACE_H
-
