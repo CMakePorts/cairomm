@@ -1,3 +1,18 @@
+2006-01-24  Murray Cumming  <murrayc@murrayc.com>
+
+	* cairomm/Makefile.am:
+	* cairomm/surface.cc:
+	* cairomm/surface.h:
+	* cairomm/xlib_surface.cc:
+	* cairomm/xlib_surface.h:
+	* cairomm/win32_surface.cc:
+	* cairomm/win32_surface.h: Moved XlibSurface and 
+	Win32Surface into separate files, not #included by 
+	the main cairomm.h file, so that developers do not need to 
+	suffer the Xlib.h or Windows namespace pollution unless they really need to. 
+	For instance, this fixes the gtkmm 2.9 build which was broken by the 
+	Display struct in Xlib.h.
+
 2006-01-15  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/surface.cc:

@@ -164,67 +164,6 @@ int ImageSurface::get_height() const
 }
 
 
-#ifdef CAIRO_HAS_XLIB_SURFACE
-
-XlibSurface::XlibSurface(cairo_surface_t* cobject, bool has_reference) :
-    Surface(cobject, has_reference)
-{}
-
-XlibSurface::~XlibSurface()
-{
-  // surface is destroyed in base class
-}
-
-RefPtr<XlibSurface> XlibSurface::create(Display *dpy, Drawable drawable, Visual *visual, int width, int height)
-{
-  cairo_surface_t* cobject = cairo_xlib_surface_create(dpy, drawable, visual, width, height);
-  check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
-}
-
-RefPtr<XlibSurface> XlibSurface::create(Display *dpy, Pixmap bitmap, Screen *screen, int width, int height)
-{
-  cairo_surface_t* cobject = cairo_xlib_surface_create_for_bitmap(dpy, bitmap, screen, width, height);
-  check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
-}
-
-void XlibSurface::set_size(int width, int height)
-{
-  cairo_xlib_surface_set_size(m_cobject, width, height);
-  check_object_status_and_throw_exception(*this);
-}
-
-void XlibSurface::set_drawable(Drawable drawable, int width, int height)
-{
-  cairo_xlib_surface_set_drawable(m_cobject, drawable, width, height);
-  check_object_status_and_throw_exception(*this);
-}
-
-#endif // CAIRO_HAS_XLIB_SURFACE
-
-
-
-#ifdef CAIRO_HAS_WIN32_SURFACE
-
-Win32Surface::Win32Surface(cairo_surface_t* cobject, bool has_reference) :
-    Surface(cobject, has_reference)
-{}
-
-Win32Surface::~Win32Surface()
-{
-  // surface is destroyed in base class
-}
-
-RefPtr<Win32Surface> Win32Surface::create(HDC hdc)
-{
-  cairo_surface_t* cobject = cairo_win32_surface_create(hdc);
-  check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<Win32Surface>(new Win32Surface(cobject, true /* has reference */));
-}
-
-#endif // CAIRO_HAS_WIN32_SURFACE
-
 
 /*******************************************************************************
  * THE FOLLOWING SURFACE TYPES ARE EXPERIMENTAL AND NOT FULLY SUPPORTED

@@ -24,12 +24,8 @@
 #include <cairomm/fontoptions.h>
 #include <cairomm/refptr.h>
 
-#ifdef CAIRO_HAS_XLIB_SURFACE
-#include <cairo-xlib.h>
-#endif
-#ifdef CAIRO_HAS_WIN32_SURFACE
-#include <cairo-win32.h>
-#endif
+//See xlib_surface.h for XlibSurface.
+//See win32_surface.h for Win32Surface.
 
 // Experimental surfaces
 #ifdef CAIRO_HAS_PDF_SURFACE
@@ -321,123 +317,6 @@ public:
 #endif // CAIRO_HAS_PNG_FUNCTIONS
 
 };
-
-
-#ifdef CAIRO_HAS_XLIB_SURFACE
-
-/** An XlibSurface provides a way to render to the X Window System using XLib.
- * If you want to draw to the screen within an application that uses the X
- * Window system, you should use this Surface type.
- *
- * \note For this surface to be availabe, cairo must have been compiled with
- * support for XLib Surfaces
- */
-class XlibSurface : public Surface
-{
-public:
-
-  /** Create a C++ wrapper for the C instance. This C++ instance should then be
-   * given to a RefPtr.
-   *
-   * @param cobject The C instance.
-   * @param has_reference whether we already have a reference. Otherwise, the
-   * constructor will take an extra reference.
-   */
-  explicit XlibSurface(cairo_surface_t* cobject, bool has_reference = false);
-  virtual ~XlibSurface();
-
-  /** Creates an Xlib surface that draws to the given drawable. The way that
-   * colors are represented in the drawable is specified by the provided
-   * visual.
-   *
-   * \note If drawable is a Window, then the function
-   * cairo_xlib_surface_set_size must be called whenever the size of the window
-   * changes.
-   *
-   * @param dpy	an X Display
-   * @param drawable	an X Drawable, (a Pixmap or a Window)
-   * @param visual	the visual to use for drawing to drawable. The depth of the visual must match the depth of the drawable. Currently, only TrueColor visuals are fully supported.
-   * @param width	the current width of drawable.
-   * @param height	the current height of drawable.
-   * @return	A RefPtr to the newly created surface
-   */
-  static RefPtr<XlibSurface> create(Display *dpy, Drawable drawable, Visual *visual, int width, int height);
-
-  /** Creates an Xlib surface that draws to the given bitmap. This will be
-   * drawn to as a CAIRO_FORMAT_A1 object.
-   *
-   * @param dpy	an X Display
-   * @param bitmap	an X Drawable, (a depth-1 Pixmap)
-   * @param screen	the X Screen associated with bitmap
-   * @param width	the current width of bitmap.
-   * @param height	the current height of bitmap.
-   * @return	A RefPtr to the newly created surface
-   */
-  static RefPtr<XlibSurface> create(Display *dpy, Pixmap bitmap, Screen *screen, int width, int height);
-
-  /** Informs cairo of the new size of the X Drawable underlying the surface.
-   * For a surface created for a Window (rather than a Pixmap), this function
-   * must be called each time the size of the window changes. (For a subwindow,
-   * you are normally resizing the window yourself, but for a toplevel window,
-   * it is necessary to listen for ConfigureNotify events.)
-   *
-   * A Pixmap can never change size, so it is never necessary to call this
-   * function on a surface created for a Pixmap.
-   *
-   * @param width	the new width of the surface
-   * @param height	the new height of the surface
-   */
-  void set_size(int width, int height);
-
-  /** Informs cairo of a new X Drawable underlying the surface. The drawable
-   * must match the display, screen and format of the existing drawable or the
-   * application will get X protocol errors and will probably terminate. No
-   * checks are done by this function to ensure this compatibility.
-   *
-   * @param drawable	the new drawable for the surface
-   * @param width	the width of the new drawable
-   * @param height	the height of the new drawable
-   */
-  void set_drawable(Drawable drawable, int width, int height);
-
-};
-
-#endif // CAIRO_HAS_XLIB_SURFACE
-
-
-#ifdef CAIRO_HAS_WIN32_SURFACE
-
-/** A Win32Surface provides a way to render within Microsoft Windows.  If you
- * want to draw to the screen within a Microsoft Windows application, you
- * should use this Surface type.
- *
- * \note For this Surface to be available, cairo must have been compiled with
- * Win32 support
- */
-class Win32Surface : public Surface
-{
-public:
-
-  /** Create a C++ wrapper for the C instance. This C++ instance should then be
-   * given to a RefPtr.
-   *
-   * @param cobject The C instance.
-   * @param has_reference whether we already have a reference. Otherwise, the
-   * constructor will take an extra reference.
-   */
-  explicit Win32Surface(cairo_surface_t* cobject, bool has_reference = false);
-  virtual ~Win32Surface();
-
-  /** Creates a Surface for drawing in Microsoft Windows
-   *
-   * @param hdc
-   * @return    A RefPtr to the newly created surface
-   */
-  static RefPtr<Win32Surface> create(HDC hdc);
-
-};
-
-#endif // CAIRO_HAS_WIN32_SURFACE
 
 
 /*******************************************************************************
