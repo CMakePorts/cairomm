@@ -1,3 +1,11 @@
+2006-01-25  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* configure.in:
+	* examples/Makefile.am: 
+	* examples/pdf-surface/: 
+	* examples/ps-surface/: 
+	* examples/svg-surface/: add examples for additional surfaces
+
 2006-01-24  Murray Cumming  <murrayc@murrayc.com>
 
 	* cairomm/Makefile.am:
