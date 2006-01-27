@@ -1,5 +1,10 @@
 0.5.0:
 
+2006-01-27  Murray Cumming  <murrayc@murrayc.com>
+
+	* examples/pdf-surface/Makefile.am: Remove extra LDADD that was breaking 
+	the distcheck.
+
 2006-01-26  Murray Cumming  <murrayc@murrayc.com>
 
 	* examples/ps-surface/main.cc:
