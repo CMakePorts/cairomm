@@ -40,12 +40,12 @@ int main(int argc, char** argv)
 
     cr->show_page();
 
-    std::cout << "Wrote PostScript file \"" << filename << "\"" << std::endl;
+    std::cout << "Wrote SVG file \"" << filename << "\"" << std::endl;
     return 0;
 
 #else
 
-    std::cout << "You must compile cairo with PDF support for this example to work."
+    std::cout << "You must compile cairo with SVG support for this example to work."
         << std::endl;
     return 1;
 

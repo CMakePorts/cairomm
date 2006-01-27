@@ -1,3 +1,17 @@
+0.5.0:
+
+* Surface:
+  - Created derived classes for PDF, PS, SVG, Glitz, 
+  X11 and Win32 surfaces, which are only available if your copy 
+  of cairo supports those surfaces. The X11 and Win32 Surface headers 
+  must be #included explicitly.
+  (Jonathon Jongsma)
+  - Added write_to_png() and write_to_png_stream(), available when PNG 
+  support is available in Cairo.
+  (Jonathon Jongsma)
+* Examples: Added PNG, PDF, PS, and SVG Surface examples.
+  (Jonathon Jongsma)
+ 
 0.4.0:
 
 * Add Cairo::RefPtr<> and use all reference-counted 

@@ -1,3 +1,10 @@
+0.5.0:
+
+2006-01-26  Murray Cumming  <murrayc@murrayc.com>
+
+	* examples/ps-surface/main.cc:
+	* examples/svg-surface/main.cc: Correct the text of the messages.
+
 2006-01-25  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* configure.in:

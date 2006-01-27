@@ -45,7 +45,7 @@ int main(int argc, char** argv)
 
 #else
 
-    std::cout << "You must compile cairo with PDF support for this example to work."
+    std::cout << "You must compile cairo with PS (Postscript) support for this example to work."
         << std::endl;
     return 1;
 
