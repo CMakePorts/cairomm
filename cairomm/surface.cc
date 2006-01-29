@@ -99,9 +99,9 @@ void Surface::unreference() const
   cairo_surface_destroy(m_cobject);
 }
 
-RefPtr<Surface> Surface::create(const Surface& other, Content content, int width, int height)
+RefPtr<Surface> Surface::create(const RefPtr<Surface> other, Content content, int width, int height)
 {
-  cairo_surface_t* cobject = cairo_surface_create_similar(other.m_cobject, (cairo_content_t)content, width, height);
+  cairo_surface_t* cobject = cairo_surface_create_similar(other->m_cobject, (cairo_content_t)content, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
 }

@@ -6,6 +6,4 @@ config.log
 config.status
 configure
 libtool
-libxml++-2.6.pc
-libxml++.spec
-
+cairomm-1.0.pc

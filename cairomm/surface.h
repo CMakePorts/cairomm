@@ -193,7 +193,7 @@ public:
    * @param height 	height of the new surface (in device-space units)
    * @return 	a RefPtr to the newly allocated surface.
    */
-  static RefPtr<Surface> create(const Surface& other, Content content, int width, int height);
+  static RefPtr<Surface> create(const RefPtr<Surface> other, Content content, int width, int height);
 
 protected:
   /** The underlying C cairo surface type that is wrapped by this Surface

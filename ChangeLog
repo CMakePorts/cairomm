@@ -1,5 +1,13 @@
 0.5.0:
 
+2006-01-27  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* .cvsignore:
+	* cairomm/.cvsignore: update .cvsignore files
+	* cairomm/surface.cc:
+	* cairomm/surface.h: change Surface::create function to take a
+	RefPtr<Surface> instead of Surface&
+
 2006-01-27  Murray Cumming  <murrayc@murrayc.com>
 
 	* examples/pdf-surface/Makefile.am: Remove extra LDADD that was breaking 
