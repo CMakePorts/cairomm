@@ -11,6 +11,7 @@
   (Jonathon Jongsma)
 * Examples: Added PNG, PDF, PS, and SVG Surface examples.
   (Jonathon Jongsma)
+* Added API documentation generation with doxygen (Jonathon Jongsma)
  
 0.4.0:
 

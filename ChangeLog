@@ -1,3 +1,13 @@
+0.5.0:
+
+2006-02-08  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/context.h: Added a lot of documentation for the Cairo::Context
+	class taken from the cairo docs.  It's not complete, but the basics are all
+	covered now. 
+	* docs/reference/Makefile.am: make use of existing Makefile variable
+	* NEWS: update for 0.5.0 release
+
 2006-02-07  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* Makefile.am: add docs/ subdir
@@ -11,8 +21,6 @@
 	* docs/reference/Makefile.am:
 	* docs/reference/introduction.h: Added infrastructure to build and install
 	the API documentation for cairomm (based on libxml++ makefiles).  
-
-0.5.0:
 
 2006-01-27  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 

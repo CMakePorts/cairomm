@@ -36,7 +36,7 @@ install-data-local: install-reference
 
 uninstall-local: uninstall-reference
 
-all-local: html/index.html
+all-local: $(index_html)
 
 clean-local:
 	-rm -rf html
