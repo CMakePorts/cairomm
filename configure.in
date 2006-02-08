@@ -94,9 +94,25 @@ PKG_CHECK_MODULES(CAIROMM, cairo >= 1.0)
 
 GLIBMM_CHECK_PERL([5.6.0])
 
+
+AC_ARG_ENABLE(docs, [AC_HELP_STRING([--enable-docs],
+              [build the included docs [default=yes]])],,
+                        [enable_docs=yes])
+if test "x$enable_docs" = "xyes"; then
+  DOCS_SUBDIR="docs"
+else
+  DOCS_SUBDIR=""
+fi
+AC_SUBST(DOCS_SUBDIR)
+
+
 AC_OUTPUT(
   Makefile
   cairomm/Makefile
+
+  docs/Makefile
+  docs/reference/Makefile
+  docs/reference/Doxyfile
 
   examples/Makefile
   examples/png_file/Makefile

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = cairomm examples
+SUBDIRS = cairomm examples $(DOCS_SUBDIR)
 #docs examples
 
 EXTRA_DIST = cairomm-1.0.pc.in

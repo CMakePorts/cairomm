@@ -1,3 +1,17 @@
+2006-02-07  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* Makefile.am: add docs/ subdir
+	* configure.in: added an --enable-docs switch to the configure script
+	(enabled by default), and added AC_OUTPUT directives for the documentation
+	Makefiles, etc.
+	* docs/.cvsignore:
+	* docs/Makefile.am:
+	* docs/reference/.cvsignore:
+	* docs/reference/Doxyfile.in:
+	* docs/reference/Makefile.am:
+	* docs/reference/introduction.h: Added infrastructure to build and install
+	the API documentation for cairomm (based on libxml++ makefiles).  
+
 0.5.0:
 
 2006-01-27  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
