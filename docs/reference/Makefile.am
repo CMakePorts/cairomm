@@ -10,6 +10,8 @@ $(index_html): $(DOXYGEN_CONFIGFILE_SOURCE)
 	doxygen $(doxygen_configfile) \
 	2> doxygen-warnings.txt | tee doxygen-output.txt && cat doxygen-warnings.txt
 
+html: $(index_html)
+
 cairomm-reference-html.tar.gz: $(index_html)
 	tar cf - html | gzip -c --best >$@
 

@@ -1,5 +1,10 @@
 0.5.0:
 
+2006-02-09  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* docs/reference/Makefile.am: added a 'html' target to satisfy the dist
+	rule
+
 2006-02-08  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/context.h: Added a lot of documentation for the Cairo::Context
