@@ -1,5 +1,10 @@
 2006-02-17  Danilo Piazzalunga  <danilopiazza@gmail.com>
 
+	* examples/*/.cvsignore: Bug #5927: added .cvsignore files to examples
+	directories
+
+2006-02-17  Danilo Piazzalunga  <danilopiazza@gmail.com>
+
 	* AUTHORS:
 	* INSTALL:
 	* README:
