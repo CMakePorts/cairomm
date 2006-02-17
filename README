@@ -1,4 +1,4 @@
-libxml++
+cairomm
 -------------
 
 This library provides a C++ interface to cairo.

@@ -43,5 +43,5 @@ const char* logic_error::what() const throw()
 }
 */
 
-} //namespace xmlpp
+} //namespace Cairo
 

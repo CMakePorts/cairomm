@@ -1,5 +1,13 @@
 2006-02-17  Danilo Piazzalunga  <danilopiazza@gmail.com>
 
+	* AUTHORS:
+	* INSTALL:
+	* README:
+	* cairomm/exception.cc:
+	* cairomm/exception.h: Remove lingering references to libxml++
+
+2006-02-17  Danilo Piazzalunga  <danilopiazza@gmail.com>
+
 	* configure.in: Bug #5929: Output files in docs subdir only if
 	--enable-docs is set.  This prevents configure from generating files which
 	are not cleaned up when --disable-docs is used.

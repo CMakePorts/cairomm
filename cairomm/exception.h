@@ -40,6 +40,6 @@ private:
   ErrorStatus m_status;
 };
 
-} // namespace xmlpp
+} // namespace Cairo
 
 #endif // __CAIRO_EXCEPTION_H
