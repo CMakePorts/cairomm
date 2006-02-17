@@ -1,5 +1,11 @@
 2006-02-16  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* docs/reference/Doxyfile.in:
+	* docs/reference/cairomm.css: added some style customisations to the API
+	doc so that it fits in with the overall Cairo style a bit better
+
+2006-02-16  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* AUTHORS:
 	* MAINTAINERS: Add my information to the Maintainers and authors file
 
