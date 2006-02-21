@@ -1,3 +1,7 @@
+2006-02-20  Danilo Piazzalunga  <danilopiazza@gmail.com>
+
+	* Makefile.am: Include MAINTAINERS in distribution. Fixes Bug #5982
+
 2006-02-17  Danilo Piazzalunga  <danilopiazza@gmail.com>
 
 	* COPYING: Use the text from the Library GPL 2.0, which is the actual

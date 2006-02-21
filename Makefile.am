@@ -3,7 +3,7 @@
 SUBDIRS = cairomm examples $(DOCS_SUBDIR)
 #docs examples
 
-EXTRA_DIST = cairomm-1.0.pc.in
+EXTRA_DIST = MAINTAINERS cairomm-1.0.pc.in
 
 DIST_SUBDIRS = $(SUBDIRS)
 
