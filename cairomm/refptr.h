@@ -2,7 +2,7 @@
 #ifndef _cairo_REFPTR_H
 #define _cairo_REFPTR_H
 
-/* $Id: refptr.h,v 1.1 2005-12-20 09:17:53 murrayc Exp $ */
+/* $Id: refptr.h,v 1.2 2006-02-21 05:21:02 jjongsma Exp $ */
 
 /* Copyright 2005 The cairomm Development Team
  *
@@ -17,8 +17,9 @@
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
  */
 
 
