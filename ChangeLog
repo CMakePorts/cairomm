@@ -1,5 +1,38 @@
 2006-02-17  Danilo Piazzalunga  <danilopiazza@gmail.com>
 
+	* COPYING: Use the text from the Library GPL 2.0, which is the actual
+	license of cairomm. Fixes Bug #5934
+
+2006-02-17  Danilo Piazzalunga  <danilopiazza@gmail.com>
+
+	* autogen.sh:
+	* cairomm/cairomm.h:
+	* cairomm/context.cc:
+	* cairomm/context.h:
+	* cairomm/enums.h:
+	* cairomm/exception.cc:
+	* cairomm/exception.h:
+	* cairomm/fontface.cc:
+	* cairomm/fontface.h:
+	* cairomm/fontoptions.cc:
+	* cairomm/fontoptions.h:
+	* cairomm/path.cc:
+	* cairomm/path.h:
+	* cairomm/pattern.cc:
+	* cairomm/pattern.h:
+	* cairomm/private.cc:
+	* cairomm/private.h:
+	* cairomm/refptr.h:
+	* cairomm/surface.cc:
+	* cairomm/surface.h:
+	* cairomm/win32_surface.cc:
+	* cairomm/win32_surface.h:
+	* cairomm/xlib_surface.cc:
+	* cairomm/xlib_surface.h: Update FSF's postal address in GPL/LGPL
+	comment headings.  Fixes Bug #5933
+
+2006-02-17  Danilo Piazzalunga  <danilopiazza@gmail.com>
+
 	* examples/*/.cvsignore: Bug #5927: added .cvsignore files to examples
 	directories
 
