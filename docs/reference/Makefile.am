@@ -1,5 +1,7 @@
 DOXYGEN_CONFIGFILE = Doxyfile
 DOXYGEN_CONFIGFILE_SOURCE = Doxyfile.in
+WEB_SERVER = cairographics.org
+WEB_SERVER_PATH = /srv/cairo.freedesktop.org/www/documentation/cairomm/reference
 
 EXTRA_DIST = $(DOXYGEN_CONFIGFILE_SOURCE) introduction.h html
 
@@ -16,6 +18,9 @@ cairomm-reference-html.tar.gz: $(index_html)
 	tar cf - html | gzip -c --best >$@
 
 referencedir = $(datadir)/doc/libcairomm-1.0/reference/html
+
+publish:	html
+	rsync -avz --rsh ssh --cvs-exclude html/ $(WEB_SERVER):$(WEB_SERVER_PATH)
 
 install-reference: $(index_html)
 	@$(NORMAL_INSTALL)

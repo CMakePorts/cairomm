@@ -1,3 +1,8 @@
+2006-02-22  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* docs/reference/Makefile.am: add target for publishing the API reference
+	to cairographics.org
+
 2006-02-20  Danilo Piazzalunga  <danilopiazza@gmail.com>
 
 	* Makefile.am: Include MAINTAINERS in distribution. Fixes Bug #5982
