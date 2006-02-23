@@ -1,3 +1,7 @@
+2006-02-22  Danilo Piazzalunga  <danilopiazza@gmail.com>
+
+	* examples/README: Write some basic information about each example
+
 2006-02-22  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* docs/reference/Makefile.am: add target for publishing the API reference

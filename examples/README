@@ -1,0 +1,14 @@
+Examples:
+
+  pdf-surface: Create a drawing and save it as a PDF document.
+  png_file: Create a drawing and save it as a PNG image.
+  ps-surface: Create a drawing and save it as a PostScript file.
+  svg-surface: Create a drawing and save it as a SVG image.
+
+
+These examples are built automatically as part of cairomm, and you can
+easily try them out if you are building from source. If cairomm has been
+installed on your system, you can compile an example program with
+
+    g++ `pkg-config --cflags --libs cairomm-1.0` main.cc
+
