@@ -1,3 +1,8 @@
+2006-02-27  Stefan Kersten  <steve@k-hornz.de>
+
+	* cairomm/surface.cc: fix an extra trailing parentheses in
+	GlitzSurface::create()
+
 2006-02-22  Danilo Piazzalunga  <danilopiazza@gmail.com>
 
 	* examples/README: Write some basic information about each example

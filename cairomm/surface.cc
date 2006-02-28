@@ -289,7 +289,7 @@ GlitzSurface::~GlitzSurface()
   // surface is destroyed in base class
 }
 
-RefPtr<GlitzSurface> GlitzSurface::create(glitz_surface_t *surface))
+RefPtr<GlitzSurface> GlitzSurface::create(glitz_surface_t *surface)
 {
   cairo_surface_t* cobject = cairo_glitz_surface_create(surface);
   check_status_and_throw_exception(cairo_surface_status(cobject));
