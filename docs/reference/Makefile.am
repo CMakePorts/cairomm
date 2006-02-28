@@ -7,7 +7,7 @@ EXTRA_DIST = $(DOXYGEN_CONFIGFILE_SOURCE) introduction.h html
 
 index_html = html/index.html
 
-$(index_html): $(DOXYGEN_CONFIGFILE_SOURCE)
+$(index_html): $(DOXYGEN_CONFIGFILE)
 	-rm -rf html
 	doxygen $(doxygen_configfile) \
 	2> doxygen-warnings.txt | tee doxygen-output.txt && cat doxygen-warnings.txt

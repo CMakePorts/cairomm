@@ -1,3 +1,10 @@
+2006-02-27  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/exception.h:
+	* docs/reference/Doxyfile.in:
+	* docs/reference/Makefile.am: hide some of the private types and functions
+	from the Doxygen API reference documentation
+
 2006-02-27  Stefan Kersten  <steve@k-hornz.de>
 
 	* cairomm/surface.cc: fix an extra trailing parentheses in

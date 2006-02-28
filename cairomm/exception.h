@@ -25,8 +25,6 @@
 namespace Cairo
 {
 
-typedef cairo_status_t ErrorStatus;
-
 /** 
  */
 class logic_error: public std::logic_error
