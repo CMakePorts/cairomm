@@ -6,7 +6,7 @@
 int main(int argc, char** argv)
 {
     Cairo::RefPtr<Cairo::ImageSurface> surface =
-        Cairo::ImageSurface::create(CAIRO_FORMAT_ARGB32, 600, 400);
+        Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 600, 400);
 
     Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
 

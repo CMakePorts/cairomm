@@ -27,9 +27,6 @@
 namespace Cairo
 {
 
-typedef cairo_extend_t Extend;
-typedef cairo_filter_t Filter;
-
 /**
  * This is a reference-counted object. The copy constructor creates a second reference to the object, instead 
  * of creating an independent copy of the object.

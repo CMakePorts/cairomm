@@ -1,3 +1,19 @@
+2006-02-28  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/context.cc:
+	* cairomm/context.h:
+	* cairomm/enums.h:
+	* cairomm/fontoptions.cc:
+	* cairomm/fontoptions.h:
+	* cairomm/pattern.cc:
+	* cairomm/pattern.h:
+	* cairomm/surface.h: wrapped all of the enum types with cairomm
+	types within the Cairo namespace, so now (for example) the values for
+	Cairo::Format are something like Cairo::FORMAT_ARGB32 instead of the base
+	cairo types like CAIRO_FORMAT_ARGB_32.
+	* examples/png_file/main.cc: fixed example to work with the new namespaced
+	enum types
+
 2006-02-27  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/exception.h:

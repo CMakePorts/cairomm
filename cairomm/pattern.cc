@@ -118,7 +118,7 @@ void SurfacePattern::set_extend(Extend extend)
 
 Extend SurfacePattern::get_extend() const
 {
-  const Extend result = cairo_pattern_get_extend(m_cobject);
+  const Extend result = static_cast<Extend>(cairo_pattern_get_extend(m_cobject));
   check_object_status_and_throw_exception(*this);
   return result;
 }
@@ -131,7 +131,7 @@ void SurfacePattern::set_filter(Filter filter)
 
 Filter SurfacePattern::get_filter() const
 {
-  Filter result = cairo_pattern_get_filter(m_cobject);
+  Filter result = static_cast<Filter>(cairo_pattern_get_filter(m_cobject));
   check_object_status_and_throw_exception(*this);
   return result;
 }

@@ -31,13 +31,6 @@
 namespace Cairo
 {
 
-typedef cairo_operator_t Operator;
-typedef cairo_fill_rule_t FillRule;
-typedef cairo_line_cap_t LineCap;
-typedef cairo_line_join_t LineJoin;
-typedef cairo_font_slant_t FontSlant;
-typedef cairo_font_weight_t FontWeight;
-
 typedef cairo_glyph_t Glyph; //A simple struct.
 typedef cairo_font_extents_t FontExtents; //A simple struct.
 typedef cairo_text_extents_t TextExtents; //A simple struct.

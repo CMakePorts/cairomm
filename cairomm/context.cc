@@ -74,7 +74,7 @@ void Context::restore()
 
 void Context::set_operator(Operator op)
 {
-  cairo_set_operator(m_cobject, (cairo_operator_t)op);
+  cairo_set_operator(m_cobject, static_cast<cairo_operator_t>(op));
   check_object_status_and_throw_exception(*this);
 }
 
@@ -111,13 +111,13 @@ void Context::set_tolerance(double tolerance)
 
 void Context::set_antialias(Antialias antialias)
 {
-  cairo_set_antialias(m_cobject, (cairo_antialias_t)antialias);
+  cairo_set_antialias(m_cobject, static_cast<cairo_antialias_t>(antialias));
   check_object_status_and_throw_exception(*this);
 }
 
 void Context::set_fill_rule(FillRule fill_rule)
 {
-  cairo_set_fill_rule(m_cobject, (cairo_fill_rule_t)fill_rule);
+  cairo_set_fill_rule(m_cobject, static_cast<cairo_fill_rule_t>(fill_rule));
   check_object_status_and_throw_exception(*this);
 }
 
@@ -129,13 +129,13 @@ void Context::set_line_width(double width)
 
 void Context::set_line_cap(LineCap line_cap)
 {
-  cairo_set_line_cap(m_cobject, (cairo_line_cap_t)line_cap);
+  cairo_set_line_cap(m_cobject, static_cast<cairo_line_cap_t>(line_cap));
   check_object_status_and_throw_exception(*this);
 }
 
 void Context::set_line_join(LineJoin line_join)
 {
-  cairo_set_line_join(m_cobject, (cairo_line_join_t)line_join);
+  cairo_set_line_join(m_cobject, static_cast<cairo_line_join_t>(line_join));
   check_object_status_and_throw_exception(*this);
 }
 
@@ -395,7 +395,9 @@ void Context::clip_preserve()
 
 void Context::select_font_face(const std::string& family, FontSlant slant, FontWeight weight)
 {
-  cairo_select_font_face (m_cobject, family.c_str(), (cairo_font_slant_t)slant, (cairo_font_weight_t)weight);
+  cairo_select_font_face (m_cobject, family.c_str(),
+          static_cast<cairo_font_slant_t>(slant),
+          static_cast<cairo_font_weight_t>(weight));
   check_object_status_and_throw_exception(*this);
 }
 
@@ -487,7 +489,7 @@ void Context::glyph_path(const std::vector<Glyph>& glyphs)
 
 Operator Context::get_operator() const
 {
-  const Operator result = cairo_get_operator(m_cobject);
+  const Operator result = static_cast<Operator>(cairo_get_operator(m_cobject));
   check_object_status_and_throw_exception(*this);
   return result;
 }
@@ -515,7 +517,7 @@ double Context::get_tolerance() const
 
 Antialias Context::get_antialias() const
 {
-  const Antialias result = cairo_get_antialias(m_cobject);
+  const Antialias result = static_cast<Antialias>(cairo_get_antialias(m_cobject));
   check_object_status_and_throw_exception(*this);
   return result;
 }
@@ -528,7 +530,7 @@ void Context::get_current_point(double& x, double& y) const
 
 FillRule Context::get_fill_rule() const
 {
-  const FillRule result = cairo_get_fill_rule(m_cobject);
+  const FillRule result = static_cast<FillRule>(cairo_get_fill_rule(m_cobject));
   check_object_status_and_throw_exception(*this);
   return result;
 }
@@ -542,14 +544,14 @@ double Context::get_line_width() const
 
 LineCap Context::get_line_cap() const
 {
-  const LineCap result = cairo_get_line_cap(m_cobject);
+  const LineCap result = static_cast<LineCap>(cairo_get_line_cap(m_cobject));
   check_object_status_and_throw_exception(*this);
   return result;
 }
 
 LineJoin Context::get_line_join() const
 {
-  const LineJoin result = cairo_get_line_join(m_cobject);
+  const LineJoin result = static_cast<LineJoin>(cairo_get_line_join(m_cobject));
   check_object_status_and_throw_exception(*this);
   return result;
 }

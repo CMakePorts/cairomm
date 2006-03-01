@@ -46,9 +46,6 @@
 namespace Cairo
 {
 
-typedef cairo_content_t Content;
-typedef cairo_format_t Format;
-
 /** A cairo surface represents an image, either as the destination of a drawing
  * operation or as source when drawing onto another surface. There are
  * different subtypes of cairo surface for different drawing backends.  This

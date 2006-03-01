@@ -27,11 +27,6 @@
 namespace Cairo
 {
 
-typedef cairo_antialias_t Antialias;
-typedef cairo_subpixel_order_t SubpixelOrder;
-typedef cairo_hint_style_t HintStyle;
-typedef cairo_hint_metrics_t HintMetrics;
-
 /** How a font should be rendered.
  */
 class FontOptions
