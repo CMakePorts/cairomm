@@ -2,7 +2,7 @@
 #ifndef _cairo_REFPTR_H
 #define _cairo_REFPTR_H
 
-/* $Id: refptr.h,v 1.2 2006-02-21 05:21:02 jjongsma Exp $ */
+/* $Id: refptr.h,v 1.3 2006-03-06 17:55:51 jjongsma Exp $ */
 
 /* Copyright 2005 The cairomm Development Team
  *
@@ -335,3 +335,4 @@ void swap(RefPtr<T_CppObject>& lhs, RefPtr<T_CppObject>& rhs)
 
 #endif /* _cairo_REFPTR_H */
 
+// vim: ts=2 sw=2 et

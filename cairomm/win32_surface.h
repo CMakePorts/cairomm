@@ -66,3 +66,5 @@ public:
 } // namespace Cairo
 
 #endif //__CAIROMM_WIN32_SURFACE_H
+
+// vim: ts=2 sw=2 et

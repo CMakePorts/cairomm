@@ -64,3 +64,5 @@ void FontFace::set_user_data(const cairo_user_data_key_t* key, void *user_data, 
 
 
 } //namespace Cairo
+
+// vim: ts=2 sw=2 et

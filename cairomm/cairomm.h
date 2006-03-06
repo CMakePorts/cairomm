@@ -27,3 +27,5 @@
 #include <cairomm/enums.h>
 
 #endif //__CAIROMM_H
+
+// vim: ts=2 sw=2 et

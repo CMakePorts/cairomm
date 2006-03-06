@@ -155,3 +155,5 @@ HintMetrics FontOptions::get_hint_metrics() const
 }
 
 } //namespace Cairo
+
+// vim: ts=2 sw=2 et

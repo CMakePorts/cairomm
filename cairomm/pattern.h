@@ -186,3 +186,4 @@ public:
 
 #endif //__CAIROMM_PATTERN_H
 
+// vim: ts=2 sw=2 et

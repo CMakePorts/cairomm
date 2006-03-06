@@ -788,3 +788,4 @@ protected:
 
 #endif //__CAIROMM_CONTEXT_H
 
+// vim: ts=2 sw=2 et

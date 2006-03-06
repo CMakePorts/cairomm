@@ -28,6 +28,10 @@ void throw_exception(ErrorStatus status)
 {
   switch(status)
   {
+    case CAIRO_STATUS_SUCCESS:
+      // we should never get here, but just in case
+      break;
+
     case CAIRO_STATUS_NO_MEMORY:
       throw std::bad_alloc();
       break;
@@ -68,3 +72,5 @@ void throw_exception(ErrorStatus status)
 }
 
 } //namespace Cairo
+
+// vim: ts=2 sw=2 et

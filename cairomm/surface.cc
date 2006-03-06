@@ -299,3 +299,5 @@ RefPtr<GlitzSurface> GlitzSurface::create(glitz_surface_t *surface)
 #endif // CAIRO_HAS_GLITZ_SURFACE
 
 } //namespace Cairo
+
+// vim: ts=2 sw=2 et

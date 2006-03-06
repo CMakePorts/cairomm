@@ -47,3 +47,4 @@ void check_object_status_and_throw_exception(const T& object)
 
 #endif //__CAIROMM_PRIVATE_H
 
+// vim: ts=2 sw=2 et

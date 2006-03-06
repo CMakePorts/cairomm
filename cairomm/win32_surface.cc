@@ -47,3 +47,5 @@ RefPtr<Win32Surface> Win32Surface::create(HDC hdc)
 #endif // CAIRO_HAS_WIN32_SURFACE
 
 } //namespace Cairo
+
+// vim: ts=2 sw=2 et

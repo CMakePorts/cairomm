@@ -46,3 +46,4 @@ const char* logic_error::what() const throw()
 
 } //namespace Cairo
 
+// vim: ts=2 sw=2 et

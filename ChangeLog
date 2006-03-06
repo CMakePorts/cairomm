@@ -1,3 +1,8 @@
+2006-03-06  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/*.cc, *.h: add vim modelines to set proper indentation for
+	cairomm when using vim
+
 2006-02-28  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/context.cc:

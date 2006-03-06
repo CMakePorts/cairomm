@@ -64,3 +64,4 @@ protected:
 
 #endif //__CAIROMM_PATH_H
 
+// vim: ts=2 sw=2 et

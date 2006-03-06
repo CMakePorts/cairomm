@@ -42,3 +42,5 @@ private:
 } // namespace Cairo
 
 #endif // __CAIRO_EXCEPTION_H
+
+// vim: ts=2 sw=2 et

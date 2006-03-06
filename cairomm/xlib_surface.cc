@@ -63,3 +63,5 @@ void XlibSurface::set_drawable(Drawable drawable, int width, int height)
 #endif // CAIRO_HAS_XLIB_SURFACE
 
 } //namespace Cairo
+
+// vim: ts=2 sw=2 et

@@ -76,3 +76,4 @@ protected:
 
 #endif //__CAIROMM_FONTFACE_H
 
+// vim: ts=2 sw=2 et

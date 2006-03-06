@@ -147,7 +147,7 @@ void Context::set_dash(std::valarray<double>& dashes, double offset)
 
 void Context::unset_dash()
 {
-  cairo_set_dash(m_cobject, 0, 0, 0);
+  cairo_set_dash(m_cobject, NULL, 0, 0.0);
   check_object_status_and_throw_exception(*this);
 }
 
@@ -605,3 +605,5 @@ void Context::append_path(const Path& path)
 }
 
 } //namespace Cairo
+
+// vim: ts=2 sw=2 et

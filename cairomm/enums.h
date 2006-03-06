@@ -164,3 +164,4 @@ typedef enum
 
 #endif //__CAIROMM_ENUMS_H
 
+// vim: ts=2 sw=2 et

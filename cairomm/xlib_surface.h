@@ -117,3 +117,5 @@ public:
 } // namespace Cairo
 
 #endif //__CAIROMM_XLIB_SURFACE_H
+
+// vim: ts=2 sw=2 et
