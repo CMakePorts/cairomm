@@ -1,6 +1,7 @@
 #! /bin/sh
+set -e
 
-# $Id: autogen.sh,v 1.2 2006-02-21 05:20:05 jjongsma Exp $
+# $Id: autogen.sh,v 1.3 2006-03-13 01:43:04 jjongsma Exp $
 #
 # Copyright (c) 2002  Daniel Elstner  <daniel.elstner@gmx.net>
 #
@@ -30,18 +31,21 @@ then
     exit 1
 fi
 
+LIBTOOLIZE=${LIBTOOLIZE:-libtoolize}
+AUTOCONF=${AUTOCONF:-autoconf}
+AUTOMAKE=${AUTOMAKE:-automake}
+
+ACLOCAL=`echo $AUTOMAKE | sed s/automake/aclocal/`
+
 rm -f config.cache acconfig.h
 
-echo "- aclocal."		&& \
-aclocal 			&& \
-echo "- libtoolize."		&& \
-libtoolize --force 		&& \
-echo "- autoconf."		&& \
-autoconf			&& \
-echo "- automake."		&& \
-automake --add-missing --gnu	&& \
-echo				&& \
-./configure "$@"		&& exit 0
+do_cmd() {
+    echo "- $@"
+    $@
+}
 
-exit 1
-
+do_cmd $ACLOCAL
+do_cmd $LIBTOOLIZE --force
+do_cmd $AUTOCONF
+do_cmd $AUTOMAKE --add-missing --gnu
+do_cmd ./configure "$@"

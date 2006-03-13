@@ -1,3 +1,8 @@
+2006-03-12  Danilo Piazzalunga  <danilopiazza@gmail.com>
+
+	* autogen.sh: Allow overriding aclocal, automake, autoconf and libtoolize
+	using environment variables. Taken from cairo's autogen.sh.
+
 2006-03-06  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/*.cc, *.h: add vim modelines to set proper indentation for
