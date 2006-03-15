@@ -120,6 +120,7 @@ AC_CONFIG_FILES(
   examples/pdf-surface/Makefile
   examples/ps-surface/Makefile
   examples/svg-surface/Makefile
+  examples/text-rotate/Makefile
 
   cairomm-1.0.pc
 )

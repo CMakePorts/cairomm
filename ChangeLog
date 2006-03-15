@@ -1,5 +1,15 @@
 2006-03-14  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* configure.in:
+	* examples/Makefile.am:
+	* examples/text-rotate/.cvsignore:
+	* examples/text-rotate/Makefile.am:
+	* examples/text-rotate/text-rotate.cc: Added another basic example,
+	borrowed from a test-case in cairo.  This one is just a simple example of
+	using text in cairomm
+
+2006-03-14  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* cairomm/fontface.h:
 	* cairomm/fontoptions.h:
 	* cairomm/path.h:
