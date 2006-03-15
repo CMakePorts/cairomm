@@ -21,6 +21,10 @@
 
 #include <cairomm/surface.h>
 
+#ifdef CAIRO_HAS_WIN32_SURFACE
+#include <cairo-win32.h>
+#endif
+
 // This header is not included by cairomm.h because it requires Windows headers that 
 // tend to pollute the namespace with non-prefixed #defines and typedefs.
 // You may include it directly if you need to use this API.

@@ -19,10 +19,6 @@
 #include <cairomm/win32_surface.h>
 #include <cairomm/private.h>
 
-#ifdef CAIRO_HAS_WIN32_SURFACE
-#include <cairo-win32.h>
-#endif
-
 namespace Cairo
 {
 

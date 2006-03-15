@@ -20,7 +20,7 @@
 #define __CAIROMM_FONTFACE_H
 
 #include <cairomm/enums.h>
-#include <cairo/cairo.h>
+#include <cairo.h>
 
 
 namespace Cairo

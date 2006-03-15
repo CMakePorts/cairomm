@@ -1,3 +1,17 @@
+2006-03-14  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/fontface.h:
+	* cairomm/fontoptions.h:
+	* cairomm/path.h:
+	* cairomm/pattern.h: include <cairo.h> instead of <cairo/cairo.h> since it
+	didn't want to compile on windows without these
+	* cairomm/win32_surface.cc:
+	* cairomm/win32_surface.h: Move the include of cairo-win32.h from the
+	source file to the header since the declaration of create() needs the HDC
+	type definition.
+	With these changes, cairomm should compile the Win32Surface cleanly with
+	mingw on Microsoft Windows
+
 2006-03-12  Danilo Piazzalunga  <danilopiazza@gmail.com>
 
 	* autogen.sh: Allow overriding aclocal, automake, autoconf and libtoolize

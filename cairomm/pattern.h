@@ -21,7 +21,7 @@
 
 #include <cairomm/surface.h>
 #include <cairomm/enums.h>
-#include <cairo/cairo.h>
+#include <cairo.h>
 
 
 namespace Cairo
