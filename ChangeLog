@@ -1,3 +1,9 @@
+2006-03-29  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* configure.in: added tests for doxygen and graphviz which displays a
+	warning if the user has --enable-docs set but doesn't have doxygen or
+	graphviz installed.  
+
 2006-03-28  Danilo Piazzalunga  <danilopiazza@gmail.com>
 
 	* cairomm/enums.h: Stop using CAIRO_EXTEND_PAD, as it only exists
