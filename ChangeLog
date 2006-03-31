@@ -1,3 +1,11 @@
+2006-03-30  Danilo Piazzalunga  <danilopiazza@gmail.com>
+
+	* configure.in: enable documentation even if doxygen and/or graphviz
+	are missing, so the docs will be installed when building a release.
+	* docs/reference/Makefile.am: don't remove html directory with `make clean`,
+	so that users of the tarball releases don't destroy the pre-built
+	documentation when running make clean. Change to maintainer-clean
+
 2006-03-29  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* configure.in: added tests for doxygen and graphviz which displays a

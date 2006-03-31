@@ -45,7 +45,7 @@ uninstall-local: uninstall-reference
 
 all-local: $(index_html)
 
-clean-local:
+maintainer-clean-local:
 	-rm -rf html
 
 CLEANFILES = cairomm_doxygen_tags \
