@@ -3,7 +3,9 @@ DOXYGEN_CONFIGFILE_SOURCE = Doxyfile.in
 WEB_SERVER = cairographics.org
 WEB_SERVER_PATH = /srv/cairo.freedesktop.org/www/documentation/cairomm/reference
 
-EXTRA_DIST = $(DOXYGEN_CONFIGFILE_SOURCE) introduction.h html
+EXTRA_DIST = $(DOXYGEN_CONFIGFILE_SOURCE) \
+			 introduction.h cairomm_doxygen_tags \
+			 html
 
 index_html = html/index.html
 
@@ -39,18 +41,22 @@ uninstall-reference: $(index_html)
 	  rm -f $(DESTDIR)$(referencedir)/$$f; \
 	done
 
+doc-clean:
+	-rm -rf html
+	-rm -f cairomm_doxygen_tags
+	-rm -f doxygen-output.txt
+	-rm -f doxygen-warnings.txt
+	-rm -f undocumented.txt
+
 install-data-local: install-reference
 
 uninstall-local: uninstall-reference
 
 all-local: $(index_html)
 
-maintainer-clean-local:
-	-rm -rf html
-
-CLEANFILES = cairomm_doxygen_tags \
-						 doxygen-output.txt \
-						 doxygen-warnings.txt \
-						 undocumented.txt
+maintainer-clean-local: doc-clean
 
 DISTCLEANFILES = $(DOXYGEN_CONFIGFILE)
+
+.PHONY: doc-clean install-reference uninstall-reference
+

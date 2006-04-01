@@ -1,3 +1,10 @@
+2006-03-31  Danilo Piazzalunga  <danilopiazza@gmail.com>
+
+	* Makefile.am:
+	* docs/Makefile.am:
+	* docs/reference/Makefile.am: add convenience targets for cleaning and
+	rebuilding documentation (doc-clean and doc-rebuild).
+
 2006-03-30  Danilo Piazzalunga  <danilopiazza@gmail.com>
 
 	* configure.in: enable documentation even if doxygen and/or graphviz

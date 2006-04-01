@@ -106,5 +106,13 @@ release-publish: release-upload releases/$(sha1_file)
 	@echo "version component to the next (odd) number and commit."
 
 
-.PHONY: release-verify-even-micro release-verify-newer release-remove-old release-cleanup-group-sticky release-check release-upload release-publish
+doc-clean-recursive:
+	(cd docs && $(MAKE) $(AM_MAKEFLAGS) doc-clean)
+
+doc-clean: doc-clean-recursive
+
+doc-rebuild:
+	(cd docs && $(MAKE) $(AM_MAKEFLAGS) doc-rebuild)
+
+.PHONY: release-verify-even-micro release-verify-newer release-remove-old release-cleanup-group-sticky release-check release-upload release-publish doc-clean doc-clean-recursive doc-rebuild
 
