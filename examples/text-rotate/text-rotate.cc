@@ -18,6 +18,7 @@
  */
 
 #include <string>
+#include <iostream>
 #include <cairomm/cairomm.h>
 
 // This example is based on the C cairo example of the same name
@@ -83,5 +84,9 @@ int main (void)
     Cairo::RefPtr<Cairo::ImageSurface> surface = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, WIDTH, HEIGHT);
     Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
     draw(cr, WIDTH, HEIGHT);
+#ifdef CAIRO_HAS_PNG_FUNCTIONS
     surface->write_to_png("text-rotate.png");
+#else
+    std::cout << "You must compile cairo with PNG support for this example to work" << std::endl;
+#endif
 }
