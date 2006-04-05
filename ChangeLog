@@ -1,5 +1,11 @@
 2006-04-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* docs/reference/Doxyfile.in:
+	* docs/reference/Makefile.am: A couple minor build fixes to make distcheck
+	happy
+
+2006-04-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* NEWS: add news for 0.6.0 release
 	* configure.in: bump version to 0.6.0
 

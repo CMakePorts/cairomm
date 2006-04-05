@@ -11,7 +11,7 @@ index_html = html/index.html
 
 $(index_html): $(DOXYGEN_CONFIGFILE)
 	-rm -rf html
-	doxygen $(doxygen_configfile) \
+	doxygen $(DOXYGEN_CONFIGFILE) \
 	2> doxygen-warnings.txt | tee doxygen-output.txt && cat doxygen-warnings.txt
 
 html: $(index_html)
