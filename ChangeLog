@@ -1,3 +1,8 @@
+2006-04-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* NEWS: add news for 0.6.0 release
+	* configure.in: bump version to 0.6.0
+
 2006-04-03  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* examples/text-rotate/text-rotate.cc: protect PNG functions with #ifdef in
