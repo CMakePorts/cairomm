@@ -1,3 +1,8 @@
+2006-04-06  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* Makefile.am: Add a brief description of cairomm to the release
+	announcement template
+
 2006-04-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* docs/reference/Doxyfile.in:
