@@ -554,7 +554,7 @@ public:
    *
    * @param pattern a Pattern
    */
-  void mask(const RefPtr<Pattern>& pattern);
+  void mask(const RefPtr<const Pattern>& pattern);
 
   /** A drawing operator that paints the current source using the alpha channel
    * of surface as a mask. (Opaque areas of surface are painted with the
@@ -564,7 +564,7 @@ public:
    * @param surface_x	X coordinate at which to place the origin of surface
    * @param surface_y	Y coordinate at which to place the origin of surface
    */
-  void mask(const RefPtr<Surface>& surface, double surface_x, double surface_y);
+  void mask(const RefPtr<const Surface>& surface, double surface_x, double surface_y);
 
   /** A drawing operator that strokes the current Path according to the current
    * line width, line join, line cap, and dash settings. After stroke(),

@@ -301,15 +301,15 @@ void Context::paint_with_alpha(double alpha)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::mask(const RefPtr<Pattern>& pattern)
+void Context::mask(const RefPtr<const Pattern>& pattern)
 {
-  cairo_mask(m_cobject, pattern->cobj());
+  cairo_mask(m_cobject, const_cast<cairo_pattern_t*>(pattern->cobj()));
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::mask(const RefPtr<Surface>& surface, double surface_x, double surface_y)
+void Context::mask(const RefPtr<const Surface>& surface, double surface_x, double surface_y)
 {
-  cairo_mask_surface(m_cobject, surface->cobj(), surface_x, surface_y);
+  cairo_mask_surface(m_cobject, const_cast<cairo_surface_t*>(surface->cobj()), surface_x, surface_y);
   check_object_status_and_throw_exception(*this);
 }
 
