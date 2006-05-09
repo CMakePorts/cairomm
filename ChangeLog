@@ -1,5 +1,12 @@
 2006-05-08  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* cairomm/context.h:
+	* cairomm/path.h: added some preliminary documentation explaining that the
+	caller is responsible for freeing Path objects returned from
+	Context::copy_path() and Context::copy_path_flat().
+
+2006-05-08  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* cairomm/cairomm.h: Add doxygen API introduction test here.
 	* docs/reference/Doxyfile.in: 
 	* docs/reference/Makefile.am:

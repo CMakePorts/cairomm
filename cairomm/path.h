@@ -28,7 +28,12 @@ namespace Cairo
 {
 
 /** A data structure for holding a path.
- * Use Context::copy_path() or Context::copy_path_flat() to instantiate a new Path.
+ * Use Context::copy_path() or Context::copy_path_flat() to instantiate a new
+ * Path.  The application is responsible for freeing the Path object when it is
+ * no longer needed.
+ *
+ * \todo There's currently no way to access the path data without reverting to
+ * the C object (see cobj())
  */
 class Path
 {

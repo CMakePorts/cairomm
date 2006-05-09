@@ -746,7 +746,30 @@ public:
   RefPtr<const Surface> get_target() const;
   
   //TODO: Copy or reference-count a Path somethow instead of asking the caller to delete it?
+  /** Creates a copy of the current path and returns it to the user.
+   *
+   * \todo See cairo_path_data_t for hints on how to iterate over the returned
+   * data structure.
+   *
+   * \note The caller owns the Path object returned from this function.  The
+   * Path object must be freed when you are finished with it.
+   */
   Path* copy_path() const;
+
+  /** Gets a flattened copy of the current path and returns it to the user
+   *
+   * \todo See cairo_path_data_t for hints on how to iterate over the returned
+   * data structure.
+   *
+   * This function is like copy_path() except that any curves in the path will
+   * be approximated with piecewise-linear approximations, (accurate to within
+   * the current tolerance value). That is, the result is guaranteed to not have
+   * any elements of type CAIRO_PATH_CURVE_TO which will instead be
+   * replaced by a series of CAIRO_PATH_LINE_TO elements. 
+   *
+   * \note The caller owns the Path object returned from this function.  The
+   * Path object must be freed when you are finished with it.
+   */
   Path* copy_path_flat() const;
 
   /** Append the path onto the current path. The path may be either the return
