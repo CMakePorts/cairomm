@@ -9,7 +9,7 @@ EXTRA_DIST = $(DOXYGEN_CONFIGFILE_SOURCE) \
 
 index_html = html/index.html
 
-$(index_html): $(DOXYGEN_CONFIGFILE)
+$(index_html): $(DOXYGEN_CONFIGFILE) $(wildcard $(top_srcdir)/cairomm/*.h)
 	-rm -rf html
 	doxygen $(DOXYGEN_CONFIGFILE) \
 	2> doxygen-warnings.txt | tee doxygen-output.txt && cat doxygen-warnings.txt
