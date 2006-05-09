@@ -2,14 +2,15 @@ DOXYGEN_CONFIGFILE = Doxyfile
 DOXYGEN_CONFIGFILE_SOURCE = Doxyfile.in
 WEB_SERVER = cairographics.org
 WEB_SERVER_PATH = /srv/cairo.freedesktop.org/www/documentation/cairomm/reference
+HTML_TEMPLATE_FILES = cairomm.css cairomm-header.html
 
 EXTRA_DIST = $(DOXYGEN_CONFIGFILE_SOURCE) \
-			 introduction.h cairomm_doxygen_tags \
+			 introduction.h $(HTML_TEMPLATE_FILES) cairomm_doxygen_tags \
 			 html
 
 index_html = html/index.html
 
-$(index_html): $(DOXYGEN_CONFIGFILE) $(wildcard $(top_srcdir)/cairomm/*.h)
+$(index_html): $(DOXYGEN_CONFIGFILE) $(wildcard $(top_srcdir)/cairomm/*.h) $(HTML_TEMPLATE_FILES)
 	-rm -rf html
 	doxygen $(DOXYGEN_CONFIGFILE) \
 	2> doxygen-warnings.txt | tee doxygen-output.txt && cat doxygen-warnings.txt

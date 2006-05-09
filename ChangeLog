@@ -1,5 +1,15 @@
 2006-05-08  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* cairomm/cairomm.h: Add doxygen API introduction test here.
+	* docs/reference/Doxyfile.in: 
+	* docs/reference/Makefile.am:
+	* docs/reference/cairomm-header.html:
+	* docs/reference/cairomm.css:
+	* docs/reference/introduction.h: fix up some documentation presentation
+	issues that turned up with newer versions of doxygen.
+
+2006-05-08  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* configure.in: remove check for perl since we're not using any of the
 	gmmproc stuff for cairomm
 	* docs/reference/Makefile.am: add documentation dependency on all of the

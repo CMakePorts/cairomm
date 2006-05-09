@@ -19,6 +19,18 @@
 #ifndef __CAIROMM_H
 #define __CAIROMM_H
 
+/** \mainpage Cairomm: A C++ wrapper for the cairo graphics library
+ *
+ * \section License
+ * Cairomm is available under the terms of the LGPL license
+ *
+ * \section Introduction
+ * If you're just beginning to learn cairomm, a good place to start is with the
+ * Cairo::Surface and Cairo::Context classes.  In general terms, you draw onto
+ * a Surface using the graphics settings specified in your Context.
+ *
+ */
+
 #include <cairomm/context.h>
 #include <cairomm/surface.h>
 #include <cairomm/fontoptions.h>
