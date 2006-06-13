@@ -1,3 +1,9 @@
+2006-06-12  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* configure.in: bump required cairo version to >= 1.1.7
+	* cairomm/surface.cc, cairomm/surface.h: update to new cairo API
+	cairo_surface_set_fallback_resolution
+
 2006-05-10  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* docs/reference/cairomm.css: minor documentation stylesheet fix
