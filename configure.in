@@ -90,7 +90,7 @@ fi
 
 AC_CHECK_HEADERS(string list map, , exit)
 
-PKG_CHECK_MODULES(CAIROMM, cairo >= 1.0)
+PKG_CHECK_MODULES(CAIROMM, cairo >= 1.1.7)
 
 
 dnl Check whether to build the documentation directory

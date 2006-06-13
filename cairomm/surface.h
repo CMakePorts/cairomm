@@ -137,6 +137,13 @@ public:
    */
   void set_device_offset(double x_offset, double y_offset);
 
+  /** Sets the fallback resolution of the image in dots per inch
+   *
+   * @param x_pixels_per_inch   Pixels per inch in the x direction
+   * @param y_pixels_per_inch   Pixels per inch in the y direction
+   */
+  void set_fallback_resolution(double x_pixels_per_inch, double y_pixels_per_inch);
+
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
 
   /** Writes the contents of surface to a new file filename as a PNG image.
@@ -367,12 +374,6 @@ public:
    */
   static RefPtr<PdfSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
-  /** Sets the resolution of the image in dots per inch
-   *
-   * @param x_dpi   The dpi in the x direction
-   * @param y_dpi    The dpi in the y direction
-   */
-  void set_dpi(double x_dpi, double y_dpi);
 };
 
 #endif  // CAIRO_HAS_PDF_SURFACE
@@ -424,12 +425,6 @@ public:
    */
   static RefPtr<PsSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
-  /** Sets the resolution of the image in dots per inch
-   *
-   * @param x_dpi   The dpi in the x direction
-   * @param y_dpi    The dpi in the y direction
-   */
-  void set_dpi(double x_dpi, double y_dpi);
 
 };
 
@@ -483,12 +478,6 @@ public:
    */
   static RefPtr<SvgSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
-  /** Sets the resolution of the image in dots per inch
-   *
-   * @param x_dpi   The dpi in the x direction
-   * @param y_dpi    The dpi in the y direction
-   */
-  void set_dpi(double x_dpi, double y_dpi);
 };
 
 #endif // CAIRO_HAS_SVG_SURFACE

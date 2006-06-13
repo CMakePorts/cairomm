@@ -76,6 +76,12 @@ void Surface::set_device_offset(double x_offset, double y_offset)
   check_object_status_and_throw_exception(*this);
 }
 
+void Surface::set_fallback_resolution(double x_pixels_per_inch, double y_pixels_per_inch)
+{
+  cairo_surface_set_fallback_resolution(m_cobject, x_pixels_per_inch, y_pixels_per_inch);
+  check_object_status_and_throw_exception(*this);
+}
+
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
 void Surface::write_to_png(const std::string& filename)
 {
@@ -195,12 +201,6 @@ RefPtr<PdfSurface> PdfSurface::create(cairo_write_func_t write_func, void *closu
   return RefPtr<PdfSurface>(new PdfSurface(cobject, true /* has reference */));
 }
 
-void PdfSurface::set_dpi(double x_dpi, double y_dpi)
-{
-  cairo_pdf_surface_set_dpi(m_cobject, x_dpi, y_dpi);
-  check_object_status_and_throw_exception(*this);
-}
-
 #endif // CAIRO_HAS_PDF_SURFACE
 
 
@@ -231,12 +231,6 @@ RefPtr<PsSurface> PsSurface::create(cairo_write_func_t write_func, void *closure
   return RefPtr<PsSurface>(new PsSurface(cobject, true /* has reference */));
 }
 
-void PsSurface::set_dpi(double x_dpi, double y_dpi)
-{
-  cairo_ps_surface_set_dpi(m_cobject, x_dpi, y_dpi);
-  check_object_status_and_throw_exception(*this);
-}
-
 #endif // CAIRO_HAS_PS_SURFACE
 
 
@@ -265,12 +259,6 @@ RefPtr<SvgSurface> SvgSurface::create(cairo_write_func_t write_func, void *closu
   cairo_surface_t* cobject = cairo_svg_surface_create_for_stream(write_func, closure, width_in_points, height_in_points);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<SvgSurface>(new SvgSurface(cobject, true /* has reference */));
-}
-
-void SvgSurface::set_dpi(double x_dpi, double y_dpi)
-{
-  cairo_svg_surface_set_dpi(m_cobject, x_dpi, y_dpi);
-  check_object_status_and_throw_exception(*this);
 }
 
 #endif // CAIRO_HAS_SVG_SURFACE
