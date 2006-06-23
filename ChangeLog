@@ -1,5 +1,9 @@
 2006-06-23  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* cairomm/enums.h: fix stupid error from last commit
+
+2006-06-23  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* cairomm/enums.h: add new FORMAT_RGB16_565 format
 
 2006-06-12  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
