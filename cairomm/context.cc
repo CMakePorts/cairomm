@@ -229,6 +229,12 @@ void Context::clear_path()
   check_object_status_and_throw_exception(*this);
 }
 
+void Context::new_sub_path()
+{
+  cairo_new_sub_path(m_cobject);
+  check_object_status_and_throw_exception(*this);
+}
+
 void Context::move_to(double x, double y)
 {
   cairo_move_to(m_cobject, x, y);
@@ -602,6 +608,55 @@ void Context::append_path(const Path& path)
 {
   cairo_append_path(m_cobject, const_cast<cairo_path_t*>(path.cobj()));
   check_object_status_and_throw_exception(*this);
+}
+
+void Context::push_group()
+{
+  cairo_push_group(m_cobject);
+  check_object_status_and_throw_exception(*this);
+}
+
+void Context::push_group_with_content(Content content)
+{
+  cairo_push_group_with_content(m_cobject, static_cast<cairo_content_t>(content));
+  check_object_status_and_throw_exception(*this);
+}
+
+RefPtr<Pattern> Context::pop_group()
+{
+  cairo_pattern_t* pattern = cairo_pop_group(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return RefPtr<Pattern>(new Pattern(pattern));
+}
+
+void Context::pop_group_to_source()
+{
+  cairo_pop_group_to_source(m_cobject);
+  check_object_status_and_throw_exception(*this);
+}
+
+RefPtr<Surface> Context::get_group_target()
+{
+  cairo_surface_t* surface = cairo_get_group_target(m_cobject);
+  // surface can be NULL if you're not between push/pop group calls
+  if (surface == NULL)
+  {
+    // FIXME: is this really the right way to handle this?
+    throw_exception(CAIRO_STATUS_NULL_POINTER);
+  }
+  return RefPtr<Surface>(new Surface(surface, false));
+}
+
+RefPtr<const Surface> Context::get_group_target() const
+{
+  cairo_surface_t* surface = cairo_get_group_target(m_cobject);
+  // surface can be NULL if you're not between push/pop group calls
+  if (surface == NULL)
+  {
+    // FIXME: is this really the right way to handle this?
+    throw_exception(CAIRO_STATUS_NULL_POINTER);
+  }
+  return RefPtr<const Surface>(new Surface(surface, false));
 }
 
 } //namespace Cairo

@@ -356,6 +356,19 @@ public:
    */
   void clear_path();
 
+  /** Begin a new subpath. Note that the existing path is not affected. After
+   * this call there will be no current point.
+   *
+   * In many cases, this call is not needed since new subpaths are frequently
+   * started with move_to().
+   *
+   * A call to new_sub_path() is particularly useful when beginning a new
+   * subpath with one of the arc() calls. This makes things easier as it is no
+   * longer necessary to manually compute the arc's initial coordinates for a
+   * call to move_to().
+   */
+  void new_sub_path();
+
   /** If the current subpath is not empty, begin a new subpath. After this call
    * the current point will be (x, y).
    *
@@ -779,6 +792,113 @@ public:
    * @param path	path to be appended
    */
   void append_path(const Path& path);
+
+  /** Temporarily redirects drawing to an intermediate surface known as a group.
+   * The redirection lasts until the group is completed by a call to pop_group()
+   * or pop_group_to_source(). These calls provide the result of any drawing to
+   * the group as a pattern, (either as an explicit object, or set as the source
+   * pattern).
+   *
+   * This group functionality can be convenient for performing intermediate
+   * compositing. One common use of a group is to render objects as opaque
+   * within the group, (so that they occlude each other), and then blend the
+   * result with translucence onto the destination.
+   *
+   * Groups can be nested arbitrarily deep by making balanced calls to
+   * push_group()/pop_group(). Each call pushes/pops the new target group
+   * onto/from a stack.
+   *
+   * The push_group() function calls save() so that any changes to the graphics
+   * state will not be visible outside the group, (the pop_group functions call
+   * restore()).
+   *
+   * By default the intermediate group will have a content type of
+   * CONTENT_COLOR_ALPHA. Other content types can be chosen for the group by
+   * using push_group_with_content() instead.
+   *
+   * As an example, here is how one might fill and stroke a path with
+   * translucence, but without any portion of the fill being visible under the
+   * stroke:
+   *
+   * @code
+   * cr->push_group();
+   * cr->set_source(fill_pattern);
+   * cr->fill_preserve();
+   * cr->set_source(stroke_pattern);
+   * cr->stroke();
+   * cr->pop_group_to_source();
+   * cr->paint_with_alpha(alpha);
+   * @endcode
+   */
+  void push_group();
+
+  /**
+   * Temporarily redirects drawing to an intermediate surface known as a
+   * group. The redirection lasts until the group is completed by a call
+   * to pop_group() or pop_group_to_source(). These calls provide the result of
+   * any drawing to the group as a pattern, (either as an explicit object, or set
+   * as the source pattern).
+   *
+   * The group will have a content type of @content. The ability to control this
+   * content type is the only distinction between this function and push_group()
+   * which you should see for a more detailed description of group rendering.
+   *
+   * \param content: indicates the type of group that will be created
+   */
+  void push_group_with_content(Content content);
+
+  /**
+   * Terminates the redirection begun by a call to push_group() or
+   * push_group_with_content() and returns a new pattern containing the results
+   * of all drawing operations performed to the group.
+   *
+   * The pop_group() function calls restore(), (balancing a call to save() by
+   * the push_group function), so that any changes to the graphics state will
+   * not be visible outside the group.
+   *
+   * \return a (surface) pattern containing the results of all drawing
+   * operations performed to the group.
+   **/
+  RefPtr<Pattern> pop_group();
+
+  /**
+   * Terminates the redirection begun by a call to push_group() or
+   * push_group_with_content() and installs the resulting pattern as the source
+   * pattern in the given cairo Context.
+   *
+   * The behavior of this function is equivalent to the sequence of operations:
+   *
+   * @code
+   * RefPtr<Pattern> group = cr->pop_group();
+   * cr->set_source(group);
+   * @endcode
+   *
+   * but is more convenient as their is no need for a variable to store
+   * the short-lived pointer to the pattern.
+   *
+   * The pop_group() function calls restore(), (balancing a call to save() by
+   * the push_group function), so that any changes to the graphics state will
+   * not be visible outside the group.
+   **/
+  void pop_group_to_source();
+
+  /**
+   * Gets the target surface for the current group as started by the most recent
+   * call to push_group() or push_group_with_content().
+   *
+   * This function will return NULL if called "outside" of any group rendering
+   * blocks, (that is, after the last balancing call to pop_group() or
+   * pop_group_to_source()).
+   *
+   * @exception
+   *
+   **/
+  RefPtr<Surface> get_group_target();
+
+  /**
+   * Same as the non-const version but returns a reference to a const Surface
+   */
+  RefPtr<const Surface> get_group_target() const;
 
   /** The base cairo C type that is wrapped by Cairo::Context
    */

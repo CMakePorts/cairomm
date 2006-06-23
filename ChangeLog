@@ -1,5 +1,11 @@
 2006-06-23  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* cairomm/context.cc:
+	* cairomm/context.h: added Context::new_sub_path() and new push/pop group
+	API.
+
+2006-06-23  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* cairomm/enums.h: fix stupid error from last commit
 
 2006-06-23  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
