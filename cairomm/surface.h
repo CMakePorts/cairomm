@@ -137,6 +137,10 @@ public:
    */
   void set_device_offset(double x_offset, double y_offset);
 
+  /** Returns a previous device offset set by set_device_offset().
+   */
+  void get_device_offset(double& x_offset, double& y_offset);
+
   /** Sets the fallback resolution of the image in dots per inch
    *
    * @param x_pixels_per_inch   Pixels per inch in the x direction
@@ -249,6 +253,29 @@ public:
   /** Gets the height of the ImageSurface in pixels
    */
   int get_height() const;
+
+  /**
+   * Get a pointer to the data of the image surface, for direct
+   * inspection or modification.
+   *
+   * Return value: a pointer to the image data of this surface or NULL
+   * if @surface is not an image surface.
+   */
+  unsigned char* get_data();
+  const unsigned char* get_data() const;
+
+  /** gets the format of the surface
+   */
+  Format get_format() const;
+
+  /**
+   * Return value: the stride of the image surface in bytes (or 0 if
+   * @surface is not an image surface). The stride is the distance in
+   * bytes from the beginning of one row of the image data to the
+   * beginning of the next row.
+   */
+  int get_stride() const;
+
 
   /** Creates an image surface of the specified format and dimensions. The
    * initial contents of the surface is undefined; you must explicitely clear

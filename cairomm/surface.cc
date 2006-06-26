@@ -76,6 +76,11 @@ void Surface::set_device_offset(double x_offset, double y_offset)
   check_object_status_and_throw_exception(*this);
 }
 
+void Surface::get_device_offset(double& x_offset, double& y_offset)
+{
+  cairo_surface_get_device_offset(m_cobject, &x_offset, &y_offset);
+}
+
 void Surface::set_fallback_resolution(double x_pixels_per_inch, double y_pixels_per_inch)
 {
   cairo_surface_set_fallback_resolution(m_cobject, x_pixels_per_inch, y_pixels_per_inch);
@@ -170,6 +175,25 @@ int ImageSurface::get_height() const
   return result;
 }
 
+unsigned char* ImageSurface::get_data()
+{
+  return cairo_image_surface_get_data(m_cobject);
+}
+
+const unsigned char* ImageSurface::get_data() const
+{
+  return cairo_image_surface_get_data(m_cobject);
+}
+
+Format ImageSurface::get_format() const
+{
+  return static_cast<Format>(cairo_image_surface_get_format(m_cobject));
+}
+
+int ImageSurface::get_stride() const
+{
+  return cairo_image_surface_get_stride(m_cobject);
+}
 
 
 /*******************************************************************************

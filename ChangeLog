@@ -1,3 +1,9 @@
+2006-06-26  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/surface.cc:
+	* cairomm/surface.h: Added new Surface and ImageSurface API from 1.1.x
+	snapshots
+
 2006-06-23  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/context.cc:
