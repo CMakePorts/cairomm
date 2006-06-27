@@ -110,6 +110,20 @@ public:
    */
   void set_drawable(Drawable drawable, int width, int height);
 
+  /** gets the Drawable object associated with this surface
+   */
+  Drawable get_drawable() const;
+
+  const Display* get_display() const;
+  Display* get_display();
+
+  Screen* get_screen();
+  const Screen* get_screen() const;
+
+  Visual* get_visual();
+  const Visual* get_visual() const;
+  int get_depth() const;
+
 };
 
 #endif // CAIRO_HAS_XLIB_SURFACE

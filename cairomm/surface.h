@@ -401,6 +401,19 @@ public:
    */
   static RefPtr<PdfSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
+/**
+ * Changes the size of a PDF surface for the current (and subsequent) pages.
+ *
+ * This function should only be called before any drawing operations have been
+ * performed on the current page. The simplest way to do this is to call this
+ * function immediately after creating the surface or immediately after
+ * completing a page with either Context::show_page() or Context::copy_page().
+ *
+ * \param width_in_points new surface width, in points (1 point == 1/72.0 inch)
+ * \param height_in_points new surface height, in points (1 point == 1/72.0 inch)
+ **/
+  void set_size(double width_in_points, double height_in_points);
+
 };
 
 #endif  // CAIRO_HAS_PDF_SURFACE
@@ -452,6 +465,45 @@ public:
    */
   static RefPtr<PsSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
+  /**
+   * Changes the size of a PostScript surface for the current (and
+   * subsequent) pages.
+   *
+   * This function should only be called before any drawing operations have been
+   * performed on the current page. The simplest way to do this is to call this
+   * function immediately after creating the surface or immediately after
+   * completing a page with either Context::show_page() or Context::copy_page().
+   *
+   * \param width_in_points new surface width, in points (1 point == 1/72.0 inch)
+   * \param height_in_points new surface height, in points (1 point == 1/72.0 inch)
+   */
+  void set_size(double width_in_points, double height_in_points);
+
+  /** Emit a comment into the PostScript output for the given surface.  See the
+   * cairo reference documentation for more information.
+   *
+   * \param comment a comment string to be emitted into the PostScript output
+   */
+  void dsc_comment(std::string comment);
+
+  /**
+   * This function indicates that subsequent calls to dsc_comment() should direct
+   * comments to the Setup section of the PostScript output.
+   *
+   * This function should be called at most once per surface, and must be called
+   * before any call to dsc_begin_page_setup() and before any drawing is performed
+   * to the surface.
+   */
+  void dsc_begin_setup();
+
+  /** This function indicates that subsequent calls to dsc_comment() should
+   * direct comments to the PageSetup section of the PostScript output.
+   *
+   * This function call is only needed for the first page of a surface. It
+   * should be called after any call to dsc_begin_setup() and before any drawing
+   * is performed to the surface.
+   */
+  void dsc_begin_page_setup();
 
 };
 

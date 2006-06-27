@@ -1,5 +1,12 @@
 2006-06-26  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* cairomm/surface.cc, cairomm/surface.h: add new PsSurface and PdfSurface
+	API: set_size, dsc_comment, dsc_begin_setup, dsc_begin_page_setup
+	* cairomm/xlib_surface.cc, cairomm/xlib_surface.h: add new XlibSurface API:
+	get_display, get_drawable, get_screen, get_visual, get_depth
+
+2006-06-26  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* cairomm/surface.cc:
 	* cairomm/surface.h: Added new Surface and ImageSurface API from 1.1.x
 	snapshots

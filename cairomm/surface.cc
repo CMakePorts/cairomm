@@ -225,6 +225,12 @@ RefPtr<PdfSurface> PdfSurface::create(cairo_write_func_t write_func, void *closu
   return RefPtr<PdfSurface>(new PdfSurface(cobject, true /* has reference */));
 }
 
+void PdfSurface::set_size(double width_in_points, double height_in_points)
+{
+  cairo_pdf_surface_set_size(m_cobject, width_in_points, height_in_points);
+  check_object_status_and_throw_exception(*this);
+}
+
 #endif // CAIRO_HAS_PDF_SURFACE
 
 
@@ -254,6 +260,32 @@ RefPtr<PsSurface> PsSurface::create(cairo_write_func_t write_func, void *closure
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<PsSurface>(new PsSurface(cobject, true /* has reference */));
 }
+
+void PsSurface::set_size(double width_in_points, double height_in_points)
+{
+  cairo_ps_surface_set_size(m_cobject, width_in_points, height_in_points);
+  check_object_status_and_throw_exception(*this);
+}
+
+
+void PsSurface::dsc_comment(std::string comment)
+{
+  cairo_ps_surface_dsc_comment(m_cobject, comment.c_str());
+  check_object_status_and_throw_exception(*this);
+}
+
+void PsSurface::dsc_begin_setup()
+{
+  cairo_ps_surface_dsc_begin_setup(m_cobject);
+  check_object_status_and_throw_exception(*this);
+}
+
+void PsSurface::dsc_begin_page_setup()
+{
+  cairo_ps_surface_dsc_begin_page_setup(m_cobject);
+  check_object_status_and_throw_exception(*this);
+}
+
 
 #endif // CAIRO_HAS_PS_SURFACE
 

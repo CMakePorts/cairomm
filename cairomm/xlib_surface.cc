@@ -60,6 +60,62 @@ void XlibSurface::set_drawable(Drawable drawable, int width, int height)
   check_object_status_and_throw_exception(*this);
 }
 
+Drawable XlibSurface::get_drawable() const
+{
+  Drawable drawable = cairo_xlib_surface_get_drawable(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return drawable;
+}
+
+const Display* XlibSurface::get_display() const
+{
+  const Display* dpy = cairo_xlib_surface_get_display(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return dpy;
+}
+
+Display* XlibSurface::get_display()
+{
+  Display* dpy = cairo_xlib_surface_get_display(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return dpy;
+}
+
+Screen* XlibSurface::get_screen()
+{
+  Screen* screen = cairo_xlib_surface_get_screen(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return screen;
+}
+
+const Screen* XlibSurface::get_screen() const
+{
+  const Screen* screen = cairo_xlib_surface_get_screen(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return screen;
+}
+
+Visual* XlibSurface::get_visual()
+{
+  Visual* visual = cairo_xlib_surface_get_visual(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return visual;
+}
+
+const Visual* XlibSurface::get_visual() const
+{
+  const Visual* visual = cairo_xlib_surface_get_visual(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return visual;
+}
+
+int XlibSurface::get_depth() const
+{
+  int depth = cairo_xlib_surface_get_depth(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return depth;
+}
+
 #endif // CAIRO_HAS_XLIB_SURFACE
 
 } //namespace Cairo
