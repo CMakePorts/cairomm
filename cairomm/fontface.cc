@@ -62,6 +62,12 @@ void FontFace::set_user_data(const cairo_user_data_key_t* key, void *user_data, 
 }
 */
 
+FontType FontFace::get_type() const
+{
+  cairo_font_type_t font_type = cairo_font_face_get_type(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return static_cast<FontType>(font_type);
+}
 
 } //namespace Cairo
 

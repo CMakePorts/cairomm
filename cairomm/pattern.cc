@@ -64,6 +64,13 @@ void Pattern::get_matrix(cairo_matrix_t &matrix) const
   check_object_status_and_throw_exception(*this);
 }
 
+PatternType Pattern::get_type() const
+{
+  cairo_pattern_type_t pattern_type = cairo_pattern_get_type(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return static_cast<PatternType>(pattern_type);
+}
+
 
 
 SolidPattern::SolidPattern(cairo_pattern_t* cobject, bool has_reference)

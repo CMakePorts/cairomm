@@ -148,6 +148,8 @@ public:
    */
   void set_fallback_resolution(double x_pixels_per_inch, double y_pixels_per_inch);
 
+  SurfaceType get_type() const;
+
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
 
   /** Writes the contents of surface to a new file filename as a PNG image.
@@ -512,6 +514,13 @@ public:
 
 #ifdef CAIRO_HAS_SVG_SURFACE
 
+typedef enum
+{
+  SVG_VERSION_1_1 = CAIRO_SVG_VERSION_1_1,
+  SVG_VERSION_1_2 = CAIRO_SVG_VERSION_1_2,
+  SVG_VERSION_LAST = CAIRO_SVG_VERSION_LAST
+} SvgVersion;
+
 /** A SvgSurface provides a way to render Scalable Vector Graphics (SVG) images
  * from cairo.  This surface is not rendered to the screen but instead renders
  * the drawing to an SVG file on disk.
@@ -556,6 +565,8 @@ public:
    * @param height_in_points   The height of the SVG document in points
    */
   static RefPtr<SvgSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
+
+  void restrict_to_version(SvgVersion version);
 
 };
 

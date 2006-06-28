@@ -50,6 +50,7 @@ public:
 
   void set_matrix(const cairo_matrix_t &matrix);
   void get_matrix(cairo_matrix_t &matrix) const;
+  PatternType get_type() const;
 
   typedef cairo_pattern_t cobject;
   inline cobject* cobj() { return m_cobject; }

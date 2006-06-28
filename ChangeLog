@@ -1,3 +1,12 @@
+2006-06-27  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/enums.h: Added enum types to support the new get_type() and SVG
+	Version API 
+	* cairomm/fontface.cc, cairomm/fontface.h: add new get_type() API
+	* cairomm/pattern.cc, cairomm/pattern.h: add new get_type() API
+	* cairomm/surface.cc, cairomm/surface.h: add new get_type() API and
+	SvgSurface::restrict_to_version() API
+
 2006-06-26  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/surface.cc, cairomm/surface.h: add new PsSurface and PdfSurface

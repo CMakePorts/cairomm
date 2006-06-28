@@ -87,6 +87,13 @@ void Surface::set_fallback_resolution(double x_pixels_per_inch, double y_pixels_
   check_object_status_and_throw_exception(*this);
 }
 
+SurfaceType Surface::get_type() const
+{
+  cairo_surface_type_t surface_type = cairo_surface_get_type(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return static_cast<SurfaceType>(surface_type);
+}
+
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
 void Surface::write_to_png(const std::string& filename)
 {
@@ -315,6 +322,12 @@ RefPtr<SvgSurface> SvgSurface::create(cairo_write_func_t write_func, void *closu
   cairo_surface_t* cobject = cairo_svg_surface_create_for_stream(write_func, closure, width_in_points, height_in_points);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<SvgSurface>(new SvgSurface(cobject, true /* has reference */));
+}
+
+void SvgSurface::restrict_to_version(SvgVersion version)
+{
+  cairo_svg_surface_restrict_to_version(m_cobject, static_cast<cairo_svg_version_t>(version));
+  check_object_status_and_throw_exception(*this);
 }
 
 #endif // CAIRO_HAS_SVG_SURFACE

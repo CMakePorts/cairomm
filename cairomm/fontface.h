@@ -53,6 +53,7 @@ public:
   void set_user_data(const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy); //TODO: Use a sigc::slot?
   */
 
+  FontType get_type() const;
 
   typedef cairo_font_face_t cobject;
   inline cobject* cobj() { return m_cobject; }
