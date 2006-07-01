@@ -124,6 +124,14 @@ public:
   const Visual* get_visual() const;
   int get_depth() const;
 
+  /** Get the height in pixels of the X Drawable underlying the surface
+   */
+  int get_height() const;
+
+  /** Get the width in pixels of the X Drawable underlying the surface
+   */
+  int get_width() const;
+
 };
 
 #endif // CAIRO_HAS_XLIB_SURFACE

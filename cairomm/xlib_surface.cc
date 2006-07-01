@@ -116,6 +116,20 @@ int XlibSurface::get_depth() const
   return depth;
 }
 
+int XlibSurface::get_height() const
+{
+  int h = cairo_xlib_surface_get_height(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return h;
+}
+
+int XlibSurface::get_width() const
+{
+  int w = cairo_xlib_surface_get_width(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return w;
+}
+
 #endif // CAIRO_HAS_XLIB_SURFACE
 
 } //namespace Cairo
