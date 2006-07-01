@@ -1,5 +1,10 @@
 2006-06-30  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* configure.in: bumped cairomm version to 0.7.0 and bumped cairo requirement
+	to 1.2.0
+
+2006-06-30  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* cairomm/xlib_surface.cc, cairomm/xlib_surface.h: add new get_height() and
 	get_width() API to XlibSurface
 
