@@ -110,26 +110,31 @@ public:
    */
   void set_drawable(Drawable drawable, int width, int height);
 
-  /** gets the Drawable object associated with this surface
-   */
+  /** gets the Drawable object associated with this surface */
   Drawable get_drawable() const;
 
+  /** Get the X Display for the underlying X Drawable. */
   const Display* get_display() const;
+  /** Get the X Display for the underlying X Drawable. */
   Display* get_display();
 
+  /** Get the X Screen for the underlying X Drawable */
   Screen* get_screen();
+  /** Get the X Screen for the underlying X Drawable */
   const Screen* get_screen() const;
 
+  /** Get the X Visual for the underlying X Drawable */
   Visual* get_visual();
+  /** Get the X Visual for the underlying X Drawable */
   const Visual* get_visual() const;
+
+  /** Get the number of bits used to represent each pixel value. */
   int get_depth() const;
 
-  /** Get the height in pixels of the X Drawable underlying the surface
-   */
+  /** Get the height in pixels of the X Drawable underlying the surface */
   int get_height() const;
 
-  /** Get the width in pixels of the X Drawable underlying the surface
-   */
+  /** Get the width in pixels of the X Drawable underlying the surface */
   int get_width() const;
 
 };

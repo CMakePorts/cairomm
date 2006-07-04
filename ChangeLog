@@ -1,5 +1,10 @@
 2006-07-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* cairomm/xlib_surface.h: add a bit more documentation for the new
+	XlibSurface API
+
+2006-07-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* cairomm/surface.cc, cairomm/surface.h: added SvgSurface::get_versions()
 	and SvgSurface::version_to_string() API.  They're implemented as static
 	members right now.
