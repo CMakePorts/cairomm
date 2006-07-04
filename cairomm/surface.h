@@ -20,6 +20,7 @@
 #define __CAIROMM_SURFACE_H
 
 #include <string>
+#include <vector>
 #include <cairomm/enums.h>
 #include <cairomm/exception.h>
 #include <cairomm/fontoptions.h>
@@ -517,8 +518,7 @@ public:
 typedef enum
 {
   SVG_VERSION_1_1 = CAIRO_SVG_VERSION_1_1,
-  SVG_VERSION_1_2 = CAIRO_SVG_VERSION_1_2,
-  SVG_VERSION_LAST = CAIRO_SVG_VERSION_LAST
+  SVG_VERSION_1_2 = CAIRO_SVG_VERSION_1_2
 } SvgVersion;
 
 /** A SvgSurface provides a way to render Scalable Vector Graphics (SVG) images
@@ -566,8 +566,32 @@ public:
    */
   static RefPtr<SvgSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
+  /** 
+   * Restricts the generated SVG file to the given version. See get_versions()
+   * for a list of available version values that can be used here.
+   *
+   * This function should only be called before any drawing operations have been
+   * performed on the given surface. The simplest way to do this is to call this
+   * function immediately after creating the surface.
+   *
+   * \since 1.2
+   */
   void restrict_to_version(SvgVersion version);
 
+  /** Retrieves the list of SVG versions supported by cairo. See
+   * restrict_to_version().
+   * 
+   * \since 1.2
+   */
+  static const std::vector<SvgVersion> get_versions();
+
+  /** Get the string representation of the given version id. The returned string
+   * will be empty if version isn't valid. See get_versions() for a way to get
+   * the list of valid version ids.
+   *
+   * Since: 1.2
+   */
+  static std::string version_to_string(SvgVersion version);
 };
 
 #endif // CAIRO_HAS_SVG_SURFACE

@@ -330,6 +330,28 @@ void SvgSurface::restrict_to_version(SvgVersion version)
   check_object_status_and_throw_exception(*this);
 }
 
+const std::vector<SvgVersion> SvgSurface::get_versions()
+{
+  cairo_svg_version_t const *versions;
+  int num_versions;
+  cairo_svg_get_versions(&versions, &num_versions);
+
+  // Just copy the version array out into a std::vector.  This is a rarely used
+  // function and the array of versions is going to be very small, so there's no
+  // real performance hit.
+  std::vector<SvgVersion> vec;
+  for (int i = 0; i < num_versions; ++i)
+  {
+    vec.push_back(static_cast<SvgVersion>(versions[i]));
+  }
+  return vec;
+}
+
+std::string SvgSurface::version_to_string(SvgVersion version)
+{
+  return std::string(cairo_svg_version_to_string(static_cast<cairo_svg_version_t>(version)));
+}
+
 #endif // CAIRO_HAS_SVG_SURFACE
 
 

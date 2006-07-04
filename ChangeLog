@@ -1,3 +1,9 @@
+2006-07-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/surface.cc, cairomm/surface.h: added SvgSurface::get_versions()
+	and SvgSurface::version_to_string() API.  They're implemented as static
+	members right now.
+
 2006-06-30  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* configure.in: bumped cairomm version to 0.7.0 and bumped cairo requirement
