@@ -29,7 +29,6 @@
 //See xlib_surface.h for XlibSurface.
 //See win32_surface.h for Win32Surface.
 
-// Experimental surfaces
 #ifdef CAIRO_HAS_PDF_SURFACE
 #include <cairo-pdf.h>
 #endif // CAIRO_HAS_PDF_SURFACE
@@ -39,6 +38,8 @@
 #ifdef CAIRO_HAS_SVG_SURFACE
 #include <cairo-svg.h>
 #endif // CAIRO_HAS_SVG_SURFACE
+
+// Experimental surfaces
 #ifdef CAIRO_HAS_GLITZ_SURFACE
 #include <cairo-glitz.h>
 #endif // CAIRO_HAS_GLITZ_SURFACE
@@ -354,10 +355,6 @@ public:
 };
 
 
-/*******************************************************************************
- * THE FOLLOWING SURFACE TYPES ARE EXPERIMENTAL AND NOT FULLY SUPPORTED
- ******************************************************************************/
-
 #ifdef CAIRO_HAS_PDF_SURFACE
 
 /** A PdfSurface provides a way to render PDF documents from cairo.  This
@@ -366,9 +363,6 @@ public:
  *
  * \note For this Surface to be available, cairo must have been compiled with
  * PDF support
- *
- * \warning This is an experimental surface.  It is not yet marked as a fully
- * supported surface by the cairo library
  */
 class PdfSurface : public Surface
 {
@@ -430,9 +424,6 @@ public:
  *
  * \note For this Surface to be available, cairo must have been compiled with
  * PostScript support
- *
- * \warning This is an experimental surface.  It is not yet marked as a fully
- * supported surface by the cairo library
  */
 class PsSurface : public Surface
 {
@@ -527,9 +518,6 @@ typedef enum
  *
  * \note For this Surface to be available, cairo must have been compiled with
  * SVG support
- *
- * \warning This is an experimental surface.  It is not yet marked as a fully
- * supported surface by the cairo library
  */
 class SvgSurface : public Surface
 {
@@ -596,6 +584,10 @@ public:
 
 #endif // CAIRO_HAS_SVG_SURFACE
 
+
+/*******************************************************************************
+ * THE FOLLOWING SURFACE TYPES ARE EXPERIMENTAL AND NOT FULLY SUPPORTED
+ ******************************************************************************/
 
 #ifdef CAIRO_HAS_GLITZ_SURFACE
 
