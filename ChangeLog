@@ -1,5 +1,11 @@
 2006-07-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* cairomm/scaledfont.cc, cairomm/scaledfont.h: wrap ScaledFont, including
+	new API for cairo 1.2
+	* cairomm/Makefile.am: add scaledfont.* to list of sources
+
+2006-07-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* cairomm/surface.h: Remove comments stating that PDF, PS, and SVG are
 	experimental surfaces.  As of 1.2.0, these three surfaces are officially
 	supported by the cairo library.
