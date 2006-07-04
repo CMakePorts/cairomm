@@ -4,3 +4,4 @@ Makefile
 *.la
 .deps
 .libs
+*.swp

@@ -1,5 +1,10 @@
 2006-07-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* .cvsignore, cairomm/.cvsignore: ignore some autotools files and *.swp
+	files (from vim)
+
+2006-07-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* cairomm/scaledfont.cc, cairomm/scaledfont.h: wrap ScaledFont, including
 	new API for cairo 1.2
 	* cairomm/Makefile.am: add scaledfont.* to list of sources

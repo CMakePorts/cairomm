@@ -7,3 +7,7 @@ config.status
 configure
 libtool
 cairomm-1.0.pc
+install-sh
+missing
+mkinstalldirs
+*.swp
