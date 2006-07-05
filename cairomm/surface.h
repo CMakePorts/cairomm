@@ -156,7 +156,7 @@ public:
 
   /** Writes the contents of surface to a new file filename as a PNG image.
    *
-   * \note For this function to be available, cairo must have been compiled
+   * @note For this function to be available, cairo must have been compiled
    * with PNG support
    *
    * @param filename	the name of a file to write to
@@ -165,7 +165,7 @@ public:
 
   /** Writes the Surface to the write function.
    *
-   * \note For this function to be available, cairo must have been compiled
+   * @note For this function to be available, cairo must have been compiled
    * with PNG support
    *
    * @param write_func  The function to be called when the backend needs to
@@ -328,7 +328,7 @@ public:
   /** Creates a new image surface and initializes the contents to the given PNG
    * file.  
    *
-   * \note For this function to be available, cairo must have been compiled
+   * @note For this function to be available, cairo must have been compiled
    * with PNG support.
    *
    * @param filename	name of PNG file to load
@@ -340,7 +340,7 @@ public:
   /** Creates a new image surface from PNG data read incrementally via the
    * read_func function.  
    *
-   * \note For this function to be available, cairo must have been compiled
+   * @note For this function to be available, cairo must have been compiled
    * with PNG support.
    *
    * @param read_func	function called to read the data of the file
@@ -361,7 +361,7 @@ public:
  * surface is not rendered to the screen but instead renders the drawing to a
  * PDF file on disk.
  *
- * \note For this Surface to be available, cairo must have been compiled with
+ * @note For this Surface to be available, cairo must have been compiled with
  * PDF support
  */
 class PdfSurface : public Surface
@@ -406,8 +406,8 @@ public:
  * function immediately after creating the surface or immediately after
  * completing a page with either Context::show_page() or Context::copy_page().
  *
- * \param width_in_points new surface width, in points (1 point == 1/72.0 inch)
- * \param height_in_points new surface height, in points (1 point == 1/72.0 inch)
+ * @param width_in_points new surface width, in points (1 point == 1/72.0 inch)
+ * @param height_in_points new surface height, in points (1 point == 1/72.0 inch)
  **/
   void set_size(double width_in_points, double height_in_points);
 
@@ -422,7 +422,7 @@ public:
  * surface is not rendered to the screen but instead renders the drawing to a
  * PostScript file on disk.
  *
- * \note For this Surface to be available, cairo must have been compiled with
+ * @note For this Surface to be available, cairo must have been compiled with
  * PostScript support
  */
 class PsSurface : public Surface
@@ -468,15 +468,15 @@ public:
    * function immediately after creating the surface or immediately after
    * completing a page with either Context::show_page() or Context::copy_page().
    *
-   * \param width_in_points new surface width, in points (1 point == 1/72.0 inch)
-   * \param height_in_points new surface height, in points (1 point == 1/72.0 inch)
+   * @param width_in_points new surface width, in points (1 point == 1/72.0 inch)
+   * @param height_in_points new surface height, in points (1 point == 1/72.0 inch)
    */
   void set_size(double width_in_points, double height_in_points);
 
   /** Emit a comment into the PostScript output for the given surface.  See the
    * cairo reference documentation for more information.
    *
-   * \param comment a comment string to be emitted into the PostScript output
+   * @param comment a comment string to be emitted into the PostScript output
    */
   void dsc_comment(std::string comment);
 
@@ -516,7 +516,7 @@ typedef enum
  * from cairo.  This surface is not rendered to the screen but instead renders
  * the drawing to an SVG file on disk.
  *
- * \note For this Surface to be available, cairo must have been compiled with
+ * @note For this Surface to be available, cairo must have been compiled with
  * SVG support
  */
 class SvgSurface : public Surface
@@ -562,14 +562,14 @@ public:
    * performed on the given surface. The simplest way to do this is to call this
    * function immediately after creating the surface.
    *
-   * \since 1.2
+   * @since 1.2
    */
   void restrict_to_version(SvgVersion version);
 
   /** Retrieves the list of SVG versions supported by cairo. See
    * restrict_to_version().
    * 
-   * \since 1.2
+   * @since 1.2
    */
   static const std::vector<SvgVersion> get_versions();
 
@@ -596,10 +596,10 @@ public:
  * want to use hardware-accelerated graphics within the X Window system, you
  * should use this Surface type.
  *
- * \note For this Surface to be available, cairo must have been compiled with
+ * @note For this Surface to be available, cairo must have been compiled with
  * Glitz support
  *
- * \warning This is an experimental surface.  It is not yet marked as a fully
+ * @warning This is an experimental surface.  It is not yet marked as a fully
  * supported surface by the cairo library
  */
 class GlitzSurface : public Surface

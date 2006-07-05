@@ -38,7 +38,7 @@ namespace Cairo
  * want to draw to the screen within a Microsoft Windows application, you
  * should use this Surface type.
  *
- * \note For this Surface to be available, cairo must have been compiled with
+ * @note For this Surface to be available, cairo must have been compiled with
  * Win32 support
  */
 class Win32Surface : public Surface

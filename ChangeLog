@@ -1,3 +1,15 @@
+2006-07-05  Murray Cumming  <murrayc@murrayc.com>
+
+	* cairomm/cairomm.h:
+	* cairomm/context.h:
+	* cairomm/path.h:
+	* cairomm/scaledfont.h:
+	* cairomm/surface.h:
+	* cairomm/win32_surface.h:
+	* cairomm/xlib_surface.h: Use @ instead of \ for doxygen 
+	commands, to be consistent with gtkmm, which uses it because it is the 
+	same as JavaDoc, with which some people are already familiar.
+
 2006-07-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* Makefile.am: add ability to do snapshot releases to the

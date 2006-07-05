@@ -39,7 +39,7 @@ namespace Cairo
  * If you want to draw to the screen within an application that uses the X
  * Window system, you should use this Surface type.
  *
- * \note For this surface to be availabe, cairo must have been compiled with
+ * @note For this surface to be availabe, cairo must have been compiled with
  * support for XLib Surfaces
  */
 class XlibSurface : public Surface
@@ -60,7 +60,7 @@ public:
    * colors are represented in the drawable is specified by the provided
    * visual.
    *
-   * \note If drawable is a Window, then the function
+   * @note If drawable is a Window, then the function
    * cairo_xlib_surface_set_size must be called whenever the size of the window
    * changes.
    *

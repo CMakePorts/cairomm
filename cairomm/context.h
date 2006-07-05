@@ -249,7 +249,7 @@ public:
    * @param dashes	an array specifying alternate lengths of on and off portions
    * @param offset	an offset into the dash pattern at which the stroke should start
    *
-   * \exception
+   * @exception
    */
   void set_dash(std::valarray<double>& dashes, double offset);
 
@@ -583,11 +583,11 @@ public:
    * line width, line join, line cap, and dash settings. After stroke(),
    * the current Path will be cleared from the cairo Context.
    *
-   * \sa set_line_width()
-   * \sa set_line_join()
-   * \sa set_line_cap()
-   * \sa set_dash()
-   * \sa stroke_preserve().
+   * @sa set_line_width()
+   * @sa set_line_join()
+   * @sa set_line_cap()
+   * @sa set_dash()
+   * @sa stroke_preserve().
    */
   void stroke();
 
@@ -595,11 +595,11 @@ public:
    * line width, line join, line cap, and dash settings. Unlike stroke(),
    * stroke_preserve() preserves the Path within the cairo Context.
    *
-   * \sa set_line_width()
-   * \sa set_line_join()
-   * \sa set_line_cap()
-   * \sa set_dash()
-   * \sa stroke_preserve().
+   * @sa set_line_width()
+   * @sa set_line_join()
+   * @sa set_line_cap()
+   * @sa set_dash()
+   * @sa stroke_preserve().
    */
   void stroke_preserve();
 
@@ -607,8 +607,8 @@ public:
    * fill rule, (each sub-path is implicitly closed before being filled). After
    * fill(), the current path will be cleared from the cairo context. 
    *
-   * \sa set_fill_rule() 
-   * \sa fill_preserve()
+   * @sa set_fill_rule() 
+   * @sa fill_preserve()
    */
   void fill();
 
@@ -617,8 +617,8 @@ public:
    * Unlike fill(), fill_preserve() preserves the path within the
    * cairo Context.
    *
-   * \sa set_fill_rule() 
-   * \sa fill().
+   * @sa set_fill_rule() 
+   * @sa fill().
    */
   void fill_preserve();
   void copy_page();
@@ -656,7 +656,7 @@ public:
    * save()/restore() pair. The only other means of increasing the size of the
    * clip region is reset_clip().
    *
-   * \sa set_fill_rule()
+   * @sa set_fill_rule()
    */
   void clip();
 
@@ -667,8 +667,8 @@ public:
    * Unlike clip(), cairo_clip_preserve preserves the path within the cairo
    * Context. 
    *
-   * \sa clip()
-   * \sa set_fill_rule()
+   * @sa clip()
+   * @sa set_fill_rule()
    */
   void clip_preserve();
   void select_font_face(const std::string& family, FontSlant slant, FontWeight weight);
@@ -761,17 +761,17 @@ public:
   //TODO: Copy or reference-count a Path somethow instead of asking the caller to delete it?
   /** Creates a copy of the current path and returns it to the user.
    *
-   * \todo See cairo_path_data_t for hints on how to iterate over the returned
+   * @todo See cairo_path_data_t for hints on how to iterate over the returned
    * data structure.
    *
-   * \note The caller owns the Path object returned from this function.  The
+   * @note The caller owns the Path object returned from this function.  The
    * Path object must be freed when you are finished with it.
    */
   Path* copy_path() const;
 
   /** Gets a flattened copy of the current path and returns it to the user
    *
-   * \todo See cairo_path_data_t for hints on how to iterate over the returned
+   * @todo See cairo_path_data_t for hints on how to iterate over the returned
    * data structure.
    *
    * This function is like copy_path() except that any curves in the path will
@@ -780,7 +780,7 @@ public:
    * any elements of type CAIRO_PATH_CURVE_TO which will instead be
    * replaced by a series of CAIRO_PATH_LINE_TO elements. 
    *
-   * \note The caller owns the Path object returned from this function.  The
+   * @note The caller owns the Path object returned from this function.  The
    * Path object must be freed when you are finished with it.
    */
   Path* copy_path_flat() const;
@@ -843,7 +843,7 @@ public:
    * content type is the only distinction between this function and push_group()
    * which you should see for a more detailed description of group rendering.
    *
-   * \param content: indicates the type of group that will be created
+   * @param content: indicates the type of group that will be created
    */
   void push_group_with_content(Content content);
 
@@ -856,7 +856,7 @@ public:
    * the push_group function), so that any changes to the graphics state will
    * not be visible outside the group.
    *
-   * \return a (surface) pattern containing the results of all drawing
+   * @return a (surface) pattern containing the results of all drawing
    * operations performed to the group.
    **/
   RefPtr<Pattern> pop_group();

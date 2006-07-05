@@ -32,7 +32,7 @@ namespace Cairo
  * Path.  The application is responsible for freeing the Path object when it is
  * no longer needed.
  *
- * \todo There's currently no way to access the path data without reverting to
+ * @todo There's currently no way to access the path data without reverting to
  * the C object (see cobj())
  */
 class Path

@@ -64,13 +64,13 @@ public:
   /** Creates a ScaledFont object from a font face and matrices that describe
    * the size of the font and the environment in which it will be used.
    *
-   * \param font_matrix font space to user space transformation matrix for the
+   * @param font_matrix font space to user space transformation matrix for the
    * font. In the simplest case of a N point font, this matrix is just a scale
    * by N, but it can also be used to shear the font or stretch it unequally
    * along the two axes. See Context::set_font_matrix().
-   * \param ctm user to device transformation matrix with which the font will be
+   * @param ctm user to device transformation matrix with which the font will be
    * used.
-   * \param options: options to use when getting metrics for the font and
+   * @param options: options to use when getting metrics for the font and
    * rendering with it.
    */
   static RefPtr<ScaledFont> create(FontFace font_face, Matrix& font_matrix,
@@ -94,10 +94,10 @@ public:
    * size of the rectangle, though they will affect the x_advance and y_advance
    * values.
    *
-   * \param utf8  a string of text, encoded in UTF-8
-   * \param extents Returns the extents of the given string
+   * @param utf8  a string of text, encoded in UTF-8
+   * @param extents Returns the extents of the given string
    *
-   * \since 1.2
+   * @since 1.2
    */
   void text_extents(const std::string& utf8, TextExtents& extents) const;
 
@@ -111,33 +111,33 @@ public:
    * Note that whitespace glyphs do not contribute to the size of the rectangle
    * (extents.width and extents.height).
    *
-   * \param glyphs A vector of glyphs to calculate the extents of
-   * \param extents Returns the extents for the array of glyphs
+   * @param glyphs A vector of glyphs to calculate the extents of
+   * @param extents Returns the extents for the array of glyphs
    **/
   void glyph_extents(std::vector<Glyph> glyphs, TextExtents& extents);
 
   /** The FontFace with which this ScaledFont was created.
-   * \since 1.2
+   * @since 1.2
    */
   RefPtr<FontFace> get_font_face() const;
 
   /** Gets the FontOptions with which the ScaledFont was created.
-   * \since 1.2
+   * @since 1.2
    */
   void get_font_options(FontOptions& options) const;
 
   /** Gets the font matrix with which the ScaledFont was created.
-   * \since 1.2
+   * @since 1.2
    */
   void get_font_matrix(Matrix& font_matrix) const;
 
   /** Gets the CTM with which the ScaledFont was created.
-   * \since 1.2
+   * @since 1.2
    */
   void get_ctm(Matrix& ctm) const;
 
   /** Gets the type of scaled Font
-   * \since 1.2
+   * @since 1.2
    */
   FontType get_type() const;
 
