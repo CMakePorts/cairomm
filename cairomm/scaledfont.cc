@@ -30,13 +30,10 @@ ScaledFont::ScaledFont(cobject* cobj, bool has_reference)
     m_cobject = cairo_scaled_font_reference(cobj);
 }
 
-RefPtr<ScaledFont> ScaledFont::create(FontFace font_face, Matrix& font_matrix,
-    Matrix& ctm, FontOptions options)
+RefPtr<ScaledFont> ScaledFont::create(FontFace& font_face, const Matrix& font_matrix,
+    const Matrix& ctm, const FontOptions& options)
 {
-  cairo_scaled_font_t* cobj = cairo_scaled_font_create(font_face.cobj(),
-      static_cast<cairo_matrix_t*>(&font_matrix),
-      static_cast<cairo_matrix_t*>(&ctm), options.cobj()
-      );
+  cairo_scaled_font_t* cobj = cairo_scaled_font_create(font_face.cobj(), &font_matrix, &ctm, options.cobj());
   check_status_and_throw_exception(cairo_scaled_font_status(cobj));
   return RefPtr<ScaledFont>(new ScaledFont(cobj, false));
 }
@@ -53,7 +50,7 @@ void ScaledFont::text_extents(const std::string& utf8, TextExtents& extents) con
   check_object_status_and_throw_exception(*this);
 }
 
-void ScaledFont::glyph_extents(std::vector<Glyph> glyphs, TextExtents& extents)
+void ScaledFont::glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents)
 {
   // copy the data from the vector to a standard C array.  I don't believe
   // this will be a frequently used function so I think the performance hit is

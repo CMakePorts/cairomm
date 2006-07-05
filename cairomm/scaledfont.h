@@ -19,8 +19,8 @@
 #ifndef __CAIROMM_SCALEDFONT_H
 #define __CAIROMM_SCALEDFONT_H
 
-#include <cairomm/context.h>    // Matrix
-#include <cairomm/fontoptions.h>    // Matrix
+#include <cairomm/context.h>
+#include <cairomm/fontoptions.h>
 
 namespace Cairo
 {
@@ -64,6 +64,7 @@ public:
   /** Creates a ScaledFont object from a font face and matrices that describe
    * the size of the font and the environment in which it will be used.
    *
+   * @param font_face A font face.
    * @param font_matrix font space to user space transformation matrix for the
    * font. In the simplest case of a N point font, this matrix is just a scale
    * by N, but it can also be used to shear the font or stretch it unequally
@@ -73,8 +74,8 @@ public:
    * @param options: options to use when getting metrics for the font and
    * rendering with it.
    */
-  static RefPtr<ScaledFont> create(FontFace font_face, Matrix& font_matrix,
-      Matrix& ctm, FontOptions options);
+  static RefPtr<ScaledFont> create(FontFace& font_face, const Matrix& font_matrix,
+      const Matrix& ctm, const FontOptions& options);
 
   /** Gets the metrics for a ScaledFont */
   void extents(FontExtents& extents) const;
@@ -114,7 +115,7 @@ public:
    * @param glyphs A vector of glyphs to calculate the extents of
    * @param extents Returns the extents for the array of glyphs
    **/
-  void glyph_extents(std::vector<Glyph> glyphs, TextExtents& extents);
+  void glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents);
 
   /** The FontFace with which this ScaledFont was created.
    * @since 1.2

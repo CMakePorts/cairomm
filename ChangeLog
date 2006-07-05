@@ -1,5 +1,19 @@
 2006-07-05  Murray Cumming  <murrayc@murrayc.com>
 
+	* cairomm/scaledfont.cc:
+	* cairomm/scaledfont.h: create(): Make the font_matrix and ctm 
+	parameters const (they are now const in the C API too). Maybe the font 
+	parameter should be const, but maybe there is a reason that it is not 
+	const in the C API. Pass FontOptions by const reference instead of 
+	by value.
+	glyph_extents(): Pass the vector by const reference instead of by 
+	value.
+	I would prefere to make all the extents() functions use return values 
+	instead of output parameters, but I suppose this might be slightly 
+	less efficient in some circumstances.
+
+2006-07-05  Murray Cumming  <murrayc@murrayc.com>
+
 	* cairomm/cairomm.h:
 	* cairomm/context.h:
 	* cairomm/path.h:
