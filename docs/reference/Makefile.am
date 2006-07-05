@@ -5,7 +5,7 @@ WEB_SERVER_PATH = /srv/cairo.freedesktop.org/www/documentation/cairomm/reference
 HTML_TEMPLATE_FILES = cairomm.css cairomm-header.html
 
 EXTRA_DIST = $(DOXYGEN_CONFIGFILE_SOURCE) \
-			 introduction.h $(HTML_TEMPLATE_FILES) cairomm_doxygen_tags \
+			 $(HTML_TEMPLATE_FILES) cairomm_doxygen_tags \
 			 html
 
 index_html = html/index.html
@@ -28,7 +28,7 @@ publish:	html
 install-reference: $(index_html)
 	@$(NORMAL_INSTALL)
 	$(mkinstalldirs) $(DESTDIR)$(referencedir)
-	@dir='$(<D)'; for p in $$dir/*.html $$dir/*.css $$dir/*.png $$dir/*.jpg $$dir/*.map $$dir/*.md5 $$dir/*.dot ; do \
+	@dir='$(<D)'; for p in `ls $$dir/*.html $$dir/*.css $$dir/*.png $$dir/*.jpg $$dir/*.map $$dir/*.md5 $$dir/*.dot` ; do \
 	  f="`echo $$p | sed -e 's|^.*/||'`"; \
 	  echo " $(INSTALL_DATA) $$p $(DESTDIR)$(referencedir)/$$f"; \
 	  $(INSTALL_DATA) $$p $(DESTDIR)$(referencedir)/$$f; \
@@ -42,12 +42,12 @@ uninstall-reference: $(index_html)
 	  rm -f $(DESTDIR)$(referencedir)/$$f; \
 	done
 
+DOXYGEN_REPORTS = doxygen-output.txt doxygen-warnings.txt undocumented.txt
+
 doc-clean:
 	-rm -rf html
 	-rm -f cairomm_doxygen_tags
-	-rm -f doxygen-output.txt
-	-rm -f doxygen-warnings.txt
-	-rm -f undocumented.txt
+	-rm -f $(DOXYGEN_REPORTS)
 
 install-data-local: install-reference
 
@@ -57,7 +57,7 @@ all-local: $(index_html)
 
 maintainer-clean-local: doc-clean
 
-DISTCLEANFILES = $(DOXYGEN_CONFIGFILE)
+DISTCLEANFILES = $(DOXYGEN_CONFIGFILE) $(DOXYGEN_REPORTS)
 
 .PHONY: doc-clean install-reference uninstall-reference
 

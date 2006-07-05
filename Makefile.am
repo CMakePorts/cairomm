@@ -18,10 +18,11 @@ pkgconfig_DATA = cairomm-1.0.pc
 #		make release-check
 # or		make release-publish
 
+RELEASE_OR_SNAPSHOT = `if [ "$(GENERIC_MINOR_VERSION)" = $$(echo "$(GENERIC_MINOR_VERSION)/2*2" | bc) ]; then echo release; else echo snapshot; fi`
 RELEASE_UPLOAD_HOST =   cairographics.org
 RELEASE_UPLOAD_BASE =	/srv/cairo.freedesktop.org/www
-RELEASE_UPLOAD_DIR =	$(RELEASE_UPLOAD_BASE)/releases
-RELEASE_URL_BASE = 	http://cairographics.org/releases
+RELEASE_UPLOAD_DIR =	$(RELEASE_UPLOAD_BASE)/$(RELEASE_OR_SNAPSHOT)s
+RELEASE_URL_BASE = 	http://cairographics.org/$(RELEASE_OR_SNAPSHOT)s
 RELEASE_ANNOUNCE_LIST = cairo-announce@cairographics.org (and CC gnome-announce-list@gnome.org)
 CVS = cvs
 
@@ -39,8 +40,6 @@ $(sha1_file): $(tar_file)
 $(gpg_file): $(sha1_file)
 	@echo "Please enter your GPG password to sign the checksum."
 	gpg --armor --sign $^ 
-
-
 
 release-verify-even-micro:
 	@echo -n "Checking that $(VERSION) has an even micro component..."
@@ -78,15 +77,15 @@ release-upload: release-check $(tar_file) $(sha1_file) $(gpg_file)
 	ssh $(RELEASE_UPLOAD_HOST) "rm -f $(RELEASE_UPLOAD_DIR)/LATEST-$(PACKAGE)-[0-9]* && ln -s $(tar_file) $(RELEASE_UPLOAD_DIR)/LATEST-$(PACKAGE)-$(VERSION)"
 	$(CVS) tag RELEASE_$(GENERIC_MAJOR_VERSION)_$(GENERIC_MINOR_VERSION)_$(GENERIC_MICRO_VERSION)
 
-release-publish: release-upload releases/$(sha1_file)
+release-publish: 
 	@echo ""
 	@echo "Please send an announcement to $(RELEASE_ANNOUNCE_LIST)"
 	@echo "including the following:"
 	@echo ""
-	@echo "Subject: $(PACKAGE) release $(VERSION) now available"
+	@echo "Subject: $(PACKAGE) $(RELEASE_OR_SNAPSHOT) $(VERSION) now available"
 	@echo ""
 	@echo "============================== CUT HERE =============================="
-	@echo "A new $(PACKAGE) release $(VERSION) is now available from:"
+	@echo "A new $(PACKAGE) $(RELEASE_OR_SNAPSHOT) $(VERSION) is now available from:"
 	@echo ""
 	@echo "	$(RELEASE_URL_BASE)/$(tar_file)"
 	@echo ""
@@ -100,7 +99,7 @@ release-publish: release-upload releases/$(sha1_file)
 	@echo "	(signed by `getent passwd "$$USER" | cut -d: -f 5 | cut -d, -f 1`)"
 	@echo ""
 	@echo "cairomm is a C++ API for the cairo graphics library.  For more "
-	@echo "information, see http://cairographics.org"
+	@echo "information, see http://cairographics.org/cairomm"
 	@echo ""
 	@echo "============================== CUT HERE =============================="
 	@echo "Also, please include the new entries from the NEWS file."

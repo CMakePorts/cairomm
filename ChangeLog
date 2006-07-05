@@ -1,5 +1,13 @@
 2006-07-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* Makefile.am: add ability to do snapshot releases to the
+	cairographics.org/snapshots/ directory in addition to official releases
+	* configure.in: bumped the revision to 1.1.10 in preparation for a snapshot
+	release of the 1.2 API
+	* docs/reference/Makefile.am: fixed some distcheck errors
+
+2006-07-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* .cvsignore, cairomm/.cvsignore: ignore some autotools files and *.swp
 	files (from vim)
 
