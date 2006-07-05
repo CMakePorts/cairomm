@@ -27,8 +27,7 @@ namespace Cairo
 {
 
 /**
- * This is a reference-counted object. The copy constructor creates a second reference to the object, instead 
- * of creating an independent copy of the object.
+ * This is a reference-counted object that should be used via Cairo::RefPtr.
  */
 class FontFace
 {

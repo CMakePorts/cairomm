@@ -42,9 +42,7 @@ typedef cairo_matrix_t Matrix; //A simple struct. //TODO: Derive and add operato
  * move_to() and line_to(), and then draw the shapes to the Surface using
  * methods such as stroke() or fill().
  *
- * Context is a reference-counted object. The copy constructor creates a second
- * reference to the object, instead of creating an independent copy of the
- * object.
+ * Context is a reference-counted object that should be used via Cairo::RefPtr.
  */
 class Context
 {

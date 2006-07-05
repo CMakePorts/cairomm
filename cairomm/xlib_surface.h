@@ -71,7 +71,7 @@ public:
    * @param height	the current height of drawable.
    * @return	A RefPtr to the newly created surface
    */
-  static RefPtr<XlibSurface> create(Display *dpy, Drawable drawable, Visual *visual, int width, int height);
+  static RefPtr<XlibSurface> create(Display* dpy, Drawable drawable, Visual* visual, int width, int height);
 
   /** Creates an Xlib surface that draws to the given bitmap. This will be
    * drawn to as a CAIRO_FORMAT_A1 object.

@@ -34,14 +34,14 @@ XlibSurface::~XlibSurface()
   // surface is destroyed in base class
 }
 
-RefPtr<XlibSurface> XlibSurface::create(Display *dpy, Drawable drawable, Visual *visual, int width, int height)
+RefPtr<XlibSurface> XlibSurface::create(Display* dpy, Drawable drawable, Visual* visual, int width, int height)
 {
   cairo_surface_t* cobject = cairo_xlib_surface_create(dpy, drawable, visual, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
 }
 
-RefPtr<XlibSurface> XlibSurface::create(Display *dpy, Pixmap bitmap, Screen *screen, int width, int height)
+RefPtr<XlibSurface> XlibSurface::create(Display* dpy, Pixmap bitmap, Screen* screen, int width, int height)
 {
   cairo_surface_t* cobject = cairo_xlib_surface_create_for_bitmap(dpy, bitmap, screen, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));

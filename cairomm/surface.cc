@@ -76,9 +76,9 @@ void Surface::set_device_offset(double x_offset, double y_offset)
   check_object_status_and_throw_exception(*this);
 }
 
-void Surface::get_device_offset(double& x_offset, double& y_offset)
+void Surface::get_device_offset(double& x_offset, double& y_offset) const
 {
-  cairo_surface_get_device_offset(m_cobject, &x_offset, &y_offset);
+  cairo_surface_get_device_offset(const_cast<cobject*>(m_cobject), &x_offset, &y_offset);
 }
 
 void Surface::set_fallback_resolution(double x_pixels_per_inch, double y_pixels_per_inch)

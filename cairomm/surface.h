@@ -53,9 +53,7 @@ namespace Cairo
  * different subtypes of cairo surface for different drawing backends.  This
  * class is a base class for all subtypes and should not be used directly
  *
- * Surfaces are reference-counted objects. The copy constructor creates a
- * second reference to the object, instead of creating an independent copy of
- * the object.
+ * Surfaces are reference-counted objects that should be used via Cairo::RefPtr. 
  */
 class Surface
 {
@@ -141,7 +139,7 @@ public:
 
   /** Returns a previous device offset set by set_device_offset().
    */
-  void get_device_offset(double& x_offset, double& y_offset);
+  void get_device_offset(double& x_offset, double& y_offset) const;
 
   /** Sets the fallback resolution of the image in dots per inch
    *
@@ -229,9 +227,7 @@ protected:
  * if you modify anything and later want to continue to draw to the surface
  * with cairo, you must let cairo know via Cairo::Surface::mark_dirty() 
  *
- * Note that like all surfaces, an ImageSurface is a reference-counted object
- * in which the copy constructor creates a second reference to the Surface
- * instead of creating an independant copy
+ * Note that like all surfaces, an ImageSurface is a reference-counted object that should be used via Cairo::RefPtr.
  */
 class ImageSurface : public Surface
 {

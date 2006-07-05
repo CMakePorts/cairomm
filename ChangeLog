@@ -1,5 +1,17 @@
 2006-07-05  Murray Cumming  <murrayc@murrayc.com>
 
+	* cairomm/context.h:
+	* cairomm/fontface.h:
+	* cairomm/pattern.h:
+	* cairomm/surface.cc:
+	* cairomm/surface.h:
+	* cairomm/xlib_surface.cc:
+	* cairomm/xlib_surface.h: Fix the generic text about reference-counted 
+	objects, because we no longer use copy constructors for this. And some 
+	pedantic white space changes.
+
+2006-07-05  Murray Cumming  <murrayc@murrayc.com>
+
 	* cairomm/scaledfont.cc:
 	* cairomm/scaledfont.h: create(): Make the font_matrix and ctm 
 	parameters const (they are now const in the C API too). Maybe the font 
