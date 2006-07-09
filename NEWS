@@ -1,3 +1,11 @@
+1.1.10:
+
+* API:
+  - Wrap new API from cairo 1.2
+  - Wrap ScaledFont
+* Improved Documentation
+* Build fixes
+
 0.6.0:
 
 * API:
