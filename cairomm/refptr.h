@@ -2,7 +2,7 @@
 #ifndef _cairo_REFPTR_H
 #define _cairo_REFPTR_H
 
-/* $Id: refptr.h,v 1.4 2006-07-11 17:16:21 murrayc Exp $ */
+/* $Id: refptr.h,v 1.5 2006-07-11 18:54:10 murrayc Exp $ */
 
 /* Copyright 2005 The cairomm Development Team
  *
@@ -206,10 +206,10 @@ void RefPtr<T_CppObject>::unref()
         delete pCppObject_;
         pCppObject_ = 0;
       }
-    }
 
-    delete pCppRefcount_;
+      delete pCppRefcount_;
       pCppRefcount_ = 0;
+    }
   }
 }
 

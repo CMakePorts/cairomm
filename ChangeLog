@@ -1,5 +1,10 @@
 2006-07-11  Murray Cumming  <murrayc@murrayc.com>
 
+	* cairomm/refptr.h: unref(): Only delete the refcount int when the refcount has 	
+	reached 0, instead of deleting it every time. Thanks valgrind.
+
+2006-07-11  Murray Cumming  <murrayc@murrayc.com>
+
 	* cairomm/refptr.h: From-C-object Constructor: Added documentation explaining 
 	how/when to use it and when to do an extra reference(). This will help us, 
 	though it should rarely be necessary for an application developer to understand 
