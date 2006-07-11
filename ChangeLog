@@ -1,3 +1,26 @@
+2006-07-11  Murray Cumming  <murrayc@murrayc.com>
+
+	* cairomm/refptr.h: From-C-object Constructor: Added documentation explaining 
+	how/when to use it and when to do an extra reference(). This will help us, 
+	though it should rarely be necessary for an application developer to understand 
+	it.
+	Made pCppRefcount_ mutable, so that refcount_() can be a const method so that 
+	the templated constructor compiles.
+	Added class documentation to explain why we even want to use this class.
+
+2006-07-05  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/refptr.h: copy constructors: initialize the pCppRefcount_ member 
+	variable, using a public refcount_() method when necessary to access a 
+	different RefPtr<> specialization.
+
+2006-07-11  Murray Cumming  <murrayc@murrayc.com>
+
+	* cairomm/refptr.h: Use an int to reference-count the C++ object, and 
+	only reference/unreference the object (and hence the underlying C object) 
+	when receiving/deleting the C++ object. Without this, we never delete 
+	the C++ object. Fixes bug #7442.
+
 2006-07-09  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* NEWS: add NEWS for 1.1.10 release

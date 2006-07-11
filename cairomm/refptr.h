@@ -2,7 +2,7 @@
 #ifndef _cairo_REFPTR_H
 #define _cairo_REFPTR_H
 
-/* $Id: refptr.h,v 1.3 2006-03-06 17:55:51 jjongsma Exp $ */
+/* $Id: refptr.h,v 1.4 2006-07-11 17:16:21 murrayc Exp $ */
 
 /* Copyright 2005 The cairomm Development Team
  *
@@ -28,20 +28,15 @@ namespace Cairo
 
 /** RefPtr<> is a reference-counting shared smartpointer.
  *
- * Some objects in gtkmm are obtained from a shared
- * store. Consequently you cannot instantiate them yourself. Instead they
- * return a RefPtr which behaves much like an ordinary pointer in that members
- * can be reached with the usual <code>object_ptr->member</code> notation.
- * Unlike most other smart pointers, RefPtr doesn't support dereferencing
- * through <code>*object_ptr</code>.
- *
  * Reference counting means that a shared reference count is incremented each
  * time a RefPtr is copied, and decremented each time a RefPtr is destroyed,
  * for instance when it leaves its scope. When the reference count reaches
- * zero, the contained object is deleted, meaning  you don't need to remember
- * to delete the object.
+ * zero, the contained object is deleted
  *
- * RefPtr<> can store any class that has reference() and unreference() methods.
+ * cairomm uses RefPtr so that you don't need to remember
+ * to delete the object explicitly, or know when a method expects you to delete 
+ * the object that it returns, and to prevent any need to manually  reference 
+ * and unreference() cairo objects.
  */
 template <class T_CppObject>
 class RefPtr
@@ -56,7 +51,17 @@ public:
   /// Destructor - decrements reference count.
   inline ~RefPtr();
 
-  /// For use only by the ::create() methods.
+  /** For use only in the internal implementation of cairomm, gtkmm, etc.
+   *
+   * This takes ownership of @a pCppObject, so it will be deleted when the 
+   * last RefPtr is deleted, for instance when it goes out of scope.
+   *
+   * This assumes that @a pCppObject already has a starting reference for its underlying cairo object,
+   * so that destruction of @a @pCppObject will cause a corresponding unreference of its underlying 
+   * cairo object. For instance, a cairo_*_create() function usually provides a starting reference, 
+   * but a cairo_*_get_*() function requires the caller to manually reference the returned object.
+   * In this case, you should call reference() on @a pCppObject before passing it to this constructor.
+   */
   explicit inline RefPtr(T_CppObject* pCppObject);
 
   /** Copy constructor
@@ -146,12 +151,24 @@ public:
   template <class T_CastFrom>
   static inline RefPtr<T_CppObject> cast_const(const RefPtr<T_CastFrom>& src);
 
+
+#ifndef DOXYGEN_IGNORE_THIS
+
+  // Warning: This is for internal use only.  Do not manually modify the
+  // reference count with this pointer.
+  inline int* refcount_() const { return pCppRefcount_; }
+
+#endif // DOXYGEN_IGNORE_THIS
+
 private:
+  void unref();
+
   T_CppObject* pCppObject_;
+  mutable int* pCppRefcount_;
 };
 
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef DOXYGEN_IGNORE_THIS
 
 // RefPtr<>::operator->() comes first here since it's used by other methods.
 // If it would come after them it wouldn't be inlined.
@@ -165,29 +182,59 @@ T_CppObject* RefPtr<T_CppObject>::operator->() const
 template <class T_CppObject> inline
 RefPtr<T_CppObject>::RefPtr()
 :
-  pCppObject_ (0)
+  pCppObject_(0),
+  pCppRefcount_(0)
 {}
 
 template <class T_CppObject> inline
 RefPtr<T_CppObject>::~RefPtr()
 {
-  if(pCppObject_)
-    pCppObject_->unreference(); // This could cause pCppObject to be deleted.
+  unref();
 }
+
+template <class T_CppObject> inline
+void RefPtr<T_CppObject>::unref()
+{
+  if(pCppRefcount_)
+  {
+    --(*pCppRefcount_);
+
+    if(*pCppRefcount_ == 0)
+    {
+      if(pCppObject_)
+      {
+        delete pCppObject_;
+        pCppObject_ = 0;
+      }
+    }
+
+    delete pCppRefcount_;
+      pCppRefcount_ = 0;
+  }
+}
+
 
 template <class T_CppObject> inline
 RefPtr<T_CppObject>::RefPtr(T_CppObject* pCppObject)
 :
-  pCppObject_ (pCppObject)
-{}
+  pCppObject_(pCppObject),
+  pCppRefcount_(0)
+{
+  if(pCppObject)
+  {
+    pCppRefcount_ = new int;
+    *pCppRefcount_ = 1; //This will be decremented in the destructor.
+  }
+}
 
 template <class T_CppObject> inline
 RefPtr<T_CppObject>::RefPtr(const RefPtr<T_CppObject>& src)
 :
-  pCppObject_ (src.pCppObject_)
+  pCppObject_ (src.pCppObject_),
+  pCppRefcount_(src.pCppRefcount_)
 {
-  if(pCppObject_)
-    pCppObject_->reference();
+  if(pCppObject_ && pCppRefcount_)
+    ++(*pCppRefcount_);
 }
 
 // The templated ctor allows copy construction from any object that's
@@ -201,18 +248,24 @@ RefPtr<T_CppObject>::RefPtr(const RefPtr<T_CastFrom>& src)
   // A different RefPtr<> will not allow us access to pCppObject_.  We need
   // to add a get_underlying() for this, but that would encourage incorrect
   // use, so we use the less well-known operator->() accessor:
-  pCppObject_ (src.operator->())
+  pCppObject_ (src.operator->()),
+  pCppRefcount_(src.refcount_())
 {
-  if(pCppObject_)
-    pCppObject_->reference();
+  if(pCppObject_ && pCppRefcount_)
+    ++(*pCppRefcount_);
 }
 
 template <class T_CppObject> inline
 void RefPtr<T_CppObject>::swap(RefPtr<T_CppObject>& other)
 {
   T_CppObject *const temp = pCppObject_;
+  int* temp_count = pCppRefcount_; 
+
   pCppObject_ = other.pCppObject_;
+  pCppRefcount_ = other.pCppRefcount_;
+
   other.pCppObject_ = temp;
+  other.pCppRefcount_ = temp_count;
 }
 
 template <class T_CppObject> inline
@@ -289,10 +342,10 @@ RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_dynamic(const RefPtr<T_CastFrom>& 
 {
   T_CppObject *const pCppObject = dynamic_cast<T_CppObject*>(src.operator->());
 
-  if(pCppObject)
-    pCppObject->reference();
+  if(pCppObject && src.pCppRefcount_)
+    ++(*(src.pCppRefcount_));
 
-  return RefPtr<T_CppObject>(pCppObject);
+  return RefPtr<T_CppObject>(pCppObject); //TODO: Does an unnecessary extra reference() on the C object.
 }
 
 template <class T_CppObject>
@@ -302,10 +355,10 @@ RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_static(const RefPtr<T_CastFrom>& s
 {
   T_CppObject *const pCppObject = static_cast<T_CppObject*>(src.operator->());
 
-  if(pCppObject)
-    pCppObject->reference();
+  if(pCppObject && src.pCppRefcount_)
+    ++(*(src.pCppRefcount_));
 
-  return RefPtr<T_CppObject>(pCppObject);
+  return RefPtr<T_CppObject>(pCppObject); //TODO: Does an unnecessary extra reference() on the C object.
 }
 
 template <class T_CppObject>
@@ -315,13 +368,13 @@ RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_const(const RefPtr<T_CastFrom>& sr
 {
   T_CppObject *const pCppObject = const_cast<T_CppObject*>(src.operator->());
 
-  if(pCppObject)
-    pCppObject->reference();
+  if(pCppObject && src.pCppRefcount_)
+    ++(*(src.pCppRefcount_));
 
-  return RefPtr<T_CppObject>(pCppObject);
+  return RefPtr<T_CppObject>(pCppObject); //TODO: Does an unnecessary extra reference() on the C object.
 }
 
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+#endif /* DOXYGEN_IGNORE_THIS */
 
 /** @relates Glib::RefPtr */
 template <class T_CppObject> inline
