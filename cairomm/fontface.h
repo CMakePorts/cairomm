@@ -49,7 +49,7 @@ public:
   /* Don't wrap these until we know what they are good for.
   void* get_user_data(const cairo_user_data_key_t *key);
 
-  void set_user_data(const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy); //TODO: Use a sigc::slot?
+  void set_user_data(const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy);
   */
 
   FontType get_type() const;
