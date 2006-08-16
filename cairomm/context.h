@@ -349,7 +349,6 @@ public:
    */
   void device_to_user_distance(double& dx, double& dy);
 
-  // FIXME: why is this named clear_path instead of new_path?
   /** Clears the current path. After this call there will be no current point.
    */
   void clear_path();

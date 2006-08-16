@@ -1,3 +1,7 @@
+2006-08-15  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/context.h: remove a FIXME that was resolved on the mailing list
+
 2006-07-11  Murray Cumming  <murrayc@murrayc.com>
 
 	* cairomm/refptr.h: unref(): Only delete the refcount int when the refcount has 	
