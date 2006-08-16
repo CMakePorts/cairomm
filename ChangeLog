@@ -1,5 +1,12 @@
 2006-08-15  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* cairomm/context.cc: remove another TODO.  I looked at cairo_append_path,
+	and it just copies the data from the supplied path and appends that to the
+	current path -- it doesn't modify the passed in path -- so it can stay
+	const.
+
+2006-08-15  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* cairomm/context.h: remove a FIXME that was resolved on the mailing list
 
 2006-07-11  Murray Cumming  <murrayc@murrayc.com>

@@ -603,7 +603,6 @@ Path* Context::copy_path_flat() const
   return new Path(cresult, true /* take ownership */); //The caller must delete it.
 }
 
-//TODO: Should this be const? Does cairo_append_path() take ownership?
 void Context::append_path(const Path& path)
 {
   cairo_append_path(m_cobject, const_cast<cairo_path_t*>(path.cobj()));
