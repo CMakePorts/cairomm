@@ -223,13 +223,13 @@ void Context::device_to_user_distance(double& dx, double& dy)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::clear_path()
+void Context::begin_new_path()
 {
   cairo_new_path(m_cobject);
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::new_sub_path()
+void Context::begin_new_sub_path()
 {
   cairo_new_sub_path(m_cobject);
   check_object_status_and_throw_exception(*this);

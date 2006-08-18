@@ -11,7 +11,7 @@ AC_SUBST(GENERIC_MICRO_VERSION)
 AC_SUBST(GENERIC_VERSION)
 
 #shared library versioning
-GENERIC_LIBRARY_VERSION=0:7:0
+GENERIC_LIBRARY_VERSION=0:8:0
 #                       | | |
 #                +------+ | +---+
 #                |        |     |

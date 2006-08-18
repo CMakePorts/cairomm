@@ -1,3 +1,14 @@
+2006-08-18  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/context.cc:
+	* cairomm/context.h: API CHANGE: some API was changed to maintain a closer
+	similarity to the underlying cairo API (while also attempting to avoid
+	confusion with the C++ 'new' keyword) in preparation for freezing the
+	cairomm API.  Two functions are affected:
+		- Context::clear_path() -> Context::begin_new_path()
+		- Context::new_sub_path() -> Context::begin_new_sub_path()
+	* configure.in: bump the libtool version to indicate API change
+
 2006-08-15  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/context.cc: remove another TODO.  I looked at cairo_append_path,

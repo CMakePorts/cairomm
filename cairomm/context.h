@@ -351,7 +351,7 @@ public:
 
   /** Clears the current path. After this call there will be no current point.
    */
-  void clear_path();
+  void begin_new_path();
 
   /** Begin a new subpath. Note that the existing path is not affected. After
    * this call there will be no current point.
@@ -359,12 +359,12 @@ public:
    * In many cases, this call is not needed since new subpaths are frequently
    * started with move_to().
    *
-   * A call to new_sub_path() is particularly useful when beginning a new
+   * A call to begin_new_sub_path() is particularly useful when beginning a new
    * subpath with one of the arc() calls. This makes things easier as it is no
    * longer necessary to manually compute the arc's initial coordinates for a
    * call to move_to().
    */
-  void new_sub_path();
+  void begin_new_sub_path();
 
   /** If the current subpath is not empty, begin a new subpath. After this call
    * the current point will be (x, y).
