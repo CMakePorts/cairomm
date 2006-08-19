@@ -1,3 +1,10 @@
+2006-08-18  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* cairomm/win32_surface.cc:
+	* cairomm/win32_surface.h: add some missing win32 API that I had overlooked:
+	cairo_win32_surface_get_dc() and cairo_win32_surface_create_with_dib(),
+	updated documentation for standard Win32Surface::create() function.
+
 2006-08-18  Cedric Gustin  <cedric.gustin@gmail.com>
 
 	* cairomm/context.cc: Define M_PI for MSVC.

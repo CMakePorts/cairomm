@@ -20,6 +20,7 @@
 #define __CAIROMM_WIN32_SURFACE_H
 
 #include <cairomm/surface.h>
+#include <cairomm/enums.h>
 
 #ifdef CAIRO_HAS_WIN32_SURFACE
 #include <cairo-win32.h>
@@ -55,12 +56,33 @@ public:
   explicit Win32Surface(cairo_surface_t* cobject, bool has_reference = false);
   virtual ~Win32Surface();
 
-  /** Creates a Surface for drawing in Microsoft Windows
+  /** Returns the HDC associated with this surface, or NULL if none. Also
+   * returns NULL if the surface is not a win32 surface.
    *
-   * @param hdc
-   * @return    A RefPtr to the newly created surface
+   * @return HDC or NULL if no HDC available.
+   */
+  HDC get_dc() const;
+
+  /** Creates a cairo surface that targets the given DC. The DC will be queried
+   * for its initial clip extents, and this will be used as the size of the
+   * cairo surface. Also, if the DC is a raster DC, it will be queried for its
+   * pixel format and the cairo surface format will be set appropriately.
+   *
+   * @param hdc the DC to create a surface for
+   * @return the newly created surface
    */
   static RefPtr<Win32Surface> create(HDC hdc);
+
+  /** Creates a device-independent-bitmap surface not associated with any
+   * particular existing surface or device context. The created bitmap will be
+   * unititialized.
+   *
+   * @param format format of pixels in the surface to create
+   * @param width width of the surface, in pixels
+   * @param height height of the surface, in pixels
+   * @return the newly created surface
+   */
+  static RefPtr<Win32Surface> create(Format format, int width, int height);
 
 };
 

@@ -33,9 +33,21 @@ Win32Surface::~Win32Surface()
   // surface is destroyed in base class
 }
 
+HDC Win32Surface::get_dc() const
+{
+  return cairo_win32_surface_get_dc(m_cobject);
+}
+
 RefPtr<Win32Surface> Win32Surface::create(HDC hdc)
 {
   cairo_surface_t* cobject = cairo_win32_surface_create(hdc);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<Win32Surface>(new Win32Surface(cobject, true /* has reference */));
+}
+
+RefPtr<Win32Surface> Win32Surface::create(Format format, int width, int height)
+{
+  cairo_surface_t* cobject = cairo_win32_surface_create_with_dib(format, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<Win32Surface>(new Win32Surface(cobject, true /* has reference */));
 }
