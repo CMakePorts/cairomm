@@ -1,3 +1,16 @@
+2006-08-18  Cedric Gustin  <cedric.gustin@gmail.com>
+
+	* cairomm/context.cc: Define M_PI for MSVC.
+	* cairomm/scaledfont.cc: Allocate glyph_array as a synamic array
+	as MSVC does not like non-const arguments as array size.
+	* examples/pdf-surface/main.cc, examples/png_file/main.cc,
+	examples/ps-surface/main.cc, examples/svg-surface/main.cc,
+	examples/text-rotate/text-rotate.cc: Define M_PI for MSVC. 
+	* configure.in, Makefile.am: Generate Makefiles in the MSVC
+	subdirectories.  
+	* .cvsignore: Added Eclipse .project to the list of ignored files.
+	* MSVC/*: Added project and resource files for Visual Studio 2005.
+	
 2006-08-18  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/context.cc:

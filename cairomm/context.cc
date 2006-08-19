@@ -19,6 +19,12 @@
 #include <cairomm/context.h>
 #include <cairomm/private.h>
 
+/* M_PI is defined in math.h in the case of Microsoft Visual C++ */
+#if defined(_MSC_VER)
+#define _USE_MATH_DEFINES
+#include <math.h>
+#endif 
+
 namespace Cairo
 {
 

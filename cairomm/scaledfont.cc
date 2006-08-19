@@ -55,12 +55,16 @@ void ScaledFont::glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& ex
   // copy the data from the vector to a standard C array.  I don't believe
   // this will be a frequently used function so I think the performance hit is
   // more than offset by the increased flexibility of the STL interface.
-  Glyph glyph_array[glyphs.size()];
+  
+  // Use new to allocate memory as MSCV complains about non-const array size with
+  // Glyph glyph_array[glyphs.size()]
+  Glyph* glyph_array= new Glyph[glyphs.size()];
   std::copy(glyphs.begin(), glyphs.end(), glyph_array);
 
   cairo_scaled_font_glyph_extents(m_cobject, glyph_array, glyphs.size(),
       static_cast<cairo_text_extents_t*>(&extents));
   check_object_status_and_throw_exception(*this);
+  delete[] glyph_array;
 }
 
 RefPtr<FontFace> ScaledFont::get_font_face() const
