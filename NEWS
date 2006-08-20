@@ -1,3 +1,17 @@
+1.2.0:
+
+* This is the first release that guarantees API and ABI stability
+* Changed API:
+  - Context::clear_path() is now Context::begin_new_path()
+  - Context::new_sub_path() is now Context::begin_new_sub_path()
+* new API:
+  - Win32Surface::get_dc()
+  - Win32Surface::create() for device-independent bitmaps
+* Bugfixes
+  - fixed a memory leak where C++ wrapper objects were not being destroyed
+* Fixes for compiling with MSVC (also includes project and resource files for
+  Visual Studio 2005.  See the MSVC/ directory)
+
 1.1.10:
 
 * API:
