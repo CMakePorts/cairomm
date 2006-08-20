@@ -1,3 +1,9 @@
+2006-08-20  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* Makefile.am: fix up the release announcement template to explain what
+	cairomm is at the top of the email before telling where to get it.
+	* configure.in: post-release bump (1.2.1)
+
 1.2.0:
 
 2006-08-20  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
