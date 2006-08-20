@@ -1,3 +1,28 @@
+2006-08-19  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* MSVC/examples/.cvsignore:
+	* MSVC/examples/Makefile.am:
+	* MSVC/examples/pdf-surface/.cvsignore:
+	* MSVC/examples/pdf-surface/Makefile.am:
+	* MSVC/examples/pdf-surface/pdf-surface.vcproj:
+	* MSVC/examples/png_file/.cvsignore:
+	* MSVC/examples/png_file/Makefile.am:
+	* MSVC/examples/png_file/png_file.vcproj:
+	* MSVC/examples/ps-surface/.cvsignore:
+	* MSVC/examples/ps-surface/Makefile.am:
+	* MSVC/examples/ps-surface/ps-surface.vcproj:
+	* MSVC/examples/svg-surface/.cvsignore:
+	* MSVC/examples/svg-surface/Makefile.am:
+	* MSVC/examples/svg-surface/svg-surface.vcproj:
+	* MSVC/examples/text-rotate/.cvsignore:
+	* MSVC/examples/text-rotate/Makefile.am:
+	* MSVC/examples/text-rotate/text-rotate.vcproj:
+	* MSVC/gendef/.cvsignore:
+	* MSVC/gendef/Makefile.am:
+	* MSVC/gendef/gendef.cc:
+	* MSVC/gendef/gendef.vcproj: added a bunch of MSVC / windows-specific things
+	that got missed last time.
+
 2006-08-18  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/win32_surface.cc:
