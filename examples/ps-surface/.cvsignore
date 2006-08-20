@@ -3,3 +3,4 @@ Makefile
 .deps
 .libs
 example_ps_file
+image.ps

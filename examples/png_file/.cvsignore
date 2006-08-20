@@ -3,3 +3,4 @@ Makefile
 .deps
 .libs
 example_png_file
+image.png

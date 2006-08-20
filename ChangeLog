@@ -1,3 +1,11 @@
+2006-08-20  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* examples/pdf-surface/.cvsignore:
+	* examples/png_file/.cvsignore:
+	* examples/ps-surface/.cvsignore:
+	* examples/svg-surface/.cvsignore: added image files produced by the example
+	programs to .cvsignore
+
 2006-08-19  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* Makefile.am: get rid of the concept of a snapshot.  It doesn't really make

@@ -3,3 +3,4 @@ Makefile
 .deps
 .libs
 example_pdf_file
+image.pdf
