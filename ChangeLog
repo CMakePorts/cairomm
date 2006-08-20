@@ -1,5 +1,11 @@
 2006-08-19  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* Makefile.am: get rid of the concept of a snapshot.  It doesn't really make
+	that much sense for cairomm, honestly, since we're just a simple wrapper
+	library.
+
+2006-08-19  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* MSVC/examples/.cvsignore:
 	* MSVC/examples/Makefile.am:
 	* MSVC/examples/pdf-surface/.cvsignore:

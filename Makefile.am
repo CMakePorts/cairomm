@@ -18,11 +18,10 @@ pkgconfig_DATA = cairomm-1.0.pc
 #		make release-check
 # or		make release-publish
 
-RELEASE_OR_SNAPSHOT = `if [ "$(GENERIC_MINOR_VERSION)" = $$(echo "$(GENERIC_MINOR_VERSION)/2*2" | bc) ]; then echo release; else echo snapshot; fi`
 RELEASE_UPLOAD_HOST =   cairographics.org
 RELEASE_UPLOAD_BASE =	/srv/cairo.freedesktop.org/www
-RELEASE_UPLOAD_DIR =	$(RELEASE_UPLOAD_BASE)/$(RELEASE_OR_SNAPSHOT)s
-RELEASE_URL_BASE = 	http://cairographics.org/$(RELEASE_OR_SNAPSHOT)s
+RELEASE_UPLOAD_DIR =	$(RELEASE_UPLOAD_BASE)/releases
+RELEASE_URL_BASE = 	http://cairographics.org/releases
 RELEASE_ANNOUNCE_LIST = cairo-announce@cairographics.org (and CC gnome-announce-list@gnome.org)
 CVS = cvs
 
@@ -82,10 +81,10 @@ release-publish: release-upload releases/$(sha1_file)
 	@echo "Please send an announcement to $(RELEASE_ANNOUNCE_LIST)"
 	@echo "including the following:"
 	@echo ""
-	@echo "Subject: $(PACKAGE) $(RELEASE_OR_SNAPSHOT) $(VERSION) now available"
+	@echo "Subject: $(PACKAGE) release $(VERSION) now available"
 	@echo ""
 	@echo "============================== CUT HERE =============================="
-	@echo "A new $(PACKAGE) $(RELEASE_OR_SNAPSHOT) $(VERSION) is now available from:"
+	@echo "A new $(PACKAGE) release $(VERSION) is now available from:"
 	@echo ""
 	@echo "	$(RELEASE_URL_BASE)/$(tar_file)"
 	@echo ""
