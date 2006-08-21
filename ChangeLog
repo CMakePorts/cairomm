@@ -1,3 +1,8 @@
+2006-08-21  Cedric Gustin  <cedric.gustin@gmail.com>
+
+	* cairomm/win32_surface.cc: Explicitly cast Cairo::Format to
+	cairo_format_t.
+	
 2006-08-20  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* Makefile.am: fix up the release announcement template to explain what

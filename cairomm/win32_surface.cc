@@ -47,7 +47,7 @@ RefPtr<Win32Surface> Win32Surface::create(HDC hdc)
 
 RefPtr<Win32Surface> Win32Surface::create(Format format, int width, int height)
 {
-  cairo_surface_t* cobject = cairo_win32_surface_create_with_dib(format, width, height);
+  cairo_surface_t* cobject = cairo_win32_surface_create_with_dib((cairo_format_t)format, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<Win32Surface>(new Win32Surface(cobject, true /* has reference */));
 }
