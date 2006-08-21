@@ -1,3 +1,10 @@
+1.2.2:
+
+2006-08-21  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
+	* NEWS: update for 1.2.2
+	* configure.in: bump to next even number (1.2.2)
+
 2006-08-21  Cedric Gustin  <cedric.gustin@gmail.com>
 
 	* cairomm/win32_surface.cc: Explicitly cast Cairo::Format to
