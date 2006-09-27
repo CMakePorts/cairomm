@@ -2,7 +2,7 @@
 #ifndef _cairo_REFPTR_H
 #define _cairo_REFPTR_H
 
-/* $Id: refptr.h,v 1.5 2006-07-11 18:54:10 murrayc Exp $ */
+/* $Id: refptr.h,v 1.6 2006-09-27 18:38:57 murrayc Exp $ */
 
 /* Copyright 2005 The cairomm Development Team
  *
@@ -342,8 +342,8 @@ RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_dynamic(const RefPtr<T_CastFrom>& 
 {
   T_CppObject *const pCppObject = dynamic_cast<T_CppObject*>(src.operator->());
 
-  if(pCppObject && src.pCppRefcount_)
-    ++(*(src.pCppRefcount_));
+  if(pCppObject && src.refcount_())
+    ++(*(src.refcount_()));
 
   return RefPtr<T_CppObject>(pCppObject); //TODO: Does an unnecessary extra reference() on the C object.
 }
@@ -355,8 +355,8 @@ RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_static(const RefPtr<T_CastFrom>& s
 {
   T_CppObject *const pCppObject = static_cast<T_CppObject*>(src.operator->());
 
-  if(pCppObject && src.pCppRefcount_)
-    ++(*(src.pCppRefcount_));
+  if(pCppObject && src.refcount_())
+    ++(*(src.refcount_()));
 
   return RefPtr<T_CppObject>(pCppObject); //TODO: Does an unnecessary extra reference() on the C object.
 }
@@ -368,8 +368,8 @@ RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_const(const RefPtr<T_CastFrom>& sr
 {
   T_CppObject *const pCppObject = const_cast<T_CppObject*>(src.operator->());
 
-  if(pCppObject && src.pCppRefcount_)
-    ++(*(src.pCppRefcount_));
+  if(pCppObject && src.refcount_())
+    ++(*(src.refcount_()));
 
   return RefPtr<T_CppObject>(pCppObject); //TODO: Does an unnecessary extra reference() on the C object.
 }
