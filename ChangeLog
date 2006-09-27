@@ -2,7 +2,7 @@
 
 	* cairomm/refptr.h: cast_static() and cast_dynamic(): 
 	Use the refcount_() accessor instead of the member variable, 
-	to avoid compilation errors, as we already doing in the 
+	to avoid compilation errors, as we already do in the 
 	templated copy constructor.
 
 1.2.2:
