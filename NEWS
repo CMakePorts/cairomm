@@ -1,3 +1,8 @@
+1.2.4:
+
+ * Fixed an error that prevented Cairo::RefPtr<>::cast_static() and
+   Cairo::RefPtr<>::cast_dynamic() from compiling.
+
 1.2.2:
 
 * Fixed an issue when compiling on windows with MSVC
