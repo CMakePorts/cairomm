@@ -1,5 +1,9 @@
 2007-01-28  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
+	* configure.in: bump rev to 1.2.5
+
+2007-01-28  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
+
 	* docs/reference/Doxyfile.in: fixes building the cairomm documentation where
 	builddir != srcdir.  Patch from yselkowitz@users.sourceforge.net for bug
 	#9727
