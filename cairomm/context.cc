@@ -405,6 +405,32 @@ void Context::clip_preserve()
   check_object_status_and_throw_exception(*this);
 }
 
+void Context::clip_extents(double& x1, double& y1, double& x2, double& y2)
+{
+  cairo_clip_extents(m_cobject, &x1, &y1, &x2, &y2);
+  check_object_status_and_throw_exception(*this);
+}
+
+void Context::copy_clip_rectangle_list(std::vector<Rectangle>& rectangles)
+{
+  cairo_rectangle_list_t* c_list = 0;
+  // FIXME: It would be nice if the cairo interface didn't copy it into a
+  // C array first and just let us do the copying...
+  c_list = cairo_copy_clip_rectangle_list(m_cobject);
+  // the rectangle list contains a status field that we need to check and the
+  // cairo context also has a status that we need to check
+  // FIXME: do we want to throw an exception if the clip can't be represented by
+  // rectangles?  or do we just want to return an empty list?
+  check_status_and_throw_exception(c_list->status);
+  check_object_status_and_throw_exception(*this);
+  // copy the C array into the passed C++ list
+  rectangles.assign(c_list->rectangles,
+                    c_list->rectangles + c_list->num_rectangles);
+  // free the memory allocated to the C array since we've copied it into a
+  // standard C++ container
+  cairo_rectangle_list_destroy(c_list);
+}
+
 void Context::select_font_face(const std::string& family, FontSlant slant, FontWeight weight)
 {
   cairo_select_font_face (m_cobject, family.c_str(),
@@ -573,6 +599,19 @@ double Context::get_miter_limit() const
   const double result = cairo_get_miter_limit(m_cobject);
   check_object_status_and_throw_exception(*this);
   return result;
+}
+
+void
+Context::get_dash(std::vector<double>& dashes, double& offset)
+{
+  // FIXME: do we need to allocate this array dynamically?  I seem to remember
+  // some compilers have trouble with allocating arrays on the stack when the
+  // array size isn't a compiler constant...
+  const int cnt = cairo_get_dash_count(m_cobject);
+  double dash_array[cnt];
+  cairo_get_dash(m_cobject, dash_array, &offset);
+  check_object_status_and_throw_exception(*this);
+  dashes.assign(dash_array, dash_array + cnt);
 }
 
 void Context::get_matrix(Matrix& matrix)
