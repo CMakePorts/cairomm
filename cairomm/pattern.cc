@@ -188,17 +188,18 @@ void Gradient::add_color_stop_rgba(double offset, double red, double green, doub
   check_object_status_and_throw_exception(*this);
 }
 
-std::vector<ColorStop>
-Gradient::get_color_stops ()
+void
+Gradient::get_color_stops (std::vector<ColorStop>& stops)
 {
-  // we could save a copy here by returning it as an output reference parameter
-  // instead of returning the array by value.
-  std::vector<ColorStop> stops;
+  // clear any existing values from the passed array since we'll be adding them
+  // on to the end of the array one-by-one
+  stops.clear ();
+
   int num_stops;
   // we can ignore the return value since we know this is a gradient pattern
   cairo_pattern_get_color_stop_count(m_cobject, &num_stops);
   // since we know the total number of stops, we can avoid re-allocation with
-  // each addition to the vector
+  // each addition to the vector by pre-allocating the required number
   stops.reserve(num_stops);
   for (int i = 0; i < num_stops; ++i)
   {

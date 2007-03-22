@@ -414,8 +414,8 @@ void Context::clip_extents(double& x1, double& y1, double& x2, double& y2)
 void Context::copy_clip_rectangle_list(std::vector<Rectangle>& rectangles)
 {
   cairo_rectangle_list_t* c_list = 0;
-  // FIXME: It would be nice if the cairo interface didn't copy it into a
-  // C array first and just let us do the copying...
+  // It would be nice if the cairo interface didn't copy it into a C array first
+  // and just let us do the copying...
   c_list = cairo_copy_clip_rectangle_list(m_cobject);
   // the rectangle list contains a status field that we need to check and the
   // cairo context also has a status that we need to check
@@ -606,7 +606,7 @@ Context::get_dash(std::vector<double>& dashes, double& offset)
 {
   // FIXME: do we need to allocate this array dynamically?  I seem to remember
   // some compilers have trouble with allocating arrays on the stack when the
-  // array size isn't a compiler constant...
+  // array size isn't a compile-time constant...
   const int cnt = cairo_get_dash_count(m_cobject);
   double dash_array[cnt];
   cairo_get_dash(m_cobject, dash_array, &offset);

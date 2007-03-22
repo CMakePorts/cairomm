@@ -1,3 +1,9 @@
+2007-03-22  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/context.cc: Minor comment cleanups
+	* cairomm/pattern.cc: get the gradient stops by reference parameter instead
+	of returning by value.  This saves an extra copy of the vector.
+
 2007-03-21  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/context.cc:
