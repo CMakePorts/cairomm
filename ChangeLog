@@ -15,7 +15,8 @@
 	probably still need quite a bit of work, but I wanted to commit what I have
 	now so that it doesn't keep sitting in my working directory.
 	(Extra note from Murray:
-	- This was Pattern::create_rgba() - a new method overload with 4 args, including alpha.
+	This was:
+	- Pattern::create_rgba() - a new method overload with 4 args, including alpha.
 	- Pattern::get_surface()
 	- Pattern::get_color_stops() (with a new ColorStop struct)
 	- Pattenr::get_linear_points()
