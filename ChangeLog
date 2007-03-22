@@ -14,6 +14,17 @@
 	* configure.in: Add initial support for new cairo 1.4.x API.  It will
 	probably still need quite a bit of work, but I wanted to commit what I have
 	now so that it doesn't keep sitting in my working directory.
+	(Extra note from Murray:
+	- This was Pattern::create_rgba() - a new method overload with 4 args, including alpha.
+	- Pattern::get_surface()
+	- Pattern::get_color_stops() (with a new ColorStop struct)
+	- Pattenr::get_linear_points()
+	- Pattern::get_radial_circles()
+	- Context::clip_extents()
+	- Context::copy_clip_rectangle_list()
+	- Context::get_dash()
+	- SURFACE_TYPE_OS2 was added
+	- FORMAT_RGB16_565 was removed (but that is not allowed, so I'll fix that.)
 
 2007-02-01  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
