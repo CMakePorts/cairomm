@@ -101,7 +101,10 @@ public:
   void get_rgba (double& red, double& green,
                  double& blue, double& alpha) const;
 
+  //TODO: Documentation
   static RefPtr<SolidPattern> create_rgb(double red, double green, double blue);
+
+  //TODO: Documentation
   static RefPtr<SolidPattern> create_rgba(double red, double green,
                                           double blue, double alpha);
 
@@ -130,7 +133,14 @@ public:
    *
    * @since 1.4
    **/
-  RefPtr<Surface> get_surface () const;
+  RefPtr<const Surface> get_surface () const;
+
+  /**
+   * Gets the surface associated with this pattern
+   *
+   * @since 1.4
+   **/
+  RefPtr<Surface> get_surface ();
 
   virtual ~SurfacePattern();
 
@@ -197,7 +207,7 @@ public:
    *
    * @since 1.4
    */
-  std::vector<ColorStop> get_color_stops ();
+  std::vector<ColorStop> get_color_stops() const;
 
 
 protected:
@@ -228,7 +238,7 @@ public:
    *
    * @since 1.4
    **/
-  void get_linear_points (double &x0, double &y0,
+  void get_linear_points(double &x0, double &y0,
                           double &x1, double &y1) const;
 
   //TODO?: LinearGradient(cairo_pattern_t *target);
@@ -264,7 +274,7 @@ public:
    *
    * @since 1.4
    **/
-  void get_radial_circles (double& x0, double& y0, double& r0,
+  void get_radial_circles(double& x0, double& y0, double& r0,
                            double& x1, double& y1, double& r1) const;
 
   //TODO?: RadialGradient(cairo_pattern_t *target);

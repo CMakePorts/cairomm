@@ -683,7 +683,7 @@ public:
    *
    * @since 1.4
    **/
-  void clip_extents(double& x1, double& y1, double& x2, double& y2);
+  void get_clip_extents(double& x1, double& y1, double& x2, double& y2) const;
 
   /**
    * Returns the current clip region as a list of rectangles in user coordinates.
@@ -693,7 +693,7 @@ public:
    *
    * @Since 1.4
    **/
-   void copy_clip_rectangle_list(std::vector<Rectangle>& rectangles);
+   void copy_clip_rectangle_list(std::vector<Rectangle>& rectangles) const;
 
   void select_font_face(const std::string& family, FontSlant slant, FontWeight weight);
   void set_font_size(double size);
@@ -772,7 +772,7 @@ public:
    *
    * Since: 1.4
    **/
-  void get_dash(std::vector<double>& dashes, double& offset);
+  void get_dash(std::vector<double>& dashes, double& offset) const;
 
 
   /** Stores the current transformation matrix (CTM) into matrix.

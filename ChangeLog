@@ -1,3 +1,19 @@
+2007-03-22  Murray Cumming  <murrayc@murrayc@murrayc.com>
+
+	* cairomm/enums.h: Restored FORMAT_RGB16_565 and marked it as deprecated.
+	Note that CAIRO_FORMAT_RGB16_565 has not really been removed from cairo. 
+	It has just moved from the enum to a #define in cairo-deprecated.
+	* cairomm/context.cc:
+	* cairomm/context.h: Made get_dash() const.
+	Renamed clip_extents() to get_clip_extents(), to match the other get_*_extents() methods
+	(in Context, if not in other classes), and made it const.
+	Made copy_clip_rectangle_list() const.
+	* cairomm/pattern.cc:
+	* cairomm/pattern.h: Make the RadialGradient::get_radial_circles(), LinearGradient::get_linear_points(), 
+	and Gradient::get_color_stops() methods const.
+	Added a non-const method overload of get_surface().
+	Correc the get_color_stops() implementation to match the declaration.
+
 2007-03-22  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/context.cc: Minor comment cleanups
@@ -17,10 +33,10 @@
 	(Extra note from Murray:
 	This was:
 	- Pattern::create_rgba() - a new method overload with 4 args, including alpha.
-	- Pattern::get_surface()
-	- Pattern::get_color_stops() (with a new ColorStop struct)
-	- Pattenr::get_linear_points()
-	- Pattern::get_radial_circles()
+	- SurfacePattern::get_surface()
+	- Gradient::get_color_stops() (with a new ColorStop struct)
+	- LinearGradient::get_linear_points()
+	- RadialGradient::get_radial_circles()
 	- Context::clip_extents()
 	- Context::copy_clip_rectangle_list()
 	- Context::get_dash()

@@ -110,9 +110,8 @@ typedef enum
     FORMAT_ARGB32 = CAIRO_FORMAT_ARGB32,
     FORMAT_RGB24 = CAIRO_FORMAT_RGB24,
     FORMAT_A8 = CAIRO_FORMAT_A8,
-    FORMAT_A1 = CAIRO_FORMAT_A1
-    // this enumeration has been deprecated
-    //FORMAT_RGB16_565 = CAIRO_FORMAT_RGB16_565
+    FORMAT_A1 = CAIRO_FORMAT_A1,
+    FORMAT_RGB16_565 = CAIRO_FORMAT_RGB16_565 /* @< @deprecated This format value is deprecated. It has never been properly implemented in cairo and is unnecessary. */
 } Format;
 
 

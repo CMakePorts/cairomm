@@ -78,7 +78,7 @@ SolidPattern::SolidPattern(cairo_pattern_t* cobject, bool has_reference)
 {
 }
 void
-SolidPattern::get_rgba (double& red, double& green,
+SolidPattern::get_rgba(double& red, double& green,
                         double& blue, double& alpha) const
 {
   // ignore the return value since we know that this is a solid color pattern
@@ -112,13 +112,19 @@ SurfacePattern::SurfacePattern(const RefPtr<Surface>& surface)
 }
 
 RefPtr<Surface>
-SurfacePattern::get_surface () const
+SurfacePattern::get_surface()
 {
   cairo_surface_t* surface = 0;
   // we can ignore the return value since we know this is a surface pattern
   cairo_pattern_get_surface(const_cast<cairo_pattern_t*>(m_cobject), &surface);
   check_object_status_and_throw_exception(*this);
   return RefPtr<Surface>(new Surface(surface, false /* does not have reference */));
+}
+
+RefPtr<const Surface>
+SurfacePattern::get_surface() const
+{
+  return const_cast<SurfacePattern*>(this)->get_surface();
 }
 
 RefPtr<SurfacePattern> SurfacePattern::create(const RefPtr<Surface>& surface)
@@ -188,27 +194,24 @@ void Gradient::add_color_stop_rgba(double offset, double red, double green, doub
   check_object_status_and_throw_exception(*this);
 }
 
-void
-Gradient::get_color_stops (std::vector<ColorStop>& stops)
+std::vector<ColorStop>
+Gradient::get_color_stops() const
 {
-  // clear any existing values from the passed array since we'll be adding them
-  // on to the end of the array one-by-one
-  stops.clear ();
+  std::vector<ColorStop> stops;
 
-  int num_stops;
+  int num_stops = 0;
   // we can ignore the return value since we know this is a gradient pattern
   cairo_pattern_get_color_stop_count(m_cobject, &num_stops);
   // since we know the total number of stops, we can avoid re-allocation with
   // each addition to the vector by pre-allocating the required number
   stops.reserve(num_stops);
-  for (int i = 0; i < num_stops; ++i)
+  for(int i = 0; i < num_stops; ++i)
   {
     ColorStop stop;
     cairo_pattern_get_color_stop_rgba(m_cobject, i, &stop.offset, &stop.red,
                                       &stop.green, &stop.blue, &stop.alpha);
     stops.push_back(stop);
   }
-  return stops;
 }
 
 
@@ -219,7 +222,7 @@ LinearGradient::LinearGradient(double x0, double y0, double x1, double y1)
 }
 
 void
-LinearGradient::get_linear_points (double &x0, double &y0,
+LinearGradient::get_linear_points(double &x0, double &y0,
                                    double &x1, double &y1) const
 {
   // ignore the return value since we know that this is a linear gradient
@@ -251,12 +254,12 @@ RadialGradient::RadialGradient(double cx0, double cy0, double radius0, double cx
 }
 
 void
-RadialGradient::get_radial_circles (double& x0, double& y0, double& r0,
+RadialGradient::get_radial_circles(double& x0, double& y0, double& r0,
                                     double& x1, double& y1, double& r1) const
 {
   // ignore the return value since we know that this is a radial gradient
   // pattern
-  cairo_pattern_get_radial_circles (const_cast<cairo_pattern_t*>(m_cobject),
+  cairo_pattern_get_radial_circles(const_cast<cairo_pattern_t*>(m_cobject),
                                     &x0, &y0, &r0, &x1, &y1, &r1);
   check_object_status_and_throw_exception(*this); 
 }

@@ -405,18 +405,18 @@ void Context::clip_preserve()
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::clip_extents(double& x1, double& y1, double& x2, double& y2)
+void Context::get_clip_extents(double& x1, double& y1, double& x2, double& y2) const
 {
-  cairo_clip_extents(m_cobject, &x1, &y1, &x2, &y2);
+  cairo_clip_extents(const_cast<cairo_t*>(m_cobject), &x1, &y1, &x2, &y2);
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::copy_clip_rectangle_list(std::vector<Rectangle>& rectangles)
+void Context::copy_clip_rectangle_list(std::vector<Rectangle>& rectangles) const
 {
   cairo_rectangle_list_t* c_list = 0;
   // It would be nice if the cairo interface didn't copy it into a C array first
   // and just let us do the copying...
-  c_list = cairo_copy_clip_rectangle_list(m_cobject);
+  c_list = cairo_copy_clip_rectangle_list(const_cast<cairo_t*>(m_cobject));
   // the rectangle list contains a status field that we need to check and the
   // cairo context also has a status that we need to check
   // FIXME: do we want to throw an exception if the clip can't be represented by
@@ -433,7 +433,7 @@ void Context::copy_clip_rectangle_list(std::vector<Rectangle>& rectangles)
 
 void Context::select_font_face(const std::string& family, FontSlant slant, FontWeight weight)
 {
-  cairo_select_font_face (m_cobject, family.c_str(),
+  cairo_select_font_face(m_cobject, family.c_str(),
           static_cast<cairo_font_slant_t>(slant),
           static_cast<cairo_font_weight_t>(weight));
   check_object_status_and_throw_exception(*this);
@@ -602,14 +602,14 @@ double Context::get_miter_limit() const
 }
 
 void
-Context::get_dash(std::vector<double>& dashes, double& offset)
+Context::get_dash(std::vector<double>& dashes, double& offset) const
 {
   // FIXME: do we need to allocate this array dynamically?  I seem to remember
   // some compilers have trouble with allocating arrays on the stack when the
   // array size isn't a compile-time constant...
   const int cnt = cairo_get_dash_count(m_cobject);
   double dash_array[cnt];
-  cairo_get_dash(m_cobject, dash_array, &offset);
+  cairo_get_dash(const_cast<cairo_t*>(m_cobject), dash_array, &offset);
   check_object_status_and_throw_exception(*this);
   dashes.assign(dash_array, dash_array + cnt);
 }
@@ -683,11 +683,12 @@ RefPtr<Surface> Context::get_group_target()
 {
   cairo_surface_t* surface = cairo_get_group_target(m_cobject);
   // surface can be NULL if you're not between push/pop group calls
-  if (surface == NULL)
+  if(!surface)
   {
     // FIXME: is this really the right way to handle this?
     throw_exception(CAIRO_STATUS_NULL_POINTER);
   }
+
   return RefPtr<Surface>(new Surface(surface, false));
 }
 
@@ -695,11 +696,12 @@ RefPtr<const Surface> Context::get_group_target() const
 {
   cairo_surface_t* surface = cairo_get_group_target(m_cobject);
   // surface can be NULL if you're not between push/pop group calls
-  if (surface == NULL)
+  if(!surface)
   {
     // FIXME: is this really the right way to handle this?
     throw_exception(CAIRO_STATUS_NULL_POINTER);
   }
+
   return RefPtr<const Surface>(new Surface(surface, false));
 }
 
