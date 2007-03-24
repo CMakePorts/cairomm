@@ -1,3 +1,22 @@
+2007-03-23  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* Makefile.am:
+	* autogen.sh:
+	* configure.in:
+	* m4/ax_boost_base.m4:
+	* m4/ax_boost_unit_test_framework.m4: Add some basic test infrastructure.
+	It's disabled by default, and must be explicitly enabled by passing
+	--enable-tests to configure (or by setting the CAIROMM_DEVEL environment
+	variable to "on").  It uses the boost unit test framework, but this should
+	not be required unless you've explicitly enabled tests.  If tests are
+	enabled, you can easily run them with 'make check'
+	* tests/Makefile.am:
+	* tests/test-context.cc: added the beginning of a test for Cairo::Context.
+	Most of these tests are really very interesting.  Basically what I'm trying
+	to do is a) test some basic behaviors, and b) excercise the functionality a
+	little bit.  One of the tests currently fails due to a RefPtr::cast_dynamic
+	failure, so I have to see what's going on there.
+
 2007-03-22  Murray Cumming  <murrayc@murrayc@murrayc.com>
 
 	* cairomm/enums.h: Restored FORMAT_RGB16_565 and marked it as deprecated.

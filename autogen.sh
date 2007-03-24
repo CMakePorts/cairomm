@@ -1,7 +1,7 @@
 #! /bin/sh
 set -e
 
-# $Id: autogen.sh,v 1.3 2006-03-13 01:43:04 jjongsma Exp $
+# $Id: autogen.sh,v 1.4 2007-03-24 03:05:33 jjongsma Exp $
 #
 # Copyright (c) 2002  Daniel Elstner  <daniel.elstner@gmx.net>
 #
@@ -35,6 +35,7 @@ LIBTOOLIZE=${LIBTOOLIZE:-libtoolize}
 AUTOCONF=${AUTOCONF:-autoconf}
 AUTOMAKE=${AUTOMAKE:-automake}
 
+ACLOCAL_FLAGS="-I m4"
 ACLOCAL=`echo $AUTOMAKE | sed s/automake/aclocal/`
 
 rm -f config.cache acconfig.h
@@ -44,7 +45,7 @@ do_cmd() {
     $@
 }
 
-do_cmd $ACLOCAL
+do_cmd $ACLOCAL $ACLOCAL_FLAGS
 do_cmd $LIBTOOLIZE --force
 do_cmd $AUTOCONF
 do_cmd $AUTOMAKE --add-missing --gnu
