@@ -1,3 +1,9 @@
+2007-04-16  Hugo Vincent  <hugo.vincent@gmail.com>
+
+	* Added QuartzSurface for MacOS X (when cairo is built with Quartz support),
+	similar to the existing Win32Surface and XlibSurface. These allow use of 
+	platform-specific features and data structures.
+
 2007-03-23  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* Makefile.am:
