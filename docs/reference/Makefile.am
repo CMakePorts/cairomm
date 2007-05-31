@@ -8,6 +8,8 @@ EXTRA_DIST = $(DOXYGEN_CONFIGFILE_SOURCE) \
 			 $(HTML_TEMPLATE_FILES) cairomm_doxygen_tags \
 			 html
 
+cairomm_doxygen_tags : $(index_html)
+
 index_html = html/index.html
 
 $(index_html): $(DOXYGEN_CONFIGFILE) $(wildcard $(top_srcdir)/cairomm/*.h) $(HTML_TEMPLATE_FILES)
