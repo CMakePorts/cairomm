@@ -6,6 +6,7 @@ autom4te.cache
 cairomm-1.0.pc
 cairomm-1.3.0.tar.gz
 .deps
+.libs
 config.guess
 config.log
 config.status
@@ -23,3 +24,12 @@ install-sh
 libtool
 ltmain.sh
 missing
+*.o
+*.lo
+*.la
+examples/pdf-surface/example_pdf_file
+examples/png_file/example_png_file
+examples/ps-surface/example_ps_file
+examples/svg-surface/example_svg_file
+examples/text-rotate/text_rotate
+tests/test-context
