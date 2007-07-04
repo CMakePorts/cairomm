@@ -536,7 +536,24 @@ RefPtr<Pattern> Context::get_source()
 {
   cairo_pattern_t* pattern = cairo_get_source(m_cobject);
   check_object_status_and_throw_exception(*this);
-  return RefPtr<Pattern>(new Pattern(pattern, false /* does not have reference */));
+  cairo_pattern_type_t pattern_type = cairo_pattern_get_type (pattern);
+  switch (pattern_type)
+  {
+    case CAIRO_PATTERN_TYPE_SOLID:
+      return RefPtr<SolidPattern>(new SolidPattern(pattern, false /* does not have reference */));
+      break;
+    case CAIRO_PATTERN_TYPE_SURFACE:
+      return RefPtr<SurfacePattern>(new SurfacePattern(pattern, false /* does not have reference */));
+      break;
+    case CAIRO_PATTERN_TYPE_LINEAR:
+      return RefPtr<LinearGradient>(new LinearGradient(pattern, false /* does not have reference */));
+      break;
+    case CAIRO_PATTERN_TYPE_RADIAL:
+      return RefPtr<RadialGradient>(new RadialGradient(pattern, false /* does not have reference */));
+      break;
+    default:
+      return RefPtr<Pattern>(new Pattern(pattern, false /* does not have reference */));
+  }
 }
 
 RefPtr<const Pattern> Context::get_source() const

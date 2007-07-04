@@ -1,5 +1,14 @@
 2007-07-04  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/context.cc: when getting the source pattern of a Cairo::Context,
+	check which type of Pattern it is so that we create the correct C++ wrapper.
+	Without this, RefPtr<>::cast_dynamic() doesn't seem to work as we would
+	expect it to.
+	* tests/test-context.cc: improve the Context::get_source() /
+	Context::set_source () tests now that dynamic casting works correctly
+
+2007-07-04  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* examples/pdf-surface/main.cc:
 	* examples/png_file/main.cc:
 	* examples/ps-surface/main.cc:

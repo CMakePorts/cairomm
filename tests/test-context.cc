@@ -74,29 +74,53 @@ test_source ()
   // there doesn't seem to be any way to compare the retrieved pattern to the
   // one that was set...  for now, just excercise the function calls.
   cr->set_source (solid_pattern);
-  //BOOST_CHECK (cr->get_source () == solid_pattern);
+  {
+    Cairo::RefPtr<Cairo::SolidPattern> retrieved_solid =
+      Cairo::RefPtr<Cairo::SolidPattern>::cast_dynamic(cr->get_source ());
+    BOOST_REQUIRE (retrieved_solid);
+    double r, g, b, a;
+    retrieved_solid->get_rgba (r, g, b, a);
+    BOOST_CHECK (r == 1.0);
+    BOOST_CHECK (g == 0.5);
+    BOOST_CHECK (b == 0.25);
+  }
 
   cr->set_source (gradient_pattern);
-  //BOOST_CHECK (cr->get_source () == gradient_pattern);
+  {
+    Cairo::RefPtr<Cairo::LinearGradient> retrieved_linear =
+      Cairo::RefPtr<Cairo::LinearGradient>::cast_dynamic(cr->get_source ());
+    BOOST_REQUIRE (retrieved_linear);
+    double x0, x1, y0, y1;
+    retrieved_linear->get_linear_points (x0, y0, x1, y1);
+    BOOST_CHECK (x0 == 0.0);
+    BOOST_CHECK (y0 == 0.0);
+    BOOST_CHECK (x1 == 1.0);
+    BOOST_CHECK (y1 == 1.0);
+  }
 
   cr->set_source_rgb (1.0, 0.5, 0.25);
-  Cairo::RefPtr<Cairo::SolidPattern> solid =
-    Cairo::RefPtr<Cairo::SolidPattern>::cast_dynamic(cr->get_source ());
-  BOOST_REQUIRE (solid);
-  double rx, gx, bx, ax;
-  solid->get_rgba (rx, gx, bx, ax);
-  BOOST_CHECK (rx == 1.0);
-  BOOST_CHECK (gx == 0.5);
-  BOOST_CHECK (bx == 0.25);
+  {
+    Cairo::RefPtr<Cairo::SolidPattern> solid =
+      Cairo::RefPtr<Cairo::SolidPattern>::cast_dynamic(cr->get_source ());
+    BOOST_REQUIRE (solid);
+    double rx, gx, bx, ax;
+    solid->get_rgba (rx, gx, bx, ax);
+    BOOST_CHECK (rx == 1.0);
+    BOOST_CHECK (gx == 0.5);
+    BOOST_CHECK (bx == 0.25);
+  }
   cr->set_source_rgba (0.1, 0.3, 0.5, 0.7);
-  solid =
-    Cairo::RefPtr<Cairo::SolidPattern>::cast_dynamic(cr->get_source ());
-  BOOST_REQUIRE (solid);
-  solid->get_rgba (rx, gx, bx, ax);
-  BOOST_CHECK (rx == 0.1);
-  BOOST_CHECK (gx == 0.3);
-  BOOST_CHECK (bx == 0.5);
-  BOOST_CHECK (ax == 0.7);
+  {
+    Cairo::RefPtr<Cairo::SolidPattern> solid =
+      Cairo::RefPtr<Cairo::SolidPattern>::cast_dynamic(cr->get_source ());
+    BOOST_REQUIRE (solid);
+    double rx, gx, bx, ax;
+    solid->get_rgba (rx, gx, bx, ax);
+    BOOST_CHECK (rx == 0.1);
+    BOOST_CHECK (gx == 0.3);
+    BOOST_CHECK (bx == 0.5);
+    BOOST_CHECK (ax == 0.7);
+  }
 }
 
 void
