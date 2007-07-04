@@ -604,14 +604,15 @@ double Context::get_miter_limit() const
 void
 Context::get_dash(std::vector<double>& dashes, double& offset) const
 {
-  // FIXME: do we need to allocate this array dynamically?  I seem to remember
-  // some compilers have trouble with allocating arrays on the stack when the
-  // array size isn't a compile-time constant...
+  // Allocate this array dynamically because some compilers complain about
+  // allocating arrays on the stack when the array size isn't a compile-time
+  // constant...
   const int cnt = cairo_get_dash_count(m_cobject);
-  double dash_array[cnt];
+  double* dash_array = new double[cnt];
   cairo_get_dash(const_cast<cairo_t*>(m_cobject), dash_array, &offset);
   check_object_status_and_throw_exception(*this);
   dashes.assign(dash_array, dash_array + cnt);
+  delete[] dash_array;
 }
 
 void Context::get_matrix(Matrix& matrix)
