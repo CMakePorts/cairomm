@@ -9,7 +9,7 @@
 #include <math.h>
 #endif 
 
-int main(int argc, char** argv)
+int main()
 {
 #ifdef CAIRO_HAS_SVG_SURFACE
 

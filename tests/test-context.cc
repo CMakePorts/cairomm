@@ -231,26 +231,29 @@ test_current_point ()
 }
 
 test_suite*
-init_unit_test_suite( int argc, char* argv[] )
+init_unit_test_suite(int argc, char* argv[])
 {
-    test_suite* test= BOOST_TEST_SUITE( "Cairo::Context Tests" );
+  // compile even with -Werror
+  if (argc && argv) {}
 
-    test->add (BOOST_TEST_CASE (&test_dashes));
-    test->add (BOOST_TEST_CASE (&test_save_restore));
-    test->add (BOOST_TEST_CASE (&test_operator));
-    test->add (BOOST_TEST_CASE (&test_source));
-    test->add (BOOST_TEST_CASE (&test_tolerance));
-    test->add (BOOST_TEST_CASE (&test_antialias));
-    test->add (BOOST_TEST_CASE (&test_fill_rule));
-    test->add (BOOST_TEST_CASE (&test_line_width));
-    test->add (BOOST_TEST_CASE (&test_line_cap));
-    test->add (BOOST_TEST_CASE (&test_line_join));
-    test->add (BOOST_TEST_CASE (&test_miter_limit));
-    //test->add (BOOST_TEST_CASE (&test_matrix));
-    //test->add (BOOST_TEST_CASE (&test_user_device));
-    test->add (BOOST_TEST_CASE (&test_draw));
-    test->add (BOOST_TEST_CASE (&test_clip));
-    test->add (BOOST_TEST_CASE (&test_current_point));
+  test_suite* test= BOOST_TEST_SUITE( "Cairo::Context Tests" );
 
-    return test;
+  test->add (BOOST_TEST_CASE (&test_dashes));
+  test->add (BOOST_TEST_CASE (&test_save_restore));
+  test->add (BOOST_TEST_CASE (&test_operator));
+  test->add (BOOST_TEST_CASE (&test_source));
+  test->add (BOOST_TEST_CASE (&test_tolerance));
+  test->add (BOOST_TEST_CASE (&test_antialias));
+  test->add (BOOST_TEST_CASE (&test_fill_rule));
+  test->add (BOOST_TEST_CASE (&test_line_width));
+  test->add (BOOST_TEST_CASE (&test_line_cap));
+  test->add (BOOST_TEST_CASE (&test_line_join));
+  test->add (BOOST_TEST_CASE (&test_miter_limit));
+  //test->add (BOOST_TEST_CASE (&test_matrix));
+  //test->add (BOOST_TEST_CASE (&test_user_device));
+  test->add (BOOST_TEST_CASE (&test_draw));
+  test->add (BOOST_TEST_CASE (&test_clip));
+  test->add (BOOST_TEST_CASE (&test_current_point));
+
+  return test;
 }

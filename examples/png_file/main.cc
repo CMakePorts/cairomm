@@ -9,7 +9,7 @@
 #include <math.h>
 #endif 
 
-int main(int argc, char** argv)
+int main()
 {
     Cairo::RefPtr<Cairo::ImageSurface> surface =
         Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 600, 400);

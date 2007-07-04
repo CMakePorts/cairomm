@@ -1,4 +1,3 @@
-/*
 /* Copyright (C) 2005 The cairomm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -55,7 +54,7 @@ void draw(Cairo::RefPtr<Cairo::Context> cr, int width, int height)
 
     cr->set_source_rgb(0.0, 0.0, 0.0);
 
-    cr->translate(WIDTH / 2.0, HEIGHT / 2.0);
+    cr->translate(width / 2.0, height / 2.0);
 
     cr->get_text_extents(text, extents);
 

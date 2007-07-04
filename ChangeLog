@@ -1,5 +1,15 @@
 2007-07-04  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* examples/pdf-surface/main.cc:
+	* examples/png_file/main.cc:
+	* examples/ps-surface/main.cc:
+	* examples/svg-surface/main.cc:
+	* examples/text-rotate/text-rotate.cc:
+	* tests/test-context.cc: fix a bunch of minor compile errors when compiling
+	with -Werror
+
+2007-07-04  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* configure.in: enable extra compiler warnings and -Werror if the
 	CAIROMM_DEVEL environment variable is set to 'on'.  This caught the
 	following mistake.
