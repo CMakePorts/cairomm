@@ -120,7 +120,10 @@ else
 fi
 AM_CONDITIONAL(AUTOTESTS, test x$ENABLE_TESTS = xyes)
 
-
+dnl enable compiler warnings when the CAIROMM_DEVEL environment variable is set to 'on'
+if test  "x$CAIROMM_DEVEL" = "xon" ; then
+    CXXFLAGS="$CXXFLAGS -Wall -g -Werror -Wextra"
+fi
 
 
 dnl Check whether to build the documentation directory

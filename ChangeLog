@@ -1,5 +1,12 @@
 2007-07-04  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* configure.in: enable extra compiler warnings and -Werror if the
+	CAIROMM_DEVEL environment variable is set to 'on'.  This caught the
+	following mistake.
+	* cairomm/pattern.cc: forgot to return the ColorStop vector
+
+2007-07-04  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/context.cc: fix a FIXME to match the style of
 	ScaledFont::glyph_extents since MSVC (and possibly other compilers) complain
 	when allocating an array on the stack and the size of the array is not a

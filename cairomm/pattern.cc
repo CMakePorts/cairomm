@@ -212,6 +212,7 @@ Gradient::get_color_stops() const
                                       &stop.green, &stop.blue, &stop.alpha);
     stops.push_back(stop);
   }
+  return stops;
 }
 
 
