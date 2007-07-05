@@ -55,16 +55,17 @@ void throw_exception(ErrorStatus status)
       throw Cairo::logic_error(status);
       break;
 
-    // Other      
+    // Other
     case CAIRO_STATUS_READ_ERROR:
     case CAIRO_STATUS_WRITE_ERROR:
-    {
-      //The Cairo language binding advice suggests that these are stream errors 
-      //that should be mapped to their C++ equivalents.
-      const char* error_message = cairo_status_to_string(status);
-      throw std::ios_base::failure( error_message ? error_message : std::string() );
-    }
-    
+      {
+        //The Cairo language binding advice suggests that these are stream errors 
+        //that should be mapped to their C++ equivalents.
+        const char* error_message = cairo_status_to_string(status);
+        throw std::ios_base::failure( error_message ? error_message : std::string() );
+      }
+      break;
+
     default:
       throw Cairo::logic_error(status);
       break;

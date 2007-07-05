@@ -1,5 +1,9 @@
 2007-07-04  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/private.cc: add missing 'break;' on the I/O error case statement
+
+2007-07-04  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/context.cc: when getting the source pattern of a Cairo::Context,
 	check which type of Pattern it is so that we create the correct C++ wrapper.
 	Without this, RefPtr<>::cast_dynamic() doesn't seem to work as we would
