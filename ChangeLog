@@ -1,5 +1,16 @@
 2007-07-04  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* tests/test-context.cc: add some tests for matrix transformations and
+	user-to-device coordinate mappings.  The matrix transformation 'test' does
+	nothing more than call the functions to excercise them a bit, but it's
+	causing an unexpected exception to be triggered when calling
+	Context::set_matrix().  The odd thing is that exception.what() results in
+	'success' being printed.  This requires further investigation
+	Also used BOOST_CHECK_EQUAL in most places instead of BOOST_CHECK to get
+	more meaningful failure messages.
+
+2007-07-04  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/private.cc: add missing 'break;' on the I/O error case statement
 
 2007-07-04  Jonathon Jongsma  <jjongsma@gnome.org>
