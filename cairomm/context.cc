@@ -18,6 +18,9 @@
 
 #include <cairomm/context.h>
 #include <cairomm/private.h>
+#include <cairomm/surface.h>
+#include <cairomm/win32_surface.h>
+#include <cairomm/xlib_surface.h>
 
 /* M_PI is defined in math.h in the case of Microsoft Visual C++ */
 #if defined(_MSC_VER)
@@ -538,10 +541,8 @@ Operator Context::get_operator() const
   return result;
 }
 
-RefPtr<Pattern> Context::get_source()
+static RefPtr<Pattern> get_pattern_wrapper (cairo_pattern_t* pattern)
 {
-  cairo_pattern_t* pattern = cairo_get_source(m_cobject);
-  check_object_status_and_throw_exception(*this);
   cairo_pattern_type_t pattern_type = cairo_pattern_get_type (pattern);
   switch (pattern_type)
   {
@@ -562,11 +563,18 @@ RefPtr<Pattern> Context::get_source()
   }
 }
 
+RefPtr<Pattern> Context::get_source()
+{
+  cairo_pattern_t* pattern = cairo_get_source(m_cobject);
+  check_object_status_and_throw_exception(*this);
+  return get_pattern_wrapper (pattern);
+}
+
 RefPtr<const Pattern> Context::get_source() const
 {
   cairo_pattern_t* pattern = cairo_get_source(m_cobject);
   check_object_status_and_throw_exception(*this);
-  return RefPtr<const Pattern>(new Pattern(pattern, false /* does not have reference */));
+  return RefPtr<const Pattern>::cast_const (get_pattern_wrapper (pattern));
 }
 
 double Context::get_tolerance() const
@@ -644,18 +652,72 @@ void Context::get_matrix(Matrix& matrix)
   check_object_status_and_throw_exception(*this);
 }
 
+static
+RefPtr<Surface> get_surface_wrapper (cairo_surface_t* surface)
+{
+  cairo_surface_type_t surface_type = cairo_surface_get_type (surface);
+  switch (surface_type)
+  {
+    case CAIRO_SURFACE_TYPE_IMAGE:
+      return RefPtr<ImageSurface>(new ImageSurface(surface, false /* does not have reference */));
+      break;
+#if CAIRO_HAS_PDF_SURFACE
+    case CAIRO_SURFACE_TYPE_PDF:
+      return RefPtr<PdfSurface>(new PdfSurface(surface, false /* does not have reference */));
+      break;
+#endif
+#if CAIRO_HAS_PS_SURFACE
+    case CAIRO_SURFACE_TYPE_PS:
+      return RefPtr<PsSurface>(new PsSurface(surface, false /* does not have reference */));
+      break;
+#endif
+#if CAIRO_HAS_XLIB_SURFACE
+    case CAIRO_SURFACE_TYPE_XLIB:
+      return RefPtr<XlibSurface>(new XlibSurface(surface, false /* does not have reference */));
+      break;
+#endif
+#if CAIRO_HAS_GLITZ_SURFACE
+    case CAIRO_SURFACE_TYPE_GLITZ:
+      return RefPtr<GlitzSurface>(new GlitzSurface(surface, false /* does not have reference */));
+      break;
+#endif
+#if CAIRO_HAS_QUARTZ_SURFACE
+    case CAIRO_SURFACE_TYPE_QUARTZ:
+      return RefPtr<QuartzSurface>(new QuartzSurface(surface, false /* does not have reference */));
+      break;
+#endif
+#if CAIRO_HAS_WIN32_SURFACE
+    case CAIRO_SURFACE_TYPE_WIN32:
+      return RefPtr<Win32Surface>(new Win32Surface(surface, false /* does not have reference */));
+      break;
+#endif
+#if CAIRO_HAS_SVG_SURFACE
+    case CAIRO_SURFACE_TYPE_SVG:
+      return RefPtr<SvgSurface>(new SvgSurface(surface, false /* does not have reference */));
+      break;
+#endif
+    // the following surfaces are not directly supported in cairomm yet
+    case CAIRO_SURFACE_TYPE_DIRECTFB:
+    case CAIRO_SURFACE_TYPE_OS2:
+    case CAIRO_SURFACE_TYPE_BEOS:
+    case CAIRO_SURFACE_TYPE_XCB:
+    default:
+      return RefPtr<Surface>(new Surface(surface, false /* does not have reference */));
+  }
+}
+
 RefPtr<Surface> Context::get_target()
 {
   cairo_surface_t* surface = cairo_get_target(const_cast<cairo_t*>(m_cobject));
   check_object_status_and_throw_exception(*this);
-  return RefPtr<Surface>(new Surface(surface, false /* does not have reference */));
+  return get_surface_wrapper (surface);
 }
 
 RefPtr<const Surface> Context::get_target() const
 {
   cairo_surface_t* surface = cairo_get_target(const_cast<cairo_t*>(m_cobject));
   check_object_status_and_throw_exception(*this);
-  return RefPtr<const Surface>(new Surface(surface, false /* does not have reference */));
+  return RefPtr<const Surface>::cast_const (get_surface_wrapper (surface));
 }
 
 Path* Context::copy_path() const
@@ -694,7 +756,7 @@ RefPtr<Pattern> Context::pop_group()
 {
   cairo_pattern_t* pattern = cairo_pop_group(m_cobject);
   check_object_status_and_throw_exception(*this);
-  return RefPtr<Pattern>(new Pattern(pattern));
+  return get_pattern_wrapper(pattern);
 }
 
 void Context::pop_group_to_source()
@@ -713,7 +775,7 @@ RefPtr<Surface> Context::get_group_target()
     throw_exception(CAIRO_STATUS_NULL_POINTER);
   }
 
-  return RefPtr<Surface>(new Surface(surface, false));
+  return get_surface_wrapper(surface);
 }
 
 RefPtr<const Surface> Context::get_group_target() const
@@ -726,7 +788,7 @@ RefPtr<const Surface> Context::get_group_target() const
     throw_exception(CAIRO_STATUS_NULL_POINTER);
   }
 
-  return RefPtr<const Surface>(new Surface(surface, false));
+  return get_surface_wrapper(surface);
 }
 
 } //namespace Cairo

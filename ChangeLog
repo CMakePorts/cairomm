@@ -1,5 +1,19 @@
 2007-07-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/context.cc: add ability to use dynamic casting with the return
+	values from more functions, including:
+		Context::get_target()
+		Context::get_target() const
+		Context::get_source()
+		Context::get_source() const
+		Context::get_group_target()
+		Context::get_group_target() const
+		Context::pop_group()
+	* tests/test-context.cc: a few additional tests to verify the const /
+	non-const versions both work with dynamic casting.
+
+2007-07-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* docs/reference/cairomm.css: Improve the documentation style a little bit
 	to make it more readable
 	* docs/reference/Doxyfile.in: build the reference doc for the new

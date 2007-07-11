@@ -97,6 +97,12 @@ test_source ()
     BOOST_CHECK_EQUAL (1.0, r);
     BOOST_CHECK_EQUAL (0.5, g);
     BOOST_CHECK_EQUAL (0.25, b);
+
+    // now try for const objects..
+    Cairo::RefPtr<const Cairo::Context> cr2 = cr;
+    Cairo::RefPtr<const Cairo::SolidPattern> retrieved_solid2 =
+      Cairo::RefPtr<const Cairo::SolidPattern>::cast_dynamic(cr2->get_source ());
+    BOOST_REQUIRE (retrieved_solid2);
   }
 
   cr->set_source (gradient_pattern);
@@ -288,6 +294,31 @@ test_current_point ()
   BOOST_CHECK (y == 3.0);
 }
 
+void
+test_target ()
+{
+  Cairo::RefPtr<Cairo::Surface> surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 10, 10); \
+  Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surf);
+
+  Cairo::RefPtr<Cairo::ImageSurface> target_surface =
+    Cairo::RefPtr<Cairo::ImageSurface>::cast_dynamic(cr->get_target ());
+  Cairo::RefPtr<Cairo::PdfSurface> bad_surface =
+    Cairo::RefPtr<Cairo::PdfSurface>::cast_dynamic(cr->get_target ());
+  BOOST_CHECK (target_surface);
+  BOOST_CHECK (!bad_surface);
+
+  // now check for const objects...
+  Cairo::RefPtr<const Cairo::Context> cr2 = Cairo::Context::create(surf);
+
+  Cairo::RefPtr<const Cairo::ImageSurface> target_surface2 =
+    Cairo::RefPtr<const Cairo::ImageSurface>::cast_dynamic(cr2->get_target ());
+  Cairo::RefPtr<const Cairo::PdfSurface> bad_surface2 =
+    Cairo::RefPtr<const Cairo::PdfSurface>::cast_dynamic(cr2->get_target ());
+  BOOST_CHECK (target_surface2);
+  BOOST_CHECK (!bad_surface2);
+
+}
+
 test_suite*
 init_unit_test_suite(int argc, char* argv[])
 {
@@ -312,6 +343,7 @@ init_unit_test_suite(int argc, char* argv[])
   test->add (BOOST_TEST_CASE (&test_draw));
   test->add (BOOST_TEST_CASE (&test_clip));
   test->add (BOOST_TEST_CASE (&test_current_point));
+  test->add (BOOST_TEST_CASE (&test_target));
 
   return test;
 }
