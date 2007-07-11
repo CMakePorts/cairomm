@@ -37,6 +37,20 @@ test_dashes ()
   BOOST_CHECK_EQUAL (dash_array[3], get_array[3]);
   BOOST_CHECK_EQUAL (0.54, get_offset);
 
+  std::vector<double> dash_vect(4);
+  dash_vect[0] = 0.5;
+  dash_vect[1] = 0.25;
+  dash_vect[2] = 0.93;
+  dash_vect[3] = 1.31;
+  cr->set_dash(dash_vect, 0.4);
+
+  cr->get_dash (get_array, get_offset);
+  BOOST_CHECK_EQUAL (dash_vect[0], get_array[0]);
+  BOOST_CHECK_EQUAL (dash_vect[1], get_array[1]);
+  BOOST_CHECK_EQUAL (dash_vect[2], get_array[2]);
+  BOOST_CHECK_EQUAL (dash_vect[3], get_array[3]);
+  BOOST_CHECK_EQUAL (0.4, get_offset);
+
   cr->unset_dash ();
   cr->get_dash (get_array, get_offset);
   BOOST_CHECK (get_array.empty ());

@@ -235,6 +235,11 @@ public:
    */
   void set_line_join(LineJoin line_join);
 
+  /** 
+   * Alternate version of set_dash().  You'll probably want to use the one that
+   * takes a std::vector argument instead.
+   */
+  void set_dash(std::valarray<double>& dashes, double offset);
   /** Sets the dash pattern to be used by stroke(). A dash pattern is specified
    * by dashes, an array of positive values. Each value provides the user-space
    * length of altenate "on" and "off" portions of the stroke. The offset
@@ -252,7 +257,7 @@ public:
    *
    * @exception
    */
-  void set_dash(std::valarray<double>& dashes, double offset);
+  void set_dash(std::vector<double>& dashes, double offset);
 
   /** This function disables a dash pattern that was set with set_dash()
    */
