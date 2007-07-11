@@ -1,3 +1,11 @@
+1.4.0:
+
+ * Wrapped new API added in cairo 1.4
+ * Added support for Quartz surfaces
+ * ability to use dynamic casting for surfaces and patterns returned from
+   Context::get_target(), Context::get_source(), etc.
+ * Various build and bug fixes
+
 1.2.4:
 
  * Fixed an error that prevented Cairo::RefPtr<>::cast_static() and

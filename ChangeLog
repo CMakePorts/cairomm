@@ -1,3 +1,10 @@
+=== 1.4.0 ===
+
+2007-07-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* NEWS: Update NEWS for release
+	* configure.in: bump version for release
+
 2007-07-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/context.cc: add ability to use dynamic casting with the return
