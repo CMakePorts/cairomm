@@ -201,6 +201,7 @@ table.mdTable + table   {
     border-left-style: none;
     background-color: #FAFAFA;
     font-size: 80%;
+    font-family: monospace;
 }
 .memItemRight {
     padding: 1px 8px 0px 8px;
@@ -219,6 +220,7 @@ table.mdTable + table   {
     border-left-style: none;
     background-color: #FAFAFA;
     font-size: 80%;
+    font-family: monospace;
 }
 .memTemplItemLeft {
     padding: 1px 0px 0px 8px;
@@ -237,6 +239,7 @@ table.mdTable + table   {
     border-left-style: none;
     background-color: #FAFAFA;
     font-size: 80%;
+    font-family: monospace;
 }
 .memTemplItemRight {
     padding: 1px 8px 0px 8px;
@@ -255,6 +258,7 @@ table.mdTable + table   {
     border-left-style: none;
     background-color: #FAFAFA;
     font-size: 80%;
+    font-family: monospace;
 }
 .memTemplParams {
     padding: 1px 0px 0px 8px;
@@ -275,6 +279,21 @@ table.mdTable + table   {
     background-color: #FAFAFA;
     font-size: 80%;
 }
+
+div.memitem
+{
+    margin-top: 3em;
+}
+
+.memproto
+{
+    background-color: #EEEEEE;
+    font-weight: bold;
+    padding: 1em;
+    border: 1px solid #CCCCCC;
+    font-family: monospace;
+}
+
 .search     {
     color: #003399;
     font-weight: bold;
@@ -304,5 +323,4 @@ th.dirtab {
 hr {
     height: 1px;
     border: none;
-    border-top: 1px solid black;
 }

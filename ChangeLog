@@ -1,5 +1,12 @@
 2007-07-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* docs/reference/cairomm.css: Improve the documentation style a little bit
+	to make it more readable
+	* docs/reference/Doxyfile.in: build the reference doc for the new
+	QuartzSurface class
+
+2007-07-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/context.cc:
 	* cairomm/context.h: add alternate API for set_dash() which takes a
 	std::vector argument instead of the slightly unexpected std::valarray
