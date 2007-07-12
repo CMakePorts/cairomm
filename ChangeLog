@@ -2,6 +2,13 @@
 
 2007-07-12  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* Makefile.am: add doc-publish target and make release-publish depend on
+	this.  This automatically uploads the new API documentation on release
+	* docs/reference/Makefile.am: upload the html documentation and a tarball of
+	the documentation to the cairographics.org site
+
+2007-07-12  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* docs/reference/Makefile.am: hacky workaround to get distcheck to pass
 
 2007-07-10  Jonathon Jongsma  <jjongsma@gnome.org>

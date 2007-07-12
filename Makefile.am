@@ -77,7 +77,10 @@ release-upload: release-check $(tar_file) $(sha1_file) $(gpg_file)
 	ssh $(RELEASE_UPLOAD_HOST) "rm -f $(RELEASE_UPLOAD_DIR)/LATEST-$(PACKAGE)-[0-9]* && ln -s $(tar_file) $(RELEASE_UPLOAD_DIR)/LATEST-$(PACKAGE)-$(VERSION)"
 	$(GIT) tag -s -m "$(PACKAGE) release $(VERSION)" v$(VERSION)
 
-release-publish: release-upload releases/$(sha1_file)
+doc-publish:
+	(cd docs/reference && $(MAKE) $(AM_MAKEFLAGS) publish)
+
+release-publish: release-upload doc-publish releases/$(sha1_file)
 	@echo ""
 	@echo "Please send an announcement to $(RELEASE_ANNOUNCE_LIST)"
 	@echo "including the following:"

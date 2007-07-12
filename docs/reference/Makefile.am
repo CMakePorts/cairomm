@@ -16,15 +16,18 @@ $(index_html): $(DOXYGEN_CONFIGFILE) $(wildcard $(top_srcdir)/cairomm/*.h) $(HTM
 	doxygen $(DOXYGEN_CONFIGFILE) \
 	2> doxygen-warnings.txt | tee doxygen-output.txt && cat doxygen-warnings.txt
 
-html: $(index_html)
+CAIROMM_DOC_TARNAME=$(PACKAGE)-doc.tar.gz
 
-cairomm-reference-html.tar.gz: $(index_html)
-	tar cf - html | gzip -c --best >$@
+doc-tarball : $(CAIROMM_DOC_TARNAME)
+
+$(CAIROMM_DOC_TARNAME): $(index_html)
+	tar cf - html | gzip -c --best > $@
 
 referencedir = $(datadir)/doc/libcairomm-1.0/reference/html
 
-publish:	html
-	rsync -avz --rsh ssh --cvs-exclude html/ $(WEB_SERVER):$(WEB_SERVER_PATH)
+publish: $(index_html) doc-tarball
+	rsync -avz --rsh ssh html/ $(WEB_SERVER):$(WEB_SERVER_PATH)
+	rsync -avz --rsh ssh $(CAIROMM_DOC_TARNAME) $(WEB_SERVER):$(WEB_SERVER_PATH)
 
 install-reference: $(index_html)
 	@$(NORMAL_INSTALL)
