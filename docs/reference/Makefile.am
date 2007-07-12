@@ -5,8 +5,7 @@ WEB_SERVER_PATH = /srv/cairo.freedesktop.org/www/documentation/cairomm/reference
 HTML_TEMPLATE_FILES = cairomm.css cairomm-header.html
 
 EXTRA_DIST = $(DOXYGEN_CONFIGFILE_SOURCE) \
-			 $(HTML_TEMPLATE_FILES) cairomm_doxygen_tags \
-			 html
+			 $(HTML_TEMPLATE_FILES) cairomm_doxygen_tags
 
 cairomm_doxygen_tags : $(index_html)
 
@@ -58,6 +57,10 @@ uninstall-local: uninstall-reference
 all-local: $(index_html)
 
 maintainer-clean-local: doc-clean
+distclean-local: doc-clean
+
+dist-hook: $(index_html)
+	cp -R html $(distdir)
 
 DISTCLEANFILES = $(DOXYGEN_CONFIGFILE) $(DOXYGEN_REPORTS)
 
