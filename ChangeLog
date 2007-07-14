@@ -1,3 +1,10 @@
+=== 1.4.2 ===
+
+2007-07-14  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* NEWS: updated for 1.4.2 release
+	* configure.in: bumped version to 1.4.2
+
 2007-06-14  Dave Beckett  <dave@dajobe.org>
 
 	* configure.in: Update the GENERIC_LIBRARY_VERSION correctly
