@@ -64,6 +64,9 @@ public:
    */
   explicit inline RefPtr(T_CppObject* pCppObject);
 
+  ///  For use only in the internal implementation of sharedptr.
+  explicit inline RefPtr(T_CppObject* pCppObject, int* refcount);
+
   /** Copy constructor
    *
    * This increments the shared reference count.
@@ -227,6 +230,17 @@ RefPtr<T_CppObject>::RefPtr(T_CppObject* pCppObject)
   }
 }
 
+//Used by cast_*() implementations:
+template <class T_CppObject> inline
+RefPtr<T_CppObject>::RefPtr(T_CppObject* pCppObject, int* refcount)
+:
+  pCppObject_(pCppObject),
+  pCppRefcount_(refcount)
+{
+  if(pCppObject_ && pCppRefcount_)
+    ++(*pCppRefcount_);
+}
+
 template <class T_CppObject> inline
 RefPtr<T_CppObject>::RefPtr(const RefPtr<T_CppObject>& src)
 :
@@ -342,10 +356,10 @@ RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_dynamic(const RefPtr<T_CastFrom>& 
 {
   T_CppObject *const pCppObject = dynamic_cast<T_CppObject*>(src.operator->());
 
-  if(pCppObject && src.refcount_())
-    ++(*(src.refcount_()));
-
-  return RefPtr<T_CppObject>(pCppObject); //TODO: Does an unnecessary extra reference() on the C object.
+  if(pCppObject) //Check whether dynamic_cast<> succeeded so we don't pass a null object with a used refcount:
+    return RefPtr<T_CppObject>(pCppObject, src.refcount_());
+  else
+    return RefPtr<T_CppObject>();
 }
 
 template <class T_CppObject>
@@ -355,10 +369,7 @@ RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_static(const RefPtr<T_CastFrom>& s
 {
   T_CppObject *const pCppObject = static_cast<T_CppObject*>(src.operator->());
 
-  if(pCppObject && src.refcount_())
-    ++(*(src.refcount_()));
-
-  return RefPtr<T_CppObject>(pCppObject); //TODO: Does an unnecessary extra reference() on the C object.
+  return RefPtr<T_CppObject>(pCppObject, src.refcount_());
 }
 
 template <class T_CppObject>
@@ -368,10 +379,7 @@ RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_const(const RefPtr<T_CastFrom>& sr
 {
   T_CppObject *const pCppObject = const_cast<T_CppObject*>(src.operator->());
 
-  if(pCppObject && src.refcount_())
-    ++(*(src.refcount_()));
-
-  return RefPtr<T_CppObject>(pCppObject); //TODO: Does an unnecessary extra reference() on the C object.
+  return RefPtr<T_CppObject>(pCppObject, src.refcount_());
 }
 
 #endif /* DOXYGEN_IGNORE_THIS */
