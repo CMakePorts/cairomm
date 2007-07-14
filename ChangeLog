@@ -1,3 +1,7 @@
+2007-07-14  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* configure.in: post-release version number bump
+
 === 1.4.2 ===
 
 2007-07-14  Jonathon Jongsma  <jjongsma@gnome.org>
