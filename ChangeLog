@@ -1,3 +1,12 @@
+2007-06-14  Dave Beckett  <dave@dajobe.org>
+
+	* configure.in: Update the GENERIC_LIBRARY_VERSION correctly
+	Was: 1:0:0 in 1.2.4
+	current: interfaces were added, increment to 2
+	revision: set to zero since current was incremented
+	age: increment since interfaces were added
+	Changed to: 2:0:1
+
 2007-06-14  Murray Cumming  <murrayc@murrayc.com>
 
 	* cairomm/refptr.h: Added RefPtr(object, refcount) constructor
