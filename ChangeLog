@@ -9,6 +9,7 @@
 	* cairomm/private.cc:
 	* cairomm/private.h: Use ifdef to replace throw_exception() with an empty 
 	implementation when exceptions are disabled.
+	This allows cairomm to be built when using CXXFLAGS=-fno-exceptions.
 
 2007-07-14  Jonathon Jongsma  <jjongsma@gnome.org>
 
