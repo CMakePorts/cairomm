@@ -30,6 +30,8 @@ VERSION=$GENERIC_VERSION
 
 AM_INIT_AUTOMAKE(cairomm, $GENERIC_VERSION)
 
+AM_CONFIG_HEADER(cairomm/cairommconfig.h)
+
 AC_PROG_CXX
 AC_PROG_CXXCPP
 AC_LANG_CPLUSPLUS
@@ -125,6 +127,7 @@ if test  "x$CAIROMM_DEVEL" = "xon" ; then
     CXXFLAGS="$CXXFLAGS -Wall -g -Werror -Wextra"
 fi
 
+CAIROMM_ARG_ENABLE_API_EXCEPTIONS()
 
 dnl Check whether to build the documentation directory
 DOCS_SUBDIR="" dnl set DOCS_SUBDIR initially blank

@@ -1,3 +1,15 @@
+2007-07-21  Murray Cumming  <murrayc@murrayc.com>
+
+	* m4/reduced.m4: Added, containing CAIROMM_ARG_ENABLE_API_EXCEPTIONS().
+	* configure.in: Use CAIROMM_ARG_ENABLE_API_EXCEPTIONS() to add a 
+	--enable-api-exceptions=yes/no option.
+	Used to generate a cairomm/cairommconfig.h config file, which 
+	defines (or not) CAIROMM_EXCEPTIONS_ENABLED.
+	* cairomm/cairommconfig.h.in: Added, used to generate cairommconfig.h
+	* cairomm/private.cc:
+	* cairomm/private.h: Use ifdef to replace throw_exception() with an empty 
+	implementation when exceptions are disabled.
+
 2007-07-14  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* configure.in: post-release version number bump

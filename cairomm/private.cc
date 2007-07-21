@@ -16,6 +16,7 @@
  * 02110-1301, USA.
  */
 
+#include <cairommconfig.h> //For CAIROMM_EXCEPTIONS_ENABLED
 #include <cairomm/private.h>
 #include <cairomm/exception.h>
 #include <stdexcept>
@@ -24,6 +25,7 @@
 namespace Cairo
 {
 
+#ifdef CAIROMM_EXCEPTIONS_ENABLED
 void throw_exception(ErrorStatus status)
 {
   switch(status)
@@ -71,6 +73,12 @@ void throw_exception(ErrorStatus status)
       break;
   }
 }
+#else
+void throw_exception(ErrorStatus /* status */)
+{
+  //Do nothing. The application should call get_status() instead.
+}
+#endif //CAIROMM_EXCEPTIONS_ENABLED
 
 } //namespace Cairo
 
