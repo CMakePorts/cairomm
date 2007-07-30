@@ -1,3 +1,5 @@
+== 1.4.4 ==
+
 2007-07-21  Murray Cumming  <murrayc@murrayc.com>
 
 	* m4/reduced.m4: Added, containing CAIROMM_ARG_ENABLE_API_EXCEPTIONS().
