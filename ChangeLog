@@ -1,3 +1,8 @@
+2007-08-13  Murray Cumming  <murrayc@murrayc.com>
+
+	* cairomm/context.cc: Add #include <cairomm/quartz_surface.h>
+	to fix the build on MacOS. Thanks to Elias N (Bug #11972).
+
 == 1.4.4 ==
 
 2007-07-21  Murray Cumming  <murrayc@murrayc.com>

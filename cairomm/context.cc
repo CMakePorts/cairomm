@@ -21,6 +21,7 @@
 #include <cairomm/surface.h>
 #include <cairomm/win32_surface.h>
 #include <cairomm/xlib_surface.h>
+#include <cairomm/quartz_surface.h>
 
 /* M_PI is defined in math.h in the case of Microsoft Visual C++ */
 #if defined(_MSC_VER)
