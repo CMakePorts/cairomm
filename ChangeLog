@@ -1,3 +1,10 @@
+== 1.4.6 ==
+
+2007-11-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* NEWS: update news for 1.4.6 release
+	* configure.in: bumped version
+
 2007-08-13  Murray Cumming  <murrayc@murrayc.com>
 
 	* cairomm/context.cc: Add #include <cairomm/quartz_surface.h>

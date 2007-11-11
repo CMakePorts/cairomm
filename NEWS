@@ -1,8 +1,13 @@
+1.4.6:
+
+ * Bugfixes:
+   - Bug #11972: Cannot build cairomm with Quartz enabled
+
 1.4.4:
 
-* Added the --enable-api-exceptions=yes/no configure option, to allow 
-  cairomm to build when exceptions are disabled. For instance, when 
-  using CXXFLAGS=-fno-exceptions with g++.
+ * Added the --enable-api-exceptions=yes/no configure option, to allow 
+   cairomm to build when exceptions are disabled. For instance, when using
+   CXXFLAGS=-fno-exceptions with g++.
 
 1.4.2:
 
