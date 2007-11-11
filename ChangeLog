@@ -1,3 +1,8 @@
+2007-11-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* configure.in: bump version and minimum cairo version so that we can start
+	implementing the 1.5.x features
+
 == 1.4.6 ==
 
 2007-11-10  Jonathon Jongsma  <jjongsma@gnome.org>
