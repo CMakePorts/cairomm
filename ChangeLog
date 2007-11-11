@@ -2,6 +2,11 @@
 
 2007-11-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* docs/reference/Doxyfile.in: update doxygen config file since my version of
+	doxygen now complains that there are obsolete config keys
+
+2007-11-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* NEWS: update news for 1.4.6 release
 	* configure.in: bumped version
 
