@@ -433,6 +433,15 @@ public:
 
 #ifdef CAIRO_HAS_PS_SURFACE
 
+/**
+ * describes the language level of the PostScript Language Reference that a
+ * generated PostScript file will conform to.
+ */
+typedef enum {
+    PS_LEVEL_2 = CAIRO_PS_LEVEL_2,
+    PS_LEVEL_3 = CAIRO_PS_LEVEL_3
+} PsLevel;
+
 /** A PsSurface provides a way to render PostScript documents from cairo.  This
  * surface is not rendered to the screen but instead renders the drawing to a
  * PostScript file on disk.
@@ -514,6 +523,54 @@ public:
    */
   void dsc_begin_page_setup();
 
+/**
+ * If eps is true, the PostScript surface will output Encapsulated
+ * PostScript.
+ *
+ * This function should only be called before any drawing operations
+ * have been performed on the current page. The simplest way to do
+ * this is to call this function immediately after creating the
+ * surface. An Encapsulated Postscript file should never contain more
+ * than one page.
+ *
+ * @since 1.6
+ **/
+  void set_eps(bool eps);
+
+  /**
+   * Restricts the generated PostSript file to @level. See get_levels() for a
+   * list of available level values that can be used here.
+   *
+   * This function should only be called before any drawing operations have been
+   * performed on the given surface. The simplest way to do this is to call this
+   * function immediately after creating the surface.
+   *
+   * @param level PostScript level
+   *
+   * @since 1.6
+   **/
+  void restrict_to_level(PsLevel level);
+
+  /**
+   * Used to retrieve the list of supported levels. See
+   * restrict_to_level().
+   *
+   * @since 1.6
+   **/
+  static const std::vector<PsLevel> get_levels();
+
+  /**
+   * Get the string representation of the given level id. This function will
+   * return an empty string if level id isn't valid. See get_levels() for a way
+   * to get the list of valid level ids.
+   *
+   * @return the string associated to given level.
+   *
+   * @param level a level id
+   *
+   * @since 1.6
+   **/
+  static std::string level_to_string(PsLevel level);
 };
 
 #endif // CAIRO_HAS_PS_SURFACE

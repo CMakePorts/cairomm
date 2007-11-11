@@ -1,6 +1,12 @@
 2007-11-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/surface.cc:
+	* cairomm/surface.h: add new PsSurface API: set_eps(), restrict_to_level(),
+	get_levels(), level_to_string()
+
+2007-11-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/surface.cc:
 	* cairomm/surface.h: add Surface::copy_page() and Surface::show_page()
 
 2007-11-10  Jonathon Jongsma  <jjongsma@gnome.org>

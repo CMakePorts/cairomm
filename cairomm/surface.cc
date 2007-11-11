@@ -305,6 +305,39 @@ void PsSurface::dsc_begin_page_setup()
   check_object_status_and_throw_exception(*this);
 }
 
+void PsSurface::set_eps(bool eps)
+{
+  cairo_ps_surface_set_eps(m_cobject, eps);
+  check_object_status_and_throw_exception(*this);
+}
+
+void PsSurface::restrict_to_level(PsLevel level)
+{
+  cairo_ps_surface_restrict_to_level(m_cobject, static_cast<cairo_ps_level_t>(level));
+  check_object_status_and_throw_exception(*this);
+}
+
+const std::vector<PsLevel> PsSurface::get_levels()
+{
+  cairo_ps_level_t const *levels;
+  int num_levels;
+  cairo_ps_get_levels(&levels, &num_levels);
+
+  // Just copy the level array out into a std::vector.  This is a rarely used
+  // function and the array of levels is going to be very small, so there's no
+  // real performance hit.
+  std::vector<PsLevel> vec;
+  for (int i = 0; i < num_levels; ++i)
+  {
+    vec.push_back(static_cast<PsLevel>(levels[i]));
+  }
+  return vec;
+}
+
+std::string PsSurface::level_to_string(PsLevel level)
+{
+  return std::string(cairo_ps_level_to_string(static_cast<cairo_ps_level_t>(level)));
+}
 
 #endif // CAIRO_HAS_PS_SURFACE
 
