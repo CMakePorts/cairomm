@@ -1,5 +1,10 @@
 2007-11-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/surface.cc:
+	* cairomm/surface.h: add Surface::copy_page() and Surface::show_page()
+
+2007-11-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* configure.in: bump version and minimum cairo version so that we can start
 	implementing the 1.5.x features
 

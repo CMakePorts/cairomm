@@ -151,6 +151,24 @@ public:
 
   SurfaceType get_type() const;
 
+  /**
+   * Emits the current page for backends that support multiple pages,
+   * but doesn't clear it, so that the contents of the current page will
+   * be retained for the next page.  Use show_page() if you want to get an empty
+   * page after the emission.
+   *
+   * @since 1.6
+   */
+  void copy_page();
+
+  /**
+   * Emits and clears the current page for backends that support multiple pages.
+   * Use copy_page() if you don't want to clear the page.
+   *
+   * @since 1.6
+   */
+  void show_page();
+
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
 
   /** Writes the contents of surface to a new file filename as a PNG image.
@@ -574,7 +592,7 @@ public:
    * will be empty if version isn't valid. See get_versions() for a way to get
    * the list of valid version ids.
    *
-   * Since: 1.2
+   * since: 1.2
    */
   static std::string version_to_string(SvgVersion version);
 };

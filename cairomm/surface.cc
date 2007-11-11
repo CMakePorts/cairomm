@@ -94,6 +94,18 @@ SurfaceType Surface::get_type() const
   return static_cast<SurfaceType>(surface_type);
 }
 
+void Surface::copy_page()
+{
+  cairo_surface_copy_page(m_cobject);
+  check_object_status_and_throw_exception(*this);
+}
+
+void Surface::show_page()
+{
+  cairo_surface_show_page(m_cobject);
+  check_object_status_and_throw_exception(*this);
+}
+
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
 void Surface::write_to_png(const std::string& filename)
 {
