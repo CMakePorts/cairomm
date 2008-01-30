@@ -75,7 +75,8 @@ AC_DEFUN([AX_BOOST_UNIT_TEST_FRAMEWORK],
 			BN=boost_unit_test_framework
             if test "x$ax_boost_user_unit_test_framework_lib" = "x"; then
          		saved_ldflags="${LDFLAGS}"
-		    	for ax_lib in $BN $BN-$CC $BN-$CC-mt $BN-$CC-mt-s $BN-$CC-s \
+		    	for ax_lib in  $BN $BN-mt $BN-mt-s $BN-s \
+                             $BN-$CC $BN-$CC-mt $BN-$CC-mt-s $BN-$CC-s \
                              lib$BN lib$BN-$CC lib$BN-$CC-mt lib$BN-$CC-mt-s lib$BN-$CC-s \
                              $BN-mgw $BN-mgw $BN-mgw-mt $BN-mgw-mt-s $BN-mgw-s ; do
                    LDFLAGS="${LDFLAGS} -l$ax_lib"
