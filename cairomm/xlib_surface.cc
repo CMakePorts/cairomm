@@ -130,6 +130,34 @@ int XlibSurface::get_width() const
   return w;
 }
 
+#if CAIRO_HAS_XLIB_XRENDER_SURFACE
+Cairo::RefPtr<Cairo::XlibSurface> 
+XlibSurface::create_with_xrender_format (Display *dpy,
+                                         Drawable drawable,
+                                         Screen *screen,
+                                         XRenderPictFormat *format,
+                                         int width,
+                                         int height)
+{
+  cairo_surface_t* cobject =
+      cairo_xlib_surface_create_with_xrender_format(dpy, drawable,
+                                                    screen, format,
+                                                    width, height);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
+}
+
+XRenderPictFormat*
+XlibSurface::get_xrender_format() const
+{
+    XRenderPictFormat*
+        format = cairo_xlib_surface_get_xrender_format(m_cobject);
+    check_object_status_and_throw_exception(*this);
+    return format;
+}
+
+#endif // CAIRO_HAS_XLIB_XRENDER_SURFACE
+
 #endif // CAIRO_HAS_XLIB_SURFACE
 
 } //namespace Cairo

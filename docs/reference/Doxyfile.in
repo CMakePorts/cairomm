@@ -189,6 +189,7 @@ INCLUDE_PATH           =
 INCLUDE_FILE_PATTERNS  = 
 PREDEFINED             = DOXYGEN_IGNORE_THIS \
                          CAIRO_HAS_XLIB_SURFACE \
+                         CAIRO_HAS_XLIB_XRENDER_SURFACE \
                          CAIRO_HAS_WIN32_SURFACE \
                          CAIRO_HAS_PDF_SURFACE \
                          CAIRO_HAS_PS_SURFACE \

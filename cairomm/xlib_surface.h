@@ -26,8 +26,11 @@
 // You may include it directly if you need to use this API.
 
 #ifdef CAIRO_HAS_XLIB_SURFACE
-#include <cairo-xlib.h> //Needed for the X11 "Display" struct (which pollutes the namespace because it has no prefix.)
-#endif
+#include <cairo-xlib.h> // Needed for the X11 "Display" struct (which pollutes the namespace because it has no prefix.)
+#ifdef CAIRO_HAS_XLIB_XRENDER_SURFACE
+#include <cairo-xlib-xrender.h> // xrender-specific API
+#endif // CAIRO_HAS_XLIB_XRENDER_SURFACE
+#endif // CAIRO_HAS_XLIB_SURFACE
 
 
 namespace Cairo
@@ -136,6 +139,49 @@ public:
 
   /** Get the width in pixels of the X Drawable underlying the surface */
   int get_width() const;
+
+#if CAIRO_HAS_XLIB_XRENDER_SURFACE
+  /**
+   * Creates an Xlib surface that draws to the given drawable.  The way that
+   * colors are represented in the drawable is specified by the provided picture
+   * format.
+   *
+   * Note: If @drawable is a Window, then the function set_size() must be called
+   * whenever the size of the window changes.
+   *
+   * @param dpy an X Display
+   * @param drawable an X Drawable, (a Pixmap or a Window)
+   * @param screen the X Screen associated with @drawable
+   * @param format the picture format to use for drawing to @drawable. The depth
+   *          of @format must match the depth of the drawable.
+   * @param width the current width of @drawable.
+   * @param height the current height of @drawable.
+   *
+   * @return the newly created surface
+   **/
+  static Cairo::RefPtr<Cairo::XlibSurface> 
+  create_with_xrender_format (Display *dpy,
+                              Drawable drawable,
+                              Screen *screen,
+                              XRenderPictFormat *format,
+                              int width,
+                              int height);
+
+  /**
+   * Gets the X Render picture format that @surface uses for rendering with the
+   * X Render extension. If the surface was created by
+   * cairo_xlib_surface_create_with_xrender_format() originally, the return
+   * value is the format passed to that constructor.
+   *
+   * Return value: the XRenderPictFormat* associated with @surface,
+   * or %NULL if the surface is not an xlib surface
+   * or if the X Render extension is not available.
+   *
+   * Since: 1.6
+   **/
+  XRenderPictFormat * get_xrender_format() const;
+
+#endif // CAIRO_HAS_XLIB_XRENDER_SURFACE
 
 };
 

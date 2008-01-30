@@ -1,5 +1,13 @@
 2008-01-30  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/xlib_surface.cc:
+	* cairomm/xlib_surface.h: add new get_xrender_format() function (new in
+	1.5.8) and add missing static create_with_xrender_format() function
+	* docs/reference/Doxyfile.in: add CAIRO_HAS_XLIB_XRENDER_SURFACE feature so
+	that new xrender API shows up in docs
+
+2008-01-30  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* configure.in: bump cairo requirement to 1.5.8
 	* cairomm/context.cc:
 	* cairomm/context.h: add get_path_extents function, new in 1.5.8
