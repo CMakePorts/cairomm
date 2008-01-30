@@ -1,5 +1,13 @@
 2008-01-30  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/context.cc:
+	* cairomm/context.h: add new has_current_point() API to deal with the fact
+	that cairo_get_current_point() changed from a void to a cairo_status_t
+	return type, and we don't necessarily want to throw an exception here or it
+	could break existing applications.  But this could be reconsidered
+
+2008-01-30  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/xlib_surface.cc:
 	* cairomm/xlib_surface.h: add new get_xrender_format() function (new in
 	1.5.8) and add missing static create_with_xrender_format() function

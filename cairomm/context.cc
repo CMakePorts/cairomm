@@ -592,9 +592,21 @@ Antialias Context::get_antialias() const
   return result;
 }
 
+bool Context::has_current_point() const
+{
+  double x, y;
+  cairo_status_t status = cairo_get_current_point(m_cobject, &x, &y);
+  return (status != CAIRO_STATUS_NO_CURRENT_POINT);
+}
+
 void Context::get_current_point(double& x, double& y) const
 {
-  cairo_get_current_point(m_cobject, &x, &y);
+  // NOTE: this function used to return void, but was changed to return a status
+  // if there was no current point.  We would normally check the status and
+  // throw an exception on error, but this could break existing code, so we
+  // added a has_current_point() function to be able to determine the case where
+  // there is no current point.
+  (void) cairo_get_current_point(m_cobject, &x, &y);
   check_object_status_and_throw_exception(*this);
 }
 

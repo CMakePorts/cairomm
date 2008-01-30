@@ -746,8 +746,14 @@ public:
    *
    * @param x	return value for X coordinate of the current point
    * @param y	return value for Y coordinate of the current point
+   *
+   * @see has_current_point
    */
   void get_current_point (double& x, double& y) const;
+
+  /** Checks if there is a current point defined
+   */
+  bool has_current_point() const;
 
   /** Gets the current fill rule, as set by set_fill_rule().
    */
