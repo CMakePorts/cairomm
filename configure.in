@@ -102,7 +102,7 @@ fi
 
 AC_CHECK_HEADERS(string list map, , exit)
 
-PKG_CHECK_MODULES(CAIROMM, cairo >= 1.5)
+PKG_CHECK_MODULES(CAIROMM, cairo >= 1.5.8)
 
 AC_ARG_ENABLE(tests,
               AC_HELP_STRING([--enable-tests=yes|no],

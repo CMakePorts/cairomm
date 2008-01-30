@@ -809,6 +809,36 @@ public:
    */
   Path* copy_path() const;
 
+/**
+ * Computes a bounding box in user-space coordinates covering the points on
+ * the current path. If the current path is empty, returns an empty rectangle
+ * ((0,0), (0,0)). Stroke parameters, fill rule, surface dimensions and
+ * clipping are not taken into account.
+ *
+ * Contrast with fill_extents() and stroke_extents() which return the extents
+ * of only the area that would be "inked" by the corresponding drawing
+ * operations.
+ *
+ * The result of path_extents() is defined as equivalent to the limit of
+ * stroke_extents() with Cairo::LINE_CAP_ROUND as the line width approaches
+ * 0.0, (but never reaching the empty-rectangle returned by stroke_extents()
+ * for a line width of 0.0).
+ *
+ * Specifically, this means that zero-area sub-paths such as
+ * move_to();line_to() segments, (even degenerate cases where the coordinates
+ * to both calls are identical), will be considered as contributing to the
+ * extents. However, a lone move_to() will not contribute to the results of
+ * path_extents().
+ *
+ * @param x1 left of the resulting extents
+ * @param y1 top of the resulting extents
+ * @param x2 right of the resulting extents
+ * @param y2 bottom of the resulting extents
+ *
+ * @since 1.6
+ **/
+  void get_path_extents(double& x1, double& y1, double& x2, double& y2) const;
+
   /** Gets a flattened copy of the current path and returns it to the user
    *
    * @todo See cairo_path_data_t for hints on how to iterate over the returned

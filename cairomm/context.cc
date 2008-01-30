@@ -728,6 +728,13 @@ Path* Context::copy_path() const
   return new Path(cresult, true /* take ownership */); //The caller must delete it.
 }
 
+void Context::get_path_extents(double& x1, double& y1, double& x2, double& y2) const
+{
+  cairo_path_extents(m_cobject, &x1, &y1, &x2, &y2);
+  check_object_status_and_throw_exception(*this);
+}
+
+
 Path* Context::copy_path_flat() const
 {
   cairo_path_t* cresult = cairo_copy_path_flat(const_cast<cairo_t*>(m_cobject));
