@@ -101,6 +101,9 @@ if test x"$os_win32" = xyes; then
 fi
 
 AC_CHECK_HEADERS(string list map, , exit)
+dnl some platforms (e.g. Solaris) need additional C headers included so
+dnl that there are always prototypes and defines available.
+AC_CHECK_HEADERS(math.h)
 
 PKG_CHECK_MODULES(CAIROMM, cairo >= 1.4)
 
