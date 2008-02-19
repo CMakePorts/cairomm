@@ -1,3 +1,14 @@
+2008-02-19  Tim Mooney  <enchanter@users.sourceforge.net>
+
+	* configure.in: Added check, defining HAVE_MATH_H.
+	* cairomm/context.cc:
+	* examples/pdf-surface/main.cc:
+	* examples/png_file/main.cc:
+	* examples/ps-surface/main.cc:
+	* examples/svg-surface/main.cc:
+	* examples/text-rotate/text-rotate.cc: Added includes of math.h to 
+	fix the build with Sun Workshop 12. Bug #14558.
+
 2008-01-30  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/context.cc:

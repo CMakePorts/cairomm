@@ -1,13 +1,19 @@
 #include <string>
 #include <iostream>
+#include <cairomm/cairommconfig.h>
 #include <cairomm/context.h>
 #include <cairomm/surface.h>
 
-/* M_PI is defined in math.h in the case of Microsoft Visual C++ */
+/* M_PI is defined in math.h in the case of Microsoft Visual C++, Solaris,
+ * et. al.
+ */
 #if defined(_MSC_VER)
 #define _USE_MATH_DEFINES
-#include <math.h>
 #endif 
+
+#ifdef HAVE_MATH_H
+# include <math.h>
+#endif
 
 int main()
 {

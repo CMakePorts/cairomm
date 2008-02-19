@@ -18,13 +18,19 @@
 
 #include <string>
 #include <iostream>
+#include <cairomm/cairommconfig.h>
 #include <cairomm/cairomm.h>
 
-/* M_PI is defined in math.h in the case of Microsoft Visual C++ */
+/* M_PI is defined in math.h in the case of Microsoft Visual C++, and
+ * Solaris needs math.h for M_PI and floor()
+ */
 #if defined(_MSC_VER)
 #define _USE_MATH_DEFINES
-#include <math.h>
 #endif 
+
+#ifdef HAVE_MATH_H
+# include <math.h>
+#endif
 
 // This example is based on the C cairo example of the same name
 
