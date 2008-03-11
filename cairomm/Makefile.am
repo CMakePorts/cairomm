@@ -2,7 +2,7 @@ SUBDIRS =
 
 INCLUDES = -I$(top_srcdir) @CAIROMM_CFLAGS@
 
-h_sources_public = cairomm.h context.h enums.h fontface.h fontoptions.h path.h pattern.h quartz_surface.h surface.h xlib_surface.h win32_surface.h exception.h refptr.h scaledfont.h
+h_sources_public = cairomm.h context.h enums.h fontface.h fontoptions.h path.h pattern.h quartz_surface.h surface.h xlib_surface.h win32_surface.h exception.h refptr.h scaledfont.h cairommconfig.h
 h_sources_private = private.h
 cc_sources = context.cc fontface.cc fontoptions.cc path.cc pattern.cc quartz_surface.cc surface.cc xlib_surface.cc win32_surface.cc exception.cc scaledfont.cc
 cc_sources_private = private.cc
@@ -22,3 +22,5 @@ libcairomm_1_0_la_SOURCES = $(cc_sources) $(h_sources_public) $(h_sources_privat
 # Install the headers:
 library_includedir=$(includedir)/cairomm-1.0/cairomm
 library_include_HEADERS = $(h_sources_public)
+
+EXTRA_DIST = cairommconfig.h.in
