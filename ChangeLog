@@ -1,3 +1,5 @@
+== 1.4.8 ==
+
 2008-03-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/exception.cc: include <string> to fix the build on solaris which
