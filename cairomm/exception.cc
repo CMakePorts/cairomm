@@ -16,6 +16,7 @@
  * 02110-1301, USA.
  */
 
+#include <string>
 #include <cairomm/exception.h>
 
 namespace Cairo
