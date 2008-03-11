@@ -1,3 +1,10 @@
+== 1.5.0 ==
+
+2008-03-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* configure.in: bump cairo requirement to at least 1.5.10
+	* NEWS: update for 1.5.0 release
+
 2008-03-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/Makefile.am: install the new cairommconfig.h header and make sure
