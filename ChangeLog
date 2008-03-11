@@ -1,3 +1,9 @@
+2008-03-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/exception.cc: include <string> to fix the build on solaris which
+	apparently doesn't include string from their exception header (Tim Mooney).
+	Fixes bug #14559
+
 2008-02-19  Tim Mooney  <enchanter@users.sourceforge.net>
 
 	* configure.in: Added check, defining HAVE_MATH_H.
