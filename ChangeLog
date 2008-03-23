@@ -1,3 +1,11 @@
+2008-03-23  Murray Cumming  <murrayc@murrayc.com>
+
+	* cairomm/enums.h (FONT_TYPE_ATSUI, FONT_TYPE_QUARTZ):
+	Change the definition of FONT_TYPE_ATSUI from CAIRO_FONT_TYPE_ATSUI to 
+	CAIRO_FONT_TYPE_QUARTZ (the same numerical value) and document it as 
+	deprecated. The others should be documented too.
+	Added FONT_TYPE_QUARTZ.
+
 == 1.5.0 ==
 
 2008-03-10  Jonathon Jongsma  <jjongsma@gnome.org>
