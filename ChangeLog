@@ -1,3 +1,9 @@
+2008-04-11  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/surface.cc:
+	* cairomm/surface.h: wrap cairo_format_stride_for_width() as a static
+	function in Cairo::ImageSurface
+
 2008-04-11  Murray Cumming  <murrayc@murrayc.com>
 
 	* Add autoheader to autogen.sh, to create cairommconfig.h.in, to fix 

@@ -214,6 +214,11 @@ int ImageSurface::get_stride() const
   return cairo_image_surface_get_stride(m_cobject);
 }
 
+int ImageSurface::format_stride_for_width (Cairo::Format format, int width)
+{
+  return cairo_format_stride_for_width(static_cast<cairo_format_t>(format), width);
+}
+
 
 /*******************************************************************************
  * THE FOLLOWING SURFACE TYPES ARE EXPERIMENTAL AND NOT FULLY SUPPORTED

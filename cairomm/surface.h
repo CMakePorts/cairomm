@@ -295,6 +295,29 @@ public:
    */
   int get_stride() const;
 
+  /**
+   * This function provides a stride value that will respect all
+   * alignment requirements of the accelerated image-rendering code
+   * within cairo. Typical usage will be of the form:
+   *
+   * @code
+   * int stride;
+   * unsigned char *data;
+   * Cairo::RefPtr<Cairo::ImageSurface> surface;
+   *
+   * stride = Cairo::ImageSurface::format_stride_for_width (format, width);
+   * data = malloc (stride * height);
+   * surface = Cairo::ImageSurface::create (data, format, width, height);
+   * @endcode
+   *
+   * @param format A Cairo::Format value
+   * @param width The desired width of an image surface to be created.
+   * @return the appropriate stride to use given the desired format and width, or
+   * -1 if either the format is invalid or the width too large.
+   *
+   * @since 1.6
+   **/
+  static int format_stride_for_width (Cairo::Format format, int width);
 
   /** Creates an image surface of the specified format and dimensions. The
    * initial contents of the surface is undefined; you must explicitely clear
