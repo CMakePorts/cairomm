@@ -1,3 +1,8 @@
+1.6.0:
+
+ * wrap cairo_format_stride_for_width().  All new cairo 1.6 API should now be
+   implemented in cairomm
+
 1.5.0:
 
  * Unstable release wrapping new API in cairo 1.5 series

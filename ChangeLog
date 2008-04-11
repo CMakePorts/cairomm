@@ -1,3 +1,10 @@
+== 1.6.0 ==
+
+2008-04-11  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* NEWS:
+	* configure.in: update for 1.6.0 release
+
 2008-04-11  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/surface.cc:
