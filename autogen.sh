@@ -34,6 +34,7 @@ fi
 LIBTOOLIZE=${LIBTOOLIZE:-libtoolize}
 AUTOCONF=${AUTOCONF:-autoconf}
 AUTOMAKE=${AUTOMAKE:-automake}
+AUTOHEADER=${AUTOHEADER:-autoheader}
 
 ACLOCAL_FLAGS="-I m4"
 ACLOCAL=`echo $AUTOMAKE | sed s/automake/aclocal/`
@@ -46,6 +47,7 @@ do_cmd() {
 }
 
 do_cmd $ACLOCAL $ACLOCAL_FLAGS
+do_cmd $AUTOHEADER
 do_cmd $LIBTOOLIZE --force
 do_cmd $AUTOCONF
 do_cmd $AUTOMAKE --add-missing --gnu

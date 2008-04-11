@@ -1,3 +1,8 @@
+2008-04-11  Murray Cumming  <murrayc@murrayc.com>
+
+	* Add autoheader to autogen.sh, to create cairommconfig.h.in, to fix 
+	the build for me.
+
 2008-03-23  Murray Cumming  <murrayc@murrayc.com>
 
 	* cairomm/enums.h (FONT_TYPE_ATSUI, FONT_TYPE_QUARTZ):
