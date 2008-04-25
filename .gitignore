@@ -33,3 +33,7 @@ examples/ps-surface/example_ps_file
 examples/svg-surface/example_svg_file
 examples/text-rotate/text_rotate
 tests/test-context
+cairomm/cairommconfig.h*
+cairomm/stamp-*
+m4/libtool.m4
+m4/lt*.m4
