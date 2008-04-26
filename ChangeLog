@@ -1,3 +1,14 @@
+2008-04-25  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/context.h: removed extra unused function declarations
+
+2008-04-25  Benjamin Reed <rangerrick@befunk.com>
+
+	* cairomm/Makefile.am, cairomm/context.cc, cairomm/context.h,
+	cairomm/context_private.h, cairomm/context_surface_quartz.cc,
+	cairomm/context_surface_xlib.h, cairomm/context_surface_win32.cc: separate
+	calls to possibly-conflicting platform surface constructors.  Bug #15712
+
 == 1.6.0 ==
 
 2008-04-11  Jonathon Jongsma  <jjongsma@gnome.org>
