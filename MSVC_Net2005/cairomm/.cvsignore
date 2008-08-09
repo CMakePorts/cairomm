@@ -1,0 +1,8 @@
+Makefile
+Makefile.in
+Debug
+Release
+cairomm.def
+cairomm_d.def
+cairomm.rc
+cairomm.aps
