@@ -28,7 +28,7 @@ namespace Private
 
 RefPtr<Surface> wrap_surface_xlib(cairo_surface_t* surface)
 {
-#if CAIRO_HAS_WIN32_SURFACE
+#if CAIRO_HAS_XLIB_SURFACE
     return RefPtr<XlibSurface>(new XlibSurface(surface, false /* does not have reference */));
 #else
     return RefPtr<Surface>(new Surface(surface, false /* does not have reference */));

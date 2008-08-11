@@ -1,3 +1,27 @@
+2008-08-09  Armin Burgmeier  <armin@arbur.net>
+
+	* MSVC_Net2005/cairomm/cairomm.rc.in: Removed #include "resource.h"
+	since there is no resource.h, and it works well without that include.
+
+	* MSVC_Net2005/cairomm/Makefile.am: Copy cairommconfig.h from
+	cairomm/, so it is available to the visual studio project.
+
+	* MSVC_Net2005/cairomm/cairomm.vcproj: Added
+	cairomm/context_surface_win32.cc to the project.
+
+	* Makefile.am:
+	* configure.in: Adapt build files.
+
+2008-08-09  Armin Burgmeier  <armin@arbur.net>
+
+	* cairomm/context_surface_xlib.cc: Check for CAIRO_HAS_XLIB_SURFACE
+	instead of CAIRO_HAS_WIN32_SURFACE.
+
+2008-08-07  Murray Cumming  <murrayc@murrayc.com>
+
+	* MSVC/: Renamed to MSVC_Net2008, ready to be patched by Armin 
+	or Cedric.
+
 2008-04-25  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/context.h: removed extra unused function declarations

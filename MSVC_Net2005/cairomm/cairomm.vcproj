@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=".;../.."
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;GLIBMM_BUILD"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CAIROMM_BUILD"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -123,7 +123,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories=".;../.."
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;GLIBMM_BUILD"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CAIROMM_BUILD"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
@@ -192,6 +192,18 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\cairomm\context_surface_quartz.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\cairomm\context_surface_win32.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\cairomm\context_surface_xlib.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\..\cairomm\exception.cc"
 				>
 			</File>
@@ -213,6 +225,10 @@
 			</File>
 			<File
 				RelativePath="..\..\cairomm\private.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\cairomm\quartz_surface.cc"
 				>
 			</File>
 			<File
@@ -271,6 +287,10 @@
 			</File>
 			<File
 				RelativePath="..\..\cairomm\private.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\cairomm\quartz_surface.h"
 				>
 			</File>
 			<File
