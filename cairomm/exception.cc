@@ -37,6 +37,11 @@ logic_error::logic_error(ErrorStatus status)
 logic_error::~logic_error() throw()
 {}
 
+ErrorStatus logic_error::get_status() const
+{
+    return m_status;
+}
+
 /*
 const char* logic_error::what() const throw()
 {
