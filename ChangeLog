@@ -1,7 +1,11 @@
+2008-08-13  Jonathon Jongsma  <jonathon.jongsma@collabora.co.uk>
+
+	* configure.in: post-release bump
+
 2008-08-13  Jonathon Jongsma  <jjongsma@gnome.org>
 
-        * NEWS:
-        * configure.in: update for 1.6.2 release
+	* NEWS:
+	* configure.in: update for 1.6.2 release
 
 2008-08-13  Jonathon Jongsma  <jjongsma@gnome.org>
 
