@@ -124,9 +124,28 @@ if test x$ENABLE_TESTS = xauto ; then
 fi
 
 if test x$ENABLE_TESTS = xyes ; then
-AX_BOOST_BASE([1.33.1])
-AX_BOOST_UNIT_TEST_FRAMEWORK
-AC_MSG_NOTICE(support of automated tests enabled)
+#######################################################
+#boost build system sucks no end.
+#it is damn hard to detect the version of boost
+#that is installed. All that because our friends of
+#the boost project don't want to integrate to autofoo.
+#So we resort to hugly hacks to detect the version of
+#boost that is installed.
+#######################################################
+    AX_BOOST_BASE([1.33.1])
+    AX_BOOST_UNIT_TEST_FRAMEWORK
+    AX_BOOST_TEST_EXEC_MONITOR
+
+    unit_framework_lib_candidates="/usr/lib/libboost_unit_test_framework-st.a /usr/lib/libboost_unit_test_framework.a"
+    unit_framework_lib_candidates=$unit_framework_lib_candidates" /usr/lib64/libboost_unit_test_framework-st.a /usr/lib64/libboost_unit_test_framework.a"
+    for i in $unit_framework_lib_candidates ; do
+        if test -f $i ; then
+            BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB=$i
+            break
+        fi
+    done
+    AC_SUBST(BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB)
+    AC_MSG_NOTICE(support of automated tests enabled)
 else
     AC_MSG_NOTICE(disabled support of automated tests)
 fi

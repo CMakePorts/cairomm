@@ -16,4 +16,4 @@ endif
 INCLUDES =  -I$(top_srcdir) @CAIROMM_CFLAGS@
 
 #The libraries that the executable needs to link against:
-LIBS = $(top_builddir)/cairomm/libcairomm-1.0.la @LIBS@ @CAIROMM_LIBS@ @BOOST_UNIT_TEST_FRAMEWORK_LIB@
+LIBS = $(top_builddir)/cairomm/libcairomm-1.0.la @LIBS@ @CAIROMM_LIBS@ @BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB@

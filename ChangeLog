@@ -1,5 +1,13 @@
 2008-08-13  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* configure.in: fix boost unit test detection (hack stolen from Dodji from
+	nemiver)
+	* tests/Makefile.am: explicitly link against the static unit test lib.  This
+	should fix the test build on (at least) Ubuntu Hardy, where previously I was
+	getting an undefined reference to main()
+
+2008-08-13  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/enums.h: update to include new surface types.  Remove an unnecessary
 	cairo version check since we depend on a higher version of cairo for other
 	stuff anyway
