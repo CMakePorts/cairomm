@@ -1,5 +1,10 @@
 2008-08-13  Jonathon Jongsma  <jjongsma@gnome.org>
 
+        * NEWS:
+        * configure.in: update for 1.6.2 release
+
+2008-08-13  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* configure.in: fix boost unit test detection (hack stolen from Dodji from
 	nemiver)
 	* tests/Makefile.am: explicitly link against the static unit test lib.  This

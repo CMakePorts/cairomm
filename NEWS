@@ -1,3 +1,14 @@
+1.6.2:
+
+ * Fix build on OSX when both Quartz and Xlib surfaces are enabled (Benjamin
+   Reed)
+ * updated the windows build (Armin Burgmeier)
+ * Fixed a bug where an exception message would often report "Success" when it
+   should have reported an error message
+ * Added ability to get the error status code from an exception:
+   Cairo::logic_error::get_status_code()
+ * Added new elements to the surface type enumeration
+
 1.6.0:
 
  * wrap cairo_format_stride_for_width().  All new cairo 1.6 API should now be
