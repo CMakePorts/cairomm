@@ -1,5 +1,11 @@
 2008-08-13  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/enums.h: update to include new surface types.  Remove an unnecessary
+	cairo version check since we depend on a higher version of cairo for other
+	stuff anyway
+
+2008-08-13  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/exception.cc:
 	* cairomm/exception.h: renamed get_status() to get_status_code() to make the
 	name a little bit more clear
