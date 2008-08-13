@@ -1,3 +1,9 @@
+2008-08-13  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/exception.cc:
+	* cairomm/exception.h: renamed get_status() to get_status_code() to make the
+	name a little bit more clear
+
 2008-08-09  Armin Burgmeier  <armin@arbur.net>
 
 	* MSVC_Net2005/cairomm/cairomm.rc.in: Removed #include "resource.h"

@@ -34,7 +34,7 @@ public:
   virtual ~logic_error() throw();
 
   //virtual const char* what() const throw();
-  ErrorStatus get_status() const;
+  ErrorStatus get_status_code() const;
 
 private:
   ErrorStatus m_status;
