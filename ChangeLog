@@ -1,4 +1,9 @@
-2008-08-13  Jonathon Jongsma  <jonathon.jongsma@collabora.co.uk>
+2008-08-14  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* m4/ax_boost_test_exec_monitor.m4: added this file which was forgotten
+	earlier.  I'm not entirely sure if it's necessary, but just in case...
+
+2008-08-13  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* configure.in: post-release bump
 
