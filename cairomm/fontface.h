@@ -19,7 +19,9 @@
 #ifndef __CAIROMM_FONTFACE_H
 #define __CAIROMM_FONTFACE_H
 
+#include <string>
 #include <cairomm/enums.h>
+#include <cairomm/refptr.h>
 #include <cairo.h>
 
 
@@ -70,6 +72,19 @@ public:
 protected:
 
   cobject* m_cobject;
+};
+
+
+class ToyFontFace : public FontFace
+{
+public:
+  static RefPtr<ToyFontFace> create(const std::string& family, FontSlant slant, FontWeight weight);
+  std::string get_family() const;
+  FontSlant get_slant() const;
+  FontWeight get_weight() const;
+
+protected:
+  ToyFontFace(const std::string& family, FontSlant slant, FontWeight weight);
 };
 
 } // namespace Cairo

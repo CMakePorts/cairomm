@@ -1,9 +1,10 @@
 if AUTOTESTS
 
 # build automated 'tests'
-noinst_PROGRAMS = test-context
+TESTS=test-context test-font-face
+noinst_PROGRAMS = $(TESTS)
 test_context_SOURCES=test-context.cc
-TESTS=test-context
+test_font_face_SOURCES=test-font-face.cc
 
 else
 

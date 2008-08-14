@@ -1,7 +1,9 @@
 include $(top_srcdir)/examples/Makefile.am_fragment
 
 # build the executable but don't install it
-noinst_PROGRAMS = text_rotate
-text_rotate_SOURCES = text-rotate.cc
+noinst_PROGRAMS = text_rotate toy-text
 
-CLEANFILES = text-rotate.png
+text_rotate_SOURCES = text-rotate.cc
+toy_text_SOURCES=toy-text.cc
+
+CLEANFILES = text-rotate.png toy-text.png

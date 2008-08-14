@@ -1,5 +1,19 @@
 2008-08-14  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* .gitignore: added new files to ignore
+	* cairomm/fontface.cc:
+	* cairomm/fontface.h: implement the ToyFontFace class
+	* configure.in:
+	* examples/Makefile.am:
+	* examples/text/Makefile.am: Renamed from examples/text-rotate/Makefile.am.
+	* examples/text/text-rotate.cc: Renamed from examples/text-rotate/text-rotate.cc.
+	* examples/text/toy-text.cc: Added.
+	* tests/Makefile.am:
+	* tests/test-font-face.cc: Added.  excercise the functionality of
+	ToyFontFace slightly
+
+2008-08-14  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* m4/ax_boost_test_exec_monitor.m4: added this file which was forgotten
 	earlier.  I'm not entirely sure if it's necessary, but just in case...
 

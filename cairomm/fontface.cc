@@ -69,6 +69,38 @@ FontType FontFace::get_type() const
   return static_cast<FontType>(font_type);
 }
 
+// 'Toy' fonts
+RefPtr<ToyFontFace>
+ToyFontFace::create(const std::string& family, FontSlant slant, FontWeight weight)
+{
+  return RefPtr<ToyFontFace>(new ToyFontFace(family, slant, weight));
+}
+
+ToyFontFace::ToyFontFace(const std::string& family, FontSlant slant, FontWeight weight) :
+  FontFace(cairo_toy_font_face_create (family.c_str(),
+                                       static_cast<cairo_font_slant_t>(slant),
+                                       static_cast<cairo_font_weight_t>(weight)),
+           true /* has reference*/)
+{
+  check_status_and_throw_exception(cairo_font_face_status(m_cobject));
+}
+
+std::string ToyFontFace::get_family() const
+{
+  return std::string(cairo_toy_font_face_get_family(m_cobject));
+}
+
+FontSlant ToyFontFace::get_slant() const
+{
+  return FontSlant(cairo_toy_font_face_get_slant(m_cobject));
+}
+
+FontWeight ToyFontFace::get_weight() const
+{
+  return FontWeight(cairo_toy_font_face_get_weight(m_cobject));
+}
+
+
 } //namespace Cairo
 
 // vim: ts=2 sw=2 et

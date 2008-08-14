@@ -31,9 +31,13 @@ examples/pdf-surface/example_pdf_file
 examples/png_file/example_png_file
 examples/ps-surface/example_ps_file
 examples/svg-surface/example_svg_file
-examples/text-rotate/text_rotate
+examples/text/text_rotate
+examples/text/toy-text
 tests/test-context
+tests/test-font-face
 cairomm/cairommconfig.h*
 cairomm/stamp-*
 m4/libtool.m4
 m4/lt*.m4
+releases/
+tags
