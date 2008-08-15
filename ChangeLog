@@ -1,3 +1,10 @@
+2008-08-15  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/scaledfont.h:
+	* cairomm/scaledfont.cc: the static ::create() function took a FontFace by
+	reference rather than by RefPtr, which means the API was essentially unusably
+	broken.  So this is an API break, but I don't see any other option.
+
 2008-08-14  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* .gitignore: added new files to ignore

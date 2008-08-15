@@ -56,7 +56,7 @@ public:
   void unreference() const { cairo_scaled_font_destroy(m_cobject); }
 #endif //DOXYGEN_IGNORE_THIS
 
-  /** Createa C++ wrapper object from the C instance.  This C++ object should
+  /** Create a C++ wrapper object from the C instance.  This C++ object should
    * then be given to a RefPtr.
    */
   explicit ScaledFont(cobject* cobj, bool has_reference = false);
@@ -74,8 +74,12 @@ public:
    * @param options: options to use when getting metrics for the font and
    * rendering with it.
    */
-  static RefPtr<ScaledFont> create(FontFace& font_face, const Matrix& font_matrix,
+  static RefPtr<ScaledFont> create(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,
       const Matrix& ctm, const FontOptions& options);
+  // NOTE: the constructor doesn't take a RefPtr<const FontFace> because the
+  // FontFace object can be changed in this constructor (in the case of user
+  // fonts, the FontFace becomes immutable, i.e. you can't call any set_*_func()
+  // functions any longer)
 
   //TODO: This should really be get_extents().
   /** Gets the metrics for a ScaledFont */
