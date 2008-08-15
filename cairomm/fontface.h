@@ -22,11 +22,17 @@
 #include <string>
 #include <cairomm/enums.h>
 #include <cairomm/refptr.h>
+#include <sigc++/slot.h>
 #include <cairo.h>
 
 
 namespace Cairo
 {
+
+class ScaledFont;
+class Context;
+typedef cairo_font_extents_t FontExtents; //A simple struct.
+typedef cairo_text_extents_t TextExtents; //A simple struct.
 
 /**
  * This is a reference-counted object that should be used via Cairo::RefPtr.
@@ -38,7 +44,6 @@ protected:
   //TODO?: FontFace(cairo_font_face_t *target);
 
 public:
-
   /** Create a C++ wrapper for the C instance. This C++ instance should then be given to a RefPtr.
    * @param cobject The C instance.
    * @param has_reference Whether we already have a reference. Otherwise, the constructor will take an extra reference.
@@ -85,6 +90,66 @@ public:
 
 protected:
   ToyFontFace(const std::string& family, FontSlant slant, FontWeight weight);
+};
+
+
+class UserFontFace : public FontFace
+{
+public:
+  static RefPtr<UserFontFace> create();
+
+  typedef sigc::slot<ErrorStatus,
+                     const RefPtr<ScaledFont>&,
+                     const RefPtr<Context>&,
+                     FontExtents&> SlotInit;
+  typedef sigc::slot<ErrorStatus,
+                     const RefPtr<ScaledFont>&,
+                     unsigned long /*unicode*/,
+                     unsigned long& /*glyph*/> SlotUnicodeToGlyph;
+  typedef sigc::slot<ErrorStatus,
+                     const RefPtr<ScaledFont>&,
+                     unsigned long /*glyph*/,
+                     const RefPtr<Context>&,
+                     TextExtents& /*metrics*/> SlotRenderGlyph;
+  // FIXME: add SlotTextToGlyphs
+
+  void set_init_func(const SlotInit& init_func);
+  void set_render_glyph_func(const SlotRenderGlyph& render_glyph_func);
+  void set_unicode_to_glyph_func(const SlotUnicodeToGlyph& unicode_to_glyph_func);
+  // FIXME: add set_text_to_glyphs_func
+
+  // FIXME: are these really useful?  What would you do with a sigc::slot when
+  // you got it?
+  const SlotInit* get_init_func() const;
+  const SlotRenderGlyph* get_render_glyph_func() const;
+  const SlotUnicodeToGlyph* get_unicode_to_glyph_func() const;
+  // FIXME: add get_text_to_glyphs_func
+
+
+  virtual ~UserFontFace();
+
+protected:
+  UserFontFace();
+
+private:
+  struct PrivateData;
+  PrivateData* m_priv;
+
+static cairo_status_t
+init_cb(cairo_scaled_font_t* scaled_font,
+        cairo_t *cr,
+        cairo_font_extents_t* metrics);
+
+static cairo_status_t
+unicode_to_glyph_cb(cairo_scaled_font_t *scaled_font,
+                    unsigned long        unicode,
+                    unsigned long       *glyph);
+
+static cairo_status_t
+render_glyph_cb(cairo_scaled_font_t  *scaled_font,
+                unsigned long         glyph,
+                cairo_t              *cr,
+                cairo_text_extents_t *metrics);
 };
 
 } // namespace Cairo

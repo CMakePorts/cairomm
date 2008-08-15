@@ -1,3 +1,17 @@
+2008-08-14  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/context.h: move some text-related typedefs into the fontface
+	header since they're needed for new user font API and that's really where they
+	should be owned.  context.h includes fontface.h, so there should not be any
+	breakage for people who were just including context.h
+	* cairomm/enums.h: add user font type to font type enum
+	* cairomm/fontface.cc:
+	* cairomm/fontface.h: add UserFontFace class.  This class has a set of
+	callbacks that can be used to do certain things.  In order to do this in a
+	flexible way, I have added libsigc++ as a dependency of cairo to achieve this
+	* configure.in: add check for libsigc++
+	* tests/test-font-face.cc: add tests for UserFontFace
+
 2008-08-15  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/scaledfont.h:

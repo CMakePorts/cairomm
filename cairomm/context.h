@@ -34,8 +34,6 @@ namespace Cairo
 {
 
 typedef cairo_glyph_t Glyph; //A simple struct.
-typedef cairo_font_extents_t FontExtents; //A simple struct.
-typedef cairo_text_extents_t TextExtents; //A simple struct.
 typedef cairo_matrix_t Matrix; //A simple struct. //TODO: Derive and add operator[] and operator. matrix multiplication?
 typedef cairo_rectangle_t Rectangle;
 
