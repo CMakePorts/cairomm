@@ -81,11 +81,15 @@ public:
   // fonts, the FontFace becomes immutable, i.e. you can't call any set_*_func()
   // functions any longer)
 
-  //TODO: This should really be get_extents().
-  /** Gets the metrics for a ScaledFont */
+  /** Gets the metrics for a ScaledFont
+   * @since 1.8
+   * */
+  void get_extents(FontExtents& extents) const;
+  /** @deprecated Use get_extents() instead
+   * @since 1.2
+   * */
   void extents(FontExtents& extents) const;
 
-  //TODO: This should really be get_text_extents().
   /** Gets the extents for a string of text. The extents describe a user-space
    * rectangle that encloses the "inked" portion of the text drawn at the origin
    * (0,0) (as it would be drawn by Context::show_text() if the cairo graphics
@@ -104,11 +108,14 @@ public:
    * @param utf8  a string of text, encoded in UTF-8
    * @param extents Returns the extents of the given string
    *
-   * @since 1.2
+   * @since 1.8
    */
+  void get_text_extents(const std::string& utf8, TextExtents& extents) const;
+  /** @deprecated Use get_text_extents() instead
+   * @since 1.2
+   * */
   void text_extents(const std::string& utf8, TextExtents& extents) const;
 
-  //TODO: This should really be get_glyph_extents().
   /** Gets the extents for an array of glyphs. The extents describe a user-space
    * rectangle that encloses the "inked" portion of the glyphs, (as they would
    * be drawn by Context::show_glyphs() if the cairo graphics state were set to the
@@ -121,7 +128,13 @@ public:
    *
    * @param glyphs A vector of glyphs to calculate the extents of
    * @param extents Returns the extents for the array of glyphs
+   *
+   * @since 1.8
    **/
+  void get_glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents);
+  /** @deprecated Use get_glyph_extents() instead
+   * @since 1.2
+   * */
   void glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents);
 
   /** The FontFace with which this ScaledFont was created.
