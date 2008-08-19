@@ -1,10 +1,11 @@
 if AUTOTESTS
 
 # build automated 'tests'
-TESTS=test-context test-font-face
+TESTS=test-context test-font-face test-surface
 noinst_PROGRAMS = $(TESTS)
 test_context_SOURCES=test-context.cc
 test_font_face_SOURCES=test-font-face.cc
+test_surface_SOURCES=test-surface.cc
 
 else
 

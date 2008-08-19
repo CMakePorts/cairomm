@@ -22,6 +22,52 @@
 namespace Cairo
 {
 
+static cairo_user_data_key_t USER_DATA_KEY_WRITE_FUNC = {0};
+static cairo_user_data_key_t USER_DATA_KEY_READ_FUNC = {0};
+
+static void
+free_slot(void* data)
+{
+  Surface::SlotWriteFunc* slot = static_cast<Surface::SlotWriteFunc*>(data);
+  delete slot;
+}
+
+static Surface::SlotWriteFunc*
+get_slot(cairo_surface_t* surface) {
+  return static_cast<Surface::SlotWriteFunc*>(cairo_surface_get_user_data(surface,
+                                                                 &USER_DATA_KEY_WRITE_FUNC));
+}
+
+static void
+set_read_slot(cairo_surface_t* surface, Surface::SlotReadFunc* slot) {
+  // the slot will automatically be freed by free_slot() when the underlying C
+  // instance is destroyed
+  cairo_surface_set_user_data(surface, &USER_DATA_KEY_READ_FUNC, slot, &free_slot);
+}
+
+static void
+set_write_slot(cairo_surface_t* surface, Surface::SlotWriteFunc* slot) {
+  // the slot will automatically be freed by free_slot() when the underlying C
+  // instance is destroyed
+  cairo_surface_set_user_data(surface, &USER_DATA_KEY_WRITE_FUNC, slot, &free_slot);
+}
+
+cairo_status_t read_func_wrapper(void* closure, unsigned char* data, unsigned int length)
+{
+  if (!closure)
+    return CAIRO_STATUS_READ_ERROR;
+  Surface::SlotReadFunc* read_func = static_cast<Surface::SlotReadFunc*>(closure);
+  return static_cast<cairo_status_t>((*read_func)(data, length));
+}
+
+cairo_status_t write_func_wrapper(void* closure, const unsigned char* data, unsigned int length)
+{
+  if (!closure)
+    return CAIRO_STATUS_WRITE_ERROR;
+  Surface::SlotWriteFunc* write_func = static_cast<Surface::SlotWriteFunc*>(closure);
+  return static_cast<cairo_status_t>((*write_func)(data, length));
+}
+
 Surface::Surface(cairo_surface_t* cobject, bool has_reference)
 : m_cobject(0)
 {
@@ -113,6 +159,19 @@ void Surface::write_to_png(const std::string& filename)
   check_status_and_throw_exception(status);
 }
 
+void Surface::write_to_png_stream(const SlotWriteFunc& write_func)
+{
+  SlotWriteFunc* old_slot = get_slot(m_cobject);
+  if (old_slot)
+    delete old_slot;
+  SlotWriteFunc* slot_copy = new SlotWriteFunc(write_func);
+  set_write_slot(m_cobject, slot_copy);
+  ErrorStatus status = cairo_surface_write_to_png_stream(m_cobject,
+                                                         &write_func_wrapper,
+                                                         slot_copy /*closure*/);
+  check_status_and_throw_exception(status);
+}
+
 void Surface::write_to_png(cairo_write_func_t write_func, void *closure)
 {
   ErrorStatus status = cairo_surface_write_to_png_stream(m_cobject, write_func, closure);
@@ -168,6 +227,16 @@ RefPtr<ImageSurface> ImageSurface::create_from_png(std::string filename)
 {
   cairo_surface_t* cobject = cairo_image_surface_create_from_png(filename.c_str());
   check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
+}
+
+RefPtr<ImageSurface> ImageSurface::create_from_png_stream(const SlotReadFunc& read_func)
+{
+  SlotReadFunc* slot_copy = new SlotReadFunc(read_func);
+  cairo_surface_t* cobject =
+    cairo_image_surface_create_from_png_stream(&read_func_wrapper, slot_copy);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  set_read_slot(cobject, slot_copy);
   return RefPtr<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
 }
 
@@ -249,6 +318,18 @@ RefPtr<PdfSurface> PdfSurface::create(cairo_write_func_t write_func, void *closu
   return RefPtr<PdfSurface>(new PdfSurface(cobject, true /* has reference */));
 }
 
+RefPtr<PdfSurface> PdfSurface::create(const SlotWriteFunc& write_func, double
+                                      width_in_points, double height_in_points)
+{
+  SlotWriteFunc* slot_copy = new SlotWriteFunc(write_func);
+  cairo_surface_t* cobject =
+    cairo_pdf_surface_create_for_stream(write_func_wrapper, slot_copy,
+                                        width_in_points, height_in_points);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  set_write_slot(cobject, slot_copy);
+  return RefPtr<PdfSurface>(new PdfSurface(cobject, true /* has reference */));
+}
+
 void PdfSurface::set_size(double width_in_points, double height_in_points)
 {
   cairo_pdf_surface_set_size(m_cobject, width_in_points, height_in_points);
@@ -275,6 +356,18 @@ RefPtr<PsSurface> PsSurface::create(std::string filename, double width_in_points
 {
   cairo_surface_t* cobject = cairo_ps_surface_create(filename.c_str(), width_in_points, height_in_points);
   check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<PsSurface>(new PsSurface(cobject, true /* has reference */));
+}
+
+RefPtr<PsSurface> PsSurface::create(const SlotWriteFunc& write_func, double
+                                    width_in_points, double height_in_points)
+{
+  SlotWriteFunc* slot_copy = new SlotWriteFunc(write_func);
+  cairo_surface_t* cobject =
+    cairo_ps_surface_create_for_stream(write_func_wrapper, slot_copy,
+                                       width_in_points, height_in_points);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  set_write_slot(cobject, slot_copy);
   return RefPtr<PsSurface>(new PsSurface(cobject, true /* has reference */));
 }
 
@@ -364,6 +457,17 @@ RefPtr<SvgSurface> SvgSurface::create(std::string filename, double width_in_poin
 {
   cairo_surface_t* cobject = cairo_svg_surface_create(filename.c_str(), width_in_points, height_in_points);
   check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<SvgSurface>(new SvgSurface(cobject, true /* has reference */));
+}
+
+RefPtr<SvgSurface> SvgSurface::create(const SlotWriteFunc& write_func, double width_in_points, double height_in_points)
+{
+  SlotWriteFunc* slot_copy = new SlotWriteFunc(write_func);
+  cairo_surface_t* cobject =
+    cairo_svg_surface_create_for_stream(write_func_wrapper, slot_copy,
+                                        width_in_points, height_in_points);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  set_write_slot(cobject, slot_copy);
   return RefPtr<SvgSurface>(new SvgSurface(cobject, true /* has reference */));
 }
 

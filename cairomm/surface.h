@@ -21,6 +21,7 @@
 
 #include <string>
 #include <vector>
+#include <sigc++/slot.h>
 #include <cairomm/enums.h>
 #include <cairomm/exception.h>
 #include <cairomm/fontoptions.h>
@@ -59,6 +60,34 @@ namespace Cairo
 class Surface
 {
 public:
+  /** For example:
+   * <code>
+   * ErrorStatus my_write_func(unsigned char* data, unsigned int length);
+   * </code>
+   *
+   * This is the type of function which is called when a backend needs to write
+   * data to an output stream. It is passed the data to write and the length of
+   * the data in bytes. The write function should return CAIRO_STATUS_SUCCESS if
+   * all the data was successfully written, CAIRO_STATUS_WRITE_ERROR otherwise.
+   *
+   * @param data the buffer containing the data to write
+   * @param length the amount of data to write
+   * @return the status code of the write operation
+   */
+  typedef sigc::slot<ErrorStatus, const unsigned char* /*data*/, unsigned int /*length*/> SlotWriteFunc;
+  /**
+   * This is the type of function which is called when a backend needs to read
+   * data from an input stream. It is passed the buffer to read the data into
+   * and the length of the data in bytes. The read function should return
+   * CAIRO_STATUS_SUCCESS if all the data was successfully read,
+   * CAIRO_STATUS_READ_ERROR otherwise.
+   *
+   * @param data the buffer into which to read the data
+   * @param length the amount of data to read
+   * @return the status code of the read operation
+   */
+  typedef sigc::slot<ErrorStatus, unsigned char* /*data*/, unsigned int /*length*/> SlotReadFunc;
+
   /** Create a C++ wrapper for the C instance. This C++ instance should then be
    * given to a RefPtr.
    *
@@ -187,9 +216,12 @@ public:
    *
    * @param write_func  The function to be called when the backend needs to
    * write data to an output stream
-   * @param closure	closure data for the write function
+   *
+   * @since 1.8
    */
-  void write_to_png(cairo_write_func_t write_func, void *closure); //TODO: Use a sigc::slot?
+  void write_to_png_stream(const SlotWriteFunc& write_func);
+  /** @deprecated Use write_to_png_stream instead */
+  void write_to_png(cairo_write_func_t write_func, void *closure);
 
 #endif // CAIRO_HAS_PNG_FUNCTIONS
 
@@ -376,16 +408,17 @@ public:
   static RefPtr<ImageSurface> create_from_png(std::string filename);
 
   /** Creates a new image surface from PNG data read incrementally via the
-   * read_func function.  
+   * read_func function.
    *
    * @note For this function to be available, cairo must have been compiled
    * with PNG support.
    *
-   * @param read_func	function called to read the data of the file
-   * @param closure	data to pass to read_func.
-   * @return	a RefPtr to the new cairo_surface_t initialized with the
+   * @param read_func function called to read the data of the file
+   * @return a RefPtr to the new cairo_surface_t initialized with the
    * contents of the PNG image file.
    */
+  static RefPtr<ImageSurface> create_from_png_stream(const SlotReadFunc& read_func);
+  /** @deprecated Use create_from_png_stream instead */
   static RefPtr<ImageSurface> create_from_png(cairo_read_func_t read_func, void *closure);
 
 #endif // CAIRO_HAS_PNG_FUNCTIONS
@@ -430,10 +463,13 @@ public:
    *
    * @param write_func  The function to be called when the backend needs to
    * write data to an output stream
-   * @param closure     closure data for the write function
    * @param width_in_points   The width of the PDF document in points
    * @param height_in_points   The height of the PDF document in points
+   *
+   * @since 1.8
    */
+  static RefPtr<PdfSurface> create(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
+  /** @deprecated */
   static RefPtr<PdfSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
 /**
@@ -500,10 +536,13 @@ public:
    *
    * @param write_func  The function to be called when the backend needs to
    * write data to an output stream
-   * @param closure     closure data for the write function
    * @param width_in_points   The width of the PostScript document in points
    * @param height_in_points   The height of the PostScript document in points
+   *
+   * @since 1.8
    */
+  static RefPtr<PsSurface> create(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
+  /** @deprecated */
   static RefPtr<PsSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
   /**
@@ -643,10 +682,13 @@ public:
    *
    * @param write_func  The function to be called when the backend needs to
    * write data to an output stream
-   * @param closure     closure data for the write function
    * @param width_in_points   The width of the SVG document in points
    * @param height_in_points   The height of the SVG document in points
+   *
+   * @since 1.8
    */
+  static RefPtr<SvgSurface> create(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
+  /** @deprecated */
   static RefPtr<SvgSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
   /** 

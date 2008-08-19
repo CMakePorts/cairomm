@@ -35,6 +35,7 @@ examples/text/text_rotate
 examples/text/toy-text
 tests/test-context
 tests/test-font-face
+tests/test-surface
 cairomm/cairommconfig.h*
 cairomm/stamp-*
 m4/libtool.m4

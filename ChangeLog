@@ -1,3 +1,10 @@
+2008-08-19  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/surface.cc:
+	* cairomm/surface.h: add sigc::slot versions of all of the functions that take
+	a cairo_write_func_t or cairo_read_func_t
+	* tests/Makefile.am: add a couple basic tests for the surfaced slot functions
+
 2008-08-18  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/fontface.h: Add a bunch of documentation for the new FontFace API
