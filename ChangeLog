@@ -1,5 +1,9 @@
 2008-08-18  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/fontface.h: Add a bunch of documentation for the new FontFace API
+
+2008-08-18  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/scaledfont.h: fix all of the TODOS by providing alternate functions
 	that begin with get_ to provide consistency with other parts of cairomm (and
 	glibmm, etc).
