@@ -1,3 +1,9 @@
+2008-08-21  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* tests/test-surface.cc: fix the image surface tests that create a file from a
+	png stream to return a valid PNG stream so they don't throw an exception on
+	creation.
+
 2008-08-19  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/surface.cc:

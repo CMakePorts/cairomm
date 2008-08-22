@@ -1,3 +1,4 @@
+#include <fstream>
 #include <boost/test/unit_test.hpp>
 #include <boost/test/test_tools.hpp>
 #include <boost/test/floating_point_comparison.hpp>
@@ -46,27 +47,38 @@ void test_svg_constructor_slot()
   BOOST_CHECK(test_slot_called > 0);
 }
 
+static std::ifstream png_file;
 unsigned int test_read_func_called = 0;
-static ErrorStatus test_read_func(unsigned char* /*data*/, unsigned int /*len*/)
+static ErrorStatus test_read_func(unsigned char* data, unsigned int len)
 {
   ++test_read_func_called;
-  return CAIRO_STATUS_SUCCESS;
+  if (png_file.read(reinterpret_cast<char*>(data), len))
+    return CAIRO_STATUS_SUCCESS;
+  return CAIRO_STATUS_READ_ERROR;
 }
 
 unsigned int c_test_read_func_called = 0;
-static cairo_status_t c_test_read_func(void* /*closure*/, unsigned char* /*data*/, unsigned int /*len*/)
+static cairo_status_t c_test_read_func(void* /*closure*/, unsigned char* data, unsigned int len)
 {
   ++c_test_read_func_called;
-  return CAIRO_STATUS_SUCCESS;
+  if (png_file.read(reinterpret_cast<char*>(data), len))
+    return CAIRO_STATUS_SUCCESS;
+  return CAIRO_STATUS_READ_ERROR;
 }
 
 void test_create_from_png()
 {
-  // FIXME: these cause a std::bad_alloc exception for some reason
   RefPtr<ImageSurface> surface;
+  // try the sigc::slot version
+  png_file.open("png-stream-test.png");
   surface = ImageSurface::create_from_png_stream(sigc::ptr_fun(&test_read_func));
+  png_file.close();
   BOOST_CHECK(test_read_func_called > 0);
+
+  // now try the raw C function (deprecated) version
+  png_file.open("png-stream-test.png");
   surface = ImageSurface::create_from_png(&c_test_read_func, NULL);
+  png_file.close();
   BOOST_CHECK(c_test_read_func_called > 0);
 }
 
