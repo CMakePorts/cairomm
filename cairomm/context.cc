@@ -498,6 +498,18 @@ void Context::show_text(const std::string& utf8)
   check_object_status_and_throw_exception(*this);
 }
 
+void Context::show_text_glyphs(const std::string& utf8,
+                               const std::vector<Glyph>& glyphs,
+                               const std::vector<TextCluster>& clusters,
+                               bool backward)
+{
+  cairo_show_text_glyphs(cobj(), utf8.c_str(), utf8.size(),
+                         glyphs.data(), glyphs.size(),
+                         clusters.data(), clusters.size(),
+                         backward);
+  check_object_status_and_throw_exception(*this);
+}
+
 void Context::show_glyphs(const std::vector<Glyph>& glyphs)
 {
   cairo_show_glyphs(m_cobject, const_cast<cairo_glyph_t*>(&glyphs[0]), glyphs.size());

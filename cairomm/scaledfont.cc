@@ -17,6 +17,7 @@
  */
 
 #include <cairomm/scaledfont.h>
+#include <cairomm/fontface.h>
 #include <cairomm/private.h>  // for check_status_and_throw_exception
 
 namespace Cairo
@@ -33,7 +34,11 @@ ScaledFont::ScaledFont(cobject* cobj, bool has_reference)
 RefPtr<ScaledFont> ScaledFont::create(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,
     const Matrix& ctm, const FontOptions& options)
 {
-  cairo_scaled_font_t* cobj = cairo_scaled_font_create(font_face->cobj(), &font_matrix, &ctm, options.cobj());
+  cairo_scaled_font_t* cobj =
+    cairo_scaled_font_create(font_face->cobj(),
+                             reinterpret_cast<const cairo_matrix_t*>(&font_matrix),
+                             reinterpret_cast<const cairo_matrix_t*>(&ctm),
+                             options.cobj());
   check_status_and_throw_exception(cairo_scaled_font_status(cobj));
   return RefPtr<ScaledFont>(new ScaledFont(cobj, false));
 }
@@ -83,13 +88,13 @@ void ScaledFont::get_font_options(FontOptions& options) const
 void ScaledFont::get_font_matrix(Matrix& font_matrix) const
 {
   cairo_scaled_font_get_font_matrix(m_cobject,
-      static_cast<cairo_matrix_t*>(&font_matrix));
+      reinterpret_cast<cairo_matrix_t*>(&font_matrix));
   check_object_status_and_throw_exception(*this);
 }
 
 void ScaledFont::get_ctm(Matrix& ctm) const
 {
-  cairo_scaled_font_get_ctm(m_cobject, static_cast<cairo_matrix_t*>(&ctm));
+  cairo_scaled_font_get_ctm(m_cobject, reinterpret_cast<cairo_matrix_t*>(&ctm));
   check_object_status_and_throw_exception(*this);
 }
 

@@ -14,6 +14,8 @@
 using namespace boost::unit_test;
 #include <cairomm/fontface.h>
 #include <cairomm/scaledfont.h>
+#include <cairomm/surface.h>
+#include <cairomm/context.h>
 
 static Cairo::Matrix identity_matrix;
 

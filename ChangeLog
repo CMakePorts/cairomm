@@ -7,6 +7,20 @@
 
 2008-08-22  Jonathon Jongsma  <jonathon.jongsma@collabora.co.uk>
 
+	* cairomm/context.cc:
+	* cairomm/context.h: added Context::show_text_glyphs()
+	* cairomm/Makefile.am:
+	* cairomm/fontface.cc:
+	* cairomm/fontface.h:
+	* cairomm/scaledfont.cc:
+	* cairomm/scaledfont.h:
+	* tests/test-font-face.cc:
+	* cairomm/types.h: rearranged some types slightly and moved them to a new file
+	since I was getting circular dependencies with a lot of the basic struct types
+	that are used by multiple classes
+
+2008-08-22  Jonathon Jongsma  <jonathon.jongsma@collabora.co.uk>
+
 	* cairomm/scaledfont.h: add default value for the font_options parameter of
 	the ScaledFont constructor
 	* tests/test-scaled-font.cc: add test to excercise the change

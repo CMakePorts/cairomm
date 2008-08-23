@@ -17,6 +17,7 @@
  */
 
 #include <iostream>
+#include <cairomm/context.h>
 #include <cairomm/fontface.h>
 #include <cairomm/scaledfont.h>
 #include <cairomm/private.h>

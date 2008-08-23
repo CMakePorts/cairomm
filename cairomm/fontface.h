@@ -21,6 +21,7 @@
 
 #include <string>
 #include <cairomm/enums.h>
+#include <cairomm/types.h>
 #include <cairomm/refptr.h>
 #include <sigc++/slot.h>
 #include <cairo.h>
@@ -31,8 +32,6 @@ namespace Cairo
 
 class ScaledFont;
 class Context;
-typedef cairo_font_extents_t FontExtents; //A simple struct.
-typedef cairo_text_extents_t TextExtents; //A simple struct.
 
 /**
  * A FontFace represents a particular font at a particular weight, slant, and

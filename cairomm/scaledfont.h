@@ -19,13 +19,14 @@
 #ifndef __CAIROMM_SCALEDFONT_H
 #define __CAIROMM_SCALEDFONT_H
 
-#include <cairomm/context.h>
+#include <cairomm/refptr.h>
 #include <cairomm/fontoptions.h>
+#include <cairomm/fontface.h>
+#include <cairomm/types.h>
+#include <vector>
 
 namespace Cairo
 {
-
-  typedef cairo_text_cluster_t TextCluster;
 
 /** A ScaledFont is a font scaled to a particular size and device resolution. It
  * is most useful for low-level font usage where a library or application wants

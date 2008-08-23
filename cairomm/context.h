@@ -25,6 +25,8 @@
 #include <cairomm/fontface.h>
 #include <cairomm/pattern.h>
 #include <cairomm/path.h>
+#include <cairomm/scaledfont.h>
+#include <cairomm/types.h>
 #include <valarray>
 #include <vector>
 #include <cairo.h>
@@ -32,13 +34,6 @@
 
 namespace Cairo
 {
-
-// forward declaration
-class ScaledFont;
-
-typedef cairo_glyph_t Glyph; //A simple struct.
-typedef cairo_matrix_t Matrix; //A simple struct. //TODO: Derive and add operator[] and operator. matrix multiplication?
-typedef cairo_rectangle_t Rectangle;
 
 /** Context is the main class used to draw in cairomm. 
  * In the simplest case, create a Context with its target Surface, set its
@@ -716,6 +711,10 @@ public:
   RefPtr<ScaledFont> get_scaled_font();
   void show_text(const std::string& utf8);
   void show_glyphs(const std::vector<Glyph>& glyphs);
+  void show_text_glyphs(const std::string& utf8,
+                        const std::vector<Glyph>& glyphs,
+                        const std::vector<TextCluster>& clusters,
+                        bool backward);
   RefPtr<FontFace> get_font_face();
   RefPtr<const FontFace> get_font_face() const;
   void get_font_extents(FontExtents& extents) const;
