@@ -5,6 +5,12 @@
 	compilation with the freely available Visual Studio Express compiler.
 	Bug #17322.
 
+2008-08-22  Jonathon Jongsma  <jonathon.jongsma@collabora.co.uk>
+
+	* cairomm/scaledfont.h: add default value for the font_options parameter of
+	the ScaledFont constructor
+	* tests/test-scaled-font.cc: add test to excercise the change
+
 2008-08-22  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/scaledfont.cc:

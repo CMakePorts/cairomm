@@ -73,7 +73,7 @@ public:
    * rendering with it.
    */
   static RefPtr<ScaledFont> create(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,
-      const Matrix& ctm, const FontOptions& options);
+      const Matrix& ctm, const FontOptions& options = FontOptions());
   // NOTE: the constructor doesn't take a RefPtr<const FontFace> because the
   // FontFace object can be changed in this constructor (in the case of user
   // fonts, the FontFace becomes immutable, i.e. you can't call any set_*_func()

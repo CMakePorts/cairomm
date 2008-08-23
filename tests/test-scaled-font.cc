@@ -13,6 +13,10 @@ void test_construction()
   cairo_matrix_init_identity(&identity);
   RefPtr<ScaledFont> font = ScaledFont::create(face, identity, identity, FontOptions());
   BOOST_REQUIRE(font);
+
+  // now use the default argument for font_options
+  font = ScaledFont::create(face, identity, identity);
+  BOOST_REQUIRE(font);
 }
 
 void test_text_to_glyphs()
