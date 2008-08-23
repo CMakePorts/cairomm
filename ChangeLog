@@ -7,6 +7,14 @@
 
 2008-08-22  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/scaledfont.cc:
+	* cairomm/scaledfont.h: add text_to_glyphs() function
+	* tests/Makefile.am:
+	* tests/test-scaled-font.cc: Added.
+	* .gitignore: ignore new test executable
+
+2008-08-22  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/context.cc:
 	* cairomm/context.h: add get/set_scaled_font() that was missed previously
 

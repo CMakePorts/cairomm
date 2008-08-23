@@ -25,9 +25,7 @@
 namespace Cairo
 {
 
-typedef enum
-{
-} ScaledFontType;
+  typedef cairo_text_cluster_t TextCluster;
 
 /** A ScaledFont is a font scaled to a particular size and device resolution. It
  * is most useful for low-level font usage where a library or application wants
@@ -162,7 +160,36 @@ public:
    */
   FontType get_type() const;
 
-  protected:
+  // FIXME: it'd be really nice not to assume a specific container (e.g.
+  // std::vector) here
+/**
+ * @param x X position to place first glyph
+ * @param y Y position to place first glyph
+ * @param utf8 a string of text encoded in UTF-8
+ * @param glyphs pointer to array of glyphs to fill
+ * @param clusters pointer to array of cluster mapping information to fill
+ * @backward whether the text to glyphs mapping goes backward
+ *
+ * Converts UTF-8 text to an array of glyphs, with cluster mapping, that can be
+ * used to render later.
+ *
+ * For details of how (@a clusters and @a backward map input
+ * UTF-8 text to the output glyphs see Context::show_text_glyphs().
+ *
+ * The output values can be readily passed to Context::show_text_glyphs()
+ * Context::show_glyphs(), or related functions, assuming that the exact
+ * same scaled font is used for the operation.
+ *
+ * @since 1.8
+ **/
+  void text_to_glyphs (double x,
+                       double y,
+                       const std::string& utf8,
+                       std::vector<Glyph>& glyphs,
+                       std::vector<TextCluster>& clusters,
+                       bool& backward);
+
+protected:
   /** The underlying C cairo object that is wrapped by this ScaledFont */
   cobject* m_cobject;
 };

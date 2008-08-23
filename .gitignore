@@ -36,6 +36,7 @@ examples/text/toy-text
 tests/test-context
 tests/test-font-face
 tests/test-surface
+tests/test-scaled-font
 cairomm/cairommconfig.h*
 cairomm/stamp-*
 m4/libtool.m4

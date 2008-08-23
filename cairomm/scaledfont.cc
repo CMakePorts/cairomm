@@ -100,5 +100,40 @@ FontType ScaledFont::get_type() const
   return static_cast<FontType>(font_type);
 }
 
+void
+ScaledFont::text_to_glyphs (double x,
+                            double y,
+                            const std::string& utf8,
+                            std::vector<Glyph>& glyphs,
+                            std::vector<TextCluster>& clusters,
+                            bool& backward)
+{
+  int num_glyphs = -1;
+  int num_clusters = -1;
+  cairo_glyph_t* c_glyphs = 0;
+  cairo_text_cluster_t* c_clusters = 0;
+  cairo_status_t status = cairo_scaled_font_text_to_glyphs(cobj(), x, y,
+                                                           utf8.c_str(),
+                                                           utf8.size(),
+                                                           &c_glyphs,
+                                                           &num_glyphs,
+                                                           &c_clusters,
+                                                           &num_clusters,
+                                                           reinterpret_cast<cairo_bool_t*>(&backward));
+  if (num_glyphs > 0 && c_glyphs) {
+    glyphs.assign(static_cast<Glyph*>(c_glyphs),
+                  static_cast<Glyph*>(c_glyphs + num_glyphs));
+    cairo_glyph_free(c_glyphs);
+  }
+  if (num_clusters > 0 && c_clusters) {
+    clusters.assign(static_cast<TextCluster*>(c_clusters),
+                    static_cast<TextCluster*>(c_clusters + num_clusters));
+    cairo_text_cluster_free(c_clusters);
+  }
+  check_status_and_throw_exception(status);
+  check_object_status_and_throw_exception(*this);
+}
+
+
 }   // namespace Cairo
 // vim: ts=2 sw=2 et
