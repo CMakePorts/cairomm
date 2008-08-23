@@ -33,6 +33,9 @@
 namespace Cairo
 {
 
+// forward declaration
+class ScaledFont;
+
 typedef cairo_glyph_t Glyph; //A simple struct.
 typedef cairo_matrix_t Matrix; //A simple struct. //TODO: Derive and add operator[] and operator. matrix multiplication?
 typedef cairo_rectangle_t Rectangle;
@@ -703,6 +706,14 @@ public:
   void set_font_matrix(const Matrix& matrix);
   void get_font_matrix(Matrix& matrix) const;
   void set_font_options(const FontOptions& options);
+  /**
+   * @since 1.8
+   */
+  void set_scaled_font(const RefPtr<const ScaledFont>& scaled_font);
+  /**
+   * @since 1.8
+   */
+  RefPtr<ScaledFont> get_scaled_font();
   void show_text(const std::string& utf8);
   void show_glyphs(const std::vector<Glyph>& glyphs);
   RefPtr<FontFace> get_font_face();

@@ -21,6 +21,7 @@
 #include <cairomm/context_private.h>
 #include <cairomm/private.h>
 #include <cairomm/surface.h>
+#include <cairomm/scaledfont.h>
 
 /* M_PI is defined in math.h in the case of Microsoft Visual C++ */
 #if defined(_MSC_VER)
@@ -476,6 +477,19 @@ void Context::set_font_options(const FontOptions& options)
 {
   cairo_set_font_options(m_cobject, options.cobj());
   check_object_status_and_throw_exception(*this);
+}
+
+void Context::set_scaled_font(const RefPtr<const ScaledFont>& scaled_font)
+{
+  cairo_set_scaled_font(cobj(), scaled_font->cobj());
+  check_object_status_and_throw_exception(*this);
+}
+
+RefPtr<ScaledFont> Context::get_scaled_font()
+{
+  cairo_scaled_font_t* font = cairo_get_scaled_font(cobj());
+  check_object_status_and_throw_exception(*this);
+  return RefPtr<ScaledFont>(new ScaledFont(font, false /* does not have reference */));
 }
 
 void Context::show_text(const std::string& utf8)

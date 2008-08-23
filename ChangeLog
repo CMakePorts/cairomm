@@ -5,6 +5,11 @@
 	compilation with the freely available Visual Studio Express compiler.
 	Bug #17322.
 
+2008-08-22  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/context.cc:
+	* cairomm/context.h: add get/set_scaled_font() that was missed previously
+
 2008-08-21  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* tests/test-surface.cc: fix the image surface tests that create a file from a

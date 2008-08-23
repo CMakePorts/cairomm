@@ -12,6 +12,7 @@
 #include <boost/test/floating_point_comparison.hpp>
 using namespace boost::unit_test;
 #include <cairomm/context.h>
+#include <cairomm/scaledfont.h>
 
 #define CREATE_CONTEXT(varname) \
   Cairo::RefPtr<Cairo::Surface> surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 10, 10); \
@@ -316,7 +317,28 @@ test_target ()
     Cairo::RefPtr<const Cairo::PdfSurface>::cast_dynamic(cr2->get_target ());
   BOOST_CHECK (target_surface2);
   BOOST_CHECK (!bad_surface2);
+}
 
+void test_scaled_font()
+{
+  CREATE_CONTEXT (cr);
+  Cairo::RefPtr<Cairo::ToyFontFace> face = Cairo::ToyFontFace::create("sans",
+                                                                      Cairo::FONT_SLANT_NORMAL,
+                                                                      Cairo::FONT_WEIGHT_NORMAL);
+  Cairo::Matrix identity;
+  cairo_matrix_init_identity(&identity);
+  Cairo::RefPtr<Cairo::ScaledFont> font = Cairo::ScaledFont::create(face,
+                                                                    identity,
+                                                                    identity,
+                                                                    Cairo::FontOptions());
+  BOOST_CHECK_NO_THROW(cr->set_scaled_font(font));
+  // There's no operator== for ScaledFont, so I'm not sure if there's a way to
+  // compare whether the font we get form get() is the same as the one we set
+  // The following test fails
+  //BOOST_CHECK_EQUAL(font, cr->get_scaled_font());
+
+  //just put in a pseudo-test for now to excercise the API
+  BOOST_CHECK(cr->get_scaled_font());
 }
 
 test_suite*
@@ -344,6 +366,7 @@ init_unit_test_suite(int argc, char* argv[])
   test->add (BOOST_TEST_CASE (&test_clip));
   test->add (BOOST_TEST_CASE (&test_current_point));
   test->add (BOOST_TEST_CASE (&test_target));
+  test->add (BOOST_TEST_CASE (&test_scaled_font));
 
   return test;
 }
