@@ -37,6 +37,7 @@ tests/test-context
 tests/test-font-face
 tests/test-surface
 tests/test-scaled-font
+tests/test-font-options
 cairomm/cairommconfig.h*
 cairomm/stamp-*
 m4/libtool.m4

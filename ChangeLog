@@ -5,6 +5,15 @@
 	compilation with the freely available Visual Studio Express compiler.
 	Bug #17322.
 
+2008-08-24  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/enums.h: add LcdFilter enum
+	* cairomm/fontoptions.cc:
+	* cairomm/fontoptions.h: add get/set_lcd_filter() API
+	* tests/Makefile.am:
+	* tests/test-font-options.cc: Added.
+	* .gitignore: ignore new test executable
+
 2008-08-22  Jonathon Jongsma  <jonathon.jongsma@collabora.co.uk>
 
 	* cairomm/context.cc:

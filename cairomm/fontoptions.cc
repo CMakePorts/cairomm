@@ -154,6 +154,21 @@ HintMetrics FontOptions::get_hint_metrics() const
   return result;
 }
 
+void FontOptions::set_lcd_filter(LcdFilter lcd_filter)
+{
+  cairo_font_options_set_lcd_filter(m_cobject,
+          static_cast<cairo_lcd_filter_t>(lcd_filter));
+  check_object_status_and_throw_exception(*this);
+}
+
+LcdFilter FontOptions::get_lcd_filter()
+{
+  const LcdFilter result =
+      static_cast<LcdFilter>(cairo_font_options_get_lcd_filter(cobj()));
+  check_object_status_and_throw_exception(*this);
+  return result;
+}
+
 } //namespace Cairo
 
 // vim: ts=2 sw=2 et

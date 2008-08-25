@@ -59,6 +59,27 @@ public:
   void set_hint_metrics(HintMetrics hint_metrics);
   HintMetrics get_hint_metrics() const;
 
+  /**
+   * Sets the LCD filter for the font options object. The LCD filter specifies how
+   * pixels are filtered when rendered with an antialiasing mode of
+   * ANTIALIAS_SUBPIXEL. See the documentation for
+   * LcdFilter for full details.
+   *
+   * @param lcd_filter the new LCD filter
+   *
+   * @since 1.8
+   **/
+  void set_lcd_filter(LcdFilter lcd_filter);
+  /**
+   * Gets the LCD filter for the font options object.
+   * See the documentation for LcdFilter for full details.
+   *
+   * @return the LCD filter for the font options object
+   *
+   * @since 1.8
+   **/
+  LcdFilter get_lcd_filter();
+
   typedef cairo_font_options_t cobject;
   inline cobject* cobj() { return m_cobject; }
   inline const cobject* cobj() const { return m_cobject; }
