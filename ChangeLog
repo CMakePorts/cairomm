@@ -7,6 +7,12 @@
 
 2008-08-24  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/enums.h:
+	* cairomm/fontoptions.h: add documentation for all remainting FontOptions API
+	and the enums that are used for them
+
+2008-08-24  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/enums.h: add LcdFilter enum
 	* cairomm/fontoptions.cc:
 	* cairomm/fontoptions.h: add get/set_lcd_filter() API

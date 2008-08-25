@@ -134,31 +134,54 @@ typedef enum
     FILTER_GAUSSIAN = CAIRO_FILTER_GAUSSIAN
 } Filter;
 
+/**
+ * The subpixel order specifies the order of color elements within each pixel on
+ * the display device when rendering with an antialiasing mode of
+ * ANTIALIAS_SUBPIXEL.
+ **/
 typedef enum
 {
-    SUBPIXEL_ORDER_DEFAULT = CAIRO_SUBPIXEL_ORDER_DEFAULT,
-    SUBPIXEL_ORDER_RGB = CAIRO_SUBPIXEL_ORDER_RGB,
-    SUBPIXEL_ORDER_BGR = CAIRO_SUBPIXEL_ORDER_BGR,
-    SUBPIXEL_ORDER_VRGB = CAIRO_SUBPIXEL_ORDER_VRGB,
-    SUBPIXEL_ORDER_VBGR = CAIRO_SUBPIXEL_ORDER_VBGR
+    SUBPIXEL_ORDER_DEFAULT = CAIRO_SUBPIXEL_ORDER_DEFAULT, /**< Use the default subpixel order for for the target device */
+    SUBPIXEL_ORDER_RGB = CAIRO_SUBPIXEL_ORDER_RGB, /**< Subpixel elements are arranged horizontally with red at the left */
+    SUBPIXEL_ORDER_BGR = CAIRO_SUBPIXEL_ORDER_BGR, /**<  Subpixel elements are arranged horizontally with blue at the left */
+    SUBPIXEL_ORDER_VRGB = CAIRO_SUBPIXEL_ORDER_VRGB, /**< Subpixel elements are arranged vertically with red at the top */
+    SUBPIXEL_ORDER_VBGR = CAIRO_SUBPIXEL_ORDER_VBGR /**< Subpixel elements are arranged vertically with blue at the top */
 } SubpixelOrder;
 
 
+/**
+ * Specifies the type of hinting to do on font outlines. Hinting is the process
+ * of fitting outlines to the pixel grid in order to improve the appearance of
+ * the result. Since hinting outlines involves distorting them, it also reduces
+ * the faithfulness to the original outline shapes. Not all of the outline
+ * hinting styles are supported by all font backends.
+ *
+ * New entries may be added in future versions.
+ **/
 typedef enum
 {
-    HINT_STYLE_DEFAULT = CAIRO_HINT_STYLE_DEFAULT,
-    HINT_STYLE_NONE = CAIRO_HINT_STYLE_NONE,
-    HINT_STYLE_SLIGHT = CAIRO_HINT_STYLE_SLIGHT,
-    HINT_STYLE_MEDIUM = CAIRO_HINT_STYLE_MEDIUM,
-    HINT_STYLE_FULL = CAIRO_HINT_STYLE_FULL
+    HINT_STYLE_DEFAULT = CAIRO_HINT_STYLE_DEFAULT, /**< Use the default hint style for font backend and target device */
+    HINT_STYLE_NONE = CAIRO_HINT_STYLE_NONE, /**< Do not hint outlines */
+    HINT_STYLE_SLIGHT = CAIRO_HINT_STYLE_SLIGHT, /**< Hint outlines slightly to improve contrast while retaining good fidelity to the original shapes. */
+    HINT_STYLE_MEDIUM = CAIRO_HINT_STYLE_MEDIUM, /**< Hint outlines with medium strength giving a compromise between fidelity to the original shapes and contrast */
+    HINT_STYLE_FULL = CAIRO_HINT_STYLE_FULL /**< Hint outlines to maximize contrast */
 } HintStyle;
 
 
+/**
+ * Specifies whether to hint font metrics; hinting font metrics means quantizing
+ * them so that they are integer values in device space. Doing this improves the
+ * consistency of letter and line spacing, however it also means that text will
+ * be laid out differently at different zoom factors.
+ **/
 typedef enum
 {
     HINT_METRICS_DEFAULT = CAIRO_HINT_METRICS_DEFAULT,
+    /**< Hint metrics in the default manner for the font backend and target device */
     HINT_METRICS_OFF = CAIRO_HINT_METRICS_OFF,
+    /**< Do not hint font metrics */
     HINT_METRICS_ON = CAIRO_HINT_METRICS_ON
+    /**< Hint font metrics */
 } HintMetrics;
 
 typedef enum
