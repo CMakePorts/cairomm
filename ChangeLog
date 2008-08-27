@@ -1,3 +1,10 @@
+2008-08-27  Armin Burgmeier  <armin@arbur.net>
+
+	* MSVC_Net2005/cairomm/cairomm.rc.in: Replaced #include "afxres.h" by
+	#include <windows.h> which does the job equally well, and allows
+	compilation with the freely available Visual Studio Express compiler.
+	Bug #17322.
+
 2008-08-21  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* tests/test-surface.cc: fix the image surface tests that create a file from a
