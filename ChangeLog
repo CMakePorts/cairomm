@@ -1,3 +1,9 @@
+2008-09-03  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/fontface.cc:
+	* cairomm/fontface.h: Add the text_to_glyphs function API to UserFontFace
+	* tests/test-font-face.cc: added tests for the new API
+
 2008-08-27  Armin Burgmeier  <armin@arbur.net>
 
 	* MSVC_Net2005/cairomm/cairomm.rc.in: Replaced #include "afxres.h" by

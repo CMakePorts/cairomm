@@ -112,11 +112,13 @@ struct UserFontFace::PrivateData
   SlotInit* m_init_slot;
   SlotUnicodeToGlyph* m_unicode_to_glyph_slot;
   SlotRenderGlyph* m_render_glyph_slot;
+  SlotTextToGlyphs* m_text_to_glyphs_slot;
 
   PrivateData()
   : m_init_slot (0)
   , m_unicode_to_glyph_slot (0)
   , m_render_glyph_slot (0)
+  , m_text_to_glyphs_slot(0)
   {
   }
 
@@ -181,6 +183,72 @@ UserFontFace::unicode_to_glyph_cb (cairo_scaled_font_t *scaled_font,
     try {
       return (*instance->m_priv->m_unicode_to_glyph_slot)(RefPtr<ScaledFont>(new ScaledFont(scaled_font)),
                                                           unicode, *glyph);
+    } catch (const std::exception& ex) {
+      log_uncaught_exception(ex.what());
+    } catch ( ... ) {
+      log_uncaught_exception();
+    }
+  }
+  // this should never happen
+  return CAIRO_STATUS_USER_FONT_ERROR;
+}
+
+cairo_status_t
+UserFontFace::text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
+                                 const char *utf8,
+                                 int utf8_len,
+                                 cairo_glyph_t **glyphs,
+                                 int *num_glyphs,
+                                 cairo_text_cluster_t **clusters,
+                                 int *num_clusters,
+                                 cairo_bool_t *backward)
+{
+  cairo_font_face_t* face = cairo_scaled_font_get_font_face(scaled_font);
+  // we've stored a pointer to the wrapper object in the C object's user_data
+  UserFontFace* instance =
+    static_cast<UserFontFace*>(cairo_font_face_get_user_data(face,
+                                                             &user_font_key));
+  if (instance && instance->m_priv && instance->m_priv->m_text_to_glyphs_slot) {
+    try {
+      std::vector<Glyph> glyph_v;
+      std::vector<TextCluster> cluster_v;
+      const std::string utf8_str(utf8, utf8 + utf8_len);
+      bool local_backwards;
+
+      ErrorStatus status =
+        (*instance->m_priv->m_text_to_glyphs_slot)(RefPtr<ScaledFont>(new
+                                                                      ScaledFont(scaled_font)),
+                                                   utf8_str,
+                                                   glyph_v,
+                                                   cluster_v,
+                                                   local_backwards);
+      // TODO: we re-allocate a new array and pass it back to the caller since
+      // cairo will free the the returned array.  It sucks to do this excessive
+      // allocation and copying, I don't see much alternative besides just
+      // presenting a plain-C API.  If cairo didn't free the list, we could
+      // possibly just pass back a .data() pointer or something...
+      if (num_glyphs && glyphs) {
+        *num_glyphs = glyph_v.size();
+        if (glyph_v.size()) {
+          *glyphs = cairo_glyph_allocate(glyph_v.size());
+          std::copy(glyph_v.begin(), glyph_v.end(), *glyphs);
+        }
+      }
+      else return CAIRO_STATUS_USER_FONT_ERROR;
+
+      // TODO: same for clusters
+      if (num_clusters && clusters) {
+        *num_clusters = cluster_v.size();
+        if (cluster_v.size()) {
+          *clusters = cairo_text_cluster_allocate(cluster_v.size());
+          std::copy(cluster_v.begin(), cluster_v.end(), *clusters);
+        }
+      }
+
+      if (backward)
+        *backward = local_backwards;
+
+      return status;
     } catch (const std::exception& ex) {
       log_uncaught_exception(ex.what());
     } catch ( ... ) {
@@ -275,6 +343,18 @@ void UserFontFace::set_unicode_to_glyph_func(const SlotUnicodeToGlyph& unicode_t
   cairo_user_font_face_set_unicode_to_glyph_func (cobj(), unicode_to_glyph_cb);
 }
 
+void UserFontFace::set_text_to_glyphs_func(const SlotTextToGlyphs& text_to_glyphs_func)
+{
+  if (!m_priv)
+    return;
+  if (m_priv->m_text_to_glyphs_slot)
+    delete m_priv->m_text_to_glyphs_slot;
+  // copy the slot
+  m_priv->m_text_to_glyphs_slot = new SlotTextToGlyphs(text_to_glyphs_func);
+  cairo_user_font_face_set_text_to_glyphs_func (cobj(), text_to_glyphs_cb);
+}
+
+
 const UserFontFace::SlotInit* UserFontFace::get_init_func() const
 {
   if (!m_priv)
@@ -294,6 +374,13 @@ const UserFontFace::SlotUnicodeToGlyph* UserFontFace::get_unicode_to_glyph_func(
   if (!m_priv)
     return 0;
   return m_priv->m_unicode_to_glyph_slot;
+}
+
+const UserFontFace::SlotTextToGlyphs* UserFontFace::get_text_to_glyphs_func() const
+{
+  if (!m_priv)
+    return 0;
+  return m_priv->m_text_to_glyphs_slot;
 }
 
 } //namespace Cairo

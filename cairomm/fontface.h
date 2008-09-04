@@ -20,6 +20,7 @@
 #define __CAIROMM_FONTFACE_H
 
 #include <string>
+#include <vector>
 #include <cairomm/enums.h>
 #include <cairomm/types.h>
 #include <cairomm/refptr.h>
@@ -259,19 +260,25 @@ public:
                      unsigned long /*glyph*/,
                      const RefPtr<Context>&,
                      TextExtents& /*metrics*/> SlotRenderGlyph;
-  // FIXME: add SlotTextToGlyphs
+
+  typedef sigc::slot<ErrorStatus,
+                     const RefPtr<ScaledFont>&,
+                     const std::string& /*utf8*/,
+                     std::vector<Glyph>& /*glyphs*/,
+                     std::vector<TextCluster>& /*clusters*/,
+                     bool& /*backward*/> SlotTextToGlyphs;
 
   void set_init_func(const SlotInit& init_func);
   void set_render_glyph_func(const SlotRenderGlyph& render_glyph_func);
   void set_unicode_to_glyph_func(const SlotUnicodeToGlyph& unicode_to_glyph_func);
-  // FIXME: add set_text_to_glyphs_func
+  void set_text_to_glyphs_func(const SlotTextToGlyphs& text_to_glyphs_func);
 
   // FIXME: are these really useful?  What would you do with a sigc::slot when
   // you got it?
   const SlotInit* get_init_func() const;
   const SlotRenderGlyph* get_render_glyph_func() const;
   const SlotUnicodeToGlyph* get_unicode_to_glyph_func() const;
-  // FIXME: add get_text_to_glyphs_func
+  const SlotTextToGlyphs* get_text_to_glyphs_func() const;
 
 
   virtual ~UserFontFace();
@@ -298,6 +305,16 @@ render_glyph_cb(cairo_scaled_font_t  *scaled_font,
                 unsigned long         glyph,
                 cairo_t              *cr,
                 cairo_text_extents_t *metrics);
+
+static cairo_status_t
+text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
+                   const char *utf8,
+                   int utf8_len,
+                   cairo_glyph_t **glyphs,
+                   int *num_glyphs,
+                   cairo_text_cluster_t **clusters,
+                   int *num_clusters,
+                   cairo_bool_t *backward);
 };
 
 } // namespace Cairo

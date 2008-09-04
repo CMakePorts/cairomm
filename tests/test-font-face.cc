@@ -70,8 +70,28 @@ Cairo::ErrorStatus my_render_glyph(const Cairo::RefPtr<Cairo::ScaledFont>&, unsi
   return CAIRO_STATUS_SUCCESS;
 }
 
+static unsigned int text_to_glyphs_call_count = 0;
+Cairo::ErrorStatus my_text_to_glyphs(const Cairo::RefPtr<Cairo::ScaledFont>&, const std::string& utf8, std::vector<Cairo::Glyph>& glyphs, std::vector<Cairo::TextCluster>& /*clusters*/, bool& /*backward*/)
+{
+  text_to_glyphs_call_count++;
+  if (glyphs.size())
+    glyphs.clear();
+  // just fill in some bogus glyph indexes
+  std::string::const_iterator str_iter = utf8.begin();
+  for (; str_iter != utf8.end(); ++str_iter)
+  {
+    Cairo::Glyph g;
+    g.index = (unsigned long) *str_iter;
+    glyphs.push_back(g);
+  }
+  return CAIRO_STATUS_SUCCESS;
+}
+
 void test_user_font_callbacks_ptr()
 {
+  render_glyph_call_count = 0;
+  unicode_to_glyph_call_count = 0;
+  init_call_count = 0;
   Cairo::RefPtr<Cairo::UserFontFace> font = Cairo::UserFontFace::create();
   BOOST_CHECK(font);
   font->set_init_func(sigc::ptr_fun(my_init));
@@ -88,6 +108,31 @@ void test_user_font_callbacks_ptr()
   cr->show_text("Hello, world");
   BOOST_CHECK (unicode_to_glyph_call_count > 0);
   BOOST_CHECK (render_glyph_call_count > 0);
+}
+
+// since unicode_to_glyph_func and text_to_glyphs_func are mutually exclusive,
+// we must test them separately.  This test tests the text_to_glyphs_func
+void test_user_font_callbacks_ptr_text()
+{
+  render_glyph_call_count = 0;
+  text_to_glyphs_call_count = 0;
+  init_call_count = 0;
+  Cairo::RefPtr<Cairo::UserFontFace> font = Cairo::UserFontFace::create();
+  BOOST_CHECK(font);
+  font->set_init_func(sigc::ptr_fun(my_init));
+  font->set_render_glyph_func(sigc::ptr_fun(my_render_glyph));
+  font->set_text_to_glyphs_func(sigc::ptr_fun(my_text_to_glyphs));
+  Cairo::RefPtr<Cairo::ScaledFont> scaled_font =
+    Cairo::ScaledFont::create(font, identity_matrix, identity_matrix,
+                              Cairo::FontOptions());
+  BOOST_CHECK (init_call_count > 0);
+  Cairo::RefPtr<Cairo::ImageSurface> surface =
+    Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 100, 100);
+  Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
+  cr->set_font_face(font);
+  cr->show_text("Hello, world");
+  BOOST_CHECK (render_glyph_call_count > 0);
+  BOOST_CHECK (text_to_glyphs_call_count > 0);
 }
 
 struct UserFontCallbacks
@@ -248,6 +293,7 @@ init_unit_test_suite(int argc, char* argv[])
   test->add (BOOST_TEST_CASE (&test_toy_getters));
   test->add (BOOST_TEST_CASE (&test_user_font_create));
   test->add (BOOST_TEST_CASE (&test_user_font_callbacks_ptr));
+  test->add (BOOST_TEST_CASE (&test_user_font_callbacks_ptr_text));
   test->add (BOOST_TEST_CASE (&test_user_font_callbacks_mem));
   test->add (BOOST_TEST_CASE (&test_user_font_callbacks_exception));
   test->add (BOOST_TEST_CASE (&test_user_font_replace_callback));
