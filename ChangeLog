@@ -1,3 +1,8 @@
+2008-09-03  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* NEWS: update for release
+	* configure.in: bump to 1.6.4
+
 2008-08-27  Armin Burgmeier  <armin@arbur.net>
 
 	* MSVC_Net2005/cairomm/cairomm.rc.in: Replaced #include "afxres.h" by

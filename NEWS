@@ -1,3 +1,8 @@
+1.6.4:
+
+ * Windows build: Fix the build on the freely available Visual Studio Express
+   compiler: Bug #17322 (Armin Burgmeier)
+
 1.6.2:
 
  * Fix build on OSX when both Quartz and Xlib surfaces are enabled (Benjamin
