@@ -15,8 +15,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
-#ifndef __CAIROMM_WIN32_SURFACE_H
-#define __CAIROMM_WIN32_SURFACE_H
+#ifndef __CAIROMM_WIN32_FONT_H
+#define __CAIROMM_WIN32_FONT_H
 
 #include <cairo-features.h>
 
@@ -159,4 +159,4 @@ protected:
 
 #endif // CAIRO_HAS_WIN32_FONT
 
-#endif // __CAIROMM_WIN32_SURFACE_H
+#endif // __CAIROMM_WIN32_FONT_H

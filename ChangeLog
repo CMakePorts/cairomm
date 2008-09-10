@@ -1,5 +1,9 @@
 2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/win32_font.h: fix header protection guards
+
+2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* tests/test-font-face.cc: add a test to use the Win32FontFace API written by
 	Armin Burgmeier
 
