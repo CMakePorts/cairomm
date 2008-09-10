@@ -504,8 +504,8 @@ void Context::show_text_glyphs(const std::string& utf8,
                                bool backward)
 {
   cairo_show_text_glyphs(cobj(), utf8.c_str(), utf8.size(),
-                         glyphs.data(), glyphs.size(),
-                         clusters.data(), clusters.size(),
+                         &glyphs[0], glyphs.size(),
+                         &clusters[0], clusters.size(),
                          backward);
   check_object_status_and_throw_exception(*this);
 }

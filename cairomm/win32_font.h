@@ -18,9 +18,12 @@
 #ifndef __CAIROMM_WIN32_SURFACE_H
 #define __CAIROMM_WIN32_SURFACE_H
 
+#include <cairo-features.h>
+
 #ifdef CAIRO_HAS_WIN32_FONT
 #include <cairo-win32.h>
 #include <cairomm/fontface.h>
+#include <cairomm/scaledfont.h>
 
 namespace Cairo
 {
@@ -85,10 +88,10 @@ public:
    *
    * @since 1.8
    */
-  static RefPtr<Win32Font> create(const RefPtr<Win32FontFace>& font_face,
-                                  const Matrix& font_matrix,
-                                  const Matrix& ctm,
-                                  const FontOptions& options = FontOptions());
+  static RefPtr<Win32ScaledFont> create(const RefPtr<Win32FontFace>& font_face,
+                                        const Matrix& font_matrix,
+                                        const Matrix& ctm,
+                                        const FontOptions& options = FontOptions());
 
   /** Selects the font into the given device context and changes the map mode
    * and world transformation of the device context to match that of the font.

@@ -16,7 +16,10 @@
  * 02110-1301, USA.
  */
 
+#include <cairomm/win32_font.h>
+
 #ifdef CAIRO_HAS_WIN32_FONT
+#include <cairomm/private.h>
 
 namespace Cairo {
 
@@ -88,21 +91,21 @@ void Win32ScaledFont::done_font()
 
 double Win32ScaledFont::get_metrics_factor() const
 {
-  double val = cairo_win32_scaled_font_get_metrics_factor(cobj());
+  double val = cairo_win32_scaled_font_get_metrics_factor(const_cast<cairo_scaled_font_t*>(cobj()));
   check_object_status_and_throw_exception(*this);
   return val;
 }
 
 void Win32ScaledFont::get_logical_to_device(Matrix& logical_to_device) const
 {
-  cairo_win32_scaled_font_get_logical_to_device(cobj(),
+  cairo_win32_scaled_font_get_logical_to_device(const_cast<cairo_scaled_font_t*>(cobj()),
                                               static_cast<cairo_matrix_t*>(&logical_to_device));
   check_object_status_and_throw_exception(*this);
 }
 
 void Win32ScaledFont::get_device_to_logical(Matrix& device_to_logical) const
 {
-  cairo_win32_scaled_font_get_device_to_logical(cobj(),
+  cairo_win32_scaled_font_get_device_to_logical(const_cast<cairo_scaled_font_t*>(cobj()),
                                               static_cast<cairo_matrix_t*>(&device_to_logical));
   check_object_status_and_throw_exception(*this);
 }

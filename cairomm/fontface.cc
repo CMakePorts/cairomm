@@ -383,6 +383,8 @@ const UserFontFace::SlotTextToGlyphs* UserFontFace::get_text_to_glyphs_func() co
   return m_priv->m_text_to_glyphs_slot;
 }
 
+#ifdef CAIRO_HAS_FT_FONT
+
 RefPtr<FtFontFace>
 FtFontFace::create(FT_Face face, int load_flags)
 {
@@ -408,6 +410,8 @@ FtFontFace::FtFontFace(FcPattern* pattern) :
 {
   check_status_and_throw_exception(cairo_font_face_status(m_cobject));
 }
+
+#endif // CAIRO_HAS_FT_FONT
 
 } //namespace Cairo
 
