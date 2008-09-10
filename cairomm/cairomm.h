@@ -31,12 +31,16 @@
  *
  */
 
+#include <cairomm/cairommconfig.h>
 #include <cairomm/context.h>
-#include <cairomm/surface.h>
-#include <cairomm/fontoptions.h>
-#include <cairomm/pattern.h>
-#include <cairomm/path.h>
 #include <cairomm/enums.h>
+#include <cairomm/exception.h>
+#include <cairomm/fontface.h>
+#include <cairomm/fontoptions.h>
+#include <cairomm/path.h>
+#include <cairomm/pattern.h>
+#include <cairomm/scaledfont.h>
+#include <cairomm/surface.h>
 
 #endif //__CAIROMM_H
 
