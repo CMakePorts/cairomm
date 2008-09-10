@@ -1,3 +1,8 @@
+2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* tests/test-font-face.cc: add a test to use the Win32FontFace API written by
+	Armin Burgmeier
+
 2008-09-10  Armin Burgmeier  <armin@arbur.net>
 
 	* cairomm/win32_font.h:

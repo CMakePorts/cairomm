@@ -17,6 +17,12 @@ using namespace boost::unit_test;
 #include <cairomm/surface.h>
 #include <cairomm/context.h>
 
+#include <cairo-features.h>
+#ifdef CAIRO_HAS_WIN32_FONT
+#include <windows.h>
+#include <cairomm/win32_font.h>
+#endif // CAIRO_HAS_WIN32_FONT
+
 static Cairo::Matrix identity_matrix;
 
 void
@@ -299,6 +305,36 @@ void test_ft_font_face()
 }
 #endif // CAIRO_HAS_FT_FONT
 
+#ifdef CAIRO_HAS_WIN32_FONT
+void test_win32_font_face()
+{
+  LOGFONTW lf;
+  lf.lfHeight = 10;
+  lf.lfWidth = 0;
+  lf.lfEscapement = 0;
+  lf.lfOrientation = 0;
+  lf.lfWeight = FW_NORMAL;
+  lf.lfItalic = FALSE;
+  lf.lfUnderline = FALSE;
+  lf.lfStrikeOut = FALSE;
+  lf.lfCharSet = ANSI_CHARSET;
+  lf.lfOutPrecision = OUT_DEFAULT_PRECIS;
+  lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
+  lf.lfQuality = DEFAULT_QUALITY;
+  lf.lfPitchAndFamily = DEFAULT_PITCH;
+  wcscpy(lf.lfFaceName, L"Courier New");
+
+  Cairo::RefPtr<Cairo::Win32FontFace> fc(Cairo::Win32FontFace::create(&lf));
+  BOOST_CHECK(fc);
+  Cairo::RefPtr<Cairo::ImageSurface> sfc(Cairo::ImageSurface::create(Cairo::FORMAT_RGB24, 100, 100));
+  Cairo::RefPtr<Cairo::Context> cr(Cairo::Context::create(sfc));
+  cr->translate(0.0, 50.0);
+  cr->set_source_rgb(1.0, 1.0, 1.0);
+  BOOST_CHECK_NO_THROW(cr->set_font_face(fc));
+  BOOST_CHECK_NO_THROW(cr->show_text("Hello, World!"));
+}
+#endif // CAIRO_HAS_WIN32_FONT
+
 
 test_suite*
 init_unit_test_suite(int argc, char* argv[])
@@ -322,6 +358,9 @@ init_unit_test_suite(int argc, char* argv[])
 #ifdef CAIRO_HAS_FT_FONT
   test->add (BOOST_TEST_CASE (&test_ft_font_face));
 #endif // CAIRO_HAS_FT_FONT
+#ifdef CAIRO_HAS_WIN32_FONT
+  test->add (BOOST_TEST_CASE (&test_win32_font_face));
+#endif // CAIRO_HAS_WIN32_FONT
 
   return test;
 }
