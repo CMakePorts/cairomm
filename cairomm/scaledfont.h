@@ -24,6 +24,9 @@
 #include <cairomm/fontface.h>
 #include <cairomm/types.h>
 #include <vector>
+#ifdef CAIRO_HAS_FT_FONT
+#include <cairo-ft.h>
+#endif // CAIRO_HAS_FT_FONT
 
 namespace Cairo
 {
@@ -191,9 +194,61 @@ public:
                        bool& backward);
 
 protected:
+  ScaledFont(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,
+             const Matrix& ctm, const FontOptions& options = FontOptions());
   /** The underlying C cairo object that is wrapped by this ScaledFont */
   cobject* m_cobject;
 };
+
+#ifdef CAIRO_HAS_FT_FONT
+/**
+ * @since 1.8
+ */
+class FtScaledFont : public ScaledFont
+{
+public:
+  /** Creates a ScaledFont From a FtFontFace
+   *
+   * @since 1.8
+   */
+  static RefPtr<FtScaledFont> create(const RefPtr<FtFontFace>& font_face, const Matrix& font_matrix,
+      const Matrix& ctm, const FontOptions& options = FontOptions());
+
+  /** Gets the FT_Face object from a FreeType backend font and scales it
+   * appropriately for the font. You must release the face with
+   * unlock_face() when you are done using it. Since the FT_Face object can be
+   * shared between multiple ScaledFont objects, you must not lock any other
+   * font objects until you unlock this one. A count is kept of the number of
+   * times lock_face() is called.  unlock_face() must be called the same number
+   * of times.
+   *
+   * You must be careful when using this function in a library or in a threaded
+   * application, because freetype's design makes it unsafe to call freetype
+   * functions simultaneously from multiple threads, (even if using distinct
+   * FT_Face objects). Because of this, application code that acquires an
+   * FT_Face object with this call must add it's own locking to protect any use
+   * of that object, (and which also must protect any other calls into cairo as
+   * almost any cairo function might result in a call into the freetype
+   * library).
+   *
+   * @return The FT_Face object for font, scaled appropriately, or NULL if
+   * scaled_font is in an error state or there is insufficient memory.
+   *
+   * @since 1.8
+   */
+  FT_Face lock_face();
+
+  /** Releases a face obtained with lock_face()
+   *
+   * @since 1.8
+   */
+  void unlock_face();
+
+protected:
+  FtScaledFont(const RefPtr<FtFontFace>& font_face, const Matrix& font_matrix,
+      const Matrix& ctm, const FontOptions& options = FontOptions());
+};
+#endif // CAIRO_HAS_FT_FONT
 
 }
 

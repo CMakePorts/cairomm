@@ -383,6 +383,32 @@ const UserFontFace::SlotTextToGlyphs* UserFontFace::get_text_to_glyphs_func() co
   return m_priv->m_text_to_glyphs_slot;
 }
 
+RefPtr<FtFontFace>
+FtFontFace::create(FT_Face face, int load_flags)
+{
+  return RefPtr<FtFontFace>(new FtFontFace(face, load_flags));
+}
+
+FtFontFace::FtFontFace(FT_Face face, int load_flags) :
+  FontFace(cairo_ft_font_face_create_for_ft_face (face, load_flags),
+           true /* has reference*/)
+{
+  check_status_and_throw_exception(cairo_font_face_status(m_cobject));
+}
+
+RefPtr<FtFontFace>
+FtFontFace::create(FcPattern* pattern)
+{
+  return RefPtr<FtFontFace>(new FtFontFace(pattern));
+}
+
+FtFontFace::FtFontFace(FcPattern* pattern) :
+  FontFace(cairo_ft_font_face_create_for_pattern (pattern),
+           true /* has reference*/)
+{
+  check_status_and_throw_exception(cairo_font_face_status(m_cobject));
+}
+
 } //namespace Cairo
 
 // vim: ts=2 sw=2 et

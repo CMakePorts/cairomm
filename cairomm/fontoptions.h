@@ -21,8 +21,10 @@
 
 #include <cairomm/enums.h>
 #include <string>
-#include <cairo.h>
-
+//#include <cairo.h>
+#ifdef CAIRO_HAS_FT_FONT
+#include <cairo-ft.h>
+#endif // CAIRO_HAS_FT_FONT
 
 namespace Cairo
 {
@@ -146,6 +148,20 @@ public:
    * @since 1.8
    **/
   LcdFilter get_lcd_filter();
+
+#ifdef CAIRO_HAS_FT_FONT
+  /** Add options to a FcPattern based on a cairo_font_options_t font options
+   * object. Options that are already in the pattern, are not overridden, so you
+   * should call this function after calling FcConfigSubstitute() (the user's
+   * settings should override options based on the surface type), but before
+   * calling FcDefaultSubstitute().
+   *
+   * @param pattern an existing FcPattern
+   *
+   * @since 1.8
+   */
+  void substitute(FcPattern* pattern);
+#endif // CAIRO_HAS_FT_FONT
 
   typedef cairo_font_options_t cobject;
   inline cobject* cobj() { return m_cobject; }

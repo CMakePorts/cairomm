@@ -31,16 +31,21 @@ ScaledFont::ScaledFont(cobject* cobj, bool has_reference)
     m_cobject = cairo_scaled_font_reference(cobj);
 }
 
-RefPtr<ScaledFont> ScaledFont::create(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,
-    const Matrix& ctm, const FontOptions& options)
+ScaledFont::ScaledFont(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,
+                       const Matrix& ctm, const FontOptions& options)
 {
-  cairo_scaled_font_t* cobj =
+  m_cobject =
     cairo_scaled_font_create(font_face->cobj(),
                              reinterpret_cast<const cairo_matrix_t*>(&font_matrix),
                              reinterpret_cast<const cairo_matrix_t*>(&ctm),
                              options.cobj());
-  check_status_and_throw_exception(cairo_scaled_font_status(cobj));
-  return RefPtr<ScaledFont>(new ScaledFont(cobj, false));
+  check_object_status_and_throw_exception(*this);
+}
+
+RefPtr<ScaledFont> ScaledFont::create(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,
+    const Matrix& ctm, const FontOptions& options)
+{
+  return RefPtr<ScaledFont>(new ScaledFont(font_face, font_matrix, ctm, options));
 }
 
 void ScaledFont::extents(FontExtents& extents) const
@@ -139,6 +144,35 @@ ScaledFont::text_to_glyphs (double x,
   check_object_status_and_throw_exception(*this);
 }
 
+#ifdef CAIRO_HAS_FT_FONT
+FtScaledFont::FtScaledFont(const RefPtr<FtFontFace>& font_face, const Matrix& font_matrix,
+                           const Matrix& ctm, const FontOptions& options) :
+  ScaledFont(font_face, font_matrix, ctm, options)
+{
+  check_object_status_and_throw_exception(*this);
+}
+
+RefPtr<FtScaledFont>
+FtScaledFont::create(const RefPtr<FtFontFace>& font_face,
+                     const Matrix& font_matrix, const Matrix& ctm,
+                     const FontOptions& options)
+{
+  return RefPtr<FtScaledFont>(new FtScaledFont(font_face, font_matrix, ctm, options));
+}
+
+FT_Face FtScaledFont::lock_face()
+{
+  FT_Face face = cairo_ft_scaled_font_lock_face(cobj());
+  check_object_status_and_throw_exception(*this);
+  return face;
+}
+
+void FtScaledFont::unlock_face()
+{
+  cairo_ft_scaled_font_unlock_face(cobj());
+  check_object_status_and_throw_exception(*this);
+}
+#endif // CAIRO_HAS_FT_FONT
 
 }   // namespace Cairo
 // vim: ts=2 sw=2 et

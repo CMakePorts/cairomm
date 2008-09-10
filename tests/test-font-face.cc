@@ -277,6 +277,28 @@ void test_user_font_replace_callback()
   BOOST_CHECK_EQUAL (init_call_count, 0);
 }
 
+#ifdef CAIRO_HAS_FT_FONT
+void test_ft_font_face()
+{
+  FcPattern* invalid = FcPatternCreate();
+  Cairo::RefPtr<Cairo::FtFontFace> invalid_face;
+  BOOST_CHECK_THROW(invalid_face = Cairo::FtFontFace::create(invalid), std::bad_alloc);
+
+  // basically taken from the cairo test case -- we don't care what font we're
+  // using so just create an empty pattern and do the minimal substitution to
+  // get a valid pattern
+  FcPattern* pattern = FcPatternCreate();
+  FcConfigSubstitute (NULL, pattern, FcMatchPattern);
+  FcDefaultSubstitute (pattern);
+  FcResult result;
+  FcPattern* resolved = FcFontMatch (NULL, pattern, &result);
+  Cairo::RefPtr<Cairo::FtFontFace> face = Cairo::FtFontFace::create(resolved);
+  BOOST_CHECK(face);
+
+  // FIXME: test creating from a FT_Face
+}
+#endif // CAIRO_HAS_FT_FONT
+
 
 test_suite*
 init_unit_test_suite(int argc, char* argv[])
@@ -297,6 +319,9 @@ init_unit_test_suite(int argc, char* argv[])
   test->add (BOOST_TEST_CASE (&test_user_font_callbacks_mem));
   test->add (BOOST_TEST_CASE (&test_user_font_callbacks_exception));
   test->add (BOOST_TEST_CASE (&test_user_font_replace_callback));
+#ifdef CAIRO_HAS_FT_FONT
+  test->add (BOOST_TEST_CASE (&test_ft_font_face));
+#endif // CAIRO_HAS_FT_FONT
 
   return test;
 }

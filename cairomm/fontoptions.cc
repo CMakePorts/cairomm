@@ -169,6 +169,14 @@ LcdFilter FontOptions::get_lcd_filter()
   return result;
 }
 
+#ifdef CAIRO_HAS_FT_FONT
+void FontOptions::substitute(FcPattern* pattern)
+{
+  cairo_ft_font_options_substitute(cobj(), pattern);
+  check_object_status_and_throw_exception(*this);
+}
+#endif // CAIRO_HAS_FT_FONT
+
 } //namespace Cairo
 
 // vim: ts=2 sw=2 et

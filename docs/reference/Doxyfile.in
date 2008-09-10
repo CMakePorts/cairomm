@@ -196,7 +196,8 @@ PREDEFINED             = DOXYGEN_IGNORE_THIS \
                          CAIRO_HAS_SVG_SURFACE \
                          CAIRO_HAS_GLITZ_SURFACE \
                          CAIRO_HAS_QUARTZ_SURFACE \
-                         CAIRO_HAS_PNG_FUNCTIONS
+                         CAIRO_HAS_PNG_FUNCTIONS \
+                         CAIRO_HAS_FT_FONT
 EXPAND_AS_DEFINED      = 
 SKIP_FUNCTION_MACROS   = YES
 #---------------------------------------------------------------------------

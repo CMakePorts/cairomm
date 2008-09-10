@@ -26,6 +26,9 @@
 #include <cairomm/refptr.h>
 #include <sigc++/slot.h>
 #include <cairo.h>
+#ifdef CAIRO_HAS_FT_FONT
+#include <cairo-ft.h>
+#endif //CAIRO_HAS_FT_FONT
 
 
 namespace Cairo
@@ -316,6 +319,83 @@ text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
                    int *num_clusters,
                    cairo_bool_t *backward);
 };
+
+// font system support
+#ifdef CAIRO_HAS_FT_FONT
+
+class FtFontFace : public FontFace {
+public:
+  /** Creates a new font face for the FreeType font backend from a pre-opened
+   * FreeType face. This font can then be used with Context::set_font_face() or
+   * FtScaledFont::create().
+   *
+   * As an example, here is how one might correctly couple the lifetime of the
+   * FreeType face object to the FtFontFace:
+   * @code
+   * static const cairo_user_data_key_t key;
+
+   * font_face = cairo_ft_font_face_create_for_ft_face (ft_face, 0);
+   * status = cairo_font_face_set_user_data (font_face, &key,
+   *                                ft_face, (cairo_destroy_func_t) FT_Done_Face);
+   * if (status) {
+   *    cairo_font_face_destroy (font_face);
+   *    FT_Done_Face (ft_face);
+   *    return ERROR;
+   * }
+   * @endcode
+   *
+   * @param face A FreeType face object, already opened. This must be kept
+   * around until the face's ref_count drops to zero and it is freed. Since the
+   * face may be referenced internally to Cairo, the best way to determine when
+   * it is safe to free the face is to pass a cairo_destroy_func_t to
+   * cairo_font_face_set_user_data()
+   * @param load_flags flags to pass to FT_Load_Glyph when loading glyphs from
+   * the font. These flags are OR'ed together with the flags derived from the
+   * cairo_font_options_t passed to cairo_scaled_font_create(), so only a few
+   * values such as FT_LOAD_VERTICAL_LAYOUT, and FT_LOAD_FORCE_AUTOHINT are
+   * useful. You should not pass any of the flags affecting the load target,
+   * such as FT_LOAD_TARGET_LIGHT.
+   *
+   * @since 1.8
+   */
+  static RefPtr<FtFontFace> create(FT_Face face, int load_flags);
+
+  /** Creates a new font face for the FreeType font backend based on a
+   * fontconfig pattern. This font can then be used with Context::set_font_face()
+   * or FtScaledFont::create().
+   *
+   * Font rendering options are represented both here and when you call
+   * FtScaledFont::create(). Font options that have a representation in a
+   * FcPattern must be passed in here; to modify FcPattern appropriately to
+   * reflect the options in a FontOptions, call FontOptions::substitute().
+   *
+   * The pattern's FC_FT_FACE element is inspected first and if that is set,
+   * that will be the FreeType font face associated with the returned cairo font
+   * face. Otherwise the FC_FILE and FC_INDEX elements of pattern are used to
+   * load a font face from file.
+   *
+   * If the FC_FT_FACE element of pattern is set, the user is responsible for
+   * making sure that the referenced FT_Face remains valid for the life time of
+   * the returned FtFontFace. See FtFontFace::create() for an exmaple of how to
+   * couple the life time of the FT_Face to that of the cairo font-face.
+   *
+   * @param pattern A fully resolved fontconfig pattern. A pattern can be
+   * resolved, by, among other things, calling FcConfigSubstitute(),
+   * FcDefaultSubstitute(), then FcFontMatch(). Cairo will call
+   * FcPatternReference() on this pattern, so you should not further modify the
+   * pattern, but you can release your reference to the pattern with
+   * FcPatternDestroy() if you no longer need to access it.
+   *
+   * @since 1.8
+   */
+  static RefPtr<FtFontFace> create(FcPattern* pattern);
+
+protected:
+  FtFontFace(FT_Face face, int load_flags);
+  FtFontFace(FcPattern* pattern);
+};
+
+#endif // CAIRO_HAS_FT_FONT
 
 } // namespace Cairo
 
