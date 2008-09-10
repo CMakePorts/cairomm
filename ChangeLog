@@ -1,4 +1,13 @@
-2008-09-10  Jonathon Jongsma  <jonathon.jongsma@collabora.co.uk>
+2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/Makefile.am:
+	* cairomm/win32_font.cc: Added.
+	* cairomm/win32_font.h: Added.
+	* docs/reference/Doxyfile.in: add support for win32 fonts.  Note that I don't
+	have a win32 platform to test with, so I haven't actually compiled this to
+	verify that it works correctly
+
+2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/cairomm.h: update, add missing includes
 
