@@ -1,3 +1,7 @@
+2008-09-09  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/fontface.cc: use vector::empty() rather than ::size()
+
 2008-09-03  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/fontface.cc:

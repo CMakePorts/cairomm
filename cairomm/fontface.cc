@@ -229,7 +229,7 @@ UserFontFace::text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
       // possibly just pass back a .data() pointer or something...
       if (num_glyphs && glyphs) {
         *num_glyphs = glyph_v.size();
-        if (glyph_v.size()) {
+        if (!glyph_v.empty()) {
           *glyphs = cairo_glyph_allocate(glyph_v.size());
           std::copy(glyph_v.begin(), glyph_v.end(), *glyphs);
         }
@@ -239,7 +239,7 @@ UserFontFace::text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
       // TODO: same for clusters
       if (num_clusters && clusters) {
         *num_clusters = cluster_v.size();
-        if (cluster_v.size()) {
+        if (!cluster_v.empty()) {
           *clusters = cairo_text_cluster_allocate(cluster_v.size());
           std::copy(cluster_v.begin(), cluster_v.end(), *clusters);
         }
