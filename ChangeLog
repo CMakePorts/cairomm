@@ -1,5 +1,13 @@
 2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/Makefile.am:
+	* cairomm/quartz_font.cc: Added.
+	* cairomm/quartz_font.h: Added.
+	* docs/reference/Doxyfile.in:
+	Added QuartzFontFace class
+
+2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/win32_font.h: fix header protection guards
 
 2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
