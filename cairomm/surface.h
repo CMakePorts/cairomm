@@ -180,6 +180,13 @@ public:
 
   SurfaceType get_type() const;
 
+  /**This function returns the content type of surface which indicates whether
+   * the surface contains color and/or alpha information.
+   *
+   * @since 1.8
+   */
+  Content get_content() const;
+
   /**
    * Emits the current page for backends that support multiple pages,
    * but doesn't clear it, so that the contents of the current page will

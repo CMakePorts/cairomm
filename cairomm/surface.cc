@@ -140,6 +140,13 @@ SurfaceType Surface::get_type() const
   return static_cast<SurfaceType>(surface_type);
 }
 
+Content Surface::get_content() const
+{
+  cairo_content_t content = cairo_surface_get_content(const_cast<cairo_surface_t*>(cobj()));
+  check_object_status_and_throw_exception(*this);
+  return static_cast<Content>(content);
+}
+
 void Surface::copy_page()
 {
   cairo_surface_copy_page(m_cobject);

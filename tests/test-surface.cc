@@ -93,6 +93,15 @@ void test_ps_eps()
   BOOST_CHECK_EQUAL(ps->get_eps(), !result);
 }
 
+void test_content()
+{
+  RefPtr<ImageSurface> surface = ImageSurface::create(FORMAT_ARGB32, 1, 1);
+  BOOST_CHECK_EQUAL(surface->get_content(), CONTENT_COLOR_ALPHA);
+  RefPtr<Surface> similar = Surface::create(surface, CONTENT_ALPHA, 1, 1);
+  BOOST_REQUIRE(similar);
+  BOOST_CHECK_EQUAL(similar->get_content(), CONTENT_ALPHA);
+}
+
 
 test_suite*
 init_unit_test_suite(int argc, char* argv[])
@@ -108,6 +117,7 @@ init_unit_test_suite(int argc, char* argv[])
   test->add (BOOST_TEST_CASE (&test_svg_constructor_slot));
   test->add (BOOST_TEST_CASE (&test_create_from_png));
   test->add (BOOST_TEST_CASE (&test_ps_eps));
+  test->add (BOOST_TEST_CASE (&test_content));
 
   return test;
 }
