@@ -2,6 +2,12 @@
 
 	* cairomm/surface.cc:
 	* cairomm/surface.h:
+	* tests/test-surface.cc: added Surface::get_fallback_resolution() + test
+
+2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
+	* cairomm/surface.cc:
+	* cairomm/surface.h:
 	* tests/test-surface.cc: add Surface::get_content() + test
 
 2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>

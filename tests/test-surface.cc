@@ -102,6 +102,18 @@ void test_content()
   BOOST_CHECK_EQUAL(similar->get_content(), CONTENT_ALPHA);
 }
 
+void test_fallback_resolution()
+{
+  RefPtr<ImageSurface> surface = ImageSurface::create(FORMAT_ARGB32, 1, 1);
+  double x, y;
+  surface->get_fallback_resolution(x, y);
+  const double new_x = 94, new_y = 123;
+  surface->set_fallback_resolution(new_x, new_y);
+  surface->get_fallback_resolution(x, y);
+  BOOST_CHECK_EQUAL(x, new_x);
+  BOOST_CHECK_EQUAL(y, new_y);
+}
+
 
 test_suite*
 init_unit_test_suite(int argc, char* argv[])

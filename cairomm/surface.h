@@ -178,6 +178,16 @@ public:
    */
   void set_fallback_resolution(double x_pixels_per_inch, double y_pixels_per_inch);
 
+  /** This function returns the previous fallback resolution set by
+   * set_fallback_resolution(), or default fallback resolution if never set.
+   *
+   * @param x_pixels_per_inch horizontal pixels per inch
+   * @param y_pixels_per_inch vertical pixels per inch
+   *
+   * @since 1.8
+   */
+  void get_fallback_resolution(double& x_pixels_per_inch, double& y_pixels_per_inch) const;
+
   SurfaceType get_type() const;
 
   /**This function returns the content type of surface which indicates whether

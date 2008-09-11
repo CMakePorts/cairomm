@@ -133,6 +133,15 @@ void Surface::set_fallback_resolution(double x_pixels_per_inch, double y_pixels_
   check_object_status_and_throw_exception(*this);
 }
 
+void Surface::get_fallback_resolution(double& x_pixels_per_inch,
+                                      double& y_pixels_per_inch) const
+{
+  cairo_surface_get_fallback_resolution(const_cast<cairo_surface_t*>(cobj()),
+                                        &x_pixels_per_inch,
+                                        &y_pixels_per_inch);
+  check_object_status_and_throw_exception(*this);
+}
+
 SurfaceType Surface::get_type() const
 {
   cairo_surface_type_t surface_type = cairo_surface_get_type(m_cobject);
