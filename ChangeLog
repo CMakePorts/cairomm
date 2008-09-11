@@ -1,5 +1,11 @@
 2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/win32_surface.cc:
+	* cairomm/win32_surface.h: add Win32Surface::create_with_ddb (and an alias for
+	create_with_dib()), and Win32Surface::get_image()
+
+2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/surface.cc:
 	* cairomm/surface.h:
 	* tests/test-surface.cc: added Surface::get_fallback_resolution() + test

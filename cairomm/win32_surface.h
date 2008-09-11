@@ -63,6 +63,17 @@ public:
    */
   HDC get_dc() const;
 
+  /** Returns a ImageSurface that refers to the same bits as the DIB of the
+   * Win32 surface. If the passed-in win32 surface is not a DIB surface, the
+   * returned surface will be NULL
+   *
+   * @return a ImageSurface (owned by the Win32Surface), or NULL if the win32
+   * surface is not a DIB.
+   *
+   * @since 1.8
+   */
+  RefPtr<ImageSurface> get_image();
+
   /** Creates a cairo surface that targets the given DC. The DC will be queried
    * for its initial clip extents, and this will be used as the size of the
    * cairo surface. Also, if the DC is a raster DC, it will be queried for its
@@ -73,6 +84,10 @@ public:
    */
   static RefPtr<Win32Surface> create(HDC hdc);
 
+  /**
+   * @deprecated use create_with_dib()
+   */
+  static RefPtr<Win32Surface> create(Format format, int width, int height);
   /** Creates a device-independent-bitmap surface not associated with any
    * particular existing surface or device context. The created bitmap will be
    * unititialized.
@@ -81,8 +96,24 @@ public:
    * @param width width of the surface, in pixels
    * @param height height of the surface, in pixels
    * @return the newly created surface
+   *
+   * @since 1.8
    */
-  static RefPtr<Win32Surface> create(Format format, int width, int height);
+  static RefPtr<Win32Surface> create_with_dib(Format format, int width, int height);
+
+  /** Creates a device-independent-bitmap surface not associated with any
+   * particular existing surface or device context. The created bitmap will be
+   * uninitialized.
+   *
+   * @param hdc the DC to create a surface for
+   * @param format format of pixels in the surface to create
+   * @param width width of the surface, in pixels
+   * @param height height of the surface, in pixels
+   * @return the newly created surface
+   *
+   * @since 1.8
+   */
+  static RefPtr<Win32Surface> create_with_ddb(Format format, int width, int height);
 
 };
 
