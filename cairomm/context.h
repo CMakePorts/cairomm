@@ -715,6 +715,7 @@ public:
   RefPtr<ScaledFont> get_scaled_font();
   void show_text(const std::string& utf8);
   void show_glyphs(const std::vector<Glyph>& glyphs);
+  bool has_show_text_glyphs() const;
   void show_text_glyphs(const std::string& utf8,
                         const std::vector<Glyph>& glyphs,
                         const std::vector<TextCluster>& clusters,
