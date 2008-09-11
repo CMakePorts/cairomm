@@ -1,5 +1,11 @@
 2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/context.cc:
+	* cairomm/context.h:
+	* tests/test-context.cc: add Context::get_font_options() and tests for it.
+
+2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/Makefile.am:
 	* cairomm/quartz_font.cc: Added.
 	* cairomm/quartz_font.h: Added.

@@ -479,6 +479,12 @@ void Context::set_font_options(const FontOptions& options)
   check_object_status_and_throw_exception(*this);
 }
 
+void Context::get_font_options(FontOptions& options) const
+{
+  cairo_get_font_options(m_cobject, options.cobj());
+  check_object_status_and_throw_exception(*this);
+}
+
 void Context::set_scaled_font(const RefPtr<const ScaledFont>& scaled_font)
 {
   cairo_set_scaled_font(cobj(), scaled_font->cobj());

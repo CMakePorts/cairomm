@@ -341,6 +341,17 @@ void test_scaled_font()
   BOOST_CHECK(cr->get_scaled_font());
 }
 
+void test_font_options()
+{
+  CREATE_CONTEXT (cr);
+  Cairo::FontOptions options;
+  options.set_antialias(Cairo::ANTIALIAS_GRAY);
+  cr->set_font_options(options);
+  Cairo::FontOptions other;
+  cr->get_font_options(other);
+  BOOST_CHECK(options == other);
+}
+
 test_suite*
 init_unit_test_suite(int argc, char* argv[])
 {
@@ -367,6 +378,7 @@ init_unit_test_suite(int argc, char* argv[])
   test->add (BOOST_TEST_CASE (&test_current_point));
   test->add (BOOST_TEST_CASE (&test_target));
   test->add (BOOST_TEST_CASE (&test_scaled_font));
+  test->add (BOOST_TEST_CASE (&test_font_options));
 
   return test;
 }

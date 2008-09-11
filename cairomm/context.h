@@ -704,6 +704,10 @@ public:
   /**
    * @since 1.8
    */
+  void get_font_options(FontOptions& options) const;
+  /**
+   * @since 1.8
+   */
   void set_scaled_font(const RefPtr<const ScaledFont>& scaled_font);
   /**
    * @since 1.8
