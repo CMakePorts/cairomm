@@ -85,14 +85,14 @@ Surface::~Surface()
 
 void Surface::finish()
 {
-  cairo_surface_finish(m_cobject);
+  cairo_surface_finish(cobj());
   check_object_status_and_throw_exception(*this);
 }
 
 void Surface::get_font_options(FontOptions& options) const
 {
   cairo_font_options_t* cfontoptions = cairo_font_options_create();
-  cairo_surface_get_font_options(m_cobject, cfontoptions);
+  cairo_surface_get_font_options(const_cast<cobject*>(cobj()), cfontoptions);
   options = FontOptions(cfontoptions);
   cairo_font_options_destroy(cfontoptions);
   check_object_status_and_throw_exception(*this);
@@ -100,36 +100,36 @@ void Surface::get_font_options(FontOptions& options) const
 
 void Surface::flush()
 {
-  cairo_surface_flush(m_cobject);
+  cairo_surface_flush(cobj());
   check_object_status_and_throw_exception(*this);
 }
 
 void Surface::mark_dirty()
 {
-  cairo_surface_mark_dirty(m_cobject);
+  cairo_surface_mark_dirty(cobj());
   check_object_status_and_throw_exception(*this);
 }
 
 void Surface::mark_dirty(int x, int y, int width, int height)
 {
-  cairo_surface_mark_dirty_rectangle(m_cobject, x, y, width, height);
+  cairo_surface_mark_dirty_rectangle(cobj(), x, y, width, height);
   check_object_status_and_throw_exception(*this);
 }
 
 void Surface::set_device_offset(double x_offset, double y_offset)
 {
-  cairo_surface_set_device_offset(m_cobject, x_offset, y_offset);
+  cairo_surface_set_device_offset(cobj(), x_offset, y_offset);
   check_object_status_and_throw_exception(*this);
 }
 
 void Surface::get_device_offset(double& x_offset, double& y_offset) const
 {
-  cairo_surface_get_device_offset(const_cast<cobject*>(m_cobject), &x_offset, &y_offset);
+  cairo_surface_get_device_offset(const_cast<cobject*>(cobj()), &x_offset, &y_offset);
 }
 
 void Surface::set_fallback_resolution(double x_pixels_per_inch, double y_pixels_per_inch)
 {
-  cairo_surface_set_fallback_resolution(m_cobject, x_pixels_per_inch, y_pixels_per_inch);
+  cairo_surface_set_fallback_resolution(cobj(), x_pixels_per_inch, y_pixels_per_inch);
   check_object_status_and_throw_exception(*this);
 }
 
@@ -144,7 +144,8 @@ void Surface::get_fallback_resolution(double& x_pixels_per_inch,
 
 SurfaceType Surface::get_type() const
 {
-  cairo_surface_type_t surface_type = cairo_surface_get_type(m_cobject);
+  cairo_surface_type_t surface_type =
+    cairo_surface_get_type(const_cast<cobject*>(cobj()));
   check_object_status_and_throw_exception(*this);
   return static_cast<SurfaceType>(surface_type);
 }
@@ -158,31 +159,31 @@ Content Surface::get_content() const
 
 void Surface::copy_page()
 {
-  cairo_surface_copy_page(m_cobject);
+  cairo_surface_copy_page(cobj());
   check_object_status_and_throw_exception(*this);
 }
 
 void Surface::show_page()
 {
-  cairo_surface_show_page(m_cobject);
+  cairo_surface_show_page(cobj());
   check_object_status_and_throw_exception(*this);
 }
 
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
 void Surface::write_to_png(const std::string& filename)
 {
-  ErrorStatus status = cairo_surface_write_to_png(m_cobject, filename.c_str());
+  ErrorStatus status = cairo_surface_write_to_png(cobj(), filename.c_str());
   check_status_and_throw_exception(status);
 }
 
 void Surface::write_to_png_stream(const SlotWriteFunc& write_func)
 {
-  SlotWriteFunc* old_slot = get_slot(m_cobject);
+  SlotWriteFunc* old_slot = get_slot(cobj());
   if (old_slot)
     delete old_slot;
   SlotWriteFunc* slot_copy = new SlotWriteFunc(write_func);
-  set_write_slot(m_cobject, slot_copy);
-  ErrorStatus status = cairo_surface_write_to_png_stream(m_cobject,
+  set_write_slot(cobj(), slot_copy);
+  ErrorStatus status = cairo_surface_write_to_png_stream(cobj(),
                                                          &write_func_wrapper,
                                                          slot_copy /*closure*/);
   check_status_and_throw_exception(status);
@@ -190,24 +191,24 @@ void Surface::write_to_png_stream(const SlotWriteFunc& write_func)
 
 void Surface::write_to_png(cairo_write_func_t write_func, void *closure)
 {
-  ErrorStatus status = cairo_surface_write_to_png_stream(m_cobject, write_func, closure);
+  ErrorStatus status = cairo_surface_write_to_png_stream(cobj(), write_func, closure);
   check_status_and_throw_exception(status);
 }
 #endif
 
 void Surface::reference() const
 {
-  cairo_surface_reference(m_cobject);
+  cairo_surface_reference(const_cast<cobject*>(cobj()));
 }
 
 void Surface::unreference() const
 {
-  cairo_surface_destroy(m_cobject);
+  cairo_surface_destroy(const_cast<cobject*>(cobj()));
 }
 
 RefPtr<Surface> Surface::create(const RefPtr<Surface> other, Content content, int width, int height)
 {
-  cairo_surface_t* cobject = cairo_surface_create_similar(other->m_cobject, (cairo_content_t)content, width, height);
+  cairo_surface_t* cobject = cairo_surface_create_similar(other->cobj(), (cairo_content_t)content, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
 }
@@ -267,36 +268,38 @@ RefPtr<ImageSurface> ImageSurface::create_from_png(cairo_read_func_t read_func, 
 
 int ImageSurface::get_width() const
 {
-  const int result = cairo_image_surface_get_width(m_cobject);
+  const int result =
+    cairo_image_surface_get_width(const_cast<cobject*>(cobj()));
   check_object_status_and_throw_exception(*this);
   return result;
 }
 
 int ImageSurface::get_height() const
 {
-  const int result = cairo_image_surface_get_height(m_cobject);
+  const int result =
+    cairo_image_surface_get_height(const_cast<cobject*>(cobj()));
   check_object_status_and_throw_exception(*this);
   return result;
 }
 
 unsigned char* ImageSurface::get_data()
 {
-  return cairo_image_surface_get_data(m_cobject);
+  return cairo_image_surface_get_data(cobj());
 }
 
 const unsigned char* ImageSurface::get_data() const
 {
-  return cairo_image_surface_get_data(m_cobject);
+  return cairo_image_surface_get_data(const_cast<cobject*>(cobj()));
 }
 
 Format ImageSurface::get_format() const
 {
-  return static_cast<Format>(cairo_image_surface_get_format(m_cobject));
+  return static_cast<Format>(cairo_image_surface_get_format(const_cast<cobject*>(cobj())));
 }
 
 int ImageSurface::get_stride() const
 {
-  return cairo_image_surface_get_stride(m_cobject);
+  return cairo_image_surface_get_stride(const_cast<cobject*>(cobj()));
 }
 
 int ImageSurface::format_stride_for_width (Cairo::Format format, int width)
@@ -348,7 +351,7 @@ RefPtr<PdfSurface> PdfSurface::create_for_stream(const SlotWriteFunc& write_func
 
 void PdfSurface::set_size(double width_in_points, double height_in_points)
 {
-  cairo_pdf_surface_set_size(m_cobject, width_in_points, height_in_points);
+  cairo_pdf_surface_set_size(cobj(), width_in_points, height_in_points);
   check_object_status_and_throw_exception(*this);
 }
 
@@ -396,26 +399,26 @@ RefPtr<PsSurface> PsSurface::create(cairo_write_func_t write_func, void *closure
 
 void PsSurface::set_size(double width_in_points, double height_in_points)
 {
-  cairo_ps_surface_set_size(m_cobject, width_in_points, height_in_points);
+  cairo_ps_surface_set_size(cobj(), width_in_points, height_in_points);
   check_object_status_and_throw_exception(*this);
 }
 
 
 void PsSurface::dsc_comment(std::string comment)
 {
-  cairo_ps_surface_dsc_comment(m_cobject, comment.c_str());
+  cairo_ps_surface_dsc_comment(cobj(), comment.c_str());
   check_object_status_and_throw_exception(*this);
 }
 
 void PsSurface::dsc_begin_setup()
 {
-  cairo_ps_surface_dsc_begin_setup(m_cobject);
+  cairo_ps_surface_dsc_begin_setup(cobj());
   check_object_status_and_throw_exception(*this);
 }
 
 void PsSurface::dsc_begin_page_setup()
 {
-  cairo_ps_surface_dsc_begin_page_setup(m_cobject);
+  cairo_ps_surface_dsc_begin_page_setup(cobj());
   check_object_status_and_throw_exception(*this);
 }
 
@@ -428,13 +431,13 @@ bool PsSurface::get_eps() const
 
 void PsSurface::set_eps(bool eps)
 {
-  cairo_ps_surface_set_eps(m_cobject, eps);
+  cairo_ps_surface_set_eps(cobj(), eps);
   check_object_status_and_throw_exception(*this);
 }
 
 void PsSurface::restrict_to_level(PsLevel level)
 {
-  cairo_ps_surface_restrict_to_level(m_cobject, static_cast<cairo_ps_level_t>(level));
+  cairo_ps_surface_restrict_to_level(cobj(), static_cast<cairo_ps_level_t>(level));
   check_object_status_and_throw_exception(*this);
 }
 
@@ -505,7 +508,7 @@ RefPtr<SvgSurface> SvgSurface::create(cairo_write_func_t write_func, void *closu
 
 void SvgSurface::restrict_to_version(SvgVersion version)
 {
-  cairo_svg_surface_restrict_to_version(m_cobject, static_cast<cairo_svg_version_t>(version));
+  cairo_svg_surface_restrict_to_version(cobj(), static_cast<cairo_svg_version_t>(version));
   check_object_status_and_throw_exception(*this);
 }
 
