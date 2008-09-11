@@ -23,7 +23,7 @@ void test_write_to_png_stream()
 void test_pdf_constructor_slot()
 {
   test_slot_called = 0;
-  RefPtr<PdfSurface> pdf = PdfSurface::create(sigc::ptr_fun(&test_slot), 1, 1);
+  RefPtr<PdfSurface> pdf = PdfSurface::create_for_stream(sigc::ptr_fun(&test_slot), 1, 1);
   pdf->show_page();
   pdf->finish();
   BOOST_CHECK(test_slot_called > 0);
@@ -32,7 +32,7 @@ void test_pdf_constructor_slot()
 void test_ps_constructor_slot()
 {
   test_slot_called = 0;
-  RefPtr<PsSurface> ps = PsSurface::create(sigc::ptr_fun(&test_slot), 1, 1);
+  RefPtr<PsSurface> ps = PsSurface::create_for_stream(sigc::ptr_fun(&test_slot), 1, 1);
   ps->show_page();
   ps->finish();
   BOOST_CHECK(test_slot_called > 0);
@@ -41,7 +41,7 @@ void test_ps_constructor_slot()
 void test_svg_constructor_slot()
 {
   test_slot_called = 0;
-  RefPtr<SvgSurface> svg = SvgSurface::create(sigc::ptr_fun(&test_slot), 1, 1);
+  RefPtr<SvgSurface> svg = SvgSurface::create_for_stream(sigc::ptr_fun(&test_slot), 1, 1);
   svg->show_page();
   svg->finish();
   BOOST_CHECK(test_slot_called > 0);

@@ -468,8 +468,8 @@ public:
    *
    * @since 1.8
    */
-  static RefPtr<PdfSurface> create(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
-  /** @deprecated */
+  static RefPtr<PdfSurface> create_for_stream(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
+  /** @deprecated use PdfSurface::create_for_stream() instead */
   static RefPtr<PdfSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
 /**
@@ -541,8 +541,8 @@ public:
    *
    * @since 1.8
    */
-  static RefPtr<PsSurface> create(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
-  /** @deprecated */
+  static RefPtr<PsSurface> create_for_stream(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
+  /** @deprecated use PsSurface::create_for_stream() instead */
   static RefPtr<PsSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
   /**
@@ -687,8 +687,8 @@ public:
    *
    * @since 1.8
    */
-  static RefPtr<SvgSurface> create(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
-  /** @deprecated */
+  static RefPtr<SvgSurface> create_for_stream(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
+  /** @deprecated Use SvgSurface::create_for_stream() instead */
   static RefPtr<SvgSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
   /** 

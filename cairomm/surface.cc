@@ -318,8 +318,8 @@ RefPtr<PdfSurface> PdfSurface::create(cairo_write_func_t write_func, void *closu
   return RefPtr<PdfSurface>(new PdfSurface(cobject, true /* has reference */));
 }
 
-RefPtr<PdfSurface> PdfSurface::create(const SlotWriteFunc& write_func, double
-                                      width_in_points, double height_in_points)
+RefPtr<PdfSurface> PdfSurface::create_for_stream(const SlotWriteFunc& write_func, double
+                                                 width_in_points, double height_in_points)
 {
   SlotWriteFunc* slot_copy = new SlotWriteFunc(write_func);
   cairo_surface_t* cobject =
@@ -359,8 +359,8 @@ RefPtr<PsSurface> PsSurface::create(std::string filename, double width_in_points
   return RefPtr<PsSurface>(new PsSurface(cobject, true /* has reference */));
 }
 
-RefPtr<PsSurface> PsSurface::create(const SlotWriteFunc& write_func, double
-                                    width_in_points, double height_in_points)
+RefPtr<PsSurface> PsSurface::create_for_stream(const SlotWriteFunc& write_func, double
+                                               width_in_points, double height_in_points)
 {
   SlotWriteFunc* slot_copy = new SlotWriteFunc(write_func);
   cairo_surface_t* cobject =
@@ -460,7 +460,9 @@ RefPtr<SvgSurface> SvgSurface::create(std::string filename, double width_in_poin
   return RefPtr<SvgSurface>(new SvgSurface(cobject, true /* has reference */));
 }
 
-RefPtr<SvgSurface> SvgSurface::create(const SlotWriteFunc& write_func, double width_in_points, double height_in_points)
+RefPtr<SvgSurface> SvgSurface::create_for_stream(const SlotWriteFunc& write_func,
+                                                 double width_in_points,
+                                                 double height_in_points)
 {
   SlotWriteFunc* slot_copy = new SlotWriteFunc(write_func);
   cairo_surface_t* cobject =

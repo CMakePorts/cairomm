@@ -1,5 +1,14 @@
 2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/surface.cc:
+	* cairomm/surface.h:
+	* tests/test-surface.cc: change the names of the stream creation functions to
+	'create_for_stream()' in order to avoid ambiguous template overload issues (I
+	was getting compile failures when passing a literal string for the std::string
+	parameter of the normal create() function)
+
+2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/context.cc:
 	* cairomm/context.h:
 	* tests/test-context.cc: add Context::get_font_options() and tests for it.
