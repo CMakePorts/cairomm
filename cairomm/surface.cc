@@ -403,6 +403,13 @@ void PsSurface::dsc_begin_page_setup()
   check_object_status_and_throw_exception(*this);
 }
 
+bool PsSurface::get_eps() const
+{
+  bool result = cairo_ps_surface_get_eps(const_cast<cairo_surface_t*>(cobj()));
+  check_object_status_and_throw_exception(*this);
+  return result;
+}
+
 void PsSurface::set_eps(bool eps)
 {
   cairo_ps_surface_set_eps(m_cobject, eps);

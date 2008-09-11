@@ -585,19 +585,25 @@ public:
    */
   void dsc_begin_page_setup();
 
-/**
- * If eps is true, the PostScript surface will output Encapsulated
- * PostScript.
- *
- * This function should only be called before any drawing operations
- * have been performed on the current page. The simplest way to do
- * this is to call this function immediately after creating the
- * surface. An Encapsulated Postscript file should never contain more
- * than one page.
- *
- * @since 1.6
- **/
+  /**
+   * If eps is true, the PostScript surface will output Encapsulated
+   * PostScript.
+   *
+   * This function should only be called before any drawing operations
+   * have been performed on the current page. The simplest way to do
+   * this is to call this function immediately after creating the
+   * surface. An Encapsulated Postscript file should never contain more
+   * than one page.
+   *
+   * @since 1.6
+   **/
   void set_eps(bool eps);
+
+  /** Check whether the PostScript surface will output Encapsulated PostScript.
+   *
+   * @since 1.8
+   */
+  bool get_eps() const;
 
   /**
    * Restricts the generated PostSript file to @level. See get_levels() for a

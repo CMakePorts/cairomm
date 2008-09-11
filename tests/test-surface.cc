@@ -82,6 +82,17 @@ void test_create_from_png()
   BOOST_CHECK(c_test_read_func_called > 0);
 }
 
+void test_ps_eps()
+{
+  RefPtr<PsSurface> ps = PsSurface::create("test.ps", 1, 1);
+  // check the initial value
+  bool result = ps->get_eps();
+  // set it to the opposite value
+  ps->set_eps(!result);
+  // verify
+  BOOST_CHECK_EQUAL(ps->get_eps(), !result);
+}
+
 
 test_suite*
 init_unit_test_suite(int argc, char* argv[])
@@ -96,6 +107,7 @@ init_unit_test_suite(int argc, char* argv[])
   test->add (BOOST_TEST_CASE (&test_ps_constructor_slot));
   test->add (BOOST_TEST_CASE (&test_svg_constructor_slot));
   test->add (BOOST_TEST_CASE (&test_create_from_png));
+  test->add (BOOST_TEST_CASE (&test_ps_eps));
 
   return test;
 }

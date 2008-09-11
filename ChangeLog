@@ -1,5 +1,11 @@
 2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/surface.cc:
+	* cairomm/surface.h:
+	* tests/test-surface.cc: add PsSurface::get_eps()
+
+2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/context.cc:
 	* cairomm/context.h:
 	* tests/test-context.cc: add Context::has_show_text_glyphs() + test
