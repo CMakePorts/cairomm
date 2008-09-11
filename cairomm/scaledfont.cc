@@ -144,6 +144,12 @@ ScaledFont::text_to_glyphs (double x,
   check_object_status_and_throw_exception(*this);
 }
 
+void ScaledFont::get_scale_matrix(Matrix& scale_matrix) const
+{
+  cairo_scaled_font_get_scale_matrix(const_cast<cairo_scaled_font_t*>(cobj()), &scale_matrix);
+  check_object_status_and_throw_exception(*this);
+}
+
 #ifdef CAIRO_HAS_FT_FONT
 FtScaledFont::FtScaledFont(const RefPtr<FtFontFace>& font_face, const Matrix& font_matrix,
                            const Matrix& ctm, const FontOptions& options) :

@@ -36,6 +36,20 @@ void test_text_to_glyphs()
   BOOST_CHECK_EQUAL(3, clusters.size());
 }
 
+void test_scale_matrix()
+{
+  RefPtr<ToyFontFace> face = ToyFontFace::create("sans", FONT_SLANT_NORMAL, FONT_WEIGHT_NORMAL);
+  Matrix m;
+  cairo_matrix_init_scale(&m, 2.0, 4.0);
+  RefPtr<ScaledFont> font = ScaledFont::create(face, m, m, FontOptions());
+  BOOST_REQUIRE(font);
+
+  Matrix result;
+  font->get_scale_matrix(result);
+  // no real test, just excercising the functionality
+}
+
+
 test_suite*
 init_unit_test_suite(int argc, char* argv[])
 {
@@ -46,6 +60,7 @@ init_unit_test_suite(int argc, char* argv[])
 
   test->add (BOOST_TEST_CASE (&test_construction));
   test->add (BOOST_TEST_CASE (&test_text_to_glyphs));
+  test->add (BOOST_TEST_CASE (&test_scale_matrix));
 
   return test;
 }

@@ -193,6 +193,16 @@ public:
                        std::vector<TextCluster>& clusters,
                        bool& backward);
 
+  /** Stores the scale matrix of this scaled font into matrix. The scale matrix
+   * is product of the font matrix and the ctm associated with the scaled font,
+   * and hence is the matrix mapping from font space to device space.
+   *
+   * @param scale_matrix return value for the matrix
+   *
+   * @since 1.8
+   */
+  void get_scale_matrix(Matrix& scale_matrix) const;
+
 protected:
   ScaledFont(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,
              const Matrix& ctm, const FontOptions& options = FontOptions());

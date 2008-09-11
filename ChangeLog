@@ -1,5 +1,11 @@
 2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
+	* cairomm/scaledfont.cc:
+	* cairomm/scaledfont.h:
+	* tests/test-scaled-font.cc: add ScaledFont::get_scale_matrix() + test
+
+2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
+
 	* cairomm/surface.cc:
 	* cairomm/surface.h:
 	* tests/test-surface.cc: add PsSurface::get_eps()
