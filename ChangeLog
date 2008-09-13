@@ -1,3 +1,8 @@
+2008-09-12  Jonathon Jongsma  <jonathon@gnome.org>
+
+	* cairomm/win32_surface.cc:
+	* cairomm/win32_surface.h: add the Win32PrintingSurface type
+
 2008-09-10  Jonathon Jongsma  <jjongsma@gnome.org>
 
 	* cairomm/context.cc:

@@ -73,6 +73,23 @@ RefPtr<Win32Surface> Win32Surface::create_with_ddb(HDC hdc, Format format, int w
   return RefPtr<Win32Surface>(new Win32Surface(cobject, true /* has reference */));
 }
 
+Win32PrintingSurface::Win32PrintingSurface(cairo_surface_t* cobject, bool has_reference = false)
+    : Surface(cobject, has_reference)
+{
+}
+
+Win32PrintingSurface::~Win32PrintingSurface()
+{
+  // surface is destroyed in base class
+}
+
+static RefPtr<Win32PrintingSurface> Win32PrintingSurface::create(HDC hdc)
+{
+  cairo_surface_t* cobject = cairo_win32_surface_create(hdc);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<Win32PrintingSurface>(new Win32PrintingSurface(cobject, true /* has reference */));
+}
+
 #endif // CAIRO_HAS_WIN32_SURFACE
 
 } //namespace Cairo

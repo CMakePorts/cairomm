@@ -21,10 +21,10 @@
 
 #include <cairomm/surface.h>
 #include <cairomm/enums.h>
+#include <cairo-features.h>
 
 #ifdef CAIRO_HAS_WIN32_SURFACE
 #include <cairo-win32.h>
-#endif
 
 // This header is not included by cairomm.h because it requires Windows headers that 
 // tend to pollute the namespace with non-prefixed #defines and typedefs.
@@ -32,8 +32,6 @@
 
 namespace Cairo
 {
-
-#ifdef CAIRO_HAS_WIN32_SURFACE
 
 /** A Win32Surface provides a way to render within Microsoft Windows.  If you
  * want to draw to the screen within a Microsoft Windows application, you
@@ -117,11 +115,37 @@ public:
 
 };
 
-#endif // CAIRO_HAS_WIN32_SURFACE
+/** A multi-page vector surface type for printing on Microsoft Windows
+ *
+ * @note For this Surface to be available, cairo must have been compiled with
+ * Win32 support
+ *
+ * @since 1.8
+ */
+class Win32PrintingSurface : public Surface
+{
+public:
+  explicit Win32PrintingSurface(cairo_surface_t* cobject, bool has_reference = false);
+  virtual ~Win32Surface();
 
+  /** Creates a cairo surface that targets the given DC. The DC will be queried
+   * for its initial clip extents, and this will be used as the size of the
+   * cairo surface. The DC should be a printing DC; antialiasing will be
+   * ignored, and GDI will be used as much as possible to draw to the surface.
+   *
+   * The returned surface will be wrapped using the paginated surface to provide
+   * correct complex rendering behaviour; show_page() and associated methods
+   * must be used for correct output.
+   *
+   * @param hdc the DC to create a surface for
+   *
+   * @since 1.8
+   */
+  static RefPtr<Win32PrintingSurface> create(HDC hdc);
+};
 
 } // namespace Cairo
 
+#endif // CAIRO_HAS_WIN32_SURFACE
 #endif //__CAIROMM_WIN32_SURFACE_H
-
 // vim: ts=2 sw=2 et
