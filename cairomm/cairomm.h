@@ -37,6 +37,7 @@
 #include <cairomm/exception.h>
 #include <cairomm/fontface.h>
 #include <cairomm/fontoptions.h>
+#include <cairomm/matrix.h>
 #include <cairomm/path.h>
 #include <cairomm/pattern.h>
 #include <cairomm/scaledfont.h>

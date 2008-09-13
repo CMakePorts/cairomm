@@ -22,6 +22,7 @@
 #include <cairomm/refptr.h>
 #include <cairomm/fontoptions.h>
 #include <cairomm/fontface.h>
+#include <cairomm/matrix.h>
 #include <cairomm/types.h>
 #include <vector>
 

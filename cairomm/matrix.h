@@ -1,4 +1,4 @@
-/* Copyright (C) 2008 The cairomm Development Team
+/* Copyright (C) 2008 Jonathon Jongsma
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -15,18 +15,34 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
-#ifndef __CAIROMM_TYPES_H
-#define __CAIROMM_TYPES_H
+#ifndef __CAIROMM_MATRIX_H
+#define __CAIROMM_MATRIX_H
 
 #include <cairo.h>
 
-namespace Cairo {
-typedef cairo_rectangle_t Rectangle;
-typedef cairo_font_extents_t FontExtents; //A simple struct.
-typedef cairo_text_extents_t TextExtents; //A simple struct.
-typedef cairo_text_cluster_t TextCluster;
-typedef cairo_glyph_t Glyph; //A simple struct.
+namespace Cairo
+{
+class Matrix : public cairo_matrix_t
+{
+public:
+  Matrix();
+  Matrix(double xx, double yx, double xy, double yy, double x0, double y0);
 
-}
+  void init_identity();
+  void init_translate(double tx, double ty);
+  void init_scale(double sx, double sy);
+  void init_rotate(double radians);
+  void translate(double tx, double ty);
+  void scale(double sx, double sy);
+  void rotate(double radians);
 
-#endif // __CAIROMM_TYPES_H
+  void invert(); // throws exception
+  void muiltiply(Matrix& a, Matrix& b); // FIXME: operator*?
+
+  void transform_distance(double& dx, double& dy) const;
+  void transform_point(double& x, double& y) const;
+};
+
+} // namespace Cairo
+
+#endif // __CAIROMM_MATRIX_H

@@ -23,6 +23,23 @@
 
 2008-09-12  Jonathon Jongsma  <jonathon@gnome.org>
 
+	* cairomm/Makefile.am:
+	* cairomm/cairomm.h:
+	* cairomm/context.h:
+	* cairomm/matrix.cc: Added.
+	* cairomm/matrix.h: Added.
+	* cairomm/scaledfont.cc:
+	* cairomm/scaledfont.h:
+	* cairomm/types.h:
+	* tests/Makefile.am:
+	* tests/test-font-face.cc:
+	* tests/test-matrix.cc: Added.
+	Inherit Cairo::Matrix from cairo_matrix_t instead of just using a typedef.
+	cairo_matrix_* functions are now member functions of Matrix.  This should
+	retain ABI compatibility while adding a more convenient C++ API.
+
+2008-09-12  Jonathon Jongsma  <jonathon@gnome.org>
+
 	* cairomm/win32_surface.cc:
 	* cairomm/win32_surface.h: add the Win32PrintingSurface type
 

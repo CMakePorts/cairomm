@@ -36,8 +36,8 @@ ScaledFont::ScaledFont(const RefPtr<FontFace>& font_face, const Matrix& font_mat
 {
   m_cobject =
     cairo_scaled_font_create(font_face->cobj(),
-                             reinterpret_cast<const cairo_matrix_t*>(&font_matrix),
-                             reinterpret_cast<const cairo_matrix_t*>(&ctm),
+                             &font_matrix,
+                             &ctm,
                              options.cobj());
   check_object_status_and_throw_exception(*this);
 }
@@ -93,13 +93,13 @@ void ScaledFont::get_font_options(FontOptions& options) const
 void ScaledFont::get_font_matrix(Matrix& font_matrix) const
 {
   cairo_scaled_font_get_font_matrix(m_cobject,
-      reinterpret_cast<cairo_matrix_t*>(&font_matrix));
+                                    &font_matrix);
   check_object_status_and_throw_exception(*this);
 }
 
 void ScaledFont::get_ctm(Matrix& ctm) const
 {
-  cairo_scaled_font_get_ctm(m_cobject, reinterpret_cast<cairo_matrix_t*>(&ctm));
+  cairo_scaled_font_get_ctm(m_cobject, &ctm);
   check_object_status_and_throw_exception(*this);
 }
 
