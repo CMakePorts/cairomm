@@ -61,11 +61,13 @@ public:
    */
   HDC get_dc() const;
 
+  //TODO: What does owned mean here? murrayc
+  //TODO: If this is just a get, shouldn't there be a const version too? murrayc
   /** Returns a ImageSurface that refers to the same bits as the DIB of the
    * Win32 surface. If the passed-in win32 surface is not a DIB surface, the
    * returned surface will be NULL
    *
-   * @return a ImageSurface (owned by the Win32Surface), or NULL if the win32
+   * @return a ImageSurface (owned by the Win32Surface), or an empty RefPtr if the win32
    * surface is not a DIB.
    *
    * @since 1.8
@@ -77,8 +79,8 @@ public:
    * cairo surface. Also, if the DC is a raster DC, it will be queried for its
    * pixel format and the cairo surface format will be set appropriately.
    *
-   * @param hdc the DC to create a surface for
-   * @return the newly created surface
+   * @param hdc the DC to create a surface for.
+   * @return the newly created surface.
    */
   static RefPtr<Win32Surface> create(HDC hdc);
 
@@ -90,10 +92,10 @@ public:
    * particular existing surface or device context. The created bitmap will be
    * unititialized.
    *
-   * @param format format of pixels in the surface to create
-   * @param width width of the surface, in pixels
-   * @param height height of the surface, in pixels
-   * @return the newly created surface
+   * @param format format of pixels in the surface to create.
+   * @param width width of the surface, in pixels.
+   * @param height height of the surface, in pixels.
+   * @return the newly created surface.
    *
    * @since 1.8
    */
@@ -103,11 +105,11 @@ public:
    * particular existing surface or device context. The created bitmap will be
    * uninitialized.
    *
-   * @param hdc the DC to create a surface for
-   * @param format format of pixels in the surface to create
-   * @param width width of the surface, in pixels
-   * @param height height of the surface, in pixels
-   * @return the newly created surface
+   * @param hdc the DC to create a surface for.
+   * @param format format of pixels in the surface to create,
+   * @param width width of the surface, in pixels.
+   * @param height height of the surface, in pixels.
+   * @return the newly created surface.
    *
    * @since 1.8
    */
@@ -137,7 +139,7 @@ public:
    * correct complex rendering behaviour; show_page() and associated methods
    * must be used for correct output.
    *
-   * @param hdc the DC to create a surface for
+   * @param hdc the DC to create a surface for.
    *
    * @since 1.8
    */

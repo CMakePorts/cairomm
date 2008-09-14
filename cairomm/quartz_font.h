@@ -28,12 +28,14 @@
 namespace Cairo
 {
 
-/** Font support for Quartz (CGFont) fonts on OS X
+/** Font support for Quartz (CGFont) fonts on OS X.
  *
  * @since 1.8
  */
-class QuartzFontFace : public FontFace {
+class QuartzFontFace : public FontFace
+{
 public:
+
   /** Creates a new font for the Quartz font backend based on a CGFontRef. This
    * font can then be used with Context::set_font_face() or
    * ScaledFont::create().

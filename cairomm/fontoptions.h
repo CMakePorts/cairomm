@@ -67,9 +67,10 @@ public:
    * Sets the antialiasing mode for the font options object. This
    * specifies the type of antialiasing to do when rendering text.
    *
-   * @param antialias the new antialiasing mode
+   * @param antialias the new antialiasing mode.
    **/
   void set_antialias(Antialias antialias);
+
   /**
    * Gets the antialiasing mode for the font options object.
    *
@@ -83,14 +84,15 @@ public:
    * when rendering with an antialiasing mode of ANTIALIAS_SUBPIXEL. See the
    * documentation for SubpixelOrder for full details.
    *
-   * @param subpixel_order the new subpixel order
+   * @param subpixel_order the new subpixel order.
    **/
   void set_subpixel_order(SubpixelOrder subpixel_order);
+
   /**
    * Gets the subpixel order for the font options object.  See the documentation
    * for SubpixelOrder for full details.
    *
-   * @return the subpixel order for the font options object
+   * @return the subpixel order for the font options object.
    **/
   SubpixelOrder get_subpixel_order() const;
 
@@ -100,14 +102,15 @@ public:
    * to optimize for fidelity or contrast.  See the documentation for
    * HintStyle for full details.
    *
-   * @param hint_style the new hint style
+   * @param hint_style the new hint style.
    **/
   void set_hint_style(HintStyle hint_style);
+
   /**
    * Gets the hint style for font outlines for the font options object.
    * See the documentation for HintStyle for full details.
    *
-   * @return the hint style for the font options object
+   * @return the hint style for the font options object.
    **/
   HintStyle get_hint_style() const;
 
@@ -117,14 +120,15 @@ public:
    * device units.
    * See the documentation for HintMetrics for full details.
    *
-   * @hint_metrics: the new metrics hinting mode
+   * @hint_metrics: the new metrics hinting mode.
    **/
   void set_hint_metrics(HintMetrics hint_metrics);
+
   /**
    * Gets the metrics hinting mode for the font options object.  See the
    * documentation for HintMetrics for full details.
    *
-   * Return value: the metrics hinting mode for the font options object
+   * Return value: the metrics hinting mode for the font options object.
    **/
   HintMetrics get_hint_metrics() const;
 
@@ -134,16 +138,17 @@ public:
    * ANTIALIAS_SUBPIXEL. See the documentation for
    * LcdFilter for full details.
    *
-   * @param lcd_filter the new LCD filter
+   * @param lcd_filter the new LCD filter.
    *
    * @since 1.8
    **/
   void set_lcd_filter(LcdFilter lcd_filter);
+
   /**
    * Gets the LCD filter for the font options object.
    * See the documentation for LcdFilter for full details.
    *
-   * @return the LCD filter for the font options object
+   * @return the LCD filter for the font options object.
    *
    * @since 1.8
    **/
@@ -156,7 +161,7 @@ public:
    * settings should override options based on the surface type), but before
    * calling FcDefaultSubstitute().
    *
-   * @param pattern an existing FcPattern
+   * @param pattern an existing FcPattern.
    *
    * @since 1.8
    */

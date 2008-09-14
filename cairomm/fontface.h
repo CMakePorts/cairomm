@@ -89,12 +89,13 @@ protected:
 
 
 /**
- * A simple font face used for the cairo 'toy' font API
+ * A simple font face used for the cairo 'toy' font API.
  * @since 1.8
  */
 class ToyFontFace : public FontFace
 {
 public:
+
   /**
    * Creates a font face from a triplet of family, slant, and weight. These font
    * faces are used in implementation of the the Context "toy" font API.
@@ -106,19 +107,22 @@ public:
    * The Context::select_font_face() function uses this to create font faces.
    * See that function for limitations of toy font faces.
    *
-   * @param family a font family name, encoded in UTF-8
-   * @param slant the slant for the font
-   * @param weight the weight for the font
+   * @param family a font family name, encoded in UTF-8.
+   * @param slant the slant for the font.
+   * @param weight the weight for the font.
    */
   static RefPtr<ToyFontFace> create(const std::string& family, FontSlant slant, FontWeight weight);
+
   /**
    * Gets the familly name of a toy font.
    */
   std::string get_family() const;
+
   /**
    * Gets the slant a toy font.
    */
   FontSlant get_slant() const;
+
   /**
    * Gets the weight a toy font.
    */
@@ -129,7 +133,7 @@ protected:
 };
 
 
-/** Font support with font data provided by the user
+/** Font support with font data provided by the user.
  *
  * The user-font feature allows the cairo user to provide drawings for glyphs in
  * a font. This is most useful in implementing fonts in non-standard formats,
@@ -169,9 +173,9 @@ public:
    * Note that scaled_font is not fully initialized at this point and trying to
    * use it for text operations in the callback will result in deadlock.
    *
-   * @param scaled_font the scaled-font being created
-   * @param cr a cairo context, in font space
-   * @param extents font extents to fill in, in font space
+   * @param scaled_font the scaled-font being created.
+   * @param cr a cairo context, in font space.
+   * @param extents font extents to fill in, in font space.
    * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
    */
   typedef sigc::slot<ErrorStatus,
@@ -207,9 +211,9 @@ public:
    * special glyph-not-found glyph. User-fonts are advised to use glyph 0 for
    * such purposes and do not use that glyph value for other purposes.
    *
-   * @param scaled_font the scaled-font being created
-   * @param unicode input unicode character code-point
-   * @param glyph_index output glyph index
+   * @param scaled_font the scaled-font being created.
+   * @param unicode input unicode character code-point.
+   * @param glyph_index output glyph index.
    * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR
    * or any other error status on error.
    */
@@ -252,10 +256,10 @@ public:
    * extents, it must be ink extents, and include the extents of all drawing
    * done to cr in the callback.
    *
-   * @param scaled_font user scaled-font
-   * @param glyph glyph code to render
-   * @param cr cairo context to draw to, in font space
-   * @param extents glyph extents to fill in, in font space
+   * @param scaled_font user scaled-font.
+   * @param glyph glyph code to render.
+   * @param cr cairo context to draw to, in font space.
+   * @param extents glyph extents to fill in, in font space.
    * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
    */
   typedef sigc::slot<ErrorStatus,
@@ -264,6 +268,7 @@ public:
                      const RefPtr<Context>&,
                      TextExtents& /*metrics*/> SlotRenderGlyph;
 
+  //TODO: Documentation
   typedef sigc::slot<ErrorStatus,
                      const RefPtr<ScaledFont>&,
                      const std::string& /*utf8*/,
@@ -271,6 +276,7 @@ public:
                      std::vector<TextCluster>& /*clusters*/,
                      bool& /*backward*/> SlotTextToGlyphs;
 
+  //TODO: Documentation:
   void set_init_func(const SlotInit& init_func);
   void set_render_glyph_func(const SlotRenderGlyph& render_glyph_func);
   void set_unicode_to_glyph_func(const SlotUnicodeToGlyph& unicode_to_glyph_func);
@@ -293,37 +299,38 @@ private:
   struct PrivateData;
   PrivateData* m_priv;
 
-static cairo_status_t
-init_cb(cairo_scaled_font_t* scaled_font,
-        cairo_t *cr,
-        cairo_font_extents_t* metrics);
+  static cairo_status_t
+  init_cb(cairo_scaled_font_t* scaled_font,
+          cairo_t *cr,
+          cairo_font_extents_t* metrics);
 
-static cairo_status_t
-unicode_to_glyph_cb(cairo_scaled_font_t *scaled_font,
-                    unsigned long        unicode,
-                    unsigned long       *glyph);
+  static cairo_status_t
+  unicode_to_glyph_cb(cairo_scaled_font_t *scaled_font,
+                      unsigned long        unicode,
+                      unsigned long       *glyph);
 
-static cairo_status_t
-render_glyph_cb(cairo_scaled_font_t  *scaled_font,
-                unsigned long         glyph,
-                cairo_t              *cr,
-                cairo_text_extents_t *metrics);
+  static cairo_status_t
+  render_glyph_cb(cairo_scaled_font_t  *scaled_font,
+                  unsigned long         glyph,
+                  cairo_t              *cr,
+                  cairo_text_extents_t *metrics);
 
-static cairo_status_t
-text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
-                   const char *utf8,
-                   int utf8_len,
-                   cairo_glyph_t **glyphs,
-                   int *num_glyphs,
-                   cairo_text_cluster_t **clusters,
-                   int *num_clusters,
-                   cairo_bool_t *backward);
+  static cairo_status_t
+  text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
+                     const char *utf8,
+                     int utf8_len,
+                     cairo_glyph_t **glyphs,
+                     int *num_glyphs,
+                     cairo_text_cluster_t **clusters,
+                     int *num_clusters,
+                     cairo_bool_t *backward);
 };
 
 // font system support
 #ifdef CAIRO_HAS_FT_FONT
 
-class FtFontFace : public FontFace {
+class FtFontFace : public FontFace
+{
 public:
   /** Creates a new font face for the FreeType font backend from a pre-opened
    * FreeType face. This font can then be used with Context::set_font_face() or
@@ -348,7 +355,7 @@ public:
    * around until the face's ref_count drops to zero and it is freed. Since the
    * face may be referenced internally to Cairo, the best way to determine when
    * it is safe to free the face is to pass a cairo_destroy_func_t to
-   * cairo_font_face_set_user_data()
+   * cairo_font_face_set_user_data().
    * @param load_flags flags to pass to FT_Load_Glyph when loading glyphs from
    * the font. These flags are OR'ed together with the flags derived from the
    * cairo_font_options_t passed to cairo_scaled_font_create(), so only a few
@@ -359,6 +366,7 @@ public:
    * @since 1.8
    */
   static RefPtr<FtFontFace> create(FT_Face face, int load_flags);
+  //TODO: Add a suitable default value for load_flags?
 
   /** Creates a new font face for the FreeType font backend based on a
    * fontconfig pattern. This font can then be used with Context::set_font_face()

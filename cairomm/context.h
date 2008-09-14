@@ -701,18 +701,26 @@ public:
   void set_font_matrix(const Matrix& matrix);
   void get_font_matrix(Matrix& matrix) const;
   void set_font_options(const FontOptions& options);
+
+  //TODO: Documentation.
   /**
    * @since 1.8
    */
   void get_font_options(FontOptions& options) const;
+
+  //TODO: Documentation.
   /**
    * @since 1.8
    */
   void set_scaled_font(const RefPtr<const ScaledFont>& scaled_font);
+
+  //TODO: Documentation.
   /**
    * @since 1.8
    */
   RefPtr<ScaledFont> get_scaled_font();
+
+  //TODO: Documentation:
   void show_text(const std::string& utf8);
   void show_glyphs(const std::vector<Glyph>& glyphs);
   bool has_show_text_glyphs() const;
@@ -720,8 +728,10 @@ public:
                         const std::vector<Glyph>& glyphs,
                         const std::vector<TextCluster>& clusters,
                         bool backward);
+
   RefPtr<FontFace> get_font_face();
   RefPtr<const FontFace> get_font_face() const;
+
   void get_font_extents(FontExtents& extents) const;
   void set_font_face(const RefPtr<const FontFace>& font_face);
   void get_text_extents(const std::string& utf8, TextExtents& extents) const;
@@ -791,8 +801,8 @@ public:
   /**
    * Gets the current dash array and offset.
    *
-   * @param dashes return value for the dash array
-   * @param offset return value for the current dash offset
+   * @param dashes return value for the dash array.
+   * @param offset return value for the current dash offset.
    *
    * Since: 1.4
    **/

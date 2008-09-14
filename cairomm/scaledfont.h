@@ -24,6 +24,7 @@
 #include <cairomm/fontface.h>
 #include <cairomm/types.h>
 #include <vector>
+
 #ifdef CAIRO_HAS_FT_FONT
 #include <cairo-ft.h>
 #endif // CAIRO_HAS_FT_FONT
@@ -83,10 +84,16 @@ public:
   // fonts, the FontFace becomes immutable, i.e. you can't call any set_*_func()
   // functions any longer)
 
+  //We use an output paramter instead of the return value,
+  //for consistency with other get_*extents() methods in other classes,
+  //though they should probably all use the return value instead.
+  //but it is too late to change that now. murrayc:
+
   /** Gets the metrics for a ScaledFont
    * @since 1.8
    * */
   void get_extents(FontExtents& extents) const;
+
   /** @deprecated Use get_extents() instead
    * @since 1.2
    * */
@@ -107,8 +114,8 @@ public:
    * size of the rectangle, though they will affect the x_advance and y_advance
    * values.
    *
-   * @param utf8  a string of text, encoded in UTF-8
-   * @param extents Returns the extents of the given string
+   * @param utf8  a string of text, encoded in UTF-8.
+   * @param extents Returns the extents of the given string.
    *
    * @since 1.8
    */
@@ -128,12 +135,13 @@ public:
    * Note that whitespace glyphs do not contribute to the size of the rectangle
    * (extents.width and extents.height).
    *
-   * @param glyphs A vector of glyphs to calculate the extents of
-   * @param extents Returns the extents for the array of glyphs
+   * @param glyphs A vector of glyphs to calculate the extents of.
+   * @param extents Returns the extents for the array of glyphs.
    *
    * @since 1.8
    **/
   void get_glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents);
+
   /** @deprecated Use get_glyph_extents() instead
    * @since 1.2
    * */
@@ -167,12 +175,12 @@ public:
   // FIXME: it'd be really nice not to assume a specific container (e.g.
   // std::vector) here
   /**
-   * @param x X position to place first glyph
-   * @param y Y position to place first glyph
-   * @param utf8 a string of text encoded in UTF-8
-   * @param glyphs pointer to array of glyphs to fill
-   * @param clusters pointer to array of cluster mapping information to fill
-   * @backward whether the text to glyphs mapping goes backward
+   * @param x X position to place first glyph.
+   * @param y Y position to place first glyph.
+   * @param utf8 a string of text encoded in UTF-8.
+   * @param glyphs pointer to array of glyphs to fill.
+   * @param clusters pointer to array of cluster mapping information to fill.
+   * @backward whether the text to glyphs mapping goes backward.
    *
    * Converts UTF-8 text to an array of glyphs, with cluster mapping, that can be
    * used to render later.
@@ -186,18 +194,18 @@ public:
    *
    * @since 1.8
    **/
-  void text_to_glyphs (double x,
-                       double y,
-                       const std::string& utf8,
-                       std::vector<Glyph>& glyphs,
-                       std::vector<TextCluster>& clusters,
-                       bool& backward);
+  void text_to_glyphs(double x,
+                      double y,
+                      const std::string& utf8,
+                      std::vector<Glyph>& glyphs,
+                      std::vector<TextCluster>& clusters,
+                      bool& backward);
 
   /** Stores the scale matrix of this scaled font into matrix. The scale matrix
    * is product of the font matrix and the ctm associated with the scaled font,
    * and hence is the matrix mapping from font space to device space.
    *
-   * @param scale_matrix return value for the matrix
+   * @param scale_matrix return value for the matrix.
    *
    * @since 1.8
    */
@@ -211,13 +219,15 @@ protected:
 };
 
 #ifdef CAIRO_HAS_FT_FONT
+
+//TODO: Documentation.
 /**
  * @since 1.8
  */
 class FtScaledFont : public ScaledFont
 {
 public:
-  /** Creates a ScaledFont From a FtFontFace
+  /** Creates a ScaledFont From a FtFontFace.
    *
    * @since 1.8
    */
@@ -248,7 +258,7 @@ public:
    */
   FT_Face lock_face();
 
-  /** Releases a face obtained with lock_face()
+  /** Releases a face obtained with lock_face().
    *
    * @since 1.8
    */

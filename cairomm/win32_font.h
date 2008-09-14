@@ -28,12 +28,14 @@
 namespace Cairo
 {
 
-/** Font support for Microsoft Windows
+/** Font support for Microsoft Windows.
  *
  * @since 1.8
  */
-class Win32FontFace : public FontFace {
+class Win32FontFace : public FontFace
+{
 public:
+
   /** Creates a new font for the Win32 font backend based on a LOGFONT. This
    * font can then be used with Context::set_font_face() or
    * Win32ScaledFont::create().
@@ -77,14 +79,15 @@ protected:
 };
 
 
-/** Scaled Font implementation for Microsoft Windows fonts
+/** Scaled Font implementation for Microsoft Windows fonts.
  *
  * @since 1.8
  */
 class Win32ScaledFont : public ScaledFont
 {
 public:
-  /** Creates a scaled font for the given Win32FontFace
+
+  /** Creates a scaled font for the given Win32FontFace.
    *
    * @since 1.8
    */

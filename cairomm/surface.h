@@ -237,6 +237,7 @@ public:
    * @since 1.8
    */
   void write_to_png_stream(const SlotWriteFunc& write_func);
+
   /** @deprecated Use write_to_png_stream instead */
   void write_to_png(cairo_write_func_t write_func, void *closure);
 
@@ -711,6 +712,7 @@ public:
    * @since 1.8
    */
   static RefPtr<SvgSurface> create_for_stream(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
+
   /** @deprecated Use SvgSurface::create_for_stream() instead */
   static RefPtr<SvgSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
