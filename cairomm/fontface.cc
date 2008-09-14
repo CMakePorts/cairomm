@@ -82,7 +82,7 @@ ToyFontFace::create(const std::string& family, FontSlant slant, FontWeight weigh
 ToyFontFace::ToyFontFace(const std::string& family, FontSlant slant, FontWeight weight) :
   FontFace(cairo_toy_font_face_create (family.c_str(),
                                        static_cast<cairo_font_slant_t>(slant),
-                                       static_cast<cairo_font_weight_t>(weight)),
+           	                            static_cast<cairo_font_weight_t>(weight)),
            true /* has reference*/)
 {
   check_status_and_throw_exception(cairo_font_face_status(m_cobject));
@@ -115,20 +115,20 @@ struct UserFontFace::PrivateData
   SlotTextToGlyphs* m_text_to_glyphs_slot;
 
   PrivateData()
-  : m_init_slot (0)
-  , m_unicode_to_glyph_slot (0)
-  , m_render_glyph_slot (0)
+  : m_init_slot(0)
+  , m_unicode_to_glyph_slot(0)
+  , m_render_glyph_slot(0)
   , m_text_to_glyphs_slot(0)
   {
   }
 
   ~PrivateData()
   {
-    if (m_init_slot)
+    if(m_init_slot)
       delete m_init_slot;
-    if (m_unicode_to_glyph_slot)
+    if(m_unicode_to_glyph_slot)
       delete m_unicode_to_glyph_slot;
-    if (m_render_glyph_slot)
+    if(m_render_glyph_slot)
       delete m_render_glyph_slot;
   }
 };
@@ -139,8 +139,9 @@ static void
 log_uncaught_exception(const char* message = 0)
 {
   std::cerr << "*** cairomm: Uncaught exception in slot callback";
-  if (message)
+  if(message)
     std::cerr << ": " << message;
+
   std::cerr << std::endl;
 }
 
@@ -154,14 +155,20 @@ UserFontFace::init_cb (cairo_scaled_font_t* scaled_font,
   UserFontFace* instance =
     static_cast<UserFontFace*>(cairo_font_face_get_user_data(face,
                                                              &user_font_key));
-  if (instance && instance->m_priv && instance->m_priv->m_init_slot) {
-    try {
+  if(instance && instance->m_priv && instance->m_priv->m_init_slot)
+  {
+    try
+    {
       return (*instance->m_priv->m_init_slot)(RefPtr<ScaledFont>(new ScaledFont(scaled_font)),
                                               RefPtr<Context>(new Context(cr)),
                                               static_cast<FontExtents&>(*metrics));
-    } catch (const std::exception& ex) {
+    }
+    catch (const std::exception& ex)
+    {
       log_uncaught_exception(ex.what());
-    } catch ( ... ) {
+    }
+    catch ( ... )
+    {
       log_uncaught_exception();
     }
   }
@@ -179,22 +186,29 @@ UserFontFace::unicode_to_glyph_cb (cairo_scaled_font_t *scaled_font,
   UserFontFace* instance =
     static_cast<UserFontFace*>(cairo_font_face_get_user_data(face,
                                                              &user_font_key));
-  if (instance && instance->m_priv && instance->m_priv->m_unicode_to_glyph_slot) {
-    try {
+  if(instance && instance->m_priv && instance->m_priv->m_unicode_to_glyph_slot)
+  {
+    try
+    {
       return (*instance->m_priv->m_unicode_to_glyph_slot)(RefPtr<ScaledFont>(new ScaledFont(scaled_font)),
                                                           unicode, *glyph);
-    } catch (const std::exception& ex) {
+    }
+    catch (const std::exception& ex)
+    {
       log_uncaught_exception(ex.what());
-    } catch ( ... ) {
+    }
+    catch ( ... )
+    {
       log_uncaught_exception();
     }
   }
+
   // this should never happen
   return CAIRO_STATUS_USER_FONT_ERROR;
 }
 
 cairo_status_t
-UserFontFace::text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
+UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
                                  const char *utf8,
                                  int utf8_len,
                                  cairo_glyph_t **glyphs,
@@ -208,7 +222,7 @@ UserFontFace::text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
   UserFontFace* instance =
     static_cast<UserFontFace*>(cairo_font_face_get_user_data(face,
                                                              &user_font_key));
-  if (instance && instance->m_priv && instance->m_priv->m_text_to_glyphs_slot) {
+  if(instance && instance->m_priv && instance->m_priv->m_text_to_glyphs_slot) {
     try {
       std::vector<Glyph> glyph_v;
       std::vector<TextCluster> cluster_v;
@@ -227,9 +241,11 @@ UserFontFace::text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
       // allocation and copying, I don't see much alternative besides just
       // presenting a plain-C API.  If cairo didn't free the list, we could
       // possibly just pass back a .data() pointer or something...
-      if (num_glyphs && glyphs) {
+      if(num_glyphs && glyphs)
+      {
         *num_glyphs = glyph_v.size();
-        if (!glyph_v.empty()) {
+        if(!glyph_v.empty())
+        {
           *glyphs = cairo_glyph_allocate(glyph_v.size());
           std::copy(glyph_v.begin(), glyph_v.end(), *glyphs);
         }
@@ -237,21 +253,26 @@ UserFontFace::text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
       else return CAIRO_STATUS_USER_FONT_ERROR;
 
       // TODO: same for clusters
-      if (num_clusters && clusters) {
+      if(num_clusters && clusters)
+      {
         *num_clusters = cluster_v.size();
-        if (!cluster_v.empty()) {
+        if(!cluster_v.empty())
+        {
           *clusters = cairo_text_cluster_allocate(cluster_v.size());
           std::copy(cluster_v.begin(), cluster_v.end(), *clusters);
         }
       }
 
-      if (backward)
+      if(backward)
         *backward = local_backwards;
 
       return status;
-    } catch (const std::exception& ex) {
+    }
+    catch (const std::exception& ex)
+    {
       log_uncaught_exception(ex.what());
-    } catch ( ... ) {
+    } catch ( ... )
+    {
       log_uncaught_exception();
     }
   }
@@ -270,14 +291,20 @@ UserFontFace::render_glyph_cb (cairo_scaled_font_t  *scaled_font,
   UserFontFace* instance =
     static_cast<UserFontFace*>(cairo_font_face_get_user_data(face,
                                                              &user_font_key));
-  if (instance && instance->m_priv && instance->m_priv->m_render_glyph_slot) {
-    try {
+  if(instance && instance->m_priv && instance->m_priv->m_render_glyph_slot)
+  {
+    try
+    {
       return (*instance->m_priv->m_render_glyph_slot)(RefPtr<ScaledFont>(new ScaledFont(scaled_font)),
                                                       glyph, RefPtr<Context>(new Context(cr)),
                                                       static_cast<TextExtents&>(*metrics));
-    } catch (const std::exception& ex) {
+    }
+    catch (const std::exception& ex)
+    {
       log_uncaught_exception(ex.what());
-    } catch ( ... ) {
+    }
+    catch ( ... )
+    {
       log_uncaught_exception();
     }
   }
@@ -291,15 +318,15 @@ RefPtr<UserFontFace> UserFontFace::create()
 }
 
 UserFontFace::UserFontFace()
-  : FontFace(cairo_user_font_face_create(), true /* has reference */)
-  , m_priv(new PrivateData())
+  : FontFace(cairo_user_font_face_create(), true /* has reference */),
+    m_priv(new PrivateData())
 {
   check_status_and_throw_exception(cairo_font_face_status(m_cobject));
 
   // store a pointer to the wrapper class in the user-data, so that when one of
   // the callback functions gets called (which has to be a plain-C function so
   // can't be a class member), we can get a reference to the wrapper class
-  cairo_font_face_set_user_data (m_cobject, &user_font_key,
+  cairo_font_face_set_user_data(m_cobject, &user_font_key,
                                  (void*)this, (cairo_destroy_func_t) NULL);
 }
 
@@ -310,78 +337,54 @@ UserFontFace::~UserFontFace()
 
 void UserFontFace::set_init_func(const SlotInit& init_func)
 {
-  if (!m_priv)
+  if(!m_priv)
     return;
-  if (m_priv->m_init_slot)
+  if(m_priv->m_init_slot)
     delete m_priv->m_init_slot;
   // copy the new slot
   m_priv->m_init_slot = new SlotInit(init_func);
 
   // register it with cairo
-  cairo_user_font_face_set_init_func (cobj(), init_cb);
+  cairo_user_font_face_set_init_func(cobj(), init_cb);
 }
 
 void UserFontFace::set_render_glyph_func(const SlotRenderGlyph& render_glyph_func)
 {
-  if (!m_priv)
+  if(!m_priv)
     return;
-  if (m_priv->m_render_glyph_slot)
+  if(m_priv->m_render_glyph_slot)
     delete m_priv->m_render_glyph_slot;
   // copy the slot
   m_priv->m_render_glyph_slot = new SlotRenderGlyph(render_glyph_func);
-  cairo_user_font_face_set_render_glyph_func (cobj(), render_glyph_cb);
+  cairo_user_font_face_set_render_glyph_func(cobj(), render_glyph_cb);
 }
 
 void UserFontFace::set_unicode_to_glyph_func(const SlotUnicodeToGlyph& unicode_to_glyph_func)
 {
-  if (!m_priv)
+  if(!m_priv)
     return;
-  if (m_priv->m_unicode_to_glyph_slot)
+
+  if(m_priv->m_unicode_to_glyph_slot)
     delete m_priv->m_unicode_to_glyph_slot;
+
   // copy the slot
   m_priv->m_unicode_to_glyph_slot = new SlotUnicodeToGlyph(unicode_to_glyph_func);
-  cairo_user_font_face_set_unicode_to_glyph_func (cobj(), unicode_to_glyph_cb);
+  cairo_user_font_face_set_unicode_to_glyph_func(cobj(), unicode_to_glyph_cb);
 }
 
 void UserFontFace::set_text_to_glyphs_func(const SlotTextToGlyphs& text_to_glyphs_func)
 {
-  if (!m_priv)
+  if(!m_priv)
     return;
-  if (m_priv->m_text_to_glyphs_slot)
+
+  if(m_priv->m_text_to_glyphs_slot)
     delete m_priv->m_text_to_glyphs_slot;
+
   // copy the slot
   m_priv->m_text_to_glyphs_slot = new SlotTextToGlyphs(text_to_glyphs_func);
-  cairo_user_font_face_set_text_to_glyphs_func (cobj(), text_to_glyphs_cb);
+  cairo_user_font_face_set_text_to_glyphs_func(cobj(), text_to_glyphs_cb);
 }
 
-
-const UserFontFace::SlotInit* UserFontFace::get_init_func() const
-{
-  if (!m_priv)
-    return 0;
-  return m_priv->m_init_slot;
-}
-
-const UserFontFace::SlotRenderGlyph* UserFontFace::get_render_glyph_func() const
-{
-  if (!m_priv)
-    return 0;
-  return m_priv->m_render_glyph_slot;
-}
-
-const UserFontFace::SlotUnicodeToGlyph* UserFontFace::get_unicode_to_glyph_func() const
-{
-  if (!m_priv)
-    return 0;
-  return m_priv->m_unicode_to_glyph_slot;
-}
-
-const UserFontFace::SlotTextToGlyphs* UserFontFace::get_text_to_glyphs_func() const
-{
-  if (!m_priv)
-    return 0;
-  return m_priv->m_text_to_glyphs_slot;
-}
 
 #ifdef CAIRO_HAS_FT_FONT
 

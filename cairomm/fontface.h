@@ -145,6 +145,9 @@ protected:
 class UserFontFace : public FontFace
 {
 public:
+
+  virtual ~UserFontFace();
+
   static RefPtr<UserFontFace> create();
 
   /** SlotInit is the type of function which is called when a ScaledFont needs
@@ -157,7 +160,7 @@ public:
    *
    * The Cairo::Context cr is not used by the caller, but is prepared in font
    * space, similar to what the cairo contexts passed to the render_glyph method
-   * will look like. The callback can use this context for extents computation
+   * will look like. The callback can use this context for extents computation,
    * for example. After the callback is called, cr is checked for any error
    * status.
    *
@@ -182,6 +185,10 @@ public:
                      const RefPtr<ScaledFont>&,
                      const RefPtr<Context>&,
                      FontExtents&> SlotInit;
+
+  //TODO: Documentation:
+  void set_init_func(const SlotInit& init_func);
+
   /**
    * SlotUnicodeToGlyph is the type of function which is called to convert an
    * input Unicode character to a single glyph. This is used by the
@@ -221,6 +228,10 @@ public:
                      const RefPtr<ScaledFont>&,
                      unsigned long /*unicode*/,
                      unsigned long& /*glyph*/> SlotUnicodeToGlyph;
+
+  void set_unicode_to_glyph_func(const SlotUnicodeToGlyph& unicode_to_glyph_func);
+
+
   /**
    * SlotRenderGlyph is the type of function which is called when a user
    * ScaledFont needs to render a glyph.
@@ -268,6 +279,8 @@ public:
                      const RefPtr<Context>&,
                      TextExtents& /*metrics*/> SlotRenderGlyph;
 
+  void set_render_glyph_func(const SlotRenderGlyph& render_glyph_func);
+
   //TODO: Documentation
   typedef sigc::slot<ErrorStatus,
                      const RefPtr<ScaledFont>&,
@@ -276,21 +289,11 @@ public:
                      std::vector<TextCluster>& /*clusters*/,
                      bool& /*backward*/> SlotTextToGlyphs;
 
-  //TODO: Documentation:
-  void set_init_func(const SlotInit& init_func);
-  void set_render_glyph_func(const SlotRenderGlyph& render_glyph_func);
-  void set_unicode_to_glyph_func(const SlotUnicodeToGlyph& unicode_to_glyph_func);
   void set_text_to_glyphs_func(const SlotTextToGlyphs& text_to_glyphs_func);
 
-  // FIXME: are these really useful?  What would you do with a sigc::slot when
-  // you got it?
-  const SlotInit* get_init_func() const;
-  const SlotRenderGlyph* get_render_glyph_func() const;
-  const SlotUnicodeToGlyph* get_unicode_to_glyph_func() const;
-  const SlotTextToGlyphs* get_text_to_glyphs_func() const;
+  // Like gtkmm, we don't have get_*_func() methods. They would not be very useful.
 
 
-  virtual ~UserFontFace();
 
 protected:
   UserFontFace();
