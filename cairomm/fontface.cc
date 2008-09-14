@@ -107,6 +107,7 @@ FontWeight ToyFontFace::get_weight() const
 //*************************//
 // UserFont Implementation //
 //*************************//
+//This is defined here, so we can change it later without breaking public ABI.
 class UserFontFace::PrivateData
 {
 public:
@@ -138,6 +139,7 @@ UserFontFace::init_cb(cairo_scaled_font_t* scaled_font,
   UserFontFace* instance =
     static_cast<UserFontFace*>(cairo_font_face_get_user_data(face,
                                                              &user_font_key));
+
   if(instance && instance->m_priv && instance->m_priv->m_init_slot)
   {
     try
@@ -155,6 +157,7 @@ UserFontFace::init_cb(cairo_scaled_font_t* scaled_font,
       log_uncaught_exception();
     }
   }
+
   // this should never happen
   return CAIRO_STATUS_USER_FONT_ERROR;
 }
@@ -205,12 +208,15 @@ UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
   UserFontFace* instance =
     static_cast<UserFontFace*>(cairo_font_face_get_user_data(face,
                                                              &user_font_key));
-  if(instance && instance->m_priv && instance->m_priv->m_text_to_glyphs_slot) {
-    try {
+
+  if(instance && instance->m_priv && instance->m_priv->m_text_to_glyphs_slot)
+  {
+    try
+    {
       std::vector<Glyph> glyph_v;
       std::vector<TextCluster> cluster_v;
       const std::string utf8_str(utf8, utf8 + utf8_len);
-      bool local_backwards;
+      bool local_backwards = false;
 
       ErrorStatus status =
         (instance->m_priv->m_text_to_glyphs_slot)(RefPtr<ScaledFont>(new
@@ -219,6 +225,7 @@ UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
                                                    glyph_v,
                                                    cluster_v,
                                                    local_backwards);
+
       // TODO: we re-allocate a new array and pass it back to the caller since
       // cairo will free the the returned array.  It sucks to do this excessive
       // allocation and copying, I don't see much alternative besides just
@@ -233,7 +240,8 @@ UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
           std::copy(glyph_v.begin(), glyph_v.end(), *glyphs);
         }
       }
-      else return CAIRO_STATUS_USER_FONT_ERROR;
+      else
+        return CAIRO_STATUS_USER_FONT_ERROR;
 
       // TODO: same for clusters
       if(num_clusters && clusters)
@@ -254,11 +262,13 @@ UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
     catch(const std::exception& ex)
     {
       log_uncaught_exception(ex.what());
-    } catch( ... )
+    }
+    catch( ... )
     {
       log_uncaught_exception();
     }
   }
+
   // this should never happen
   return CAIRO_STATUS_USER_FONT_ERROR;
 }
@@ -291,6 +301,7 @@ UserFontFace::render_glyph_cb(cairo_scaled_font_t  *scaled_font,
       log_uncaught_exception();
     }
   }
+
   // this should never happen
   return CAIRO_STATUS_USER_FONT_ERROR;
 }
