@@ -159,9 +159,9 @@ public:
    * attributes can be modified if desired, (eg. to create a repeating pattern
    * with Pattern::set_extend()).
    *
-   * @param surface : 	a Surface to be used to set the source pattern
-   * @param x : 	User-space X coordinate for surface origin
-   * @param y : 	User-space Y coordinate for surface origin 
+   * @param surface  	a Surface to be used to set the source pattern
+   * @param x  	User-space X coordinate for surface origin
+   * @param y  	User-space Y coordinate for surface origin 
    */
   void set_source(const RefPtr<Surface>& surface, double x, double y);
 
@@ -942,7 +942,7 @@ public:
    * content type is the only distinction between this function and push_group()
    * which you should see for a more detailed description of group rendering.
    *
-   * @param content: indicates the type of group that will be created
+   * @param content indicates the type of group that will be created
    */
   void push_group_with_content(Content content);
 

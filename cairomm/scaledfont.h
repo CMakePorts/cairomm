@@ -74,7 +74,7 @@ public:
    * along the two axes. See Context::set_font_matrix().
    * @param ctm user to device transformation matrix with which the font will be
    * used.
-   * @param options: options to use when getting metrics for the font and
+   * @param options options to use when getting metrics for the font and
    * rendering with it.
    */
   static RefPtr<ScaledFont> create(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,

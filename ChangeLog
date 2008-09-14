@@ -1,5 +1,13 @@
 2008-09-14  Murray Cumming  <murrayc@murrayc.com>
 
+	* cairomm/fontface.h: Improve (and complete) the documenation for 
+	the set_*_func() methods.
+	* cairomm/fontoptions.h:
+	* cairomm/scaledfont.h:
+	* cairomm/context.h: Corrected some @param Doxygen syntax.
+
+2008-09-14  Murray Cumming  <murrayc@murrayc.com>
+
 	* cairomm/fontface.[h|cc]: Simplify the code by using slots without
 	new and delete.
 

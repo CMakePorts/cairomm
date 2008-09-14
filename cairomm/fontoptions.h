@@ -120,7 +120,7 @@ public:
    * device units.
    * See the documentation for HintMetrics for full details.
    *
-   * @hint_metrics: the new metrics hinting mode.
+   * @param hint_metrics the new metrics hinting mode.
    **/
   void set_hint_metrics(HintMetrics hint_metrics);
 

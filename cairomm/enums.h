@@ -26,6 +26,7 @@ namespace Cairo
 
 #ifndef DOXYGEN_IGNORE_THIS
 //This is only used internally, but it must be in a public header because we inline some methods.
+//Actually, it is used now by the UserFontFace set_*_func() slots, which are public. murrayc.
 typedef cairo_status_t ErrorStatus;
 #endif //DOXYGEN_IGNORE_THIS
 

@@ -150,7 +150,7 @@ public:
 
   static RefPtr<UserFontFace> create();
 
-  /** SlotInit is the type of function which is called when a ScaledFont needs
+  /** A SlotInit slot is called when a ScaledFont needs
    * to be created for a UserFontFace.
    *
    * For example:
@@ -186,11 +186,20 @@ public:
                      const RefPtr<Context>&,
                      FontExtents&> SlotInit;
 
-  //TODO: Documentation:
+  /** Sets the scaled-font initialization function of a user-font.
+   * See SlotInit for details of how the callback works.
+   *
+   * The font-face should not be immutable or a CAIRO_STATUS_USER_FONT_IMMUTABLE
+   * error will occur.  A user font-face is immutable as soon as a scaled-font
+   * is created from it.
+   *
+   * @param init_func The init callback.
+   *
+   * @since 1.8
+   */
   void set_init_func(const SlotInit& init_func);
 
-  /**
-   * SlotUnicodeToGlyph is the type of function which is called to convert an
+  /** A SlotUnicodeToGlyph slot is called to convert an
    * input Unicode character to a single glyph. This is used by the
    * Context::show_text() operation.
    *
@@ -229,11 +238,23 @@ public:
                      unsigned long /*unicode*/,
                      unsigned long& /*glyph*/> SlotUnicodeToGlyph;
 
+
+  /** Sets the unicode-to-glyph conversion function of a user-font.
+   * See SlotUnicodeToGlyph for details of how the callback
+   * works.
+   *   
+   * The font-face should not be immutable or a CAIRO_STATUS_USER_FONT_IMMUTABLE
+   * error will occur.  A user font-face is immutable as soon as a scaled-font
+   * is created from it.
+   *
+   * @param unicode_to_glyph_func The unicode_to_glyph callback.
+   *
+   * @since 1.8
+   */
   void set_unicode_to_glyph_func(const SlotUnicodeToGlyph& unicode_to_glyph_func);
 
 
-  /**
-   * SlotRenderGlyph is the type of function which is called when a user
+  /** A SlotRenderGlyph slot is called when a user
    * ScaledFont needs to render a glyph.
    *
    * For example:
@@ -279,9 +300,58 @@ public:
                      const RefPtr<Context>&,
                      TextExtents& /*metrics*/> SlotRenderGlyph;
 
+  /** Sets the glyph rendering function of a user-font.
+   * See SlotRenderGlyph for details of how the callback
+   * works.
+   *
+   * The font-face should not be immutable or a CAIRO_STATUS_USER_FONT_IMMUTABLE
+   * error will occur.  A user font-face is immutable as soon as a scaled-font
+   * is created from it.
+   *
+   * The render_glyph callback is the only mandatory callback of a user-font.
+   * If the callback is %NULL and a glyph is tried to be rendered using
+   * @font_face, a CAIRO_STATUS_USER_FONT_ERROR will occur.
+   *
+   * @param render_glyph_func The render_glyph callback.
+   *
+   * @since 1.8
+   */
   void set_render_glyph_func(const SlotRenderGlyph& render_glyph_func);
 
-  //TODO: Documentation
+
+ /** A SlotTextToGlyphs slot is called to convert input text to an array of glyphs.  This is used by the
+  * Cairo::Context::show_text() operation.
+  *
+  * Using this callback the user-font has full control on glyphs and their
+  * positions.  That means, it allows for features like ligatures and kerning,
+  * as well as complex <firstterm>shaping</firstterm> required for scripts like
+  * Arabic and Indic.
+  *
+  * The callback should populate the glyph indices and
+  * positions (in font space) assuming that the text is to be shown at the
+  * origin.
+  *
+  * The callback is optional.  If not set, the unicode_to_glyph callback
+  * is tried.  See SlotUnicodeToGlyph.
+  *
+  * Note: While cairo does not impose any limitation on glyph indices,
+  * some applications may assume that a glyph index fits in a 16-bit
+  * unsigned integer.  As such, it is advised that user-fonts keep their
+  * glyphs in the 0 to 65535 range.  Furthermore, some applications may
+  * assume that glyph 0 is a special glyph-not-found glyph.  User-fonts
+  * are advised to use glyph 0 for such purposes and do not use that
+  * glyph value for other purposes.
+  *
+  * Returns: CAIRO_STATUS_SUCCESS upon success, or
+  * CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
+  *
+  * @param utf8 a string of text encoded in UTF-8.
+  * @param glyphs An array of glyphs to fill, in font space.
+  * @param clusters An array of cluster mapping information to fill.
+  * @param backward This will be set, to specify whether the text to glyphs mapping goes backward.
+  *
+  * Since: 1.8
+  **/
   typedef sigc::slot<ErrorStatus,
                      const RefPtr<ScaledFont>&,
                      const std::string& /*utf8*/,
@@ -289,9 +359,23 @@ public:
                      std::vector<TextCluster>& /*clusters*/,
                      bool& /*backward*/> SlotTextToGlyphs;
 
+ /** Sets the text-to-glyphs conversion function of a user-font.
+  * See SlotTextToGlyphs for details of how the callback
+  * works.
+  *
+  * The font-face should not be immutable or a CAIRO_STATUS_USER_FONT_IMMUTABLE
+  * error will occur.  A user font-face is immutable as soon as a scaled-font
+  * is created from it.
+  *
+  * @param text_to_glyphs_func The text_to_glyphs callback.
+  *
+  * @since 1.8
+  */
   void set_text_to_glyphs_func(const SlotTextToGlyphs& text_to_glyphs_func);
 
   // Like gtkmm, we don't have get_*_func() methods. They would not be very useful.
+
+  //TODO: Add unset_*_func() methods, to match the use of NULL in the C API?
 
 
 
