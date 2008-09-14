@@ -107,30 +107,13 @@ FontWeight ToyFontFace::get_weight() const
 //*************************//
 // UserFont Implementation //
 //*************************//
-struct UserFontFace::PrivateData
+class UserFontFace::PrivateData
 {
-  SlotInit* m_init_slot;
-  SlotUnicodeToGlyph* m_unicode_to_glyph_slot;
-  SlotRenderGlyph* m_render_glyph_slot;
-  SlotTextToGlyphs* m_text_to_glyphs_slot;
-
-  PrivateData()
-  : m_init_slot(0)
-  , m_unicode_to_glyph_slot(0)
-  , m_render_glyph_slot(0)
-  , m_text_to_glyphs_slot(0)
-  {
-  }
-
-  ~PrivateData()
-  {
-    if(m_init_slot)
-      delete m_init_slot;
-    if(m_unicode_to_glyph_slot)
-      delete m_unicode_to_glyph_slot;
-    if(m_render_glyph_slot)
-      delete m_render_glyph_slot;
-  }
+public:
+  SlotInit m_init_slot;
+  SlotUnicodeToGlyph m_unicode_to_glyph_slot;
+  SlotRenderGlyph m_render_glyph_slot;
+  SlotTextToGlyphs m_text_to_glyphs_slot;
 };
 
 static const cairo_user_data_key_t user_font_key = {0};
@@ -146,7 +129,7 @@ log_uncaught_exception(const char* message = 0)
 }
 
 cairo_status_t
-UserFontFace::init_cb (cairo_scaled_font_t* scaled_font,
+UserFontFace::init_cb(cairo_scaled_font_t* scaled_font,
                        cairo_t *cr,
                        cairo_font_extents_t* metrics)
 {
@@ -159,15 +142,15 @@ UserFontFace::init_cb (cairo_scaled_font_t* scaled_font,
   {
     try
     {
-      return (*instance->m_priv->m_init_slot)(RefPtr<ScaledFont>(new ScaledFont(scaled_font)),
+      return (instance->m_priv->m_init_slot)(RefPtr<ScaledFont>(new ScaledFont(scaled_font)),
                                               RefPtr<Context>(new Context(cr)),
                                               static_cast<FontExtents&>(*metrics));
     }
-    catch (const std::exception& ex)
+    catch(const std::exception& ex)
     {
       log_uncaught_exception(ex.what());
     }
-    catch ( ... )
+    catch( ... )
     {
       log_uncaught_exception();
     }
@@ -177,7 +160,7 @@ UserFontFace::init_cb (cairo_scaled_font_t* scaled_font,
 }
 
 cairo_status_t
-UserFontFace::unicode_to_glyph_cb (cairo_scaled_font_t *scaled_font,
+UserFontFace::unicode_to_glyph_cb(cairo_scaled_font_t *scaled_font,
                                    unsigned long        unicode,
                                    unsigned long       *glyph)
 {
@@ -190,14 +173,14 @@ UserFontFace::unicode_to_glyph_cb (cairo_scaled_font_t *scaled_font,
   {
     try
     {
-      return (*instance->m_priv->m_unicode_to_glyph_slot)(RefPtr<ScaledFont>(new ScaledFont(scaled_font)),
+      return (instance->m_priv->m_unicode_to_glyph_slot)(RefPtr<ScaledFont>(new ScaledFont(scaled_font)),
                                                           unicode, *glyph);
     }
-    catch (const std::exception& ex)
+    catch(const std::exception& ex)
     {
       log_uncaught_exception(ex.what());
     }
-    catch ( ... )
+    catch( ... )
     {
       log_uncaught_exception();
     }
@@ -230,7 +213,7 @@ UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
       bool local_backwards;
 
       ErrorStatus status =
-        (*instance->m_priv->m_text_to_glyphs_slot)(RefPtr<ScaledFont>(new
+        (instance->m_priv->m_text_to_glyphs_slot)(RefPtr<ScaledFont>(new
                                                                       ScaledFont(scaled_font)),
                                                    utf8_str,
                                                    glyph_v,
@@ -268,10 +251,10 @@ UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
 
       return status;
     }
-    catch (const std::exception& ex)
+    catch(const std::exception& ex)
     {
       log_uncaught_exception(ex.what());
-    } catch ( ... )
+    } catch( ... )
     {
       log_uncaught_exception();
     }
@@ -281,7 +264,7 @@ UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
 }
 
 cairo_status_t
-UserFontFace::render_glyph_cb (cairo_scaled_font_t  *scaled_font,
+UserFontFace::render_glyph_cb(cairo_scaled_font_t  *scaled_font,
                                unsigned long         glyph,
                                cairo_t              *cr,
                                cairo_text_extents_t *metrics)
@@ -295,15 +278,15 @@ UserFontFace::render_glyph_cb (cairo_scaled_font_t  *scaled_font,
   {
     try
     {
-      return (*instance->m_priv->m_render_glyph_slot)(RefPtr<ScaledFont>(new ScaledFont(scaled_font)),
+      return (instance->m_priv->m_render_glyph_slot)(RefPtr<ScaledFont>(new ScaledFont(scaled_font)),
                                                       glyph, RefPtr<Context>(new Context(cr)),
                                                       static_cast<TextExtents&>(*metrics));
     }
-    catch (const std::exception& ex)
+    catch(const std::exception& ex)
     {
       log_uncaught_exception(ex.what());
     }
-    catch ( ... )
+    catch( ... )
     {
       log_uncaught_exception();
     }
@@ -339,10 +322,9 @@ void UserFontFace::set_init_func(const SlotInit& init_func)
 {
   if(!m_priv)
     return;
-  if(m_priv->m_init_slot)
-    delete m_priv->m_init_slot;
+
   // copy the new slot
-  m_priv->m_init_slot = new SlotInit(init_func);
+  m_priv->m_init_slot = init_func;
 
   // register it with cairo
   cairo_user_font_face_set_init_func(cobj(), init_cb);
@@ -352,10 +334,9 @@ void UserFontFace::set_render_glyph_func(const SlotRenderGlyph& render_glyph_fun
 {
   if(!m_priv)
     return;
-  if(m_priv->m_render_glyph_slot)
-    delete m_priv->m_render_glyph_slot;
+
   // copy the slot
-  m_priv->m_render_glyph_slot = new SlotRenderGlyph(render_glyph_func);
+  m_priv->m_render_glyph_slot = render_glyph_func;
   cairo_user_font_face_set_render_glyph_func(cobj(), render_glyph_cb);
 }
 
@@ -364,11 +345,8 @@ void UserFontFace::set_unicode_to_glyph_func(const SlotUnicodeToGlyph& unicode_t
   if(!m_priv)
     return;
 
-  if(m_priv->m_unicode_to_glyph_slot)
-    delete m_priv->m_unicode_to_glyph_slot;
-
   // copy the slot
-  m_priv->m_unicode_to_glyph_slot = new SlotUnicodeToGlyph(unicode_to_glyph_func);
+  m_priv->m_unicode_to_glyph_slot = unicode_to_glyph_func;
   cairo_user_font_face_set_unicode_to_glyph_func(cobj(), unicode_to_glyph_cb);
 }
 
@@ -377,11 +355,8 @@ void UserFontFace::set_text_to_glyphs_func(const SlotTextToGlyphs& text_to_glyph
   if(!m_priv)
     return;
 
-  if(m_priv->m_text_to_glyphs_slot)
-    delete m_priv->m_text_to_glyphs_slot;
-
   // copy the slot
-  m_priv->m_text_to_glyphs_slot = new SlotTextToGlyphs(text_to_glyphs_func);
+  m_priv->m_text_to_glyphs_slot = text_to_glyphs_func;
   cairo_user_font_face_set_text_to_glyphs_func(cobj(), text_to_glyphs_cb);
 }
 

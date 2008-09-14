@@ -1,5 +1,10 @@
 2008-09-14  Murray Cumming  <murrayc@murrayc.com>
 
+	* cairomm/fontface.[h|cc]: Simplify the code by using slots without
+	new and delete.
+
+2008-09-14  Murray Cumming  <murrayc@murrayc.com>
+
 	* cairomm/fontface.[h|cc]: Remove the useless/awkward get_*_func() 
 	methods. We do not have them in gtkmm either.
 
