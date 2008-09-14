@@ -1,3 +1,8 @@
+2008-09-14  Murray Cumming  <murrayc@murrayc.com>
+
+	* cairomm/*.h: Added many missing . to documentation, 
+	and corrected some whitespace.
+
 2008-09-12  Jonathon Jongsma  <jonathon@gnome.org>
 
 	* cairomm/win32_surface.cc:
