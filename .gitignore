@@ -38,6 +38,7 @@ tests/test-font-face
 tests/test-surface
 tests/test-scaled-font
 tests/test-font-options
+tests/test-matrix
 cairomm/cairommconfig.h*
 cairomm/stamp-*
 m4/libtool.m4

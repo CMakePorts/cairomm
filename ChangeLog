@@ -1,3 +1,19 @@
+2008-10-05  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* cairomm/matrix.cc:
+	* cairomm/matrix.h: Add documentation for newly-wrapped matrix functions.
+	Also, changed how the cairo_matrix_init_XXX() functions are wrapped.
+	Initially I had basically wrapped them directly (as Matrix::init_XXX()),
+	however, on the advice of Chong Kai Xiong (descender) on IRC, I have moved
+	these into standalone 'generator' functions:
+		- scaled_matrix()
+		- translation_matrix()
+		- rotation_matrix()
+		- identity_matrix()
+	* tests/test-font-face.cc:
+	* tests/test-matrix.cc: modify the tests for the change in API.  The new API
+	does make things much more comfortable to use.
+
 2008-09-14  Murray Cumming  <murrayc@murrayc.com>
 
 	* cairomm/fontface.h: Improve (and complete) the documenation for 

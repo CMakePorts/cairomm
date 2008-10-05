@@ -23,8 +23,6 @@ using namespace boost::unit_test;
 #include <cairomm/win32_font.h>
 #endif // CAIRO_HAS_WIN32_FONT
 
-static Cairo::Matrix identity_matrix;
-
 void
 test_create_toy ()
 {
@@ -103,10 +101,8 @@ void test_user_font_callbacks_ptr()
   font->set_init_func(sigc::ptr_fun(my_init));
   font->set_unicode_to_glyph_func(sigc::ptr_fun(my_unicode_to_glyph));
   font->set_render_glyph_func(sigc::ptr_fun(my_render_glyph));
-  Cairo::Matrix font_matrix;
-  font_matrix.init_scale(10, 10);
   Cairo::RefPtr<Cairo::ScaledFont> scaled_font =
-    Cairo::ScaledFont::create(font, font_matrix, identity_matrix,
+    Cairo::ScaledFont::create(font, Cairo::scaled_matrix(10, 10), Cairo::identity_matrix(),
                               Cairo::FontOptions());
   BOOST_CHECK (init_call_count > 0);
   Cairo::RefPtr<Cairo::ImageSurface> surface =
@@ -130,10 +126,8 @@ void test_user_font_callbacks_ptr_text()
   font->set_init_func(sigc::ptr_fun(my_init));
   font->set_render_glyph_func(sigc::ptr_fun(my_render_glyph));
   font->set_text_to_glyphs_func(sigc::ptr_fun(my_text_to_glyphs));
-  Cairo::Matrix font_matrix;
-  font_matrix.init_scale(10, 10);
   Cairo::RefPtr<Cairo::ScaledFont> scaled_font =
-    Cairo::ScaledFont::create(font, font_matrix, identity_matrix,
+    Cairo::ScaledFont::create(font, Cairo::scaled_matrix(10, 10), Cairo::identity_matrix(),
                               Cairo::FontOptions());
   BOOST_CHECK (init_call_count > 0);
   Cairo::RefPtr<Cairo::ImageSurface> surface =
@@ -184,10 +178,8 @@ void test_user_font_callbacks_mem()
                                                 &UserFontCallbacks::unicode_to_glyph));
   font->set_render_glyph_func(sigc::mem_fun(&callbacks,
                                             &UserFontCallbacks::render_glyph));
-  Cairo::Matrix font_matrix;
-  font_matrix.init_scale(10, 10);
   Cairo::RefPtr<Cairo::ScaledFont> scaled_font =
-    Cairo::ScaledFont::create(font, font_matrix, identity_matrix,
+    Cairo::ScaledFont::create(font, Cairo::scaled_matrix(10, 10), Cairo::identity_matrix(),
                               Cairo::FontOptions());
   BOOST_CHECK (UserFontCallbacks::init_call_count > 0);
   Cairo::RefPtr<Cairo::ImageSurface> surface =
@@ -232,12 +224,10 @@ void test_user_font_callbacks_exception()
   // through C code.  However, due to the exception being thrown, the create()
   // function will fail and throw a new exception.  So if the executable doesn't
   // abort, we should get an exception here.
-  Cairo::Matrix font_matrix;
-  font_matrix.init_scale(10, 10);
   Cairo::RefPtr<Cairo::ScaledFont> scaled_font;
   BOOST_CHECK_THROW (scaled_font = Cairo::ScaledFont::create(font,
-                                                             font_matrix,
-                                                             identity_matrix,
+                                                             Cairo::scaled_matrix(10, 10),
+                                                             Cairo::identity_matrix(),
                                                              Cairo::FontOptions()),
                      Cairo::logic_error);
   BOOST_CHECK (init_exception_call_count > 0);
@@ -248,8 +238,8 @@ void test_user_font_callbacks_exception()
   font->set_render_glyph_func(sigc::ptr_fun(my_render_glyph_exception));
   font->set_unicode_to_glyph_func(sigc::ptr_fun(my_unicode_to_glyph_exception));
   BOOST_CHECK_NO_THROW (scaled_font = Cairo::ScaledFont::create(font,
-                                                                font_matrix,
-                                                                identity_matrix,
+                                                                Cairo::scaled_matrix(10, 10),
+                                                                Cairo::identity_matrix(),
                                                                 Cairo::FontOptions()))
   Cairo::RefPtr<Cairo::ImageSurface> surface =
     Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 100, 100);
@@ -282,12 +272,10 @@ void test_user_font_replace_callback()
   // now replace the init function with my_init2 and make sure that the 2nd
   // function is called, not the first
   font->set_init_func(sigc::ptr_fun(my_init2));
-  Cairo::Matrix font_matrix;
-  font_matrix.init_scale(10, 10);
   Cairo::RefPtr<Cairo::ScaledFont> scaled_font;
   BOOST_CHECK_NO_THROW (scaled_font = Cairo::ScaledFont::create(font,
-                                                                font_matrix,
-                                                                identity_matrix,
+                                                                Cairo::scaled_matrix(10, 10),
+                                                                Cairo::identity_matrix(),
                                                                 Cairo::FontOptions()))
   BOOST_CHECK (init2_call_count > 0);
   BOOST_CHECK_EQUAL (init_call_count, 0);

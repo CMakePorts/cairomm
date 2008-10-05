@@ -23,7 +23,6 @@ namespace Cairo
 
 Matrix::Matrix()
 {
-  init_identity();
 }
 
 Matrix::Matrix(double xx, double yx, double xy, double yy, double x0, double y0)
@@ -31,24 +30,32 @@ Matrix::Matrix(double xx, double yx, double xy, double yy, double x0, double y0)
   cairo_matrix_init(this, xx, yx, xy, yy, x0, y0);
 }
 
-void Matrix::init_identity()
+Matrix identity_matrix()
 {
-  cairo_matrix_init_identity(this);
+  Matrix m;
+  cairo_matrix_init_identity(&m);
+  return m;
 }
 
-void Matrix::init_translate(double tx, double ty)
+Matrix translation_matrix(double tx, double ty)
 {
-  cairo_matrix_init_translate(this, tx, ty);
+  Matrix m;
+  cairo_matrix_init_translate(&m, tx, ty);
+  return m;
 }
 
-void Matrix::init_scale(double sx, double sy)
+Matrix scaled_matrix(double sx, double sy)
 {
-  cairo_matrix_init_scale(this, sx, sy);
+  Matrix m;
+  cairo_matrix_init_scale(&m, sx, sy);
+  return m;
 }
 
-void Matrix::init_rotate(double radians)
+Matrix rotation_matrix(double radians)
 {
-  cairo_matrix_init_rotate(this, radians);
+  Matrix m;
+  cairo_matrix_init_rotate(&m, radians);
+  return m;
 }
 
 void Matrix::translate(double tx, double ty)
@@ -73,7 +80,7 @@ void Matrix::invert()
 }
 
 // throws exception
-void Matrix::muiltiply(Matrix& a, Matrix& b)
+void Matrix::multiply(Matrix& a, Matrix& b)
 {
   cairo_matrix_multiply(this, &a, &b);
 }
@@ -86,6 +93,13 @@ void Matrix::transform_distance(double& dx, double& dy) const
 void Matrix::transform_point(double& x, double& y) const
 {
   cairo_matrix_transform_point(this, &x, &y);
+}
+
+Matrix operator*(const Matrix& a, const Matrix& b)
+{
+  Matrix m;
+  cairo_matrix_multiply(&m, &a, &b);
+  return m;
 }
 
 } // namespace Cairo

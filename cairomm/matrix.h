@@ -22,26 +22,185 @@
 
 namespace Cairo
 {
+
+/** A Transformation matrix.
+ *
+ * Cairo::Matrix is used throughout cairomm to convert between different
+ * coordinate spaces. A Matrix holds an affine transformation, such as
+ * a scale, rotation, shear, or a combination of these. The transformation of
+ * a point (x,y) is given by:
+ *
+ * @code
+ * x_new = xx * x + xy * y + x0;
+ * y_new = yx * x + yy * y + y0;
+ * @endcode
+ *
+ * The current transformation matrix of a Context, represented as a
+ * Matrix, defines the transformation from user-space coordinates to
+ * device-space coordinates.
+ * @sa Context::get_matrix()
+ * @sa Context::set_matrix()
+ */
 class Matrix : public cairo_matrix_t
 {
 public:
+  /** Creates an uninitialized matrix.  If you want a matrix initialized to a
+   * certain value, either specify the values explicitly with the other
+   * constructor or use one of the free functions for initializing matrices with
+   * specific scales, rotations, etc.
+   *
+   * @sa identity_matrix()
+   * @sa rotation_matrix()
+   * @sa translation_matrix()
+   * @sa scaled_matrix()
+   */
   Matrix();
+
+  /** Creates a matrix Sets to be the affine transformation given by xx, yx, xy,
+   * yy, x0, y0. The transformation is given by:
+   *
+   * @code
+   * x_new = xx * x + xy * y + x0;
+   * y_new = yx * x + yy * y + y0;
+   * @endcode
+   *
+   * @param xx xx component of the affine transformation
+   * @param yx yx component of the affine transformation
+   * @param xy xy component of the affine transformation
+   * @param yy yy component of the affine transformation
+   * @param x0 X translation component of the affine transformation
+   * @param y0 Y translation component of the affine transformation
+   */
   Matrix(double xx, double yx, double xy, double yy, double x0, double y0);
 
-  void init_identity();
-  void init_translate(double tx, double ty);
-  void init_scale(double sx, double sy);
-  void init_rotate(double radians);
+  /** Applies a translation by tx, ty to the transformation in matrix. The
+   * effect of the new transformation is to first translate the coordinates by
+   * tx and ty, then apply the original transformation to the coordinates.
+   *
+   * @param tx amount to translate in the X direction
+   * @param ty amount to translate in the Y direction
+   */
   void translate(double tx, double ty);
+
+  /** Applies scaling by sx, sy to the transformation in matrix. The effect of
+   * the new transformation is to first scale the coordinates by sx and sy, then
+   * apply the original transformation to the coordinates.
+   *
+   * @param sx scale factor in the X direction
+   * @param sy scale factor in the Y direction
+   */
   void scale(double sx, double sy);
+
+  /** Applies rotation by radians to the transformation in matrix. The effect of
+   * the new transformation is to first rotate the coordinates by radians, then
+   * apply the original transformation to the coordinates.
+   *
+   * @param radians angle of rotation, in radians. The direction of rotation is
+   * defined such that positive angles rotate in the direction from the positive
+   * X axis toward the positive Y axis. With the default axis orientation of
+   * cairo, positive angles rotate in a clockwise direction.
+   */
   void rotate(double radians);
 
+  /** Changes matrix to be the inverse of it's original value. Not all
+   * transformation matrices have inverses; if the matrix collapses points
+   * together (it is degenerate), then it has no inverse and this function will
+   * throw an exception.
+   */
   void invert(); // throws exception
-  void muiltiply(Matrix& a, Matrix& b); // FIXME: operator*?
 
+  /** Multiplies the affine transformations in a and b together and stores the
+   * result in this matrix. The effect of the resulting transformation is to first
+   * apply the transformation in a to the coordinates and then apply the
+   * transformation in b to the coordinates.
+   *
+   * It is allowable for result to be identical to either a or b.
+   *
+   * @param a a Matrix
+   * @param b a Matrix
+   *
+   * @sa operator*()
+   */
+  void multiply(Matrix& a, Matrix& b);
+
+  /** Transforms the distance vector (dx,dy) by matrix. This is similar to
+   * transform_point() except that the translation components of the
+   * transformation are ignored. The calculation of the returned vector is as
+   * follows:
+   *
+   * @code
+   * dx2 = dx1 * a + dy1 * c;
+   * dy2 = dx1 * b + dy1 * d;
+   * @endcode
+   *
+   * Affine transformations are position invariant, so the same vector always
+   * transforms to the same vector. If (x1,y1) transforms to (x2,y2) then
+   * (x1+dx1,y1+dy1) will transform to (x1+dx2,y1+dy2) for all values of x1 and
+   * x2.
+   *
+   * @param dx X component of a distance vector. An in/out parameter
+   * @param dy Y component of a distance vector. An in/out parameter
+   */
   void transform_distance(double& dx, double& dy) const;
+
+  /** Transforms the point (x, y) by this matrix.
+   *
+   * @param x X position. An in/out parameter
+   * @param y Y position. An in/out parameter
+   */
   void transform_point(double& x, double& y) const;
 };
+
+/** Returns a Matrix initialized to the identity matrix
+ *
+ * @relates Matrix
+ */
+Matrix identity_matrix();
+
+/** Returns a Matrix initialized to a transformation that translates by tx and
+ * ty in the X and Y dimensions, respectively.
+ *
+ * @param tx amount to translate in the X direction
+ * @param ty amount to translate in the Y direction
+ *
+ * @relates Matrix
+ */
+Matrix translation_matrix(double tx, double ty);
+
+/** Returns a Matrix initialized to a transformation that scales by sx and sy in
+ * the X and Y dimensions, respectively.
+ *
+ * @param sx scale factor in the X direction
+ * @param sy scale factor in the Y direction
+ *
+ * @relates Matrix
+ */
+Matrix scaled_matrix(double sx, double sy);
+
+/** Returns a Matrix initialized to a transformation that rotates by radians.
+ *
+ * @param radians angle of rotation, in radians. The direction of rotation is
+ * defined such that positive angles rotate in the direction from the positive X
+ * axis toward the positive Y axis. With the default axis orientation of cairo,
+ * positive angles rotate in a clockwise direction.
+ *
+ * @relates Matrix
+ */
+Matrix rotation_matrix(double radians);
+
+/** Multiplies the affine transformations in a and b together and returns the
+ * result. The effect of the resulting transformation is to first
+ * apply the transformation in a to the coordinates and then apply the
+ * transformation in b to the coordinates.
+ *
+ * It is allowable for result to be identical to either a or b.
+ *
+ * @param a a Matrix
+ * @param b a Matrix
+ *
+ * @relates Matrix
+ */
+Matrix operator*(const Matrix& a, const Matrix& b);
 
 } // namespace Cairo
 
