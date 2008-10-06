@@ -70,13 +70,13 @@ void test_create_from_png()
 {
   RefPtr<ImageSurface> surface;
   // try the sigc::slot version
-  png_file.open("png-stream-test.png");
+  png_file.open(PNG_STREAM_FILE);
   surface = ImageSurface::create_from_png_stream(sigc::ptr_fun(&test_read_func));
   png_file.close();
   BOOST_CHECK(test_read_func_called > 0);
 
   // now try the raw C function (deprecated) version
-  png_file.open("png-stream-test.png");
+  png_file.open(PNG_STREAM_FILE);
   surface = ImageSurface::create_from_png(&c_test_read_func, NULL);
   png_file.close();
   BOOST_CHECK(c_test_read_func_called > 0);

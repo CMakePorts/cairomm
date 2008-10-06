@@ -10,6 +10,8 @@ test_scaled_font_SOURCES=test-scaled-font.cc
 test_font_options_SOURCES=test-font-options.cc
 test_matrix_SOURCES=test-matrix.cc
 
+test_surface_CPPFLAGS=-DPNG_STREAM_FILE=\"$(srcdir)/png-stream-test.png\"
+
 else
 
 #don't build anything
@@ -22,3 +24,5 @@ INCLUDES =  -I$(top_srcdir) @CAIROMM_CFLAGS@
 
 #The libraries that the executable needs to link against:
 LIBS = $(top_builddir)/cairomm/libcairomm-1.0.la @LIBS@ @CAIROMM_LIBS@ @BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB@
+
+EXTRA_DIST=png-stream-test.png

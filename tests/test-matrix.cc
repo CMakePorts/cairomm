@@ -35,7 +35,12 @@ void test_constructors()
 {
   cairo_matrix_t c_identity;
   cairo_matrix_init_identity(&c_identity);
-  BOOST_CHECK_EQUAL(c_identity, Cairo::identity_matrix());
+  BOOST_CHECK_EQUAL(c_identity.xx, Cairo::identity_matrix().xx);
+  BOOST_CHECK_EQUAL(c_identity.xy, Cairo::identity_matrix().xy);
+  BOOST_CHECK_EQUAL(c_identity.yx, Cairo::identity_matrix().yx);
+  BOOST_CHECK_EQUAL(c_identity.yy, Cairo::identity_matrix().yy);
+  BOOST_CHECK_EQUAL(c_identity.x0, Cairo::identity_matrix().x0);
+  BOOST_CHECK_EQUAL(c_identity.y0, Cairo::identity_matrix().y0);
 
   // nonsense values, just for testing
   const double xx=1, yx=2, xy=3, yy=5, x0=6, y0=7;
@@ -43,7 +48,12 @@ void test_constructors()
   cairo_matrix_init(&c_matrix, xx, yx, xy, yy, x0, y0);
   Cairo::Matrix cpp_matrix(xx, yx, xy, yy, x0, y0);
 
-  BOOST_CHECK_EQUAL(c_matrix, cpp_matrix);
+  BOOST_CHECK_EQUAL(c_matrix.xx, cpp_matrix.xx);
+  BOOST_CHECK_EQUAL(c_matrix.xy, cpp_matrix.xy);
+  BOOST_CHECK_EQUAL(c_matrix.yx, cpp_matrix.yx);
+  BOOST_CHECK_EQUAL(c_matrix.yy, cpp_matrix.yy);
+  BOOST_CHECK_EQUAL(c_matrix.x0, cpp_matrix.x0);
+  BOOST_CHECK_EQUAL(c_matrix.y0, cpp_matrix.y0);
 }
 
 void test_invert()
@@ -70,11 +80,21 @@ void test_cast()
   cairo_matrix_t identity;
   cairo_matrix_init_identity(&identity);
 
-  BOOST_CHECK_EQUAL(casted, identity);
+  BOOST_CHECK_EQUAL(casted.xx, identity.xx);
+  BOOST_CHECK_EQUAL(casted.xy, identity.xy);
+  BOOST_CHECK_EQUAL(casted.yx, identity.yx);
+  BOOST_CHECK_EQUAL(casted.yy, identity.yy);
+  BOOST_CHECK_EQUAL(casted.x0, identity.x0);
+  BOOST_CHECK_EQUAL(casted.y0, identity.y0);
 
   // pass C++ type as an argument to C
   foo(&matrix);
-  BOOST_CHECK_EQUAL(matrix, *test_matrix);
+  BOOST_CHECK_EQUAL(matrix.xx, test_matrix->xx);
+  BOOST_CHECK_EQUAL(matrix.xy, test_matrix->xy);
+  BOOST_CHECK_EQUAL(matrix.yx, test_matrix->yx);
+  BOOST_CHECK_EQUAL(matrix.yy, test_matrix->yy);
+  BOOST_CHECK_EQUAL(matrix.x0, test_matrix->x0);
+  BOOST_CHECK_EQUAL(matrix.y0, test_matrix->y0);
 }
 
 void test_multiply()
