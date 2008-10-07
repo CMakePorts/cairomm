@@ -1,5 +1,10 @@
 2008-10-07  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* configure.in: add library version numbers to the cairommconfig.h file:
+	CAIROMM_MAJOR_VERSION, CAIROMM_MINOR_VERSION, and CAIROMM_MICRO_VERSION
+
+2008-10-07  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* cairomm/context.cc:
 	* cairomm/context.h: remove has_show_text_glyphs() (moved to Surface)
 	* cairomm/surface.cc:

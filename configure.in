@@ -25,12 +25,15 @@ GENERIC_LIBRARY_VERSION=3:0:2
 #                +- increment if interfaces have been added, removed or changed
 AC_SUBST(GENERIC_LIBRARY_VERSION)
 
-
 VERSION=$GENERIC_VERSION
 
 AM_INIT_AUTOMAKE(cairomm, $GENERIC_VERSION)
 
-AM_CONFIG_HEADER(cairomm/cairommconfig.h)
+# define values for config header
+AC_DEFINE_UNQUOTED([CAIROMM_MAJOR_VERSION], $GENERIC_MAJOR_VERSION, [cairomm major version])
+AC_DEFINE_UNQUOTED([CAIROMM_MINOR_VERSION], $GENERIC_MINOR_VERSION, [cairomm minor version])
+AC_DEFINE_UNQUOTED([CAIROMM_MICRO_VERSION], $GENERIC_MICRO_VERSION, [cairomm micro version])
+AC_CONFIG_HEADER(cairomm/cairommconfig.h)
 
 AC_PROG_CXX
 AC_PROG_CXXCPP
