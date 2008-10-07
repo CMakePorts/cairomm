@@ -348,7 +348,7 @@ public:
   * @param utf8 a string of text encoded in UTF-8.
   * @param glyphs An array of glyphs to fill, in font space.
   * @param clusters An array of cluster mapping information to fill.
-  * @param backward This will be set, to specify whether the text to glyphs mapping goes backward.
+  * @param cluster_flags This will be set, to specify the text to glyphs mapping flags
   *
   * Since: 1.8
   **/
@@ -357,7 +357,7 @@ public:
                      const std::string& /*utf8*/,
                      std::vector<Glyph>& /*glyphs*/,
                      std::vector<TextCluster>& /*clusters*/,
-                     bool& /*backward*/> SlotTextToGlyphs;
+                     TextClusterFlags& /*cluster_flags*/> SlotTextToGlyphs;
 
  /** Sets the text-to-glyphs conversion function of a user-font.
   * See SlotTextToGlyphs for details of how the callback
@@ -410,7 +410,7 @@ private:
                      int *num_glyphs,
                      cairo_text_cluster_t **clusters,
                      int *num_clusters,
-                     cairo_bool_t *backward);
+                     cairo_text_cluster_flags_t *cluster_flags);
 };
 
 // font system support

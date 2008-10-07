@@ -724,11 +724,11 @@ public:
   //TODO: Documentation:
   void show_text(const std::string& utf8);
   void show_glyphs(const std::vector<Glyph>& glyphs);
-  bool has_show_text_glyphs() const;
+  /** @since 1.8 */
   void show_text_glyphs(const std::string& utf8,
                         const std::vector<Glyph>& glyphs,
                         const std::vector<TextCluster>& clusters,
-                        bool backward);
+                        TextClusterFlags cluster_flags);
 
   RefPtr<FontFace> get_font_face();
   RefPtr<const FontFace> get_font_face() const;

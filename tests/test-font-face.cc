@@ -75,7 +75,7 @@ Cairo::ErrorStatus my_render_glyph(const Cairo::RefPtr<Cairo::ScaledFont>&, unsi
 }
 
 static unsigned int text_to_glyphs_call_count = 0;
-Cairo::ErrorStatus my_text_to_glyphs(const Cairo::RefPtr<Cairo::ScaledFont>&, const std::string& utf8, std::vector<Cairo::Glyph>& glyphs, std::vector<Cairo::TextCluster>& /*clusters*/, bool& /*backward*/)
+Cairo::ErrorStatus my_text_to_glyphs(const Cairo::RefPtr<Cairo::ScaledFont>&, const std::string& utf8, std::vector<Cairo::Glyph>& glyphs, std::vector<Cairo::TextCluster>& /*clusters*/, Cairo::TextClusterFlags& /*cluster_flags*/)
 {
   text_to_glyphs_call_count++;
   if (glyphs.size())

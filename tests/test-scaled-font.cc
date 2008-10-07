@@ -29,8 +29,8 @@ void test_text_to_glyphs()
 
   std::vector<Glyph> glyphs;
   std::vector<TextCluster> clusters;
-  bool backwards = false;
-  font->text_to_glyphs(0, 0, "foo", glyphs, clusters, backwards);
+  TextClusterFlags flags;
+  font->text_to_glyphs(0, 0, "foo", glyphs, clusters, flags);
 
   BOOST_CHECK_EQUAL(3, glyphs.size());
   BOOST_CHECK_EQUAL(3, clusters.size());

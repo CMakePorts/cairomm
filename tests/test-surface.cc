@@ -114,6 +114,16 @@ void test_fallback_resolution()
   BOOST_CHECK_EQUAL(y, new_y);
 }
 
+void test_show_text_glyphs()
+{
+  // image surface doesn't support show_text_glyphs
+  Cairo::RefPtr<Cairo::Surface> surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 10, 10); \
+  BOOST_CHECK(!surf->has_show_text_glyphs());
+  // but pdf surface should
+  surf = Cairo::PdfSurface::create("test.pdf", 10.0, 10.0);
+  BOOST_CHECK(surf->has_show_text_glyphs());
+}
+
 
 test_suite*
 init_unit_test_suite(int argc, char* argv[])
@@ -130,6 +140,7 @@ init_unit_test_suite(int argc, char* argv[])
   test->add (BOOST_TEST_CASE (&test_create_from_png));
   test->add (BOOST_TEST_CASE (&test_ps_eps));
   test->add (BOOST_TEST_CASE (&test_content));
+  test->add (BOOST_TEST_CASE (&test_show_text_glyphs));
 
   return test;
 }

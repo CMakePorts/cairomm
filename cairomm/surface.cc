@@ -169,6 +169,15 @@ void Surface::show_page()
   check_object_status_and_throw_exception(*this);
 }
 
+bool Surface::has_show_text_glyphs() const
+{
+  bool result = cairo_surface_has_show_text_glyphs(const_cast<cairo_surface_t*>(cobj()));
+  check_object_status_and_throw_exception(*this);
+  return result;
+}
+
+
+
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
 void Surface::write_to_png(const std::string& filename)
 {

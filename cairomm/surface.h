@@ -215,6 +215,20 @@ public:
    */
   void show_page();
 
+  /** Returns whether the surface supports sophisticated
+   * Context::show_text_glyphs() operations.  That is, whether it actually uses
+   * the provided text and cluster data to a Context::show_text_glyphs() call.
+   *
+   * Note: Even if this function returns %FALSE, a Context::show_text_glyphs()
+   * operation targeted at this surface will still succeed.  It just will act
+   * like a Context::show_glyphs() operation.  Users can use this function to
+   * avoid computing UTF-8 text and cluster mapping if the target surface does
+   * not use it.
+   *
+   * @since 1.8
+   **/
+  bool has_show_text_glyphs() const;
+
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
 
   /** Writes the contents of surface to a new file filename as a PNG image.

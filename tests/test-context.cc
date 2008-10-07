@@ -352,18 +352,6 @@ void test_font_options()
   BOOST_CHECK(options == other);
 }
 
-void test_show_text_glyphs()
-{
-  // image surface doesn't support show_text_glyphs
-  Cairo::RefPtr<Cairo::Surface> surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 10, 10); \
-  Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surf);
-  BOOST_CHECK(!cr->has_show_text_glyphs());
-  // but pdf surface should
-  surf = Cairo::PdfSurface::create("test.pdf", 10.0, 10.0);
-  cr = Cairo::Context::create(surf);
-  BOOST_CHECK(cr->has_show_text_glyphs());
-}
-
 test_suite*
 init_unit_test_suite(int argc, char* argv[])
 {
@@ -391,7 +379,6 @@ init_unit_test_suite(int argc, char* argv[])
   test->add (BOOST_TEST_CASE (&test_target));
   test->add (BOOST_TEST_CASE (&test_scaled_font));
   test->add (BOOST_TEST_CASE (&test_font_options));
-  test->add (BOOST_TEST_CASE (&test_show_text_glyphs));
 
   return test;
 }

@@ -1,3 +1,26 @@
+2008-10-07  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* cairomm/context.cc:
+	* cairomm/context.h: remove has_show_text_glyphs() (moved to Surface)
+	* cairomm/surface.cc:
+	* cairomm/surface.h: added has_show_text_glyphs() (moved from Context)
+	* cairomm/enums.h: removed LcdFilter enum, added a TextClusterFlags enum
+	* cairomm/fontface.cc:
+	* cairomm/fontface.h: changed the 'backwards' bool argument of
+	SlotTextToGlyphs to use TextClusterFlags instead.  Same general change for the
+	C callback text_to_glyphs_cb
+	* cairomm/fontoptions.cc:
+	* cairomm/fontoptions.h: remove get/set_lcd_filter() since it was removed from
+	cairo just before the 1.8 release
+	* cairomm/scaledfont.cc:
+	* cairomm/scaledfont.h: changed the 'backwards' bool argument of
+	text_to_glyphs() to use TextClusterFlags instead
+	* tests/test-context.cc:
+	* tests/test-font-face.cc:
+	* tests/test-font-options.cc:
+	* tests/test-scaled-font.cc:
+	* tests/test-surface.cc: update tests for API changes
+
 2008-10-05  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* cairomm/matrix.cc:

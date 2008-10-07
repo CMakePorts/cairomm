@@ -201,7 +201,7 @@ UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
                                  int *num_glyphs,
                                  cairo_text_cluster_t **clusters,
                                  int *num_clusters,
-                                 cairo_bool_t *backward)
+                                 cairo_text_cluster_flags_t *cluster_flags)
 {
   cairo_font_face_t* face = cairo_scaled_font_get_font_face(scaled_font);
   // we've stored a pointer to the wrapper object in the C object's user_data
@@ -216,7 +216,7 @@ UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
       std::vector<Glyph> glyph_v;
       std::vector<TextCluster> cluster_v;
       const std::string utf8_str(utf8, utf8 + utf8_len);
-      bool local_backwards = false;
+      TextClusterFlags local_flags = static_cast<TextClusterFlags>(0);
 
       ErrorStatus status =
         (instance->m_priv->m_text_to_glyphs_slot)(RefPtr<ScaledFont>(new
@@ -224,7 +224,7 @@ UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
                                                    utf8_str,
                                                    glyph_v,
                                                    cluster_v,
-                                                   local_backwards);
+                                                   local_flags);
 
       // TODO: we re-allocate a new array and pass it back to the caller since
       // cairo will free the the returned array.  It sucks to do this excessive
@@ -254,8 +254,8 @@ UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
         }
       }
 
-      if(backward)
-        *backward = local_backwards;
+      if(cluster_flags)
+        *cluster_flags = static_cast<cairo_text_cluster_flags_t>(local_flags);
 
       return status;
     }

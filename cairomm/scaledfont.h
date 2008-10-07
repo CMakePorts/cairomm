@@ -181,12 +181,12 @@ public:
    * @param utf8 a string of text encoded in UTF-8.
    * @param glyphs pointer to array of glyphs to fill.
    * @param clusters pointer to array of cluster mapping information to fill.
-   * @backward whether the text to glyphs mapping goes backward.
+   * @cluster_flags cluster mapping flags
    *
    * Converts UTF-8 text to an array of glyphs, with cluster mapping, that can be
    * used to render later.
    *
-   * For details of how (@a clusters and @a backward map input
+   * For details of how (@a clusters and @a cluster_flags map input
    * UTF-8 text to the output glyphs see Context::show_text_glyphs().
    *
    * The output values can be readily passed to Context::show_text_glyphs()
@@ -200,7 +200,7 @@ public:
                       const std::string& utf8,
                       std::vector<Glyph>& glyphs,
                       std::vector<TextCluster>& clusters,
-                      bool& backward);
+                      TextClusterFlags& cluster_flags);
 
   /** Stores the scale matrix of this scaled font into matrix. The scale matrix
    * is product of the font matrix and the ctm associated with the scaled font,

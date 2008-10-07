@@ -221,19 +221,14 @@ typedef enum
     FONT_TYPE_USER = CAIRO_FONT_TYPE_USER
 } FontType;
 
-/**
- * The LCD filter specifies the low-pass filter applied to LCD-optimized
- * bitmaps generated with an antialiasing mode of ANTIALIAS_SUBPIXEL.
+/** Specifies properties of a text cluster mapping.
  *
  * @since 1.8
  **/
-typedef enum {
-    LCD_FILTER_DEFAULT = CAIRO_LCD_FILTER_DEFAULT, /**< Use the default LCD filter for font backend and target device */
-    LCD_FILTER_NONE = CAIRO_LCD_FILTER_NONE, /**< Do not perform LCD filtering */
-    LCD_FILTER_INTRA_PIXEL = CAIRO_LCD_FILTER_INTRA_PIXEL, /**< Intra-pixel filter */
-    LCD_FILTER_FIR3 = CAIRO_LCD_FILTER_FIR3, /**< FIR filter with a 3x3 kernel */
-    LCD_FILTER_FIR5 = CAIRO_LCD_FILTER_FIR5 /**< FIR filter with a 5x5 kernel */
-} LcdFilter;
+typedef enum
+{
+    TEXT_CLUSTER_FLAG_BACKWARD = CAIRO_TEXT_CLUSTER_FLAG_BACKWARD /**< The clusters in the cluster array map to glyphs in the glyph array from end to start. */
+} TextClusterFlags;
 
 } // namespace Cairo
 

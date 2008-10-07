@@ -7,19 +7,31 @@
 using namespace boost::unit_test;
 using namespace Cairo;
 
-void test_lcd_filter()
+void test_excercise()
 {
-  FontOptions fo;
-  fo.set_lcd_filter(LCD_FILTER_DEFAULT);
-  BOOST_CHECK_EQUAL(fo.get_lcd_filter(), LCD_FILTER_DEFAULT);
-  fo.set_lcd_filter(LCD_FILTER_NONE);
-  BOOST_CHECK_EQUAL(fo.get_lcd_filter(), LCD_FILTER_NONE);
-  fo.set_lcd_filter(LCD_FILTER_INTRA_PIXEL);
-  BOOST_CHECK_EQUAL(fo.get_lcd_filter(), LCD_FILTER_INTRA_PIXEL);
-  fo.set_lcd_filter(LCD_FILTER_FIR3);
-  BOOST_CHECK_EQUAL(fo.get_lcd_filter(), LCD_FILTER_FIR3);
-  fo.set_lcd_filter(LCD_FILTER_FIR5);
-  BOOST_CHECK_EQUAL(fo.get_lcd_filter(), LCD_FILTER_FIR5);
+  // just excercise all of the methods
+  Cairo::FontOptions options;
+
+  Cairo::FontOptions other;
+  options.merge(other);
+
+  options.hash();
+
+  options.set_antialias(Cairo::ANTIALIAS_SUBPIXEL);
+  Cairo::Antialias antialias = options.get_antialias();
+  BOOST_CHECK_EQUAL(Cairo::ANTIALIAS_SUBPIXEL, antialias);
+
+  options.set_subpixel_order(Cairo::SUBPIXEL_ORDER_DEFAULT);
+  Cairo::SubpixelOrder order = options.get_subpixel_order();
+  BOOST_CHECK_EQUAL(Cairo::SUBPIXEL_ORDER_DEFAULT, order);
+
+  options.set_hint_style(Cairo::HINT_STYLE_SLIGHT);
+  Cairo::HintStyle hint_style = options.get_hint_style();
+  BOOST_CHECK_EQUAL(Cairo::HINT_STYLE_SLIGHT, hint_style);
+
+  options.set_hint_metrics(Cairo::HINT_METRICS_OFF);
+  Cairo::HintMetrics metrics = options.get_hint_metrics();
+  BOOST_CHECK_EQUAL(Cairo::HINT_METRICS_OFF, metrics);
 }
 
 test_suite*
@@ -30,7 +42,7 @@ init_unit_test_suite(int argc, char* argv[])
 
   test_suite* test= BOOST_TEST_SUITE( "Cairo::Context Tests" );
 
-  test->add (BOOST_TEST_CASE (&test_lcd_filter));
+  test->add (BOOST_TEST_CASE (&test_excercise));
 
   return test;
 }

@@ -116,7 +116,7 @@ ScaledFont::text_to_glyphs (double x,
                             const std::string& utf8,
                             std::vector<Glyph>& glyphs,
                             std::vector<TextCluster>& clusters,
-                            bool& backward)
+                            TextClusterFlags& cluster_flags)
 {
   int num_glyphs = -1;
   int num_clusters = -1;
@@ -129,7 +129,7 @@ ScaledFont::text_to_glyphs (double x,
                                                            &num_glyphs,
                                                            &c_clusters,
                                                            &num_clusters,
-                                                           reinterpret_cast<cairo_bool_t*>(&backward));
+                                                           reinterpret_cast<cairo_text_cluster_flags_t*>(&cluster_flags));
   if (num_glyphs > 0 && c_glyphs) {
     glyphs.assign(static_cast<Glyph*>(c_glyphs),
                   static_cast<Glyph*>(c_glyphs + num_glyphs));

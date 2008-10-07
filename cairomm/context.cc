@@ -504,22 +504,15 @@ void Context::show_text(const std::string& utf8)
   check_object_status_and_throw_exception(*this);
 }
 
-bool Context::has_show_text_glyphs() const
-{
-  bool result = cairo_has_show_text_glyphs(const_cast<cairo_t*>(cobj()));
-  check_object_status_and_throw_exception(*this);
-  return result;
-}
-
 void Context::show_text_glyphs(const std::string& utf8,
                                const std::vector<Glyph>& glyphs,
                                const std::vector<TextCluster>& clusters,
-                               bool backward)
+                               TextClusterFlags cluster_flags)
 {
   cairo_show_text_glyphs(cobj(), utf8.c_str(), utf8.size(),
                          &glyphs[0], glyphs.size(),
                          &clusters[0], clusters.size(),
-                         backward);
+                         static_cast<cairo_text_cluster_flags_t>(cluster_flags));
   check_object_status_and_throw_exception(*this);
 }
 
