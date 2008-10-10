@@ -108,9 +108,77 @@ dnl some platforms (e.g. Solaris) need additional C headers included so
 dnl that there are always prototypes and defines available.
 AC_CHECK_HEADERS(math.h)
 
+########################
+# Determine Dependencies
+########################
+dnl first just make sure that our base requirements are met
 PKG_CHECK_MODULES(CAIROMM,
-                  cairo >= 1.6.0
-                  sigc++-2.0)
+                  [cairo >= 1.6.0
+                   sigc++-2.0])
+
+dnl then check and add additional dependencies
+PKG_CHECK_MODULES(CAIROFT, cairo-ft, [HAS_FT=yes], [HAS_FT=no])
+if test x$HAS_FT = xyes; then
+  INSTALLED_PC="$INSTALLED_PC cairomm-ft-1.0.pc"
+fi
+
+PKG_CHECK_MODULES(CAIROPDF, cairo-pdf, [HAS_PDF=yes], [HAS_PDF=no])
+if test x$HAS_PDF = xyes; then
+  INSTALLED_PC="$INSTALLED_PC cairomm-pdf-1.0.pc"
+fi
+
+PKG_CHECK_MODULES(CAIROPNG, cairo-png, [HAS_PNG=yes], [HAS_PNG=no])
+if test x$HAS_PNG = xyes; then
+  INSTALLED_PC="$INSTALLED_PC cairomm-png-1.0.pc"
+fi
+
+PKG_CHECK_MODULES(CAIROPS, cairo-ps, [HAS_PS=yes], [HAS_PS=no])
+if test x$HAS_PS = xyes; then
+  INSTALLED_PC="$INSTALLED_PC cairomm-ps-1.0.pc"
+fi
+
+PKG_CHECK_MODULES(CAIROSVG, cairo-svg, [HAS_SVG=yes], [HAS_SVG=no])
+if test x$HAS_SVG = xyes; then
+  INSTALLED_PC="$INSTALLED_PC cairomm-svg-1.0.pc"
+fi
+
+PKG_CHECK_MODULES(CAIROXLIB, cairo-xlib, [HAS_XLIB=yes], [HAS_XLIB=no])
+if test x$HAS_XLIB = xyes; then
+  INSTALLED_PC="$INSTALLED_PC cairomm-xlib-1.0.pc"
+fi
+
+PKG_CHECK_MODULES(CAIROXLIBXRENDER, cairo-xlib-xrender, [HAS_XLIBXRENDER=yes], [HAS_XLIBXRENDER=no])
+if test x$HAS_XLIBXRENDER = xyes; then
+  INSTALLED_PC="$INSTALLED_PC cairomm-xlib-xrender-1.0.pc"
+fi
+
+PKG_CHECK_MODULES(CAIROWIN32, cairo-win32, [HAS_WIN32=yes], [HAS_WIN32=no])
+if test x$HAS_WIN32 = xyes; then
+  INSTALLED_PC="$INSTALLED_PC cairomm-win32-1.0.pc"
+fi
+
+PKG_CHECK_MODULES(CAIROWIN32FONT, cairo-win32-font, [HAS_WIN32FONT=yes], [HAS_WIN32FONT=no])
+if test x$HAS_WIN32FONT = xyes; then
+  INSTALLED_PC="$INSTALLED_PC cairomm-win32-font-1.0.pc"
+fi
+
+PKG_CHECK_MODULES(CAIROQUARTZ, cairo-quartz, [HAS_QUARTZ=yes], [HAS_QUARTZ=no])
+if test x$HAS_QUARTZ = xyes; then
+  INSTALLED_PC="$INSTALLED_PC cairomm-quartz-1.0.pc"
+fi
+
+PKG_CHECK_MODULES(CAIROQUARTZFONT, cairo-quartz-font, [HAS_QUARTZFONT=yes], [HAS_QUARTZFONT=no])
+if test x$HAS_QUARTZFONT = xyes; then
+  INSTALLED_PC="$INSTALLED_PC cairomm-quartz-font-1.0.pc"
+fi
+
+PKG_CHECK_MODULES(CAIROQUARTZIMAGE, cairo-quartz-image, [HAS_QUARTZIMAGE=yes], [HAS_QUARTZIMAGE=no])
+if test x$HAS_QUARTZIMAGE = xyes; then
+  INSTALLED_PC="$INSTALLED_PC cairomm-quartz-image-1.0.pc"
+fi
+
+AC_SUBST(INSTALLED_PC)
+
 
 AC_ARG_ENABLE(tests,
               AC_HELP_STRING([--enable-tests=yes|no],
@@ -205,6 +273,7 @@ AC_CONFIG_FILES(
   tests/Makefile
 
   cairomm-1.0.pc
+  $INSTALLED_PC
 )
 
 AC_CONFIG_FILES([

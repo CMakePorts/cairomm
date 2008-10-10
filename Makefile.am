@@ -4,13 +4,30 @@ SUBDIRS = cairomm examples MSVC_Net2005 $(DOCS_SUBDIR) tests
 #docs examples
 ACLOCAL_AMFLAGS = -I m4
 
-EXTRA_DIST = MAINTAINERS cairomm-1.0.pc.in
+# This is a list of all of the possible pkg-config files that can be generated.
+# Specific ones to be installed are determined in configure.in
+ALL_PC_IN = cairomm-1.0.pc.in \
+		cairomm-ft-1.0.pc.in \
+		cairomm-pdf-1.0.pc.in \
+		cairomm-png-1.0.pc.in \
+		cairomm-ps-1.0.pc.in \
+		cairomm-quartz-1.0.pc.in \
+		cairomm-quartz-font-1.0.pc.in \
+		cairomm-quartz-image-1.0.pc.in \
+		cairomm-svg-1.0.pc.in \
+		cairomm-win32-1.0.pc.in \
+		cairomm-win32-font-1.0.pc.in \
+		cairomm-xlib-1.0.pc.in \
+		cairomm-xlib-xrender-1.0.pc.in
+
+EXTRA_DIST = MAINTAINERS $(ALL_PC_IN)
 
 DIST_SUBDIRS = $(SUBDIRS)
 
-# Install the pkg-config file:
+# Install the pkg-config files:
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = cairomm-1.0.pc
+# $INSTALLED_PC is computed in configure.in
+pkgconfig_DATA = cairomm-1.0.pc $(INSTALLED_PC)
 
 # Copied from cairo/Makefile.am:
 #
