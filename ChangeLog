@@ -12,6 +12,22 @@
 	* configure.in:
 	* Makefile.am: Added the VS 2008 project files to the distribution.
 
+2008-10-10  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* configure.in:
+	* Makefile.am:
+	* cairomm-**.pc.in:
+	Add a bunch of extra .pc files for additional functionality
+
+	This is done in a bit of a brute-force method at the moment.  I have .pc.in
+	templates for all possible files.  Then I check the underlying cairo-XXX.p
+	files and if those exist, I generate the corresponding cairomm-XXX.pc file
+	It's not the prettiest solution, but it seems to work.
+	So now, if you want to just use base cairo functionality, check for cairom
+	but if you want to use other functionality that requires that you link you
+	application against other libraries (e.g. freetype, xlib, etc), you should
+	for cairomm-ft-1.0, cairomm-xlib-1.0, etc.
+
 2008-10-07  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* configure.in: add library version numbers to the cairommconfig.h file:
