@@ -1,3 +1,17 @@
+2008-10-09  Armin Burgmeier  <armin@openismus.com>
+
+	* MSVC_Net2005/cairomm/cairomm.vcproj: Changed output file names to
+	cairomm-vc80-1_0.dll or cairomm-vc80-d-1_0.dll, respectively.
+
+	* MSVC_Net2008/cairomm.sln:
+	* MSVC_Net2008/cairomm.rc.in:
+	* MSVC_Net2008/Makefile.am:
+	* MSVC_Net2008/*/*.vcproj: Added necesseary files for a Visual Studio
+	2008 build.
+
+	* configure.in:
+	* Makefile.am: Added the VS 2008 project files to the distribution.
+
 2008-10-07  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* configure.in: add library version numbers to the cairommconfig.h file:

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = cairomm examples MSVC_Net2005 $(DOCS_SUBDIR) tests
+SUBDIRS = cairomm examples MSVC_Net2005 MSVC_Net2008 $(DOCS_SUBDIR) tests
 #docs examples
 ACLOCAL_AMFLAGS = -I m4
 
