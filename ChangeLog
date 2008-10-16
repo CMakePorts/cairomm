@@ -1,3 +1,7 @@
+2008-10-15  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* configure.in: bump required cairo version to 1.8.0
+
 2008-10-09  Armin Burgmeier  <armin@openismus.com>
 
 	* MSVC_Net2005/cairomm/cairomm.vcproj: Changed output file names to

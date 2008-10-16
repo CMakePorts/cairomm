@@ -113,7 +113,7 @@ AC_CHECK_HEADERS(math.h)
 ########################
 dnl first just make sure that our base requirements are met
 PKG_CHECK_MODULES(CAIROMM,
-                  [cairo >= 1.6.0
+                  [cairo >= 1.8.0
                    sigc++-2.0])
 
 dnl then check and add additional dependencies
