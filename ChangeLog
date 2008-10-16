@@ -1,5 +1,10 @@
 2008-10-15  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* configure.in: add all of the _LIBS and _CFLAGS for those features that are
+	supported (e.g. FT, PNG, PDF, etc) to the cairomm build flags/libs.
+
+2008-10-15  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* configure.in: bump required cairo version to 1.8.0
 
 2008-10-09  Armin Burgmeier  <armin@openismus.com>
