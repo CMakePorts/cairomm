@@ -1,3 +1,12 @@
+2008-10-22  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* cairomm/pattern.cc:
+	* cairomm/pattern.h: Fix broken get/set_matrix() API that was using the C
+	cairo_matrix_t type instead of Cairo::Matrix.  This should be an
+	ABI-compatible change since Cairo::Matrix is ABI-compatible with
+	cairo_matrix_t, however it is a minor API change that could result in some
+	compile warnings for existing code
+
 2008-10-15  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* configure.in: add all of the _LIBS and _CFLAGS for those features that are

@@ -32,6 +32,8 @@ struct ColorStop
   double red, green, blue, alpha;
 };
 
+struct Matrix;
+
 /**
  * This is a reference-counted object that should be used via Cairo::RefPtr.
  */
@@ -52,8 +54,11 @@ public:
 
   virtual ~Pattern();
 
-  void set_matrix(const cairo_matrix_t &matrix);
-  void get_matrix(cairo_matrix_t &matrix) const;
+  void set_matrix(const Matrix& matrix);
+  void get_matrix(Matrix& matrix) const;
+  /** @since 1.8
+   */
+  Matrix get_matrix() const;
   PatternType get_type() const;
 
   typedef cairo_pattern_t cobject;

@@ -18,6 +18,7 @@
 
 #include <cairomm/pattern.h>
 #include <cairomm/private.h>
+#include <cairomm/matrix.h>
 
 namespace Cairo
 {
@@ -52,16 +53,24 @@ void Pattern::unreference() const
   cairo_pattern_destroy(m_cobject);
 }
 
-void Pattern::set_matrix(const cairo_matrix_t &matrix)
+void Pattern::set_matrix(const Matrix& matrix)
 {
-  cairo_pattern_set_matrix(m_cobject, &matrix);
+  cairo_pattern_set_matrix(m_cobject, (cairo_matrix_t*)&matrix);
   check_object_status_and_throw_exception(*this);
 }
 
-void Pattern::get_matrix(cairo_matrix_t &matrix) const
+void Pattern::get_matrix(Matrix& matrix) const
 {
-  cairo_pattern_get_matrix(m_cobject, &matrix);
+  cairo_pattern_get_matrix(m_cobject, (cairo_matrix_t*)&matrix);
   check_object_status_and_throw_exception(*this);
+}
+
+Matrix Pattern::get_matrix() const
+{
+  Cairo::Matrix m;
+  cairo_pattern_get_matrix(m_cobject, (cairo_matrix_t*)&m);
+  check_object_status_and_throw_exception(*this);
+  return m;
 }
 
 PatternType Pattern::get_type() const
