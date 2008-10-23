@@ -1,3 +1,72 @@
+1.7.0:
+
+ * API Changes
+   * ScaledFont: Change fontface constructor parameter to be a RefPtr
+     * This is an API break, but the old interface was essentially unusably
+       broken
+   * Cairo::Matrix now inherits from cairo_matrix_t
+     * Previously, we had used Cairo::Matrix throughout our API, but
+       Cairo::Matrix was just a typedef for cairo_matrix_t
+     * This could be considered an API change, but the new Cairo::Matrix still
+       is-a cairo_matrix_t even if it's not exactly a cairo_matrix_t.  This
+       change does not break ABI either, as there are no data members or virtual
+       functions.  So I believe this is a safe change, but feedback is appreciated.
+     * Provides a much more C++-friendly API for handling matrices
+     * Also added a set of standalone 'generator' functions for generating
+       starting matrices:
+       * Cairo::identity_matrix(), rotation_matrix(), translation_matrix(),
+         scaled_matrix().  This allows for convenient use such as:
+           cr->set_matrix(Cairo::identity_matrix());
+         rather than something like what was required before:
+           Cairo::Matrix identity_matrix;
+           cairo_matrix_init_identity(&identity_matrix);
+           cr->set_matrix(identity_matrix);
+   * Pattern: get/set_matrix() functions were using a cairo_matrix_t parameter in
+     the API.  This is the only place where we used this type and so it was
+     inconsistent with every other matrix-related API in cairomm.  Previously
+     this wasn't really an issue since cairo_matrix_t and Cairo::Matrix were
+     typedefed to the same type.  However, with the the change to Cairo::Matrix
+     mentioned above, this because a much bigger issue.
+     * This is an ABI-compatible change, but it is a minor API change that could
+       result in some warnings or compile problems in some situations`
+ * New API (some of these are new in cairo 1.8, some are older API that were
+   not wrapped in cairomm previously)
+   * Add Context::get/set_scaled_font()
+   * add Context::show_text_glyphs()
+   * add Context::get_font_options()
+   * Add Surface::has_show_text_glyphs()
+   * Add Surface::get_content() + test
+   * Added Surface::get_fallback_resolution()
+   * Add ScaledFont::text_to_glyphs()
+   * Add PsSurface::get_eps()
+   * Add missing Win32Surface API: create_with_ddb(), create_with_dib(), and get_image()
+   * Add Win32PrintingSurface
+   * Vastly improved font support
+     * ToyFontFace
+     * UserFontFace
+     * Add Freetype font support (FtFontFace, etc)
+     * Add win32 font support (Win32FontFace, etc)
+     * Add quartz font support (QuartzFontFace, etc)
+     * Add ScaledFont::get_scale_matrix()
+ * Fix API inconsistencies by adding overloads and deprecating old versions
+   * Deprecated FontFace::extents() in favor of FontFace::get_extents()
+   * Deprecated FontFace::text_extents() in favor of FontFace::get_text_extents()
+   * Deprecated FontFace::glyph_extents() in favor of FontFace::get_glyph_extents()
+   * Add sigc::slot versions of all of the functions that take a
+     cairo_write_func_t or cairo_read_func_t
+     * This adds a new dependency on libsigc++, but offers a much more flexible
+       and C++-like solution
+     * Old API using cairo_write_func_t / cairo_read_func_t still exist, but are
+       deprecated in favor of the new API
+   * Add a default value for the font_options parameter of the ScaledFont constructor
+ * Added new macros for determining library version:
+   * CAIROMM_MAJOR_VERSION, CAIROMM_MINOR_VERSION, and CAIROMM_MICRO_VERSION
+ * Add a bunch of extra .pc files for additional functionality
+   * like cairo, create convenience .pc files for using some of the optional
+     features.  For example, cairomm-ft-1.0, cairomm-pdf-1.0, cairomm-xlib-1.0, etc.
+ * Numerous windows build improvements
+ * Added a *lot* of automated tests
+
 1.6.2:
 
  * Fix build on OSX when both Quartz and Xlib surfaces are enabled (Benjamin
