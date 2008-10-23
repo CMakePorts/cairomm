@@ -1,5 +1,9 @@
 2008-10-22  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* configure.in: bump version to 1.7.0
+
+2008-10-22  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* cairomm/context.cc:
 	* cairomm/context.h: add an overloaded get_matrix() function that returns a
 	copy of the matrix for convenience
