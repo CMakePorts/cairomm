@@ -1,5 +1,11 @@
 2008-10-22  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* cairomm/matrix.h: add a link to the cairo reference for cairo_matrix_t
+	* docs/reference/Doxyfile.in: don't generate docs for the members of the
+	Cairo::Private namespace
+
+2008-10-22  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* configure.in: bump version to 1.7.0
 
 2008-10-22  Jonathon Jongsma  <jonathon@quotidian.org>

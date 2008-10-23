@@ -23,6 +23,12 @@
 namespace Cairo
 {
 
+/** @class cairo_matrix_t
+ * See the <a
+ * href="http://www.cairographics.org/manual/cairo-matrix.html">cairo_matrix_t
+ * reference</a> in the cairo manual for more information
+ */
+
 /** A Transformation matrix.
  *
  * Cairo::Matrix is used throughout cairomm to convert between different
