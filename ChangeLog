@@ -1,5 +1,28 @@
 2008-10-22  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* .gitignore:
+	* Makefile.am:
+	* configure.in: moved pkgconfig files to a data subdirectory, and consolidated
+	all dependency checks into one PKG_CHECK_MODULES call so that we don't have
+	duplicate libs or flags in the compiler command line due to checking all of
+	teh deps individually and then aggregating them
+	* data/Makefile.am: Added.
+	* data/cairomm-1.0.pc.in: Renamed from cairomm-1.0.pc.in.
+	* data/cairomm-ft-1.0.pc.in: Renamed from cairomm-ft-1.0.pc.in.
+	* data/cairomm-pdf-1.0.pc.in: Renamed from cairomm-pdf-1.0.pc.in.
+	* data/cairomm-png-1.0.pc.in: Renamed from cairomm-png-1.0.pc.in.
+	* data/cairomm-ps-1.0.pc.in: Renamed from cairomm-ps-1.0.pc.in.
+	* data/cairomm-quartz-1.0.pc.in: Renamed from cairomm-quartz-1.0.pc.in.
+	* data/cairomm-quartz-font-1.0.pc.in: Renamed from cairomm-quartz-font-1.0.pc.in.
+	* data/cairomm-quartz-image-1.0.pc.in: Renamed from cairomm-quartz-image-1.0.pc.in.
+	* data/cairomm-svg-1.0.pc.in: Renamed from cairomm-svg-1.0.pc.in.
+	* data/cairomm-win32-1.0.pc.in: Renamed from cairomm-win32-1.0.pc.in.
+	* data/cairomm-win32-font-1.0.pc.in: Renamed from cairomm-win32-font-1.0.pc.in.
+	* data/cairomm-xlib-1.0.pc.in: Renamed from cairomm-xlib-1.0.pc.in.
+	* data/cairomm-xlib-xrender-1.0.pc.in: Renamed from cairomm-xlib-xrender-1.0.pc.in.
+
+2008-10-22  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* cairomm/pattern.cc:
 	* cairomm/pattern.h: Fix broken get/set_matrix() API that was using the C
 	cairo_matrix_t type instead of Cairo::Matrix.  This should be an

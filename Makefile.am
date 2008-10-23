@@ -1,33 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = cairomm examples MSVC_Net2005 MSVC_Net2008 $(DOCS_SUBDIR) tests
+SUBDIRS = cairomm data examples MSVC_Net2005 MSVC_Net2008 $(DOCS_SUBDIR) tests
 #docs examples
 ACLOCAL_AMFLAGS = -I m4
 
-# This is a list of all of the possible pkg-config files that can be generated.
-# Specific ones to be installed are determined in configure.in
-ALL_PC_IN = cairomm-1.0.pc.in \
-		cairomm-ft-1.0.pc.in \
-		cairomm-pdf-1.0.pc.in \
-		cairomm-png-1.0.pc.in \
-		cairomm-ps-1.0.pc.in \
-		cairomm-quartz-1.0.pc.in \
-		cairomm-quartz-font-1.0.pc.in \
-		cairomm-quartz-image-1.0.pc.in \
-		cairomm-svg-1.0.pc.in \
-		cairomm-win32-1.0.pc.in \
-		cairomm-win32-font-1.0.pc.in \
-		cairomm-xlib-1.0.pc.in \
-		cairomm-xlib-xrender-1.0.pc.in
-
-EXTRA_DIST = MAINTAINERS $(ALL_PC_IN)
+EXTRA_DIST = MAINTAINERS
 
 DIST_SUBDIRS = $(SUBDIRS)
-
-# Install the pkg-config files:
-pkgconfigdir = $(libdir)/pkgconfig
-# $INSTALLED_PC is computed in configure.in
-pkgconfig_DATA = cairomm-1.0.pc $(INSTALLED_PC)
 
 # Copied from cairo/Makefile.am:
 #
