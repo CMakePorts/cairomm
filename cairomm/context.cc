@@ -698,6 +698,14 @@ void Context::get_matrix(Matrix& matrix)
   check_object_status_and_throw_exception(*this);
 }
 
+Matrix Context::get_matrix() const
+{
+  Cairo::Matrix m;
+  cairo_get_matrix(const_cast<cairo_t*>(cobj()), (cairo_matrix_t*)&m);
+  check_object_status_and_throw_exception(*this);
+  return m;
+}
+
 static
 RefPtr<Surface> get_surface_wrapper (cairo_surface_t* surface)
 {

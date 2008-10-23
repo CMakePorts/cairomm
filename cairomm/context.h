@@ -815,6 +815,9 @@ public:
    * @param matrix	return value for the matrix
    */
   void get_matrix(Matrix& matrix);
+  /** @since 1.8
+   */
+  Matrix get_matrix() const;
 
   /** Gets the target surface associated with this Context.
    *

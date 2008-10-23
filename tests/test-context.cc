@@ -225,6 +225,7 @@ test_matrix ()
   cr->set_matrix(matrix);
   cr->set_identity_matrix ();
   cr->get_matrix (matrix);
+  Cairo::Matrix m2 = cr->get_matrix ();
 }
 
 void
