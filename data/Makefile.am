@@ -21,4 +21,6 @@ EXTRA_DIST = $(ALL_PC_IN)
 # Install the pkg-config files:
 pkgconfigdir = $(libdir)/pkgconfig
 # $INSTALLED_PC is computed in configure.in
-pkgconfig_DATA = cairomm-1.0.pc $(INSTALLED_PC)
+pkgconfig_DATA = $(INSTALLED_PC)
+
+DISTCLEANFILES=$(INSTALLED_PC)

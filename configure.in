@@ -115,6 +115,9 @@ dnl base dependencies
 DEPS_PC="cairo >= 1.8.0
          sigc++-2.0"
 
+dnl always install the 'base' pkg-config file
+INSTALLED_PC="cairomm-1.0.pc"
+
 dnl then check and add additional dependencies
 PKG_CHECK_MODULES(CAIROFT, cairo-ft, [HAS_FT=yes], [HAS_FT=no])
 if test x$HAS_FT = xyes; then
@@ -192,7 +195,7 @@ PKG_CHECK_MODULES(CAIROMM, [$DEPS_PC])
 
 AC_SUBST(INSTALLED_PC)
 
-CONFIG_PC=data/cairomm-1.0.pc
+CONFIG_PC=""
 for pc in $INSTALLED_PC; do
   CONFIG_PC="$CONFIG_PC data/$pc"
 done
