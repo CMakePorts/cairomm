@@ -1,3 +1,7 @@
+2008-10-25  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* NEWS: explicitly mention that 1.7.0 is an unstable release
+
 2008-10-22  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* NEWS: add news for 1.7.x release

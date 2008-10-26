@@ -1,4 +1,4 @@
-1.7.0:
+1.7.0 (UNSTABLE):
 
  * API Changes
    * ScaledFont: Change fontface constructor parameter to be a RefPtr
@@ -83,7 +83,7 @@
  * wrap cairo_format_stride_for_width().  All new cairo 1.6 API should now be
    implemented in cairomm
 
-1.5.0:
+1.5.0 (UNSTABLE):
 
  * Unstable release wrapping new API in cairo 1.5 series
  * Bugfixes
