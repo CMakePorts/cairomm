@@ -1,3 +1,7 @@
+2008-10-29  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* Makefile.am: distribute autogen.sh with the tarballs
+
 2008-10-25  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* configure.in:
