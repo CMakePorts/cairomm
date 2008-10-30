@@ -1,3 +1,11 @@
+2008-10-30  Dave Evans <devans@macports.org>
+
+	* cairomm/fontface.h:
+	* cairomm/surface.h: fix compile in mac osx by undefining the 'nil' symbol
+	before including any sigc++ headers.  In the future this should become
+	necessary if sigc++ headers do this directly, but for now work around it in
+	cairomm
+
 2008-10-29  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* Makefile.am: distribute autogen.sh with the tarballs

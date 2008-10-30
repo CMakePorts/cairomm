@@ -21,6 +21,15 @@
 
 #include <string>
 #include <vector>
+
+/* following is required for OS X */
+
+#ifdef nil
+#undef nil
+#endif
+
+/* end OS X */
+
 #include <sigc++/slot.h>
 #include <cairomm/enums.h>
 #include <cairomm/exception.h>
