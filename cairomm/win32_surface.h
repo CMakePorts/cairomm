@@ -113,7 +113,7 @@ public:
    *
    * @since 1.8
    */
-  static RefPtr<Win32Surface> create_with_ddb(Format format, int width, int height);
+  static RefPtr<Win32Surface> create_with_ddb(HDC hdc, Format format, int width, int height);
 
 };
 
@@ -128,7 +128,7 @@ class Win32PrintingSurface : public Surface
 {
 public:
   explicit Win32PrintingSurface(cairo_surface_t* cobject, bool has_reference = false);
-  virtual ~Win32Surface();
+  virtual ~Win32PrintingSurface();
 
   /** Creates a cairo surface that targets the given DC. The DC will be queried
    * for its initial clip extents, and this will be used as the size of the

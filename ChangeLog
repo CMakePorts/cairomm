@@ -1,5 +1,11 @@
 2008-11-14  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* cairomm/win32_surface.cc:
+	* cairomm/win32_surface.h: fix a bunch of compile errors in the win32 surface
+	as reported by Paul Goins <general vultaire.net>
+
+2008-11-14  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* configure.in: support the --with-boost=[boost_path] option for specifying
 	the install path of boost libraries
 
