@@ -230,16 +230,31 @@ if test x$ENABLE_TESTS = xyes ; then
     AX_BOOST_UNIT_TEST_FRAMEWORK
     AX_BOOST_TEST_EXEC_MONITOR
 
-    unit_framework_lib_candidates="/usr/lib/libboost_unit_test_framework-st.a /usr/lib/libboost_unit_test_framework.a"
-    unit_framework_lib_candidates=$unit_framework_lib_candidates" /usr/lib64/libboost_unit_test_framework-st.a /usr/lib64/libboost_unit_test_framework.a"
+    dnl AX_BOOST_BASE defines a --with-boost[=DIR] option that sets
+    dnl $ac_boost_path as a custom boost prefix, so use that if it was specified
+    if test x$ac_boost_path != x; then
+        unit_framework_lib_candidates="$ac_boost_path/lib/libboost_unit_test_framework.a
+        $ac_boost_path/lib/libboost_unit_test_framework-st.a
+        $ac_boost_path/libboost_unit_test_framework.a
+        $ac_boost_path/libboost_unit_test_framework-st.a"
+    else
+        unit_framework_lib_candidates="/usr/lib/libboost_unit_test_framework-st.a
+        /usr/lib/libboost_unit_test_framework.a
+        /usr/lib64/libboost_unit_test_framework-st.a
+        /usr/lib64/libboost_unit_test_framework.a"
+    fi
     for i in $unit_framework_lib_candidates ; do
         if test -f $i ; then
             BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB=$i
             break
         fi
     done
-    AC_SUBST(BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB)
-    AC_MSG_NOTICE(support of automated tests enabled)
+    if test x$BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB != x; then
+        AC_SUBST(BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB)
+        AC_MSG_NOTICE(support of automated tests enabled)
+    else
+        AC_MSG_ERROR([Tried to enable unit tests, but couldn't find Boost Unit Test framework static library candidate.  You can specify a custom location using --with-boost=/path/to/lib])
+    fi
 else
     AC_MSG_NOTICE(disabled support of automated tests)
 fi
