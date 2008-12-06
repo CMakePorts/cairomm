@@ -42,6 +42,12 @@ ScaledFont::ScaledFont(const RefPtr<FontFace>& font_face, const Matrix& font_mat
   check_object_status_and_throw_exception(*this);
 }
 
+ScaledFont::~ScaledFont()
+{
+  if (cobj())
+    cairo_scaled_font_destroy(cobj());
+}
+
 RefPtr<ScaledFont> ScaledFont::create(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,
     const Matrix& ctm, const FontOptions& options)
 {
@@ -81,7 +87,7 @@ RefPtr<FontFace> ScaledFont::get_font_face() const
 {
   cairo_font_face_t* face = cairo_scaled_font_get_font_face(m_cobject);
   check_object_status_and_throw_exception(*this);
-  return RefPtr<FontFace>(new FontFace(face, true));
+  return RefPtr<FontFace>(new FontFace(face, true /* returned face doesn't have a reference */));
 }
 
 void ScaledFont::get_font_options(FontOptions& options) const

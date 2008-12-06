@@ -1,3 +1,13 @@
+2008-12-05  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* cairomm/scaledfont.cc: Fix an error in ScaledFont::get_font_face() where
+	we were releasing a reference we didn't hold.
+	Also fix a rather severe memory leak where we weren't calling
+	cairo_scaled_font_destroy in the ScaledFont destructor.  I added a virtual
+	destructor to ScaledFont, which theoretically changes ABI, but I don't see how
+	anybody could be using ScaledFont in cairomm currently without serious memory
+	leaks, so I think it's worthwhile to make this change
+
 2008-11-14  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* cairomm/win32_surface.cc:
