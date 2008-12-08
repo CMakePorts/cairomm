@@ -1,5 +1,17 @@
 2008-12-07  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* cairomm/fontface.cc: 'fix' the text_to_glyphs implementation so that the
+	default virtual function will be bypassed and the unicode_to_glyph will be
+	called instead.  This is done in the C implementation by passing a negative
+	value for the num_glyphs output parameter, but since we're using a std::vector
+	for the glyphs, it's not possible to return a negative value.  So I'm using an
+	ugly hack that will set a boolean flag the first time the default
+	text_to_glyphs vfunc is called (which implies that that function has not been
+	reimplemented in a derived class), and if we check that boolean flag and it is
+	set, we will pass a negative value down to the C caller
+
+2008-12-07  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* cairomm/fontface.cc:
 	* cairomm/fontface.h: Change UserFontFace implementation to a vfunc-based
 	implementation rather than requiring people to supply callbacks at runtime as

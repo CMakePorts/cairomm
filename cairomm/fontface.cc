@@ -25,6 +25,8 @@
 namespace Cairo
 {
 
+const cairo_user_data_key_t USER_DATA_KEY_DEFAULT_TEXT_TO_GLYPHS =  {0};
+
 FontFace::FontFace(cairo_font_face_t* cobject, bool has_reference)
 : m_cobject(0)
 {
@@ -233,6 +235,13 @@ UserFontFace::text_to_glyphs_cb(cairo_scaled_font_t *scaled_font,
                                                     ScaledFont(scaled_font)),
                                  utf8_str, glyph_v, cluster_v, local_flags);
 
+      // NOTE: see explanation in text_to_glyphs()
+      if (cairo_font_face_get_user_data(face, &USER_DATA_KEY_DEFAULT_TEXT_TO_GLYPHS))
+      {
+        *num_glyphs = -1;
+        return status;
+      }
+
       // TODO: we re-allocate a new array and pass it back to the caller since
       // cairo will free the the returned array.  It sucks to do this excessive
       // allocation and copying, I don't see much alternative besides just
@@ -287,8 +296,18 @@ UserFontFace::text_to_glyphs(const RefPtr<ScaledFont>& /*scaled_font*/,
                              std::vector<TextCluster>& /*clusters*/,
                              TextClusterFlags& /*cluster_flags*/)
 {
-  // FIXME: default implementation should return -1 for num_glyphs, but there's not
-  // really any way to do that with the current interface
+  // this is a big hack to make up for the fact that we can't easily pass back a
+  // negative value for the size of the glyph array, which is a special value in
+  // the C API that means: "ignore this function and call unicode_to_glyph
+  // instead".  If this default virtual function is ever called, it will set a
+  // bool value in the user_data, which we can read back in the
+  // text_to_glyphs_cb and used as a signal to return -1 for the num_glyphs
+  // parameter.
+  static bool first_time = true;
+  if (first_time) {
+    cairo_font_face_set_user_data(cobj(), &USER_DATA_KEY_DEFAULT_TEXT_TO_GLYPHS, reinterpret_cast<void*>(true), NULL);
+    first_time = false;
+  }
   return CAIRO_STATUS_SUCCESS;
 }
 
