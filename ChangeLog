@@ -1,5 +1,10 @@
 2008-12-07  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* cairomm/fontface.cc: Fix the default implementation of UserFontFace::init()
+	to set up the font extents parameter correctly according to the documentation
+
+2008-12-07  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* cairomm/fontface.cc: 'fix' the text_to_glyphs implementation so that the
 	default virtual function will be bypassed and the unicode_to_glyph will be
 	called instead.  This is done in the C implementation by passing a negative

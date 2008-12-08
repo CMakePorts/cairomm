@@ -158,9 +158,15 @@ UserFontFace::init_cb(cairo_scaled_font_t* scaled_font,
 ErrorStatus
 UserFontFace::init(const RefPtr<ScaledFont>& /*scaled_font*/,
                    const RefPtr<Context>& /*cr*/,
-                   FontExtents& /*extents*/)
+                   FontExtents& extents)
 {
-  // fallback behavior is to not do anything, just claim success
+  // fallback behavior is to set up the default text extents as described in the
+  // cairo API documentation
+  extents.ascent = 1.0;
+  extents.descent = 0.0;
+  extents.height = 1.0;
+  extents.max_x_advance = 1.0;
+  extents.max_y_advance = 0.0;
   return CAIRO_STATUS_SUCCESS;
 }
 
