@@ -33,7 +33,6 @@
 
 /* end OS X */
 
-#include <sigc++/slot.h>
 #include <cairo.h>
 #ifdef CAIRO_HAS_FT_FONT
 #include <cairo-ft.h>
@@ -157,7 +156,12 @@ public:
 
   virtual ~UserFontFace();
 
+  /*
   static RefPtr<UserFontFace> create();
+  static RefPtr<UserFontFace> create(cairo_font_face_t* cobject, bool has_reference = false);
+  */
+
+protected:
 
   /** A SlotInit slot is called when a ScaledFont needs
    * to be created for a UserFontFace.
@@ -190,32 +194,12 @@ public:
    * @param extents font extents to fill in, in font space.
    * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
    */
-  typedef sigc::slot<ErrorStatus,
-                     const RefPtr<ScaledFont>&,
-                     const RefPtr<Context>&,
-                     FontExtents&> SlotInit;
+  virtual ErrorStatus init(const RefPtr<ScaledFont>& scaled_font,
+                           const RefPtr<Context>& cr,
+                           FontExtents& extents);
 
-  /** Sets the scaled-font initialization function of a user-font.
-   * See SlotInit for details of how the callback works.
-   *
-   * The font-face should not be immutable or a CAIRO_STATUS_USER_FONT_IMMUTABLE
-   * error will occur.  A user font-face is immutable as soon as a scaled-font
-   * is created from it.
-   *
-   * @param init_func The init callback.
-   *
-   * @since 1.8
-   */
-  void set_init_func(const SlotInit& init_func);
-
-  /** A SlotUnicodeToGlyph slot is called to convert an
-   * input Unicode character to a single glyph. This is used by the
-   * Context::show_text() operation.
-   *
-   * For example:
-   * <code>
-   * ErrorStatus my_unicode_to_glyph_func(const RefPtr<ScaledFont>& scaled_font, unsigned long unicode, unsigned long& glyph);
-   * </code>
+  /** unicode_to_glyph is called to convert an input Unicode character to a
+   * single glyph. This is used by the Context::show_text() operation.
    *
    * This callback is used to provide the same functionality as the
    * text_to_glyphs callback does (see SlotTextToGlyphs) but has much less
@@ -242,34 +226,12 @@ public:
    * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR
    * or any other error status on error.
    */
-  typedef sigc::slot<ErrorStatus,
-                     const RefPtr<ScaledFont>&,
-                     unsigned long /*unicode*/,
-                     unsigned long& /*glyph*/> SlotUnicodeToGlyph;
+  virtual ErrorStatus unicode_to_glyph(const RefPtr<ScaledFont>& scaled_font,
+                                       unsigned long unicode,
+                                       unsigned long& glyph);
 
 
-  /** Sets the unicode-to-glyph conversion function of a user-font.
-   * See SlotUnicodeToGlyph for details of how the callback
-   * works.
-   *   
-   * The font-face should not be immutable or a CAIRO_STATUS_USER_FONT_IMMUTABLE
-   * error will occur.  A user font-face is immutable as soon as a scaled-font
-   * is created from it.
-   *
-   * @param unicode_to_glyph_func The unicode_to_glyph callback.
-   *
-   * @since 1.8
-   */
-  void set_unicode_to_glyph_func(const SlotUnicodeToGlyph& unicode_to_glyph_func);
-
-
-  /** A SlotRenderGlyph slot is called when a user
-   * ScaledFont needs to render a glyph.
-   *
-   * For example:
-   * <code>
-   * ErrorStatus my_render_glyph_func(const RefPtr<ScaledFont>& scaled_font, unsigned long glyph, const RefPtr<Context>& cr, TextExtents& metrics);
-   * </code>
+  /** render_glyph is called when a user ScaledFont needs to render a glyph.
    *
    * The callback is mandatory, and expected to draw the glyph with code glyph
    * to the Context cr. cr is prepared such that the glyph drawing is done
@@ -301,47 +263,28 @@ public:
    * @param glyph glyph code to render.
    * @param cr cairo context to draw to, in font space.
    * @param extents glyph extents to fill in, in font space.
-   * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
+   * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR
+   * or any other error status on error.
    */
-  typedef sigc::slot<ErrorStatus,
-                     const RefPtr<ScaledFont>&,
-                     unsigned long /*glyph*/,
-                     const RefPtr<Context>&,
-                     TextExtents& /*metrics*/> SlotRenderGlyph;
-
-  /** Sets the glyph rendering function of a user-font.
-   * See SlotRenderGlyph for details of how the callback
-   * works.
-   *
-   * The font-face should not be immutable or a CAIRO_STATUS_USER_FONT_IMMUTABLE
-   * error will occur.  A user font-face is immutable as soon as a scaled-font
-   * is created from it.
-   *
-   * The render_glyph callback is the only mandatory callback of a user-font.
-   * If the callback is %NULL and a glyph is tried to be rendered using
-   * @font_face, a CAIRO_STATUS_USER_FONT_ERROR will occur.
-   *
-   * @param render_glyph_func The render_glyph callback.
-   *
-   * @since 1.8
-   */
-  void set_render_glyph_func(const SlotRenderGlyph& render_glyph_func);
+  virtual ErrorStatus render_glyph(const RefPtr<ScaledFont>& scaled_font,
+                                   unsigned long glyph,
+                                   const RefPtr<Context>& cr,
+                                   TextExtents& metrics) = 0;
 
 
- /** A SlotTextToGlyphs slot is called to convert input text to an array of glyphs.  This is used by the
-  * Cairo::Context::show_text() operation.
+ /** text_to_glyphs is called to convert input text to an array of glyphs.  This
+  * is used by the Cairo::Context::show_text() operation.
   *
-  * Using this callback the user-font has full control on glyphs and their
+  * By implementing this virtual function the user-font has full control on glyphs and their
   * positions.  That means, it allows for features like ligatures and kerning,
   * as well as complex <firstterm>shaping</firstterm> required for scripts like
   * Arabic and Indic.
   *
-  * The callback should populate the glyph indices and
-  * positions (in font space) assuming that the text is to be shown at the
-  * origin.
+  * This virtual function should populate the glyph indices and positions (in
+  * font space) assuming that the text is to be shown at the origin.
   *
   * The callback is optional.  If not set, the unicode_to_glyph callback
-  * is tried.  See SlotUnicodeToGlyph.
+  * is tried.
   *
   * Note: While cairo does not impose any limitation on glyph indices,
   * some applications may assume that a glyph index fits in a 16-bit
@@ -361,40 +304,17 @@ public:
   *
   * Since: 1.8
   **/
-  typedef sigc::slot<ErrorStatus,
-                     const RefPtr<ScaledFont>&,
-                     const std::string& /*utf8*/,
-                     std::vector<Glyph>& /*glyphs*/,
-                     std::vector<TextCluster>& /*clusters*/,
-                     TextClusterFlags& /*cluster_flags*/> SlotTextToGlyphs;
-
- /** Sets the text-to-glyphs conversion function of a user-font.
-  * See SlotTextToGlyphs for details of how the callback
-  * works.
-  *
-  * The font-face should not be immutable or a CAIRO_STATUS_USER_FONT_IMMUTABLE
-  * error will occur.  A user font-face is immutable as soon as a scaled-font
-  * is created from it.
-  *
-  * @param text_to_glyphs_func The text_to_glyphs callback.
-  *
-  * @since 1.8
-  */
-  void set_text_to_glyphs_func(const SlotTextToGlyphs& text_to_glyphs_func);
-
-  // Like gtkmm, we don't have get_*_func() methods. They would not be very useful.
-
-  //TODO: Add unset_*_func() methods, to match the use of NULL in the C API?
+  virtual ErrorStatus text_to_glyphs(const RefPtr<ScaledFont>& scaled_font,
+                                     const std::string& utf8,
+                                     std::vector<Glyph>& glyphs,
+                                     std::vector<TextCluster>& clusters,
+                                     TextClusterFlags& cluster_flags);
 
 
 
-protected:
   UserFontFace();
 
 private:
-  struct PrivateData;
-  PrivateData* m_priv;
-
   static cairo_status_t
   init_cb(cairo_scaled_font_t* scaled_font,
           cairo_t *cr,

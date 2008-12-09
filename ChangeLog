@@ -1,3 +1,14 @@
+2008-12-07  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* cairomm/fontface.cc:
+	* cairomm/fontface.h: Change UserFontFace implementation to a vfunc-based
+	implementation rather than requiring people to supply callbacks at runtime as
+	sigc::slot objects.  This was requested by Ian Britten on the mailing list and
+	was my original plan but ran into issues in my original implementation.  This
+	isn't a fully-working implementation yet, but I think I can overcome the
+	issues now, so I'm moving forward on the redesign.
+	* tests/test-font-face.cc: disable UserFontFace tests for now
+
 2008-12-05  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* cairomm/scaledfont.cc: Fix an error in ScaledFont::get_font_face() where

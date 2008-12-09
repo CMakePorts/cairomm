@@ -46,6 +46,7 @@ void test_toy_getters ()
   BOOST_CHECK_EQUAL (Cairo::FONT_TYPE_TOY, toy->get_type());
 }
 
+#if 0
 void test_user_font_create()
 {
   Cairo::RefPtr<Cairo::UserFontFace> font = Cairo::UserFontFace::create();
@@ -280,6 +281,7 @@ void test_user_font_replace_callback()
   BOOST_CHECK (init2_call_count > 0);
   BOOST_CHECK_EQUAL (init_call_count, 0);
 }
+#endif // UserFont disabled
 
 #ifdef CAIRO_HAS_FT_FONT
 void test_ft_font_face()
@@ -344,12 +346,14 @@ init_unit_test_suite(int argc, char* argv[])
 
   test->add (BOOST_TEST_CASE (&test_create_toy));
   test->add (BOOST_TEST_CASE (&test_toy_getters));
+  /*
   test->add (BOOST_TEST_CASE (&test_user_font_create));
   test->add (BOOST_TEST_CASE (&test_user_font_callbacks_ptr));
   test->add (BOOST_TEST_CASE (&test_user_font_callbacks_ptr_text));
   test->add (BOOST_TEST_CASE (&test_user_font_callbacks_mem));
   test->add (BOOST_TEST_CASE (&test_user_font_callbacks_exception));
   test->add (BOOST_TEST_CASE (&test_user_font_replace_callback));
+  */
 #ifdef CAIRO_HAS_FT_FONT
   test->add (BOOST_TEST_CASE (&test_ft_font_face));
 #endif // CAIRO_HAS_FT_FONT
