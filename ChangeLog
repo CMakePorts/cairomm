@@ -1,5 +1,11 @@
 2008-12-11  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* examples/text/user-font.cc: enhanced the UserFontFace example quite a bit so
+	that it shows a few different virtual functions and actually draws different
+	sized boxes for different characters
+
+2008-12-11  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* cairomm/fontface.h: fix up a lot of the documentation for UserFontFace since
 	it was redesigned to use virtual functions rather than callbacks
 
