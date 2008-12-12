@@ -302,10 +302,7 @@ AC_CONFIG_FILES(
   data/Makefile
 
   examples/Makefile
-  examples/png_file/Makefile
-  examples/pdf-surface/Makefile
-  examples/ps-surface/Makefile
-  examples/svg-surface/Makefile
+  examples/surfaces/Makefile
   examples/text/Makefile
 
   tests/Makefile

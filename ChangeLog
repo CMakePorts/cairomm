@@ -1,5 +1,29 @@
 2008-12-12  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	Restructure the examples directory so that there aren't so many subdirs, which
+	tends to slow down builds since they can't be done in parallel.  Also
+	'standardize' the executable names a bit more and give the source files
+	meaningful names rather than 'main.cc' or similar
+
+	* configure.in:
+	* examples/.cvsignore: Removed.
+	* examples/Makefile.am:
+	* examples/README:
+	* examples/pdf-surface/.cvsignore: Removed.
+	* examples/pdf-surface/Makefile.am: Removed.
+	* examples/png_file/.cvsignore: Removed.
+	* examples/png_file/Makefile.am: Removed.
+	* examples/ps-surface/.cvsignore: Removed.
+	* examples/ps-surface/Makefile.am: Removed.
+	* examples/surfaces/image-surface.cc: Renamed from examples/png_file/main.cc.
+	* examples/surfaces/pdf-surface.cc: Renamed from examples/pdf-surface/main.cc.
+	* examples/surfaces/ps-surface.cc: Renamed from examples/ps-surface/main.cc.
+	* examples/surfaces/svg-surface.cc: Renamed from examples/svg-surface/main.cc.
+	* examples/svg-surface/.cvsignore: Removed.
+	* examples/svg-surface/Makefile.am: Removed.
+
+2008-12-12  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* cairomm/fontface.h: add more documentation about UserFontFace, including a
 	warning about needing to keep the UserFontFace wrapper around as long as we're
 	rendering text with that face.
