@@ -1,3 +1,12 @@
+2008-12-12  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* cairomm/fontface.h: add more documentation about UserFontFace, including a
+	warning about needing to keep the UserFontFace wrapper around as long as we're
+	rendering text with that face.
+	Include the user-font.cc and toy-text.cc examples in the doxygen reference
+	documentation
+	* docs/reference/Doxyfile.in: set EXAMPLE_PATH
+
 2008-12-11  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* examples/text/user-font.cc: enhanced the UserFontFace example quite a bit so

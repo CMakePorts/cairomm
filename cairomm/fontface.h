@@ -96,6 +96,10 @@ protected:
 };
 
 
+ /** @example toy-text.cc
+  * A relatively simple example of using Cairo::ToyFontFace
+  */
+
 /**
  * A simple font face used for the cairo 'toy' font API.
  * @since 1.8
@@ -141,6 +145,10 @@ protected:
 };
 
 
+ /** @example user-font.cc
+  * A relatively simple example of using Cairo::UserFontFace
+  */
+
 /** Font support with font data provided by the user.
  *
  * The user-font feature allows the cairo user to provide drawings for glyphs in
@@ -150,7 +158,52 @@ protected:
  *
  * To use user fonts, you must derive from this class and implement the virtual
  * functions below.  The only virtual function that absolutely must be
- * implemented is render_glyph().
+ * implemented is render_glyph().  You should make the constructor protected and
+ * provide a factory function that returns a new object in a RefPtr since it is
+ * a refcounted object
+ *
+ * @code
+ * class MyUserFont : public UserFontFace {
+ *
+ * public:
+ *   static Cairo::RefPtr<MyUserFont> create() {
+ *     return Cairo::RefPtr<MyUserFont>(new MyUserFont);
+ *
+ * protected:
+ *   // implement render_glyph() and any other virtual functions you want to override
+ *   ErrorStatus render_glyph(const RefPtr<ScaledFont>& scaled_font,
+ *                            unsigned long glyph,
+ *                            const RefPtr<Context>& cr,
+ *                            TextExtents& metrics) {
+ *     // render the glyph into cr here
+ *   }
+ *
+ *   MyUserFont() : UserFontFace() {
+ *     // constructor implementation
+ *   }
+ * };
+ * @endcode
+ *
+ * @warning
+ * Because of a design flaw in cairomm, it is currently necessary to keep the
+ * the UserFontFace object around until as long as you are rendering text with
+ * the user font.  The following code illustrates the issue:
+ *
+ * @code
+ * {
+ *   Cairo::RefPtr<MyUserFont> face = MyUserFont::create();
+ *   cr->set_font_face(face);
+ * }  // scope for demonstration purposes
+ *
+ * // the following call will cause a crash because your user font is no longer
+ * // in scope but it needs to call the virtual functions in face
+ * cr->show_text("hello, world");
+ * @endcode
+ *
+ * The preceding is obviously a very contrived example, but the important thing
+ * to know is that you *must* cache all userfont objects yourself as long as you
+ * intend to render text with that font.  A future release of cairomm will fix
+ * this requirement, but that will require ABI-incompatible changes.
  *
  * @since 1.8
  */
@@ -342,6 +395,7 @@ private:
                      int *num_clusters,
                      cairo_text_cluster_flags_t *cluster_flags);
 };
+
 
 // font system support
 #ifdef CAIRO_HAS_FT_FONT
