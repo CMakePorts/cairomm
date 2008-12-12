@@ -148,6 +148,10 @@ protected:
  * like SVG fonts and Flash fonts, but can also be used by games and other
  * application to draw "funky" fonts.
  *
+ * To use user fonts, you must derive from this class and implement the virtual
+ * functions below.  The only virtual function that absolutely must be
+ * implemented is render_glyph().
+ *
  * @since 1.8
  */
 class UserFontFace : public FontFace
@@ -163,55 +167,52 @@ public:
 
 protected:
 
-  /** A SlotInit slot is called when a ScaledFont needs
-   * to be created for a UserFontFace.
+  /** This function is called when a scaled-font needs to be created for a user
+   * font-face.
    *
-   * For example:
-   * <code>
-   * ErrorStatus my_init_func(const RefPtr<ScaledFont>& scaled_font, const RefPtr<Context>& cr, FontExtents& extents);
-   * </code>
+   * The Context @a cr is not used by the caller, but is prepared in font space,
+   * similar to what the cairo contexts passed to the render_glyph method will
+   * look like. The callback can use this context for extents computation for
+   * example. After the callback is called, @a cr is checked for any error status.
    *
-   * The Cairo::Context cr is not used by the caller, but is prepared in font
-   * space, similar to what the cairo contexts passed to the render_glyph method
-   * will look like. The callback can use this context for extents computation,
-   * for example. After the callback is called, cr is checked for any error
-   * status.
-   *
-   * The extents argument is where the user font sets the font extents for
+   * The @a extents argument is where the user font sets the font extents for
    * scaled_font. It is in font space, which means that for most cases its
-   * ascent and descent members should add to 1.0. extents is preset to hold a
+   * ascent and descent members should add to 1.0. @a extents is preset to hold a
    * value of 1.0 for ascent, height, and max_x_advance, and 0.0 for descent and
    * max_y_advance members.
    *
-   * The callback is optional. If not set, default font extents as described in
-   * the previous paragraph will be used.
+   * The default implementation sets the font extents as described in the
+   * previous paragraph.  If you need different extents, you can override this
+   * function in your derived class.
    *
-   * Note that scaled_font is not fully initialized at this point and trying to
-   * use it for text operations in the callback will result in deadlock.
+   * Note that @a scaled_font is not fully initialized at this point and trying
+   * to use it for text operations in the callback will result in deadlock.
    *
-   * @param scaled_font the scaled-font being created.
-   * @param cr a cairo context, in font space.
-   * @param extents font extents to fill in, in font space.
-   * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
+   * @param scaled_font the scaled-font being created
+   * @param cr  cairo context, in font space
+   * @param extents extents to fill in, in font space
+   * @return  CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
+   *
+   * @since 1.8
    */
   virtual ErrorStatus init(const RefPtr<ScaledFont>& scaled_font,
                            const RefPtr<Context>& cr,
                            FontExtents& extents);
 
-  /** unicode_to_glyph is called to convert an input Unicode character to a
-   * single glyph. This is used by the Context::show_text() operation.
+  /** This function is called to convert an input Unicode character to a single
+   * glyph.  This is used by the Context::show_text() operation.
    *
-   * This callback is used to provide the same functionality as the
-   * text_to_glyphs callback does (see SlotTextToGlyphs) but has much less
-   * control on the output, in exchange for increased ease of use. The inherent
-   * assumption to using this callback is that each character maps to one glyph,
-   * and that the mapping is context independent. It also assumes that glyphs
-   * are positioned according to their advance width. These mean no ligatures,
-   * kerning, or complex scripts can be implemented using this callback.
+   * This function is used to provide the same functionality as the
+   * text_to_glyphs callback does but has much less control on the output, in
+   * exchange for increased ease of use. The inherent assumption to using this
+   * callback is that each character maps to one glyph, and that the mapping is
+   * context independent. It also assumes that glyphs are positioned according
+   * to their advance width. These mean no ligatures, kerning, or complex
+   * scripts can be implemented using this callback.
    *
-   * The callback is optional, and only used if text_to_glyphs callback is not
-   * set or fails to return glyphs. If this callback is not set, an identity
-   * mapping from Unicode code-points to glyph indices is assumed.
+   * The default implementation of this function is an identity mapping from
+   * Unicode code-points to glyph indices.  If you need different behavior, you
+   * may override this virtual function in your derived class.
    *
    * Note: While cairo does not impose any limitation on glyph indices, some
    * applications may assume that a glyph index fits in a 16-bit unsigned
@@ -220,51 +221,53 @@ protected:
    * special glyph-not-found glyph. User-fonts are advised to use glyph 0 for
    * such purposes and do not use that glyph value for other purposes.
    *
-   * @param scaled_font the scaled-font being created.
-   * @param unicode input unicode character code-point.
-   * @param glyph_index output glyph index.
-   * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR
-   * or any other error status on error.
+   * @param scaled_font the scaled-font being created
+   * @param unicode input unicode character code-point
+   * @param glyph_index output glyph index
+   * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
+   * @since 1.8
    */
   virtual ErrorStatus unicode_to_glyph(const RefPtr<ScaledFont>& scaled_font,
                                        unsigned long unicode,
                                        unsigned long& glyph);
 
 
-  /** render_glyph is called when a user ScaledFont needs to render a glyph.
+  /** This function is called when a user scaled-font needs to render a
+   * glyph.
    *
-   * The callback is mandatory, and expected to draw the glyph with code glyph
-   * to the Context cr. cr is prepared such that the glyph drawing is done
-   * in font space. That is, the matrix set on cr is the scale matrix of
-   * scaled_font, The extents argument is where the user font sets the font
-   * extents for scaled_font. However, if user prefers to draw in user space,
-   * they can achieve that by changing the matrix on cr. All cairo rendering
-   * operations to cr are permitted, however, the result is undefined if any
-   * source other than the default source on cr is used. That means, glyph
-   * bitmaps should be rendered using Context::mask() instead of
-   * Context::paint().
+   * You must implement this in your derived class, and it is expected to draw
+   * the glyph with code @a glyph to the Context @a cr. @a cr is prepared such
+   * that the glyph drawing is done in font space. That is, the matrix set on @a
+   * cr is the scale matrix of @a scaled_font, The @a extents argument is where
+   * the user font sets the font extents for scaled_font. However, if user
+   * prefers to draw in user space, they can achieve that by changing the matrix
+   * on @a cr. All cairo rendering operations to @a cr are permitted, however,
+   * the result is undefined if any source other than the default source on @a
+   * cr is used. That means, glyph bitmaps should be rendered using
+   * Context::mask() instead of Context::paint().
    *
-   * Other non-default settings on cr include a font size of 1.0 (given that it
-   * is set up to be in font space), and font options corresponding to
+   * Other non-default settings on @a cr include a font size of 1.0 (given that
+   * it is set up to be in font space), and font options corresponding to @a
    * scaled_font.
    *
-   * The extents argument is preset to have x_bearing, width, and y_advance of
-   * zero, y_bearing set to -font_extents.ascent, height to
+   * The @a extents argument is preset to have x_bearing, width, and y_advance
+   * of zero, y_bearing set to -font_extents.ascent, height to
    * font_extents.ascent+font_extents.descent, and x_advance to
    * font_extents.max_x_advance. The only field user needs to set in majority of
-   * cases is x_advance. If the width field is zero upon the callback returning
+   * cases is x_advance. If the width field is zero upon this function returning
    * (which is its preset value), the glyph extents are automatically computed
-   * based on the drawings done to cr. This is in most cases exactly what the
-   * desired behavior is. However, if for any reason the callback sets the
+   * based on the drawings done to @a cr. This is in most cases exactly what the
+   * desired behavior is. However, if for any reason this function sets the
    * extents, it must be ink extents, and include the extents of all drawing
-   * done to cr in the callback.
+   * done to @a cr.
    *
-   * @param scaled_font user scaled-font.
-   * @param glyph glyph code to render.
-   * @param cr cairo context to draw to, in font space.
-   * @param extents glyph extents to fill in, in font space.
-   * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR
-   * or any other error status on error.
+   * @param scaled_font user scaled-font
+   * @param glyph glyph code to render
+   * @param cr Context to draw to, in font space
+   * @param extents glyph extents to fill in, in font space
+   * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
+   *
+   * @since 1.8
    */
   virtual ErrorStatus render_glyph(const RefPtr<ScaledFont>& scaled_font,
                                    unsigned long glyph,
@@ -272,38 +275,36 @@ protected:
                                    TextExtents& metrics) = 0;
 
 
- /** text_to_glyphs is called to convert input text to an array of glyphs.  This
-  * is used by the Cairo::Context::show_text() operation.
-  *
-  * By implementing this virtual function the user-font has full control on glyphs and their
-  * positions.  That means, it allows for features like ligatures and kerning,
-  * as well as complex <firstterm>shaping</firstterm> required for scripts like
-  * Arabic and Indic.
-  *
-  * This virtual function should populate the glyph indices and positions (in
-  * font space) assuming that the text is to be shown at the origin.
-  *
-  * The callback is optional.  If not set, the unicode_to_glyph callback
-  * is tried.
-  *
-  * Note: While cairo does not impose any limitation on glyph indices,
-  * some applications may assume that a glyph index fits in a 16-bit
-  * unsigned integer.  As such, it is advised that user-fonts keep their
-  * glyphs in the 0 to 65535 range.  Furthermore, some applications may
-  * assume that glyph 0 is a special glyph-not-found glyph.  User-fonts
-  * are advised to use glyph 0 for such purposes and do not use that
-  * glyph value for other purposes.
-  *
-  * Returns: CAIRO_STATUS_SUCCESS upon success, or
-  * CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
-  *
-  * @param utf8 a string of text encoded in UTF-8.
-  * @param glyphs An array of glyphs to fill, in font space.
-  * @param clusters An array of cluster mapping information to fill.
-  * @param cluster_flags This will be set, to specify the text to glyphs mapping flags
-  *
-  * Since: 1.8
-  **/
+  /** This function is called to convert input text to an array of glyphs. This
+   * is used by the Context::show_text() operation.
+   *
+   * Using this function, the user-font has full control on glyphs and their
+   * positions. That means, it allows for features like ligatures and kerning,
+   * as well as complex shaping required for scripts like Arabic and Indic.
+   *
+   * This function should populate the glyph indices and positions (in font
+   * space) assuming that the text is to be shown at the origin.
+   *
+   * If clusters is not empty, cluster mapping should be computed.
+   *
+   * If you do not override this virtual function in your derived class, 
+   * the unicode_to_glyph function is used instead.
+   *
+   * Note: While cairo does not impose any limitation on glyph indices, some
+   * applications may assume that a glyph index fits in a 16-bit unsigned
+   * integer. As such, it is advised that user-fonts keep their glyphs in the 0
+   * to 65535 range. Furthermore, some applications may assume that glyph 0 is a
+   * special glyph-not-found glyph. User-fonts are advised to use glyph 0 for
+   * such purposes and do not use that glyph value for other purposes.
+   *
+   * @param scaled_font the scaled-font being created
+   * @param utf8 a string of text encoded in UTF-8
+   * @param glyphs array of glyphs to fill, in font space
+   * @param clusters array of cluster mapping information to fill
+   * @param cluster_flags a variable to set the cluster flags corresponding to the output clusters
+   * @return CAIRO_STATUS_SUCCESS upon success, or CAIRO_STATUS_USER_FONT_ERROR or any other error status on error.
+   * @since 1.8
+   */
   virtual ErrorStatus text_to_glyphs(const RefPtr<ScaledFont>& scaled_font,
                                      const std::string& utf8,
                                      std::vector<Glyph>& glyphs,

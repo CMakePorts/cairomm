@@ -1,3 +1,8 @@
+2008-12-11  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* cairomm/fontface.h: fix up a lot of the documentation for UserFontFace since
+	it was redesigned to use virtual functions rather than callbacks
+
 2008-12-07  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* examples/text/Makefile.am:
