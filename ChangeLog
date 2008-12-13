@@ -1,5 +1,10 @@
 2008-12-12  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* cairomm/types.h: add cross-reference links to the cairo manual for all types
+	that are just typedefs of C structs
+
+2008-12-12  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* .gitignore: ignore the new example executable names
 	* examples/text/Makefile.am: normalize the text-rotate example
 	executable name

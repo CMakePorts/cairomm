@@ -20,13 +20,39 @@
 
 #include <cairo.h>
 
-namespace Cairo {
+namespace Cairo
+{
+
+/** See the <a
+ * href="http://cairographics.org/manual/cairo-context.html#cairo-rectangle-t">cairo_rectangle_t
+ * reference</a> in the cairo manual for more information
+ */
 typedef cairo_rectangle_t Rectangle;
+
+/** See the <a
+ * href="http://cairographics.org/manual/cairo-scaled-font.html#cairo-font-extents-t">cairo_font_extents_t
+ * reference</a> in the cairo manual for more information
+ */
 typedef cairo_font_extents_t FontExtents; //A simple struct.
+
+/** See the <a
+ * href="http://cairographics.org/manual/cairo-scaled-font.html#cairo-text-extents-t">cairo_text_extents_t
+ * reference</a> in the cairo manual for more information
+ */
 typedef cairo_text_extents_t TextExtents; //A simple struct.
+
+/** See the <a
+ * href="http://cairographics.org/manual/cairo-text.html#cairo-text-cluster-t">cairo_text_cluster_t
+ * reference</a> in the cairo manual for more information
+ */
 typedef cairo_text_cluster_t TextCluster;
+
+/** See the <a
+ * href="http://cairographics.org/manual/cairo-text.html#cairo-glyph-t">cairo_glyph_t
+ * reference</a> in the cairo manual for more information
+ */
 typedef cairo_glyph_t Glyph; //A simple struct.
 
-}
+} // namespace Cairo
 
 #endif // __CAIROMM_TYPES_H
