@@ -1,5 +1,9 @@
 2008-12-12  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* cairomm/surface.h: add the surface examples to the doxygen documentation
+
+2008-12-12  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	Restructure the examples directory so that there aren't so many subdirs, which
 	tends to slow down builds since they can't be done in parallel.  Also
 	'standardize' the executable names a bit more and give the source files

@@ -304,6 +304,9 @@ protected:
   cobject* m_cobject;
 };
 
+/** @example image-surface.cc
+ * An example of using Cairo::ImageSurface class to render to PNG
+ */
 
 /** Image surfaces provide the ability to render to memory buffers either
  * allocated by cairo or by the calling code. The supported image formats are
@@ -469,6 +472,10 @@ public:
 
 #ifdef CAIRO_HAS_PDF_SURFACE
 
+/** @example pdf-surface.cc
+ * An example of using Cairo::PdfSurface class to render to PDF
+ */
+
 /** A PdfSurface provides a way to render PDF documents from cairo.  This
  * surface is not rendered to the screen but instead renders the drawing to a
  * PDF file on disk.
@@ -532,6 +539,10 @@ public:
 
 
 #ifdef CAIRO_HAS_PS_SURFACE
+
+/** @example ps-surface.cc
+ * An example of using Cairo::PsSurface class to render to PostScript
+ */
 
 /**
  * describes the language level of the PostScript Language Reference that a
@@ -686,6 +697,10 @@ public:
 
 
 #ifdef CAIRO_HAS_SVG_SURFACE
+
+/** @example svg-surface.cc
+ * An example of using Cairo::SvgSurface class to render to SVG
+ */
 
 typedef enum
 {
