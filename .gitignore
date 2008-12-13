@@ -45,11 +45,11 @@ missing
 *.lo
 *.la
 
-examples/pdf-surface/example_pdf_file
-examples/png_file/example_png_file
-examples/ps-surface/example_ps_file
-examples/svg-surface/example_svg_file
-examples/text/text_rotate
+examples/surfaces/pdf-surface
+examples/surfaces/image-surface
+examples/surfaces/ps-surface
+examples/surfaces/svg-surface
+examples/text/text-rotate
 examples/text/toy-text
 examples/text/user-font
 

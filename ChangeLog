@@ -1,5 +1,13 @@
 2008-12-12  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* .gitignore: ignore the new example executable names
+	* examples/text/Makefile.am: normalize the text-rotate example
+	executable name
+	* examples/text/text-rotate.cc: print a message to the terminal explaining
+	that a file was written
+
+2008-12-12  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* cairomm/surface.h: add the surface examples to the doxygen documentation
 
 2008-12-12  Jonathon Jongsma  <jonathon@quotidian.org>

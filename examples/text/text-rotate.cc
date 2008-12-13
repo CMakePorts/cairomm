@@ -1,4 +1,4 @@
-/* Copyright (C) 2005 The cairomm Development Team
+/* Copyright (C) 2008 The cairomm Development Team
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -73,7 +73,7 @@ void draw(Cairo::RefPtr<Cairo::Context> cr, int width, int height)
         y_off = (int) - floor(0.5 + extents.height / 2.0);
         x_off = (int) floor(0.5 + (extents.height + 1.0) / (2.0 * tan (M_PI / NUM_TEXT)));
     }
-  
+
     for (i=0; i < NUM_TEXT; i++)
     {
         cr->save();
@@ -96,7 +96,9 @@ int main (void)
     Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
     draw(cr, WIDTH, HEIGHT);
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
-    surface->write_to_png("text-rotate.png");
+    const char* filename = "text-rotate.png";
+    surface->write_to_png(filename);
+    std::cout << "Wrote file " << filename << std::endl;
 #else
     std::cout << "You must compile cairo with PNG support for this example to work" << std::endl;
 #endif
