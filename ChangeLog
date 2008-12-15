@@ -1,3 +1,13 @@
+2008-12-15  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* cairomm/scaledfont.h: revert the virtual destructor since it's unnecessary
+	and an ABI change.  The ScaledFont subclasses don't have any virtual functions
+	or any subclass-specific data that needs to be cleaned up, so a virtual
+	destructor is not really necessary here.
+	* tests/test-scaled-font.cc: a little paranoia test just to ensure that the
+	base destructor is called correctly reducing the ref count when we delete a
+	FtFontFace
+
 2008-12-14  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* cairomm/fontface.cc: fixed a bug in UserFont where I was incorrectly using a

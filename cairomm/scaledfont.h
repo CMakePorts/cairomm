@@ -65,7 +65,7 @@ public:
    */
   explicit ScaledFont(cobject* cobj, bool has_reference = false);
 
-  virtual ~ScaledFont();
+  ~ScaledFont();
 
   /** Creates a ScaledFont object from a font face and matrices that describe
    * the size of the font and the environment in which it will be used.
