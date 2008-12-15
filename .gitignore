@@ -58,6 +58,7 @@ tests/test-surface
 tests/test-scaled-font
 tests/test-font-options
 tests/test-matrix
+tests/test-user-font
 
 cairomm/cairommconfig.h*
 cairomm/stamp-*

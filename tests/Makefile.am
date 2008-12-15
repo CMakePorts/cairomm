@@ -1,10 +1,11 @@
 if AUTOTESTS
 
 # build automated 'tests'
-TESTS=test-context test-font-face test-surface test-scaled-font test-font-options test-matrix
+TESTS=test-context test-font-face test-surface test-scaled-font test-font-options test-matrix test-user-font
 noinst_PROGRAMS = $(TESTS)
 test_context_SOURCES=test-context.cc
 test_font_face_SOURCES=test-font-face.cc
+test_user_font_SOURCES=test-user-font.cc
 test_surface_SOURCES=test-surface.cc
 test_scaled_font_SOURCES=test-scaled-font.cc
 test_font_options_SOURCES=test-font-options.cc

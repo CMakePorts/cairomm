@@ -309,11 +309,7 @@ UserFontFace::text_to_glyphs(const RefPtr<ScaledFont>& /*scaled_font*/,
   // bool value in the user_data, which we can read back in the
   // text_to_glyphs_cb and used as a signal to return -1 for the num_glyphs
   // parameter.
-  static bool first_time = true;
-  if (first_time) {
-    cairo_font_face_set_user_data(cobj(), &USER_DATA_KEY_DEFAULT_TEXT_TO_GLYPHS, reinterpret_cast<void*>(true), NULL);
-    first_time = false;
-  }
+  cairo_font_face_set_user_data(cobj(), &USER_DATA_KEY_DEFAULT_TEXT_TO_GLYPHS, reinterpret_cast<void*>(true), NULL);
   return CAIRO_STATUS_SUCCESS;
 }
 

@@ -1,5 +1,14 @@
 2008-12-14  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* cairomm/fontface.cc: fixed a bug in UserFont where I was incorrectly using a
+	function static variable and so it was not returning negative numbers for
+	num_glyphs when I expected it to
+	* tests/Makefile.am:
+	* tests/test-font-face.cc:
+	* tests/test-user-font.cc: Added tests for UserFontFace
+
+2008-12-14  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* cairomm/scaledfont.cc: actually fix a reference-counting issue with
 	ScaledFont::get_font_face() that I thought I had fixed in b1d01ff7
 	* tests/test-scaled-font.cc: add a test for the get_font_face() bug
