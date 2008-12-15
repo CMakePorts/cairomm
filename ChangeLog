@@ -1,3 +1,9 @@
+2008-12-14  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* cairomm/scaledfont.cc: actually fix a reference-counting issue with
+	ScaledFont::get_font_face() that I thought I had fixed in b1d01ff7
+	* tests/test-scaled-font.cc: add a test for the get_font_face() bug
+
 2008-12-12  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* configure.in: bump version since we forgot to do it after release

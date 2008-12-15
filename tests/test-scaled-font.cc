@@ -3,6 +3,7 @@
 #include <boost/test/floating_point_comparison.hpp>
 using namespace boost::unit_test;
 #include <cairomm/scaledfont.h>
+#include <iostream>
 
 using namespace Cairo;
 
@@ -49,6 +50,25 @@ void test_scale_matrix()
   // no real test, just excercising the functionality
 }
 
+void test_get_font_face()
+{
+  // this is to test for a bug where we were accidentally freeing the resulting
+  // font face from a call to ScaledFont::get_font_face() when we didn't hold a
+  // reference to it
+  RefPtr<ToyFontFace> face = ToyFontFace::create("sans", FONT_SLANT_NORMAL, FONT_WEIGHT_NORMAL);
+  Matrix identity;
+  cairo_matrix_init_identity(&identity);
+  RefPtr<ScaledFont> font = ScaledFont::create(face, identity, identity, FontOptions());
+  BOOST_REQUIRE(font);
+  const int refcount = cairo_font_face_get_reference_count(face->cobj());
+  {
+    RefPtr<FontFace> got_face = font->get_font_face();
+  } // scope ensure that the font face is destroyed
+  // after creating and destroying the FontFace in get_font_face, our reference
+  // count should be the same
+  BOOST_REQUIRE_EQUAL(cairo_font_face_get_reference_count(face->cobj()), refcount);
+}
+
 
 test_suite*
 init_unit_test_suite(int argc, char* argv[])
@@ -61,6 +81,7 @@ init_unit_test_suite(int argc, char* argv[])
   test->add (BOOST_TEST_CASE (&test_construction));
   test->add (BOOST_TEST_CASE (&test_text_to_glyphs));
   test->add (BOOST_TEST_CASE (&test_scale_matrix));
+  test->add (BOOST_TEST_CASE (&test_get_font_face));
 
   return test;
 }

@@ -87,7 +87,7 @@ RefPtr<FontFace> ScaledFont::get_font_face() const
 {
   cairo_font_face_t* face = cairo_scaled_font_get_font_face(m_cobject);
   check_object_status_and_throw_exception(*this);
-  return RefPtr<FontFace>(new FontFace(face, true /* returned face doesn't have a reference */));
+  return RefPtr<FontFace>(new FontFace(face, false /* returned face doesn't have a reference */));
 }
 
 void ScaledFont::get_font_options(FontOptions& options) const
