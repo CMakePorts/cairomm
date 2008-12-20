@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C++ Express 2005
+# Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gendef", "gendef\gendef.vcproj", "{07324745-C9BE-4D65-B08A-9C88188C0C28}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cairomm-1.0", "cairomm\cairomm.vcproj", "{58B2B53C-C4FF-47FD-817B-095E45B7F7D4}"
@@ -8,11 +8,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cairomm-1.0", "cairomm\cair
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_pdf-surface", "examples\pdf-surface\pdf-surface.vcproj", "{129ECC08-6D30-4884-B824-4AF96EF0A45C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_png_file", "examples\png_file\png_file.vcproj", "{45EEED29-0231-45C6-9682-CAB2E042C51E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
 	EndProjectSection
@@ -28,6 +23,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_svg-surface", "exa
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_text-rotate", "examples\text-rotate\text-rotate.vcproj", "{F4D455E4-464D-49CC-A120-DB9B8AE0207E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_image-surface", "examples\image-surface\image-surface.vcproj", "{29607D06-BADE-4CBC-A6E9-43A75A88792A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_toy-text", "examples\toy-text\toy-text.vcproj", "{C22BBC48-734B-4A0D-BC2E-6B5A9E0CE07E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_user-font", "examples\user-font\user-font.vcproj", "{59A5893F-4443-4403-878B-4FCDEE891EA8}"
 	ProjectSection(ProjectDependencies) = postProject
 		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
 	EndProjectSection
@@ -50,10 +60,6 @@ Global
 		{129ECC08-6D30-4884-B824-4AF96EF0A45C}.Debug|Win32.Build.0 = Debug|Win32
 		{129ECC08-6D30-4884-B824-4AF96EF0A45C}.Release|Win32.ActiveCfg = Release|Win32
 		{129ECC08-6D30-4884-B824-4AF96EF0A45C}.Release|Win32.Build.0 = Release|Win32
-		{45EEED29-0231-45C6-9682-CAB2E042C51E}.Debug|Win32.ActiveCfg = Debug|Win32
-		{45EEED29-0231-45C6-9682-CAB2E042C51E}.Debug|Win32.Build.0 = Debug|Win32
-		{45EEED29-0231-45C6-9682-CAB2E042C51E}.Release|Win32.ActiveCfg = Release|Win32
-		{45EEED29-0231-45C6-9682-CAB2E042C51E}.Release|Win32.Build.0 = Release|Win32
 		{CAE46373-7375-4607-AAB7-0EBA8F0E5B55}.Debug|Win32.ActiveCfg = Debug|Win32
 		{CAE46373-7375-4607-AAB7-0EBA8F0E5B55}.Debug|Win32.Build.0 = Debug|Win32
 		{CAE46373-7375-4607-AAB7-0EBA8F0E5B55}.Release|Win32.ActiveCfg = Release|Win32
@@ -66,6 +72,18 @@ Global
 		{F4D455E4-464D-49CC-A120-DB9B8AE0207E}.Debug|Win32.Build.0 = Debug|Win32
 		{F4D455E4-464D-49CC-A120-DB9B8AE0207E}.Release|Win32.ActiveCfg = Release|Win32
 		{F4D455E4-464D-49CC-A120-DB9B8AE0207E}.Release|Win32.Build.0 = Release|Win32
+		{29607D06-BADE-4CBC-A6E9-43A75A88792A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{29607D06-BADE-4CBC-A6E9-43A75A88792A}.Debug|Win32.Build.0 = Debug|Win32
+		{29607D06-BADE-4CBC-A6E9-43A75A88792A}.Release|Win32.ActiveCfg = Release|Win32
+		{29607D06-BADE-4CBC-A6E9-43A75A88792A}.Release|Win32.Build.0 = Release|Win32
+		{C22BBC48-734B-4A0D-BC2E-6B5A9E0CE07E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C22BBC48-734B-4A0D-BC2E-6B5A9E0CE07E}.Debug|Win32.Build.0 = Debug|Win32
+		{C22BBC48-734B-4A0D-BC2E-6B5A9E0CE07E}.Release|Win32.ActiveCfg = Release|Win32
+		{C22BBC48-734B-4A0D-BC2E-6B5A9E0CE07E}.Release|Win32.Build.0 = Release|Win32
+		{59A5893F-4443-4403-878B-4FCDEE891EA8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{59A5893F-4443-4403-878B-4FCDEE891EA8}.Debug|Win32.Build.0 = Debug|Win32
+		{59A5893F-4443-4403-878B-4FCDEE891EA8}.Release|Win32.ActiveCfg = Release|Win32
+		{59A5893F-4443-4403-878B-4FCDEE891EA8}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -32,7 +32,7 @@ struct ColorStop
   double red, green, blue, alpha;
 };
 
-struct Matrix;
+class Matrix;
 
 /**
  * This is a reference-counted object that should be used via Cairo::RefPtr.

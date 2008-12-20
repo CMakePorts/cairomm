@@ -190,7 +190,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\examples\pdf-surface\main.cc"
+				RelativePath="..\..\..\examples\surfaces\pdf-surface.cc"
 				>
 			</File>
 		</Filter>

@@ -75,3 +75,11 @@ image.svg
 text-rotate.png
 toy-text.png
 user-font.png
+
+# Windows
+*.exe
+*.user
+*.ncb
+*.suo
+Debug
+Release

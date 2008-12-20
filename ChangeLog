@@ -1,3 +1,51 @@
+2008-12-20  Armin Burgmeier  <armin@openismus.com>
+
+	* cairomm/pattern.h: Forward-declared Matrix as a class instead of as
+	a struct, to prevent MSVC from complaining about "'Cairo::Matrix' :
+	type name first seen using 'struct' now seen using 'class'".
+
+	* MSVC_Net2005/examples/png_file:
+	* MSVC_Net2008/examples/png_file: Removed, as the corresponding
+	example has been removed.
+
+	* MSVC_Net2005/cairomm/cairomm.vcproj:
+	* MSVC_Net2008/cairomm/cairomm.vcproj: Link against libsigc++, added
+	matrix.h, win32_font.h, matrix.cc and win32_font.cc to the project.
+
+	* MSVC_Net2005/examples/pdf-surface/pdf-surface.vcproj:
+	* MSVC_Net2005/examples/ps-surface/ps-surface.vcproj:
+	* MSVC_Net2005/examples/svg-surface/svg-surface.vcproj:
+	* MSVC_Net2005/examples/pdf-surface/pdf-surface.vcproj:
+	* MSVC_Net2008/examples/ps-surface/ps-surface.vcproj:
+	* MSVC_Net2008/examples/svg-surface/svg-surface.vcproj:
+	* MSVC_Net2008/examples/text-rotate/text-rotate.vcproj:
+	* MSVC_Net2008/examples/text-rotate/text-rotate.vcproj: Adapt path to
+	source files.
+
+	* MSVC_Net2005/examples/image-surface/image-surface.vcproj:
+	* MSVC_Net2005/examples/image-surface/Makefile.am:
+	* MSVC_Net2005/examples/toy-text/toy-text.vcproj:
+	* MSVC_Net2005/examples/toy-text/Makefile.am:
+	* MSVC_Net2005/examples/user-font/user-font.vcproj:
+	* MSVC_Net2005/examples/user-font/Makefile.am:
+	* MSVC_Net2005/examples/Makefile.am: Added MSVC2005 projects for these
+	examples.
+
+	* MSVC_Net2008/examples/image-surface/image-surface.vcproj:
+	* MSVC_Net2008/examples/image-surface/Makefile.am:
+	* MSVC_Net2008/examples/toy-text/toy-text.vcproj:
+	* MSVC_Net2008/examples/toy-text/Makefile.am:
+	* MSVC_Net2008/examples/user-font/user-font.vcproj:
+	* MSVC_Net2008/examples/user-font/Makefile.am:
+	* MSVC_Net2008/examples/Makefile.am: Added MSVC2008 projects for these
+	examples.
+
+	* MSVC_Net2005/cairomm.sln:
+	* MSVC_Net2008/cairomm.sln: Added the new example projects to the
+	corresponding solution.
+
+	* configure.in: Create Makefiles in the newly added directories.
+
 2008-12-15  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* cairomm/scaledfont.h: revert the virtual destructor since it's unnecessary

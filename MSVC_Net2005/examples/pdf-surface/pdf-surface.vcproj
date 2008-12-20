@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="examples_pdf-surface"
 	ProjectGUID="{129ECC08-6D30-4884-B824-4AF96EF0A45C}"
 	RootNamespace="examples_dispatcher"
@@ -191,7 +191,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\examples\pdf-surface\main.cc"
+				RelativePath="..\..\..\examples\surfaces\pdf-surface.cc"
 				>
 			</File>
 		</Filter>

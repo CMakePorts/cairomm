@@ -1,1 +1,2 @@
-SUBDIRS = pdf-surface png_file ps-surface svg-surface text-rotate
+SUBDIRS = pdf-surface ps-surface svg-surface image-surface text-rotate \
+          toy-text user-font

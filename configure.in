@@ -317,20 +317,24 @@ AC_CONFIG_FILES([
     MSVC_Net2005/cairomm/cairomm.rc
     MSVC_Net2005/examples/Makefile
       MSVC_Net2005/examples/pdf-surface/Makefile
-      MSVC_Net2005/examples/png_file/Makefile
       MSVC_Net2005/examples/ps-surface/Makefile
       MSVC_Net2005/examples/svg-surface/Makefile
+      MSVC_Net2005/examples/image-surface/Makefile
       MSVC_Net2005/examples/text-rotate/Makefile
+      MSVC_Net2005/examples/toy-text/Makefile
+      MSVC_Net2005/examples/user-font/Makefile
   MSVC_Net2008/Makefile
     MSVC_Net2008/gendef/Makefile
     MSVC_Net2008/cairomm/Makefile
     MSVC_Net2008/cairomm/cairomm.rc
     MSVC_Net2008/examples/Makefile
       MSVC_Net2008/examples/pdf-surface/Makefile
-      MSVC_Net2008/examples/png_file/Makefile
       MSVC_Net2008/examples/ps-surface/Makefile
       MSVC_Net2008/examples/svg-surface/Makefile
+      MSVC_Net2008/examples/image-surface/Makefile
       MSVC_Net2008/examples/text-rotate/Makefile
+      MSVC_Net2008/examples/toy-text/Makefile
+      MSVC_Net2008/examples/user-font/Makefile
 ])
 
 AC_OUTPUT()

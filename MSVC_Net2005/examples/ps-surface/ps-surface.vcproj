@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="examples_ps-surface"
 	ProjectGUID="{CAE46373-7375-4607-AAB7-0EBA8F0E5B55}"
 	RootNamespace="examples_dispatcher"
@@ -191,7 +191,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\examples\ps-surface\main.cc"
+				RelativePath="..\..\..\examples\surfaces\ps-surface.cc"
 				>
 			</File>
 		</Filter>

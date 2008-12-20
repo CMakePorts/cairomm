@@ -190,7 +190,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\examples\svg-surface\main.cc"
+				RelativePath="..\..\..\examples\surfaces\svg-surface.cc"
 				>
 			</File>
 		</Filter>

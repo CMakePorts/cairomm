@@ -190,7 +190,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\examples\text-rotate\text-rotate.cc"
+				RelativePath="..\..\..\examples\text\text-rotate.cc"
 				>
 			</File>
 		</Filter>

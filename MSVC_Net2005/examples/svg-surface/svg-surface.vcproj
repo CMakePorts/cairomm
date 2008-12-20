@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="examples_svg-surface"
 	ProjectGUID="{BCA44D2B-1832-41F5-9EE9-FE1F709EE584}"
 	RootNamespace="examples_dispatcher"
@@ -191,7 +191,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\examples\svg-surface\main.cc"
+				RelativePath="..\..\..\examples\surfaces\svg-surface.cc"
 				>
 			</File>
 		</Filter>

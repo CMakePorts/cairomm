@@ -190,7 +190,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\examples\ps-surface\main.cc"
+				RelativePath="..\..\..\examples\surfaces\ps-surface.cc"
 				>
 			</File>
 		</Filter>

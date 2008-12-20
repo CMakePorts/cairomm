@@ -67,7 +67,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cairo.lib"
+				AdditionalDependencies="cairo.lib sigc-vc90-d-2_0.lib"
 				OutputFile="$(OutDir)/cairomm-vc90-d-1_0.dll"
 				GenerateManifest="true"
 				ModuleDefinitionFile="$(ConfigurationName)\$(InputName).def"
@@ -145,7 +145,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cairo.lib"
+				AdditionalDependencies="cairo.lib sigc-vc90-2_0.lib"
 				OutputFile="$(OutDir)\cairomm-vc90-1_0.dll"
 				GenerateManifest="true"
 				ModuleDefinitionFile="$(ConfigurationName)\$(InputName).def"
@@ -216,6 +216,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\cairomm\matrix.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\..\cairomm\path.cc"
 				>
 			</File>
@@ -237,6 +241,10 @@
 			</File>
 			<File
 				RelativePath="..\..\cairomm\surface.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\cairomm\win32_font.cc"
 				>
 			</File>
 			<File
@@ -278,6 +286,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\cairomm\matrix.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\cairomm\path.h"
 				>
 			</File>
@@ -303,6 +315,10 @@
 			</File>
 			<File
 				RelativePath="..\..\cairomm\surface.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\cairomm\win32_font.h"
 				>
 			</File>
 			<File
