@@ -1,3 +1,11 @@
+2008-12-20  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* cairomm/matrix.cc:
+	* cairomm/matrix.h: change free convenience function 'scaled_matrix()' to
+	'scaling_matrix()' to better match the other names (e.g.
+	'translation_matrix()').  This API was added in 1.7.x so while it is an API
+	change, it doesn't affect any stable API.
+
 2008-12-20  Armin Burgmeier  <armin@openismus.com>
 
 	* cairomm/pattern.h: Forward-declared Matrix as a class instead of as

@@ -44,7 +44,7 @@ Matrix translation_matrix(double tx, double ty)
   return m;
 }
 
-Matrix scaled_matrix(double sx, double sy)
+Matrix scaling_matrix(double sx, double sy)
 {
   Matrix m;
   cairo_matrix_init_scale(&m, sx, sy);

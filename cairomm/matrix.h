@@ -58,7 +58,7 @@ public:
    * @sa identity_matrix()
    * @sa rotation_matrix()
    * @sa translation_matrix()
-   * @sa scaled_matrix()
+   * @sa scaling_matrix()
    */
   Matrix();
 
@@ -181,7 +181,7 @@ Matrix translation_matrix(double tx, double ty);
  *
  * @relates Matrix
  */
-Matrix scaled_matrix(double sx, double sy);
+Matrix scaling_matrix(double sx, double sy);
 
 /** Returns a Matrix initialized to a transformation that rotates by radians.
  *
