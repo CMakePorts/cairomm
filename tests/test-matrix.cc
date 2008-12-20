@@ -99,7 +99,7 @@ void test_cast()
 
 void test_multiply()
 {
-  Cairo::Matrix A = Cairo::scaled_matrix(2, 4);
+  Cairo::Matrix A = Cairo::scaling_matrix(2, 4);
   Cairo::Matrix B = Cairo::translation_matrix(5.3, 1.2);
   Cairo::Matrix C = A * B;
   Cairo::Matrix D;

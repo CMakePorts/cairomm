@@ -228,7 +228,6 @@ if test x$ENABLE_TESTS = xyes ; then
 #######################################################
     AX_BOOST_BASE([1.33.1])
     AX_BOOST_UNIT_TEST_FRAMEWORK
-    AX_BOOST_TEST_EXEC_MONITOR
 
     dnl AX_BOOST_BASE defines a --with-boost[=DIR] option that sets
     dnl $ac_boost_path as a custom boost prefix, so use that if it was specified

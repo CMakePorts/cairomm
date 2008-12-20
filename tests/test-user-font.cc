@@ -274,7 +274,7 @@ void test_user_font_exception()
   // abort, we should get an exception here.
   Cairo::RefPtr<Cairo::ScaledFont> scaled_font;
   BOOST_CHECK_THROW (scaled_font = Cairo::ScaledFont::create(font,
-                                                             Cairo::scaled_matrix(10, 10),
+                                                             Cairo::scaling_matrix(10, 10),
                                                              Cairo::identity_matrix(),
                                                              Cairo::FontOptions()),
                      Cairo::logic_error);
@@ -283,7 +283,7 @@ void test_user_font_exception()
   // now test when an exception is thrown in unicode_to_glyph
   font = ExceptionUserFont::create(ExceptionUserFont::FLAG_UNICODE);
   BOOST_CHECK_NO_THROW (scaled_font = Cairo::ScaledFont::create(font,
-                                                                Cairo::scaled_matrix(10, 10),
+                                                                Cairo::scaling_matrix(10, 10),
                                                                 Cairo::identity_matrix(),
                                                                 Cairo::FontOptions()));
   TestSetup setup;
@@ -300,7 +300,7 @@ void test_user_font_exception()
   // now test when an exception is thrown in render_glyph
   font = ExceptionUserFont::create(ExceptionUserFont::FLAG_RENDER);
   BOOST_CHECK_NO_THROW (scaled_font = Cairo::ScaledFont::create(font,
-                                                                Cairo::scaled_matrix(10, 10),
+                                                                Cairo::scaling_matrix(10, 10),
                                                                 Cairo::identity_matrix(),
                                                                 Cairo::FontOptions()));
   // need a new setup since the old cr is now in an error state, so attemtping
