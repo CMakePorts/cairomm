@@ -1,3 +1,19 @@
+1.7.2 (UNSTABLE):
+
+* API Changes (all API changes are in unstable API introduced in 1.7.x)
+  * UserFontFace is not implemented with virtual functions rather than by
+    registering callbacks
+  * Cairo::scaled_matrix() -> Cairo::scaling_matrix() to match other matrix
+    convenience functions
+* Bugfixes
+  * Incorrect refcounting on ScaledFont
+  * build fixes for Mac OSX
+* Contributors for this release:
+     1	Armin Burgmeier
+     1	Dave Evans
+    22	Jonathon Jongsma
+
+
 1.7.0 (UNSTABLE):
 
  * API Changes

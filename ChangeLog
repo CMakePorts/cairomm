@@ -1,5 +1,10 @@
 2008-12-20  Jonathon Jongsma  <jonathon@quotidian.org>
 
+	* NEWS:
+	* configure.in: update for release
+
+2008-12-20  Jonathon Jongsma  <jonathon@quotidian.org>
+
 	* cairomm/matrix.cc:
 	* cairomm/matrix.h: change free convenience function 'scaled_matrix()' to
 	'scaling_matrix()' to better match the other names (e.g.
