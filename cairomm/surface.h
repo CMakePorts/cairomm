@@ -395,16 +395,11 @@ public:
    **/
   static int format_stride_for_width (Cairo::Format format, int width);
 
-  /** Creates an image surface of the specified format and dimensions. The
-   * initial contents of the surface is undefined; you must explicitely clear
-   * the buffer, using, for example, Cairo::Context::rectangle() and
-   * Cairo::Context::fill() if you want it cleared.
-   *
-   * Use this function to create the surface if you don't need access to the
-   * internal data and want cairo to manage it for you.  Since you don't have
-   * access to the internal data, the resulting surface can only be saved to a
-   * PNG image file (if cairo has been compiled with PNG support) or as a
-   * source surface (see Cairo::SurfacePattern).
+  /**
+   * Creates an image surface of the specified format and dimensions. Initially
+   * the surface contents are all 0. (Specifically, within each pixel, each
+   * color or alpha channel belonging to format will be 0. The contents of bits
+   * within a pixel, but not belonging to the given format are undefined).
    *
    * @param format 	format of pixels in the surface to create
    * @param width 	width of the surface, in pixels
@@ -413,34 +408,34 @@ public:
    */
   static RefPtr<ImageSurface> create(Format format, int width, int height);
 
-  /** Creates an image surface for the provided pixel data. The output buffer
-   * must be kept around until the Surface is destroyed or finish() is called
-   * on the surface. The initial contents of buffer will be used as the inital
-   * image contents; you must explicitely clear the buffer, using, for example,
-   * Cairo::Context::rectangle() and Cairo::Context::fill() if you want it
-   * cleared.
+  /**
+   * Creates an image surface for the provided pixel data. The output buffer
+   * must be kept around until the surface is destroyed or finish() is called on
+   * the surface. The initial contents of buffer will be used as the initial
+   * image contents; you must explicitly clear the buffer, using, for example,
+   * Context::rectangle() and Context::fill() if you want it cleared.
    *
-   * If you want to be able to manually manipulate or extract the data after
-   * drawing to the surface with Cairo, you should use this function to create
-   * the Surface.  Since you own the internal data, you can do anything you
-   * want with it.
+   * Note that the stride may be larger than @a width * @a bytes_per_pixel to
+   * provide proper alignment for each pixel and row. This alignment is required
+   * to allow high-performance rendering within cairo. The correct way to obtain
+   * a legal stride value is to call format_stride_for_width() with the desired
+   * format and maximum image width value, and the use the resulting stride
+   * value to allocate the data and to create the image surface. See
+   * format_stride_for_width() for example code.
    *
-   * @param data	a pointer to a buffer supplied by the application in which
-   * to write contents.
-   * @param format	the format of pixels in the buffer
-   * @param width	the width of the image to be stored in the buffer
-   * @param height	the height of the image to be stored in the buffer
-   * @param stride	the number of bytes between the start of rows in the
-   * buffer. Having this be specified separate from width allows for padding at
-   * the end of rows, or for writing to a subportion of a larger image.
-   * @return	a RefPtr to the newly created surface.
+   * @param data a pointer to a buffer supplied by the application in which to write contents. This pointer must be suitably aligned for any kind of variable, (for example, a pointer returned by malloc).
+   * @param format the format of pixels in the buffer
+   * @param width the width of the image to be stored in the buffer
+   * @param height the height of the image to be stored in the buffer
+   * @param stride the number of bytes between the start of rows in the buffer as allocated. This value should always be computed by cairo_format_stride_for_width() before allocating the data buffer.
+   * @return a RefPtr to the newly created surface.
    */
   static RefPtr<ImageSurface> create(unsigned char* data, Format format, int width, int height, int stride);
 
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
 
   /** Creates a new image surface and initializes the contents to the given PNG
-   * file.  
+   * file.
    *
    * @note For this function to be available, cairo must have been compiled
    * with PNG support.

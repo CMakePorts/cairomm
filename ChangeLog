@@ -1,3 +1,10 @@
+2009-01-20  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* cairomm/surface.h: fixed the documentation for ImageSurface::create() to
+	match the cairo C documentation (it must have changed since we initially
+	copied the documentation -- it'd really be nice to have a way to automatically
+	generate the C++ documentation...)
+
 2008-12-20  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* configure.in:
