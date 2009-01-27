@@ -1,3 +1,8 @@
+2009-01-26  Jonathon Jongsma  <jonathon@quotidian.org>
+
+	* NEWS:
+	* configure.in: bump version for 1.8.0
+
 2009-01-20  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* cairomm/surface.h: fixed the documentation for ImageSurface::create() to
