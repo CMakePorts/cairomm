@@ -82,6 +82,9 @@ public:
    */
   static RefPtr<ScaledFont> create(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,
       const Matrix& ctm, const FontOptions& options = FontOptions());
+  /* To keep 1.6.x ABI  */
+  static RefPtr<ScaledFont> create(const RefPtr<FontFace>& font_face, const cairo_matrix_t& font_matrix,
+      const cairo_matrix_t& ctm, const FontOptions& options = FontOptions());
   // NOTE: the constructor doesn't take a RefPtr<const FontFace> because the
   // FontFace object can be changed in this constructor (in the case of user
   // fonts, the FontFace becomes immutable, i.e. you can't call any set_*_func()
@@ -164,11 +167,15 @@ public:
    * @since 1.2
    */
   void get_font_matrix(Matrix& font_matrix) const;
+  /* To keep 1.6.x ABI  */
+  void get_font_matrix(cairo_matrix_t& font_matrix) const;
 
   /** Gets the CTM with which the ScaledFont was created.
    * @since 1.2
    */
   void get_ctm(Matrix& ctm) const;
+  /* To keep 1.6.x ABI  */
+  void get_ctm(cairo_matrix_t& ctm) const;
 
   /** Gets the type of scaled Font
    * @since 1.2
@@ -215,8 +222,9 @@ public:
   void get_scale_matrix(Matrix& scale_matrix) const;
 
 protected:
-  ScaledFont(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,
-             const Matrix& ctm, const FontOptions& options = FontOptions());
+  /* Cairo::Matrix parameters changed to cairo_matrix_t */
+  ScaledFont(const RefPtr<FontFace>& font_face, const cairo_matrix_t& font_matrix,
+             const cairo_matrix_t& ctm, const FontOptions& options = FontOptions());
   /** The underlying C cairo object that is wrapped by this ScaledFont */
   cobject* m_cobject;
 };

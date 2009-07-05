@@ -307,12 +307,18 @@ public:
    */
   void transform(const Matrix& matrix);
 
+  /* To keep 1.6.x ABI  */
+  void transform(const cairo_matrix_t& matrix);
+
   /** Modifies the current transformation matrix (CTM) by setting it equal to
    * matrix.
    *
    * @param matrix	a transformation matrix from user space to device space
    */
   void set_matrix(const Matrix& matrix);
+
+  /* To keep 1.6.x ABI  */
+  void set_matrix(const cairo_matrix_t& matrix);
 
   /** Resets the current transformation matrix (CTM) by setting it equal to the
    * identity matrix. That is, the user-space and device-space axes will be
@@ -703,6 +709,10 @@ public:
   void get_font_matrix(Matrix& matrix) const;
   void set_font_options(const FontOptions& options);
 
+  /* To keep 1.6.x ABI  */
+  void set_font_matrix(const cairo_matrix_t& matrix);
+  void get_font_matrix(cairo_matrix_t& matrix) const;
+
   //TODO: Documentation.
   /**
    * @since 1.8
@@ -815,6 +825,10 @@ public:
    * @param matrix	return value for the matrix
    */
   void get_matrix(Matrix& matrix);
+
+  /* To keep 1.6.x ABI  */
+  void get_matrix(cairo_matrix_t& matrix);
+
   /** @since 1.8
    */
   Matrix get_matrix() const;

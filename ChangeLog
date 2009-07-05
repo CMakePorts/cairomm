@@ -1,3 +1,15 @@
+2009-07-05  Jānis Rukšāns <thedogfarted@gmail.com>
+
+	Reviewed by Jonathon Jongsma
+
+	* cairomm/context.cc:
+	* cairomm/context.h:
+	* cairomm/pattern.cc:
+	* cairomm/pattern.h:
+	* cairomm/scaledfont.cc:
+	* cairomm/scaledfont.h: Restore 1.6.x ABI / API that was
+	  unintentionally broken by the matrix changes in the 1.8.x series
+
 2009-01-26  Jonathon Jongsma  <jonathon@quotidian.org>
 
 	* NEWS:
