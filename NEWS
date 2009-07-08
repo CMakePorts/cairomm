@@ -1,3 +1,8 @@
+1.8.2:
+
+* Fix accidental ABI breakage from 1.8.0.  All users are urged to please upgrade
+  from 1.8.0 to 1.8.2 as soon as possible
+
 1.8.0:
 
 * No notable changes since 1.7.2
