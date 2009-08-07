@@ -477,6 +477,10 @@ public:
    *
    * @param dx	the X offset
    * @param dy	the Y offset
+   *
+   * It is an error to call this function with no current point. Doing
+   * so will cause this to shutdown with a status of
+   * CAIRO_STATUS_NO_CURRENT_POINT. Cairomm will then throw an exception.
    */
   void rel_move_to(double dx, double dy);
 
@@ -496,6 +500,10 @@ public:
    *
    * @param dx	the X offset to the end of the new line
    * @param dy	the Y offset to the end of the new line
+   *
+   * It is an error to call this function with no current point. Doing
+   * so will cause this to shutdown with a status of
+   * CAIRO_STATUS_NO_CURRENT_POINT. Cairomm will then throw an exception.
    */
   void rel_line_to(double dx, double dy);
 
@@ -520,6 +528,10 @@ public:
    * @param dy2	the Y offset to the second control point
    * @param dx3	the X offset to the end of the curve
    * @param dy3	the Y offset to the end of the curve
+   *
+   * It is an error to call this function with no current point. Doing
+   * so will cause this to shutdown with a status of
+   * CAIRO_STATUS_NO_CURRENT_POINT. Cairomm will then throw an exception.
    */
   void rel_curve_to(double dx1, double dy1, double dx2, double dy2, double dx3, double dy3);
 
