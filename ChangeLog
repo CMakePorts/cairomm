@@ -1,3 +1,16 @@
+2009-08-11  David King  <davidk@openismus.com>
+
+	* autogen.sh: Replace with a simple wrapper around mm-common-prepare
+	and autoreconf.
+	* build/*.m4: Move from m4 directory.
+	* Makefile.am: Rename m4 directory to build.
+	* configure.ac: Rename from configure.in, as it is recommended by
+	Autoconf developers and currently required by mm-common-prepare. Major
+	update to take advantage of mm-common build infrastructure.
+	* INSTALL: Remove from repository, using GNU install instructions
+	instead.
+	* cairomm/Makefile.am: Remove unnecessary win32 conditionals.
+
 2009-07-07  Christopher Harvey <chris@basementcode.com>
 
 	* cairomm/context.h

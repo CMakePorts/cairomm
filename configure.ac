@@ -1,39 +1,45 @@
-AC_INIT(cairomm/cairomm.h)
+AC_INIT([cairomm], [1.8.2], [cairo@cairographics.org], [cairomm])
+AC_PREREQ([2.62])
 
-#release versioning
-GENERIC_MAJOR_VERSION=1
-GENERIC_MINOR_VERSION=8
-GENERIC_MICRO_VERSION=2
-GENERIC_VERSION=$GENERIC_MAJOR_VERSION.$GENERIC_MINOR_VERSION.$GENERIC_MICRO_VERSION
-AC_SUBST(GENERIC_MAJOR_VERSION)
-AC_SUBST(GENERIC_MINOR_VERSION)
-AC_SUBST(GENERIC_MICRO_VERSION)
-AC_SUBST(GENERIC_VERSION)
+AC_CONFIG_SRCDIR([cairomm/cairomm.h])
+AC_CONFIG_AUX_DIR([build])
+AC_CONFIG_MACRO_DIR([build])
+AC_CONFIG_HEADERS([cairomm/cairommconfig.h])
 
-#shared library versioning
-GENERIC_LIBRARY_VERSION=5:0:4
-#                       | | |
-#                +------+ | +---+
-#                |        |     |
-#             current:revision:age
-#                |        |     |
-#                |        |     +- increment if interfaces have been added
-#                |        |        set to zero if interfaces have been removed
-#                                  or changed
-#                |        +- increment if source code has changed
-#                |           set to zero if current is incremented
-#                +- increment if interfaces have been added, removed or changed
-AC_SUBST(GENERIC_LIBRARY_VERSION)
+AM_INIT_AUTOMAKE([1.10 -Wno-portability no-define tar-ustar])
+AM_MAINTAINER_MODE
+AC_ARG_VAR([ACLOCAL_FLAGS], [aclocal flags, e.g. -I <macro dir>])
 
-VERSION=$GENERIC_VERSION
+# http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
+AC_SUBST([CAIROMM_SO_VERSION], [5:0:4])
 
-AM_INIT_AUTOMAKE(cairomm, $GENERIC_VERSION)
+AC_PROG_CXX
+AC_DISABLE_STATIC
+AC_LIBTOOL_WIN32_DLL
+AC_PROG_LIBTOOL
 
-# define values for config header
-AC_DEFINE_UNQUOTED([CAIROMM_MAJOR_VERSION], $GENERIC_MAJOR_VERSION, [cairomm major version])
-AC_DEFINE_UNQUOTED([CAIROMM_MINOR_VERSION], $GENERIC_MINOR_VERSION, [cairomm minor version])
-AC_DEFINE_UNQUOTED([CAIROMM_MICRO_VERSION], $GENERIC_MICRO_VERSION, [cairomm micro version])
-AC_CONFIG_HEADER(cairomm/cairommconfig.h)
+AC_SUBST([CAIROMM_MODULES], ['cairo >= 1.8.0 sigc++-2.0'])
+PKG_CHECK_MODULES([CAIROMM], [$CAIROMM_MODULES])
+
+MM_ARG_ENABLE_DOCUMENTATION
+MM_ARG_WITH_TAGFILE_DOC([libstdc++.tag], [mm-common-libstdc++])
+MM_ARG_WITH_TAGFILE_DOC([libsigc++-2.0.tag], [sigc++-2.0])
+
+AC_LANG([C++])
+MM_ARG_ENABLE_WARNINGS([CAIROMM_WXXFLAGS],
+                       [-Wall],
+                       [-Wall -g -Wextra])
+
+AC_CONFIG_FILES([Makefile
+                 cairomm/Makefile
+                 data/Makefile
+                 data/cairomm-1.0.pc
+                 docs/Makefile
+                 docs/reference/Doxyfile
+                 examples/Makefile
+                 examples/surfaces/Makefile
+                 examples/text/Makefile
+                 tests/Makefile])
 
 AC_PROG_CXX
 AC_PROG_CXXCPP
@@ -42,66 +48,13 @@ AC_PROG_INSTALL
 AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
 
-dnl Used for enabling the "-no-undefined" and "-export-all-symbols" flags
-dnl while generating DLLs. Borrowed from the official gtk+-2 configure.in
-AC_MSG_CHECKING([for some Win32 platform])
-case "$host" in
-  *-*-mingw*|*-*-cygwin*)
-    platform_win32=yes
-    ;;
-  *)
-    platform_win32=no
-    ;;
-esac
-AC_MSG_RESULT([$platform_win32])
-AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
-
-AC_MSG_CHECKING([for native Win32])
-case "$host" in
-  *-*-mingw*)
-    os_win32=yes
-    ;;
-  *)
-    os_win32=no
-    ;;
-esac
-AC_MSG_RESULT([$os_win32])
-AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
-
 # Ensure MSVC-compatible struct packing convention is used when
 # compiling for Win32 with gcc.
 # What flag to depends on gcc version: gcc3 uses "-mms-bitfields", while
 # gcc2 uses "-fnative-struct".
-if test x"$os_win32" = xyes; then
-  if test x"$GCC" = xyes; then
-    msnative_struct=''
-    AC_MSG_CHECKING([how to get MSVC-compatible struct packing])
-    if test -z "$ac_cv_prog_CC"; then
-      our_gcc="$CC"
-    else
-      our_gcc="$ac_cv_prog_CC"
-    fi
-    case `$our_gcc --version | sed -e 's,\..*,.,' -e q` in
-      2.)
-        if $our_gcc -v --help 2>/dev/null | grep fnative-struct >/dev/null; then
-          msnative_struct='-fnative-struct'
-        fi
-        ;;
-      *)
-        if $our_gcc -v --help 2>/dev/null | grep ms-bitfields >/dev/null; then
-          msnative_struct='-mms-bitfields'
-        fi
-        ;;
-    esac
-    if test x"$msnative_struct" = x ; then
-      AC_MSG_RESULT([no way])
-      AC_MSG_WARN([produced libraries might be incompatible with MSVC-compiled code])
-    else
-      CXXFLAGS="$CXXFLAGS $msnative_struct"
-      AC_MSG_RESULT([${msnative_struct}])
-    fi
-  fi
-fi
+# TODO: Disabled for now. I don't think this should be enabled by the
+# libraries themselves on behalf of the user. That makes no sense as
+# it is a platform-wide ABI choice.
 
 AC_CHECK_HEADERS(string list map, , exit)
 dnl some platforms (e.g. Solaris) need additional C headers included so
@@ -111,10 +64,6 @@ AC_CHECK_HEADERS(math.h)
 ########################
 # Determine Dependencies
 ########################
-dnl base dependencies
-DEPS_PC="cairo >= 1.8.0
-         sigc++-2.0"
-
 dnl always install the 'base' pkg-config file
 INSTALLED_PC="cairomm-1.0.pc"
 
@@ -259,57 +208,10 @@ else
 fi
 AM_CONDITIONAL(AUTOTESTS, test x$ENABLE_TESTS = xyes)
 
-dnl enable compiler warnings when the CAIROMM_DEVEL environment variable is set to 'on'
-if test  "x$CAIROMM_DEVEL" = "xon" ; then
-    CXXFLAGS="$CXXFLAGS -Wall -g -Werror -Wextra"
-fi
-
-CAIROMM_ARG_ENABLE_API_EXCEPTIONS()
-
-dnl Check whether to build the documentation directory
-DOCS_SUBDIR="" dnl set DOCS_SUBDIR initially blank
-AC_ARG_ENABLE(docs, [AC_HELP_STRING([--enable-docs],
-              [build the included docs [default=yes]])],,
-              [enable_docs=yes])
-if test "x$enable_docs" = "xyes"; then
-  dnl check if doxygen is installed
-  AC_CHECK_PROGS(DOXYGEN, [doxygen], no)
-  if test x$DOXYGEN = xno; then
-    AC_MSG_WARN([Doxygen not found, documentation will not be rebuilt])
-  else
-    dnl check if graphviz / dot is installed (used by doxygen)
-    AC_CHECK_PROGS(DOT, [dot], no)
-    if test x$DOT = xno; then
-      AC_MSG_WARN([graphviz / dot not found, documentation graphs will not be rebuilt])
-    fi
-  fi
-
-  DOCS_SUBDIR="docs"
-  AC_CONFIG_FILES(
-    docs/Makefile
-    docs/reference/Makefile
-    docs/reference/Doxyfile
-  )
-fi
-AC_SUBST(DOCS_SUBDIR)
-
-
-AC_CONFIG_FILES(
-  Makefile
-  cairomm/Makefile
-
-  data/Makefile
-
-  examples/Makefile
-  examples/surfaces/Makefile
-  examples/text/Makefile
-
-  tests/Makefile
-
-  $CONFIG_PC
-)
+CAIROMM_ARG_ENABLE_API_EXCEPTIONS
 
 AC_CONFIG_FILES([
+  $CONFIG_PC
   MSVC_Net2005/Makefile
     MSVC_Net2005/gendef/Makefile
     MSVC_Net2005/cairomm/Makefile
@@ -336,4 +238,4 @@ AC_CONFIG_FILES([
       MSVC_Net2008/examples/user-font/Makefile
 ])
 
-AC_OUTPUT()
+AC_OUTPUT

@@ -1,9 +1,6 @@
-#! /bin/sh
-set -e
+#! /bin/sh -e
 
-# $Id: autogen.sh,v 1.4 2007-03-24 03:05:33 jjongsma Exp $
-#
-# Copyright (c) 2002  Daniel Elstner  <daniel.elstner@gmx.net>
+# Copyright (c) 2009 Openismus GmbH
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License VERSION 2 as
@@ -21,34 +18,9 @@ set -e
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 
+test -n "$srcdir" || srcdir=`dirname "$0"`
+test -n "$srcdir" || srcdir=.
 
-dir=`echo "$0" | sed 's,[^/]*$,,'`
-test "x${dir}" = "x" && dir='.'
-
-if test "x`cd "${dir}" 2>/dev/null && pwd`" != "x`pwd`"
-then
-    echo "This script must be executed directly from the source directory."
-    exit 1
-fi
-
-LIBTOOLIZE=${LIBTOOLIZE:-libtoolize}
-AUTOCONF=${AUTOCONF:-autoconf}
-AUTOMAKE=${AUTOMAKE:-automake}
-AUTOHEADER=${AUTOHEADER:-autoheader}
-
-ACLOCAL_FLAGS="-I m4"
-ACLOCAL=`echo $AUTOMAKE | sed s/automake/aclocal/`
-
-rm -f config.cache acconfig.h
-
-do_cmd() {
-    echo "- $@"
-    $@
-}
-
-do_cmd $ACLOCAL $ACLOCAL_FLAGS
-do_cmd $AUTOHEADER
-do_cmd $LIBTOOLIZE --force
-do_cmd $AUTOCONF
-do_cmd $AUTOMAKE --add-missing --gnu
-do_cmd ./configure "$@"
+mm-common-prepare --force --copy "$srcdir"
+autoreconf --force --install "$srcdir"
+test -n "$NOCONFIGURE" || "$srcdir/configure" "$@"

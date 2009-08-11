@@ -7,15 +7,10 @@ h_sources_private = private.h context_private.h
 cc_sources = context.cc fontface.cc fontoptions.cc matrix.cc path.cc pattern.cc quartz_font.cc quartz_surface.cc surface.cc xlib_surface.cc win32_font.cc win32_surface.cc exception.cc scaledfont.cc
 cc_sources_private = private.cc context_surface_quartz.cc context_surface_win32.cc context_surface_xlib.cc
 
-# Support for DLL on cygwin/mingw using libtool > 1.4
-if PLATFORM_WIN32
-win32_dlls_ldflags = -no-undefined -Wl,--export-all-symbols
-else
-win32_dlls_ldflags =
-endif
+win32_dlls_ldflags = -no-undefined
 
 lib_LTLIBRARIES = libcairomm-1.0.la
-libcairomm_1_0_la_LDFLAGS = -version-info $(GENERIC_LIBRARY_VERSION) $(win32_dlls_ldflags) 
+libcairomm_1_0_la_LDFLAGS = -version-info $(CAIROMM_SO_VERSION) $(win32_dlls_ldflags) 
 libcairomm_1_0_la_LIBADD = @CAIROMM_LIBS@
 libcairomm_1_0_la_SOURCES = $(cc_sources) $(h_sources_public) $(h_sources_private) $(cc_sources_private)
 

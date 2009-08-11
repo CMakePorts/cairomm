@@ -8,5 +8,5 @@ EXTRA_DIST = cairommconfig.h cairomm.vcproj cairomm.rc
 # wht respect to the .h.in file, to prevent an error with 'make distcheck'.
 # See http://sources.redhat.com/automake/automake.html#distcleancheck
 
-cairommconfig.h: $(top_srcdir)/cairomm/cairommconfig.h.in $(top_srcdir)/configure.in
+cairommconfig.h: $(top_srcdir)/cairomm/cairommconfig.h.in $(top_srcdir)/configure.ac
 	cp -f $(top_builddir)/cairomm/cairommconfig.h $@
