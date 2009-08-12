@@ -212,30 +212,12 @@ CAIROMM_ARG_ENABLE_API_EXCEPTIONS
 
 AC_CONFIG_FILES([
   $CONFIG_PC
-  MSVC_Net2005/Makefile
-    MSVC_Net2005/gendef/Makefile
-    MSVC_Net2005/cairomm/Makefile
-    MSVC_Net2005/cairomm/cairomm.rc
-    MSVC_Net2005/examples/Makefile
-      MSVC_Net2005/examples/pdf-surface/Makefile
-      MSVC_Net2005/examples/ps-surface/Makefile
-      MSVC_Net2005/examples/svg-surface/Makefile
-      MSVC_Net2005/examples/image-surface/Makefile
-      MSVC_Net2005/examples/text-rotate/Makefile
-      MSVC_Net2005/examples/toy-text/Makefile
-      MSVC_Net2005/examples/user-font/Makefile
-  MSVC_Net2008/Makefile
-    MSVC_Net2008/gendef/Makefile
-    MSVC_Net2008/cairomm/Makefile
-    MSVC_Net2008/cairomm/cairomm.rc
-    MSVC_Net2008/examples/Makefile
-      MSVC_Net2008/examples/pdf-surface/Makefile
-      MSVC_Net2008/examples/ps-surface/Makefile
-      MSVC_Net2008/examples/svg-surface/Makefile
-      MSVC_Net2008/examples/image-surface/Makefile
-      MSVC_Net2008/examples/text-rotate/Makefile
-      MSVC_Net2008/examples/toy-text/Makefile
-      MSVC_Net2008/examples/user-font/Makefile
-])
+  MSVC_Net2005/cairomm/cairomm.rc
+  MSVC_Net2008/cairomm/cairomm.rc])
+
+AC_CONFIG_COMMANDS([MSVC_Net2005/cairomm/cairommconfig.h],
+                   [cp -f cairomm/cairommconfig.h MSVC_Net2005/cairomm/cairommconfig.h])
+AC_CONFIG_COMMANDS([MSVC_Net2008/cairomm/cairommconfig.h],
+                   [cp -f cairomm/cairommconfig.h MSVC_Net2008/cairomm/cairommconfig.h])
 
 AC_OUTPUT

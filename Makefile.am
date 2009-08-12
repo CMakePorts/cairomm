@@ -3,7 +3,7 @@ doc_subdirs = docs
 else
 doc_subdirs =
 endif
-SUBDIRS = cairomm $(doc_subdirs) data examples MSVC_Net2005 MSVC_Net2008 tests
+SUBDIRS = cairomm $(doc_subdirs) data examples tests
 ACLOCAL_AMFLAGS = -I build ${ACLOCAL_FLAGS}
 DISTCHECK_CONFIGURE_FLAGS = --enable-warnings=fatal
 
@@ -14,6 +14,16 @@ nodist_cairomm_libinclude_HEADERS = cairomm/cairommconfig.h
 
 pkgconfigdir = $(libdir)/pkgconfig
 nodist_pkgconfig_DATA = data/$(CAIROMM_MODULE_NAME).pc
+
+include $(srcdir)/MSVC_Net2005/filelist.am
+include $(srcdir)/MSVC_Net2008/filelist.am
+
+msvc_files = $(msvc_net2005_data:%=MSVC_Net2005/%) $(msvc_net2008_data:%=MSVC_Net2008/%)
+
+dist_noinst_DATA = $(msvc_files)
+
+DISTCLEANFILES = MSVC_Net2005/cairomm/cairommconfig.h \
+                 MSVC_Net2008/cairomm/cairommconfig.h
 
 dist_noinst_SCRIPTS = autogen.sh
 
