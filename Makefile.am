@@ -18,7 +18,7 @@ nodist_pkgconfig_DATA = data/$(CAIROMM_MODULE_NAME).pc
 dist_noinst_SCRIPTS = autogen.sh
 
 ###
-EXTRA_DIST = MAINTAINERS autogen.sh
+EXTRA_DIST = MAINTAINERS
 
 DIST_SUBDIRS = $(SUBDIRS)
 
@@ -123,14 +123,5 @@ release-publish: release-upload doc-publish releases/$(sha1_file)
 	@echo "Last but not least, do not forget to bump up the micro"
 	@echo "version component to the next (odd) number and commit."
 
-
-doc-clean-recursive:
-	(cd docs && $(MAKE) $(AM_MAKEFLAGS) doc-clean)
-
-doc-clean: doc-clean-recursive
-
-doc-rebuild:
-	(cd docs && $(MAKE) $(AM_MAKEFLAGS) doc-rebuild)
-
-.PHONY: release-verify-even-micro release-verify-newer release-remove-old release-cleanup-group-sticky release-check release-upload release-publish doc-clean doc-clean-recursive doc-rebuild
+.PHONY: release-verify-even-micro release-verify-newer release-remove-old release-cleanup-group-sticky release-check release-upload release-publish
 

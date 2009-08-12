@@ -1,13 +1,10 @@
-SUBDIRS = reference
+include $(top_srcdir)/cairomm/filelist.am
 
-doc-clean-recursive:
-	list='$(SUBDIRS)'; for subdir in $$list; do \
-	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) doc-clean); \
-	done
+book_name = $(CAIROMM_MODULE_NAME)
+doc_input = $(addprefix $(top_srcdir)/cairomm/,$(files_extra_h))
 
-doc-clean: doc-clean-recursive
+htmlrefpub = http://www.cairographics.org/documentation/$(book_name)/reference/
 
-doc-rebuild: doc-clean all
+include $(top_srcdir)/build/doc-reference.am
 
-.PHONY: doc-clean doc-clean-recursive doc-rebuild
-
+dist_noinst_DATA += reference/cairomm-header.html

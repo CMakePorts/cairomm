@@ -1,12 +1,20 @@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
+datarootdir=@datarootdir@
+datadir=@datadir@
 includedir=@includedir@
+
+docdir=${datarootdir}/doc/@CAIROMM_MODULE_NAME@
+doxytagfile=${docdir}/reference/@CAIROMM_MODULE_NAME@.tag
+htmlrefdir=${docdir}/reference/html
+htmlrefpub=http://www.cairographics.org/documentation/$(book_name)/reference/
 
 Name: cairomm
 Description: C++ wrapper for cairo
-Requires: cairo sigc++-2.0
-Version: @VERSION@
-Libs: -L${libdir} -lcairomm-1.0
-Cflags: -I${includedir}/cairomm-1.0
+Version: @PACKAGE_VERSION@
+URL: http://www.cairographics.org/cairomm/
+Requires: @CAIROMM_MODULES@
+Libs: -L${libdir} -lcairomm-@CAIROMM_API_VERSION@
+Cflags: -I${includedir}/cairomm-@CAIROMM_API_VERSION@
 

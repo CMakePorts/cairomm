@@ -34,6 +34,9 @@ MSVC_Net2008/cairomm/cairommconfig.h
 
 docs/reference/Doxyfile
 docs/reference/cairomm_doxygen_tags
+docs/reference/cairomm-1.0.devhelp2
+docs/reference/cairomm-1.0.tag
+docs/reference/doxygen.log
 docs/reference/doxygen-output.txt
 docs/reference/doxygen-warnings.txt
 docs/reference/html

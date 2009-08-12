@@ -1,5 +1,18 @@
 2009-08-12  David King  <davidk@openismus.com>
 
+	* .gitignore: Add new generated documentation files.
+	* Makefile.am: Remove old documentation generation build.
+	* configure.ac:
+	* docs/reference/Makefile.am: Remove, with switch to non-recursive
+	documentation build.
+	* data/cairomm-1.0.pc.in:
+	* docs/Makefile.am: Switch to new documentation build infrastructure
+	from mm-common.
+	* docs/reference/Doxyfile.in: Modernise and disable several unused
+	features of the Doxygen output.
+
+2009-08-12  David King  <davidk@openismus.com>
+
 	* .gitignore: Add INSTALL, mm-common *.am files and .dirstamp.
 	* Makefile.am: Change VERSION to PACKAGE_VERSION. Begin transition
 	to use of new build infrastructure.

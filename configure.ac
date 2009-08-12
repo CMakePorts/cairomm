@@ -38,7 +38,6 @@ AC_CONFIG_FILES([Makefile
                  data/cairomm-1.0.pc
                  docs/Makefile
                  docs/reference/Doxyfile
-                 docs/reference/Makefile
                  examples/Makefile
                  tests/Makefile])
 
