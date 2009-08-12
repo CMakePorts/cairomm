@@ -1,21 +1,11 @@
-SUBDIRS = 
-
-INCLUDES = -I$(top_srcdir) @CAIROMM_CFLAGS@
-
-h_sources_public = cairomm.h context.h enums.h fontface.h fontoptions.h matrix.h path.h pattern.h quartz_font.h quartz_surface.h surface.h xlib_surface.h win32_font.h win32_surface.h exception.h refptr.h scaledfont.h types.h cairommconfig.h
-h_sources_private = private.h context_private.h
-cc_sources = context.cc fontface.cc fontoptions.cc matrix.cc path.cc pattern.cc quartz_font.cc quartz_surface.cc surface.cc xlib_surface.cc win32_font.cc win32_surface.cc exception.cc scaledfont.cc
-cc_sources_private = private.cc context_surface_quartz.cc context_surface_win32.cc context_surface_xlib.cc
-
-win32_dlls_ldflags = -no-undefined
-
 lib_LTLIBRARIES = libcairomm-1.0.la
-libcairomm_1_0_la_LDFLAGS = -version-info $(CAIROMM_SO_VERSION) $(win32_dlls_ldflags) 
-libcairomm_1_0_la_LIBADD = @CAIROMM_LIBS@
-libcairomm_1_0_la_SOURCES = $(cc_sources) $(h_sources_public) $(h_sources_private) $(cc_sources_private)
 
-# Install the headers:
-library_includedir=$(includedir)/cairomm-1.0/cairomm
-library_include_HEADERS = $(h_sources_public)
+include $(srcdir)/filelist.am
+include $(top_srcdir)/build/compile-binding.am
 
-EXTRA_DIST = cairommconfig.h.in
+AM_CPPFLAGS = $(binding_includes) $(binding_cppflags) -I. $(CAIROMM_CFLAGS)
+AM_CXXFLAGS = $(CAIROMM_WXXFLAGS)
+
+libcairomm_1_0_la_SOURCES = $(binding_sources)
+libcairomm_1_0_la_LDFLAGS = -no-undefined -version-info $(CAIROMM_SO_VERSION)
+libcairomm_1_0_la_LIBADD = $(CAIROMM_LIBS)

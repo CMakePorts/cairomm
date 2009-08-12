@@ -6,9 +6,11 @@ AC_CONFIG_AUX_DIR([build])
 AC_CONFIG_MACRO_DIR([build])
 AC_CONFIG_HEADERS([cairomm/cairommconfig.h])
 
-AM_INIT_AUTOMAKE([1.10 -Wno-portability no-define tar-ustar])
+AM_INIT_AUTOMAKE([1.10 -Wno-portability no-define nostdinc tar-pax])
 AM_MAINTAINER_MODE
 AC_ARG_VAR([ACLOCAL_FLAGS], [aclocal flags, e.g. -I <macro dir>])
+
+MM_INIT_MODULE([cairomm-1.0], m4_expand([AC_PACKAGE_VERSION]))
 
 # http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
 AC_SUBST([CAIROMM_SO_VERSION], [5:0:4])
@@ -36,9 +38,8 @@ AC_CONFIG_FILES([Makefile
                  data/cairomm-1.0.pc
                  docs/Makefile
                  docs/reference/Doxyfile
+                 docs/reference/Makefile
                  examples/Makefile
-                 examples/surfaces/Makefile
-                 examples/text/Makefile
                  tests/Makefile])
 
 AC_PROG_CXX

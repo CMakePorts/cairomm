@@ -1,4 +1,5 @@
 *.swp
+INSTALL
 Makefile
 Makefile.in
 aclocal.m4
@@ -17,6 +18,7 @@ data/cairomm-quartz-1.0.pc
 data/cairomm-quartz-font-1.0.pc
 data/cairomm-quartz-image-1.0.pc
 .deps
+.dirstamp
 .libs
 config.guess
 config.log
@@ -62,8 +64,12 @@ tests/test-user-font
 
 cairomm/cairommconfig.h*
 cairomm/stamp-*
-m4/libtool.m4
-m4/lt*.m4
+build/compile-binding.am
+build/dist-changelog.am
+build/doc-reference.am
+build/generate-binding.am
+build/libtool.m4
+build/lt*.m4
 releases/
 tags
 

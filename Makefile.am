@@ -1,9 +1,23 @@
-## Process this file with automake to produce Makefile.in
-
-SUBDIRS = cairomm data examples MSVC_Net2005 MSVC_Net2008 $(DOCS_SUBDIR) tests
-#docs examples
+if ENABLE_DOCUMENTATION
+doc_subdirs = docs
+else
+doc_subdirs =
+endif
+SUBDIRS = cairomm $(doc_subdirs) data examples MSVC_Net2005 MSVC_Net2008 tests
 ACLOCAL_AMFLAGS = -I build ${ACLOCAL_FLAGS}
+DISTCHECK_CONFIGURE_FLAGS = --enable-warnings=fatal
 
+cairomm_includedir = $(includedir)/$(CAIROMM_MODULE_NAME)/cairomm
+cairomm_include_HEADERS = cairomm/cairomm.h
+cairomm_libincludedir = $(libdir)/$(CAIROMM_MODULE_NAME)/include
+nodist_cairomm_libinclude_HEADERS = cairomm/cairommconfig.h
+
+pkgconfigdir = $(libdir)/pkgconfig
+nodist_pkgconfig_DATA = data/$(CAIROMM_MODULE_NAME).pc
+
+dist_noinst_SCRIPTS = autogen.sh
+
+###
 EXTRA_DIST = MAINTAINERS autogen.sh
 
 DIST_SUBDIRS = $(SUBDIRS)
@@ -38,7 +52,7 @@ $(gpg_file): $(sha1_file)
 	gpg --armor --sign $^ 
 
 release-verify-even-micro:
-	@echo -n "Checking that $(VERSION) has an even micro component..."
+	@echo -n "Checking that $(PACKAGE_VERSION) has an even micro component..."
 	@test "$(GENERIC_MICRO_VERSION)" = "`echo $(GENERIC_MICRO_VERSION)/2*2 | bc`" \
 		|| (echo "Ouch." && echo "The version micro component '$(GENERIC_MICRO_VERSION)' is not an even number." \
 		&& echo "The version in configure.in must be incremented before a new release." \
@@ -46,7 +60,7 @@ release-verify-even-micro:
 	@echo "Good."
 
 release-verify-newer:
-	@echo -n "Checking that no $(VERSION) release already exists..."
+	@echo -n "Checking that no $(PACKAGE_VERSION) release already exists..."
 	@ssh $(RELEASE_UPLOAD_HOST) test ! -e $(RELEASE_UPLOAD_DIR)/$(tar_file) \
 		|| (echo "Ouch." && echo "Found: $(RELEASE_UPLOAD_HOST):$(RELEASE_UPLOAD_DIR)/$(tar_file)" \
 		&& echo "Are you sure you have an updated git checkout?" \
@@ -71,7 +85,7 @@ release-upload: release-check $(tar_file) $(sha1_file) $(gpg_file)
 	scp $(tar_file) $(sha1_file) $(gpg_file) $(RELEASE_UPLOAD_HOST):$(RELEASE_UPLOAD_DIR)
 	mv $(tar_file) $(sha1_file) $(gpg_file) releases
 	ssh $(RELEASE_UPLOAD_HOST) "rm -f $(RELEASE_UPLOAD_DIR)/LATEST-$(PACKAGE)-[0-9]* && ln -s $(tar_file) $(RELEASE_UPLOAD_DIR)/LATEST-$(PACKAGE)-$(VERSION)"
-	$(GIT) tag -s -m "$(PACKAGE) release $(VERSION)" v$(VERSION)
+	$(GIT) tag -s -m "$(PACKAGE) release $(PACKAGE_VERSION)" v$(PACKAGE_VERSION)
 
 doc-publish:
 	(cd docs/reference && $(MAKE) $(AM_MAKEFLAGS) publish)
@@ -81,13 +95,13 @@ release-publish: release-upload doc-publish releases/$(sha1_file)
 	@echo "Please send an announcement to $(RELEASE_ANNOUNCE_LIST)"
 	@echo "including the following:"
 	@echo ""
-	@echo "Subject: $(PACKAGE) release $(VERSION) now available"
+	@echo "Subject: $(PACKAGE) release $(PACKAGE_VERSION) now available"
 	@echo ""
 	@echo "============================== CUT HERE =============================="
 	@echo "cairomm is a C++ API for the cairo graphics library.  For more "
 	@echo "information, see http://cairographics.org/cairomm"
 	@echo ""
-	@echo "A new $(PACKAGE) release $(VERSION) is now available from:"
+	@echo "A new $(PACKAGE) release $(PACKAGE_VERSION) is now available from:"
 	@echo ""
 	@echo "	$(RELEASE_URL_BASE)/$(tar_file)"
 	@echo ""

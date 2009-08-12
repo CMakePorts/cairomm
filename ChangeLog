@@ -1,3 +1,19 @@
+2009-08-12  David King  <davidk@openismus.com>
+
+	* .gitignore: Add INSTALL, mm-common *.am files and .dirstamp.
+	* Makefile.am: Change VERSION to PACKAGE_VERSION. Begin transition
+	to use of new build infrastructure.
+	* cairomm/Makefile.am: Simplify by moving significant portions to
+	toplevel Makefile.am.
+	* cairomm/filelist.am: List of files for libcairomm. Move private
+	source files to files_extra_cc.
+	* configure.ac: Use MM_INIT_MODULE and remove example subdirectory
+	Makefile.am.
+	* examples/surfaces/Makefile.am:
+	* examples/text/Makefile.am: Remove.
+	* examples/Makefile.am: Convert examples tree to non-recursive
+	build, with single, slimmer Makefile.am.
+
 2009-08-11  David King  <davidk@openismus.com>
 
 	* autogen.sh: Replace with a simple wrapper around mm-common-prepare
