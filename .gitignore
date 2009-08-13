@@ -33,6 +33,10 @@ stamp-h?
 /MSVC_Net2008/cairomm/cairomm.rc
 /MSVC_Net2008/cairomm/cairommconfig.h
 
+/docs/doc-install.pl
+/docs/doc-postprocess.pl
+/docs/tagfile-to-devhelp2.xsl
+
 /docs/reference/Doxyfile
 /docs/reference/cairomm_doxygen_tags
 /docs/reference/cairomm-1.0.devhelp2

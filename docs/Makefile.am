@@ -25,4 +25,9 @@ htmlrefpub = $(pubdocbase)cairomm/reference
 
 include $(top_srcdir)/build/doc-reference.am
 
-dist_noinst_DATA += reference/cairomm.css reference/cairomm-header.html
+dist_noinst_DATA +=			\
+	doc-install.pl			\
+	doc-postprocess.pl		\
+	tagfile-to-devhelp2.xsl		\
+	reference/cairomm.css		\
+	reference/cairomm-header.html

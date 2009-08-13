@@ -1,5 +1,12 @@
 2009-08-13  Daniel Elstner  <danielk@openismus.com>
 
+	Distribute mm-common documentation utilities
+
+	* docs/Makefile.am (dist_noinst_DATA): List the utility scripts
+	installed by mm-common-prepare here, so they will be distributed.
+
+2009-08-13  Daniel Elstner  <danielk@openismus.com>
+
 	Add missing call to MM_CONFIG_DOCTOOL_DIR
 
 	* configure.ac: Call MM_CONFIG_DOCTOOL_DIR([docs]) to indicate to
