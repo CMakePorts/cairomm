@@ -26,6 +26,7 @@ Makefile.in
 /config.status
 stamp-h?
 /cairommconfig.h
+/cairomm-*.tar.*
 
 /MSVC_Net2005/cairomm/cairomm.rc
 /MSVC_Net2005/cairomm/cairommconfig.h

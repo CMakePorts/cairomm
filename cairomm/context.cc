@@ -29,9 +29,7 @@
 #endif 
 
 /* Solaris et. al. need math.h for M_PI too */
-#ifdef HAVE_MATH_H
-# include <math.h>
-#endif
+#include <cmath>
 
 using namespace Cairo::Private;
 

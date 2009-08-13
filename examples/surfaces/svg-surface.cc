@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include <cairomm/cairommconfig.h>
+#include <cairommconfig.h>
 #include <cairomm/context.h>
 #include <cairomm/surface.h>
 
@@ -11,9 +11,7 @@
 #define _USE_MATH_DEFINES
 #endif 
 
-#ifdef HAVE_MATH_H
-# include <math.h>
-#endif
+#include <cmath>
 
 int main()
 {

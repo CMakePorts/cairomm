@@ -18,7 +18,7 @@
 
 #include <string>
 #include <iostream>
-#include <cairomm/cairommconfig.h>
+#include <cairommconfig.h>
 #include <cairomm/cairomm.h>
 
 /* M_PI is defined in math.h in the case of Microsoft Visual C++, and
@@ -28,9 +28,7 @@
 #define _USE_MATH_DEFINES
 #endif 
 
-#ifdef HAVE_MATH_H
-# include <math.h>
-#endif
+#include <cmath>
 
 // This example is based on the C cairo example of the same name
 

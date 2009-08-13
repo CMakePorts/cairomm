@@ -1,5 +1,16 @@
 2009-08-13  Daniel Elstner  <danielk@openismus.com>
 
+	Fix left-over cairomm/cairommconfig.h includes
+
+	* cairomm/cairomm.h: Remove directory prefix from cairommconfig.h
+	include statement.
+	* cairomm/context.cc: Include <cmath> unconditionally instead of
+	conditionally including <math.h>.
+	* examples/surfaces/*.cc: ditto,
+	* examples/text/text-rotate.cc: ditto.
+
+2009-08-13  Daniel Elstner  <danielk@openismus.com>
+
 	Review and clean up after build overhaul
 
 	* autogen.sh: Pass --enable-maintainer-mode to ./configure since the

@@ -31,7 +31,7 @@
  *
  */
 
-#include <cairomm/cairommconfig.h>
+#include <cairommconfig.h>
 #include <cairomm/context.h>
 #include <cairomm/enums.h>
 #include <cairomm/exception.h>
