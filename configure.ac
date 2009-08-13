@@ -70,16 +70,6 @@ AC_ARG_ENABLE(tests,
               ENABLE_TESTS=$enableval,
               ENABLE_TESTS=auto)
 
-if test x$ENABLE_TESTS = xauto ; then
-    dnl unless explicitly disabled, attempt to enable tests for developers and
-    dnl disable it for others
-    if test x$CAIROMM_DEVEL = xon ; then
-        ENABLE_TESTS=yes
-    else
-        ENABLE_TESTS=no
-    fi
-fi
-
 if test x$ENABLE_TESTS = xyes ; then
 #######################################################
 #boost build system sucks no end.
