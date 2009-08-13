@@ -12,14 +12,14 @@ CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
 REPEAT_BRIEF           = YES
-ABBREVIATE_BRIEF       = 
+ABBREVIATE_BRIEF       =
 ALWAYS_DETAILED_SEC    = NO
 INLINE_INHERITED_MEMB  = NO
 FULL_PATH_NAMES        = YES
-STRIP_FROM_PATH        = "@abs_top_builddir@/cairomm/" \
-                         "@abs_top_srcdir@/cairomm/"
-STRIP_FROM_INC_PATH    = "@abs_top_builddir@/cairomm/" \
-                         "@abs_top_srcdir@/cairomm/"
+STRIP_FROM_PATH        = "@abs_top_builddir@/" \
+                         "@abs_top_srcdir@/"
+STRIP_FROM_INC_PATH    = "@abs_top_builddir@/" \
+                         "@abs_top_srcdir@/"
 SHORT_NAMES            = NO
 JAVADOC_AUTOBRIEF      = YES
 QT_AUTOBRIEF           = NO
@@ -27,7 +27,7 @@ MULTILINE_CPP_IS_BRIEF = NO
 INHERIT_DOCS           = YES
 SEPARATE_MEMBER_PAGES  = NO
 TAB_SIZE               = 8
-ALIASES                = 
+ALIASES                =
 OPTIMIZE_OUTPUT_FOR_C  = NO
 OPTIMIZE_OUTPUT_JAVA   = NO
 OPTIMIZE_FOR_FORTRAN   = NO
@@ -40,7 +40,7 @@ IDL_PROPERTY_SUPPORT   = YES
 DISTRIBUTE_GROUP_DOC   = NO
 SUBGROUPING            = YES
 TYPEDEF_HIDES_STRUCT   = NO
-SYMBOL_CACHE_SIZE     = 0
+SYMBOL_CACHE_SIZE      = 0
 #---------------------------------------------------------------------------
 # Build related configuration options
 #---------------------------------------------------------------------------
@@ -83,7 +83,7 @@ WARNINGS               = YES
 WARN_IF_UNDOCUMENTED   = YES
 WARN_IF_DOC_ERROR      = YES
 WARN_NO_PARAMDOC       = NO
-WARN_FORMAT            = "$file:$line: $text  "
+WARN_FORMAT            = "$file:$line: $text"
 WARN_LOGFILE           = reference/doxygen.log
 #---------------------------------------------------------------------------
 # configuration options related to the input files
@@ -92,10 +92,9 @@ INPUT                  =
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          =
 RECURSIVE              = NO
-EXCLUDE                = "@abs_top_srcdir@/cairomm/private.h" \
-                         "@abs_top_srcdir@/cairomm/context_private.h"
+EXCLUDE                =
 EXCLUDE_SYMLINKS       = NO
-EXCLUDE_PATTERNS       = 
+EXCLUDE_PATTERNS       =
 EXCLUDE_SYMBOLS        = _* \
                          adaptor_trait \
                          basic_filebuf \
@@ -109,9 +108,9 @@ EXAMPLE_PATH           = "@abs_top_srcdir@/examples"
 EXAMPLE_PATTERNS       = *.cc \
                          *.h
 EXAMPLE_RECURSIVE      = YES
-IMAGE_PATH             = 
-INPUT_FILTER           = 
-FILTER_PATTERNS        = 
+IMAGE_PATH             =
+INPUT_FILTER           =
+FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
@@ -173,8 +172,8 @@ LATEX_CMD_NAME         = latex
 MAKEINDEX_CMD_NAME     = makeindex
 COMPACT_LATEX          = NO
 PAPER_TYPE             = a4wide
-EXTRA_PACKAGES         = 
-LATEX_HEADER           = 
+EXTRA_PACKAGES         =
+LATEX_HEADER           =
 PDF_HYPERLINKS         = YES
 USE_PDFLATEX           = YES
 LATEX_BATCHMODE        = NO
@@ -186,8 +185,8 @@ GENERATE_RTF           = NO
 RTF_OUTPUT             = rtf
 COMPACT_RTF            = NO
 RTF_HYPERLINKS         = NO
-RTF_STYLESHEET_FILE    = 
-RTF_EXTENSIONS_FILE    = 
+RTF_STYLESHEET_FILE    =
+RTF_EXTENSIONS_FILE    =
 #---------------------------------------------------------------------------
 # configuration options related to the man page output
 #---------------------------------------------------------------------------
@@ -200,8 +199,8 @@ MAN_LINKS              = NO
 #---------------------------------------------------------------------------
 GENERATE_XML           = NO
 XML_OUTPUT             = xml
-XML_SCHEMA             = 
-XML_DTD                = 
+XML_SCHEMA             =
+XML_DTD                =
 XML_PROGRAMLISTING     = NO
 #---------------------------------------------------------------------------
 # configuration options for the AutoGen Definitions output
@@ -213,7 +212,7 @@ GENERATE_AUTOGEN_DEF   = NO
 GENERATE_PERLMOD       = NO
 PERLMOD_LATEX          = NO
 PERLMOD_PRETTY         = YES
-PERLMOD_MAKEVAR_PREFIX = 
+PERLMOD_MAKEVAR_PREFIX =
 #---------------------------------------------------------------------------
 # Configuration options related to the preprocessor
 #---------------------------------------------------------------------------
@@ -221,8 +220,8 @@ ENABLE_PREPROCESSING   = YES
 MACRO_EXPANSION        = YES
 EXPAND_ONLY_PREDEF     = YES
 SEARCH_INCLUDES        = YES
-INCLUDE_PATH           = "@abs_top_builddir@/cairomm/" \
-                         "@abs_top_srcdir@/cairomm/"
+INCLUDE_PATH           = "@abs_top_builddir@/" \
+                         "@abs_top_srcdir@/"
 INCLUDE_FILE_PATTERNS  = *.h
 PREDEFINED             = __cplusplus \
                          DOXYGEN_IGNORE_THIS \
@@ -238,7 +237,9 @@ PREDEFINED             = __cplusplus \
                          CAIRO_HAS_FT_FONT \
                          CAIRO_HAS_WIN32_FONT \
                          CAIRO_HAS_QUARTZ_FONT
-EXPAND_AS_DEFINED      = 
+EXPAND_AS_DEFINED      = CAIROMM_MAJOR_VERSION \
+                         CAIROMM_MINOR_VERSION \
+                         CAIROMM_MICRO_VERSION
 SKIP_FUNCTION_MACROS   = YES
 #---------------------------------------------------------------------------
 # Configuration::additions related to external references

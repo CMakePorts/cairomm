@@ -1,36 +1,46 @@
+## Copyright (c) 2009  Openismus GmbH  <http://www.openismus.com/>
+##
+## This file is part of cairomm.
+##
+## cairomm is free software: you can redistribute it and/or modify it
+## under the terms of the GNU Lesser General Public License as published
+## by the Free Software Foundation, either version 2.1 of the License,
+## or (at your option) any later version.
+##
+## cairomm is distributed in the hope that it will be useful, but
+## WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+## See the GNU Lesser General Public License for more details.
+##
+## You should have received a copy of the GNU Lesser General Public License
+## along with this library.  If not, see <http://www.gnu.org/licenses/>.
+
+ACLOCAL_AMFLAGS = -I build ${ACLOCAL_FLAGS}
+DISTCHECK_CONFIGURE_FLAGS = --enable-warnings=fatal
+
 if ENABLE_DOCUMENTATION
 doc_subdirs = docs
 else
 doc_subdirs =
 endif
-SUBDIRS = cairomm $(doc_subdirs) data examples tests
-ACLOCAL_AMFLAGS = -I build ${ACLOCAL_FLAGS}
-DISTCHECK_CONFIGURE_FLAGS = --enable-warnings=fatal
+SUBDIRS = cairomm examples tests $(doc_subdirs)
 
-cairomm_includedir = $(includedir)/$(CAIROMM_MODULE_NAME)/cairomm
-cairomm_include_HEADERS = cairomm/cairomm.h
 cairomm_libincludedir = $(libdir)/$(CAIROMM_MODULE_NAME)/include
-nodist_cairomm_libinclude_HEADERS = cairomm/cairommconfig.h
+nodist_cairomm_libinclude_HEADERS = cairommconfig.h
 
 pkgconfigdir = $(libdir)/pkgconfig
-nodist_pkgconfig_DATA = data/$(CAIROMM_MODULE_NAME).pc
+nodist_pkgconfig_DATA = $(CAIROMM_INSTALL_PC)
 
 include $(srcdir)/MSVC_Net2005/filelist.am
 include $(srcdir)/MSVC_Net2008/filelist.am
 
-msvc_files = $(msvc_net2005_data:%=MSVC_Net2005/%) $(msvc_net2008_data:%=MSVC_Net2008/%)
+msvc_files = $(addprefix MSVC_Net2005/,$(msvc_net2005_data)) \
+             $(addprefix MSVC_Net2008/,$(msvc_net2008_data))
 
-dist_noinst_DATA = $(msvc_files)
-
-DISTCLEANFILES = MSVC_Net2005/cairomm/cairommconfig.h \
-                 MSVC_Net2008/cairomm/cairommconfig.h
-
+dist_noinst_DATA = MAINTAINERS $(msvc_files)
 dist_noinst_SCRIPTS = autogen.sh
 
-###
-EXTRA_DIST = MAINTAINERS
-
-DIST_SUBDIRS = $(SUBDIRS)
+DISTCLEANFILES = MSVC_Net2005/cairomm/cairommconfig.h MSVC_Net2008/cairomm/cairommconfig.h
 
 # Copied from cairo/Makefile.am:
 #
@@ -44,11 +54,7 @@ RELEASE_UPLOAD_BASE =	/srv/cairo.freedesktop.org/www
 RELEASE_UPLOAD_DIR =	$(RELEASE_UPLOAD_BASE)/releases
 RELEASE_URL_BASE = 	http://cairographics.org/releases
 RELEASE_ANNOUNCE_LIST = cairo-announce@cairographics.org (and CC gnome-announce-list@gnome.org)
-GIT = $(top_srcdir)/missing --run git
-
-#MANUAL_DATED =		cairo-manual-`date +%Y%m%d`
-#MANUAL_TAR_FILE = 	$(MANUAL_DATED).tar.gz
-#MANUAL_UPLOAD_DIR =	$(RELEASE_UPLOAD_BASE)
+GIT = $(top_srcdir)/build/missing --run git
 
 tar_file = $(PACKAGE)-$(VERSION).tar.gz
 sha1_file = $(tar_file).sha1
@@ -97,10 +103,8 @@ release-upload: release-check $(tar_file) $(sha1_file) $(gpg_file)
 	ssh $(RELEASE_UPLOAD_HOST) "rm -f $(RELEASE_UPLOAD_DIR)/LATEST-$(PACKAGE)-[0-9]* && ln -s $(tar_file) $(RELEASE_UPLOAD_DIR)/LATEST-$(PACKAGE)-$(VERSION)"
 	$(GIT) tag -s -m "$(PACKAGE) release $(PACKAGE_VERSION)" v$(PACKAGE_VERSION)
 
-doc-publish:
-	(cd docs/reference && $(MAKE) $(AM_MAKEFLAGS) publish)
-
-release-publish: release-upload doc-publish releases/$(sha1_file)
+# TODO: Had to remove the doc-publish target for now.
+release-publish: release-upload releases/$(sha1_file)
 	@echo ""
 	@echo "Please send an announcement to $(RELEASE_ANNOUNCE_LIST)"
 	@echo "including the following:"
@@ -134,4 +138,3 @@ release-publish: release-upload doc-publish releases/$(sha1_file)
 	@echo "version component to the next (odd) number and commit."
 
 .PHONY: release-verify-even-micro release-verify-newer release-remove-old release-cleanup-group-sticky release-check release-upload release-publish
-
