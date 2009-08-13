@@ -1,5 +1,13 @@
 2009-08-13  Daniel Elstner  <danielk@openismus.com>
 
+	Add missing call to MM_CONFIG_DOCTOOL_DIR
+
+	* configure.ac: Call MM_CONFIG_DOCTOOL_DIR([docs]) to indicate to
+	mm-common-prepare that this module cannot depend on the utilities
+	shipped with glibmm, and needs its own copies.
+
+2009-08-13  Daniel Elstner  <danielk@openismus.com>
+
 	Fix left-over cairomm/cairommconfig.h includes
 
 	* cairomm/cairomm.h: Remove directory prefix from cairommconfig.h

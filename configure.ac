@@ -28,6 +28,7 @@ AM_MAINTAINER_MODE
 AC_ARG_VAR([ACLOCAL_FLAGS], [aclocal flags, e.g. -I <macro dir>])
 
 MM_INIT_MODULE([cairomm-1.0], m4_expand([AC_PACKAGE_VERSION]))
+MM_CONFIG_DOCTOOL_DIR([docs])
 
 # http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
 AC_SUBST([CAIROMM_SO_VERSION], [5:0:4])
