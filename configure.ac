@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([cairomm], [1.8.2], [cairo@cairographics.org], [cairomm])
+AC_INIT([cairomm], [1.8.4], [cairo@cairographics.org], [cairomm])
 AC_PREREQ([2.62])
 
 AC_CONFIG_SRCDIR([cairomm/cairomm.h])
@@ -68,7 +68,7 @@ AC_ARG_ENABLE(tests,
               AC_HELP_STRING([--enable-tests=yes|no],
                              [enable automated tests (default is no)]),
               ENABLE_TESTS=$enableval,
-              ENABLE_TESTS=auto)
+              ENABLE_TESTS=no)
 
 if test x$ENABLE_TESTS = xyes ; then
 #######################################################

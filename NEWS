@@ -1,3 +1,12 @@
+1.8.4:
+
+* move to new mm-common build infrastructure
+* Contributors for this release:
+     1  Christopher Harvey
+     4  Daniel Elstner
+     4  David King
+     1  Jonathon Jongsma
+
 1.8.2:
 
 * Fix accidental ABI breakage from 1.8.0.  All users are urged to please upgrade
