@@ -1,3 +1,39 @@
+2009-10-26  Armin Burgmeier  <armin@arbur.net>
+
+	* MSVC_Net2005/cairomm/cairomm.rc.in:
+	* MSVC_Net2008/cairomm/cairomm.rc.in: Replaced GENERIC_MAJOR_VERSION
+	et al. by CAIROMM_MAJOR_VERSION, so that they are properly replaced
+	during configure.
+
+	* MSVC_Net2005/examples/image-surface/image-surface.vcproj:
+	* MSVC_Net2005/examples/pdf-surface/pdf-surface.vcproj:
+	* MSVC_Net2005/examples/ps-surface/ps-surface.vcproj:
+	* MSVC_Net2005/examples/svg-surface/svg-surface.vcproj:
+	* MSVC_Net2005/examples/text-rotate/text-rotate.vcproj:
+	* MSVC_Net2005/examples/toy-text/toy-text.vcproj:
+	* MSVC_Net2005/examples/user-font/user-font.vcproj:
+	* MSVC_Net2008/examples/image-surface/image-surface.vcproj:
+	* MSVC_Net2008/examples/pdf-surface/pdf-surface.vcproj:
+	* MSVC_Net2008/examples/ps-surface/ps-surface.vcproj:
+	* MSVC_Net2008/examples/svg-surface/svg-surface.vcproj:
+	* MSVC_Net2008/examples/text-rotate/text-rotate.vcproj:
+	* MSVC_Net2008/examples/toy-text/toy-text.vcproj:
+	* MSVC_Net2008/examples/user-font/user-font.vcproj: Added
+	$(SolutionDir)/cairomm to the include search paths, so that
+	cairommconfig.h is found even if configure did not run.
+
+	* cairomm/fontface.cc: MSVC does not allow to reinterpret_cast a bool
+	to void*, so use an int instead.
+
+	* cairomm/context.cc:
+	* examples/surfaces/image-surface.cc:
+	* examples/surfaces/pdf-surface.cc:
+	* examples/surfaces/ps-surface.cc:
+	* examples/surfaces/svg-surface.cc:
+	* examples/text/text-rotate.cc: Define _USE_MATH_DEFINES before
+	including anything, to make sure we get the defines even if math.h
+	is included indirectly via another header.
+
 2010-06-07  Augusto Jun Devegili  <monipol@gmx.com>
 
 	Put ifdefs around 32-bit-only API, to fix the build on 64-bit machines.
