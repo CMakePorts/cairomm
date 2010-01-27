@@ -15,7 +15,8 @@
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([cairomm], [1.8.4], [cairo@cairographics.org], [cairomm])
+AC_INIT([cairomm], [1.8.4], [https://bugs.freedesktop.org/enter_bug.cgi?product=cairomm],
+        [cairomm], [http://www.cairographics.org/cairomm/])
 AC_PREREQ([2.62])
 
 AC_CONFIG_SRCDIR([cairomm/cairomm.h])
@@ -24,10 +25,12 @@ AC_CONFIG_MACRO_DIR([build])
 AC_CONFIG_HEADERS([build/config.h cairommconfig.h])
 
 AM_INIT_AUTOMAKE([1.10 -Wno-portability no-define nostdinc tar-pax])
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES])
 AM_MAINTAINER_MODE
 AC_ARG_VAR([ACLOCAL_FLAGS], [aclocal flags, e.g. -I <macro dir>])
 
-MM_INIT_MODULE([cairomm-1.0], m4_expand([AC_PACKAGE_VERSION]))
+MM_PREREQ([0.8])
+MM_INIT_MODULE([cairomm-1.0])
 MM_CONFIG_DOCTOOL_DIR([docs])
 
 # http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
@@ -64,13 +67,14 @@ MM_ARG_ENABLE_WARNINGS([CAIROMM_WXXFLAGS],
                        [-Wall],
                        [-pedantic -Wall -Wextra])
 
-AC_ARG_ENABLE(tests,
-              AC_HELP_STRING([--enable-tests=yes|no],
-                             [enable automated tests (default is no)]),
-              ENABLE_TESTS=$enableval,
-              ENABLE_TESTS=no)
+AC_ARG_ENABLE([tests],
+              [AS_HELP_STRING([--enable-tests], [enable automated tests [default=no]])],
+              [ENABLE_TESTS=$enableval],
+              [ENABLE_TESTS=no])
 
-if test x$ENABLE_TESTS = xyes ; then
+BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB=
+AS_IF([test "x$ENABLE_TESTS" = xyes],
+[
 #######################################################
 #boost build system sucks no end.
 #it is damn hard to detect the version of boost
@@ -84,32 +88,30 @@ if test x$ENABLE_TESTS = xyes ; then
 
     dnl AX_BOOST_BASE defines a --with-boost[=DIR] option that sets
     dnl $ac_boost_path as a custom boost prefix, so use that if it was specified
-    if test x$ac_boost_path != x; then
-        unit_framework_lib_candidates="$ac_boost_path/lib/libboost_unit_test_framework.a
-        $ac_boost_path/lib/libboost_unit_test_framework-st.a
-        $ac_boost_path/libboost_unit_test_framework.a
-        $ac_boost_path/libboost_unit_test_framework-st.a"
-    else
-        unit_framework_lib_candidates="/usr/lib/libboost_unit_test_framework-st.a
-        /usr/lib/libboost_unit_test_framework.a
-        /usr/lib64/libboost_unit_test_framework-st.a
-        /usr/lib64/libboost_unit_test_framework.a"
-    fi
-    for i in $unit_framework_lib_candidates ; do
-        if test -f $i ; then
-            BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB=$i
-            break
-        fi
-    done
-    if test x$BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB != x; then
-        AC_SUBST(BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB)
-        AC_MSG_NOTICE(support of automated tests enabled)
-    else
-        AC_MSG_ERROR([Tried to enable unit tests, but couldn't find Boost Unit Test framework static library candidate.  You can specify a custom location using --with-boost=/path/to/lib])
-    fi
-else
-    AC_MSG_NOTICE(disabled support of automated tests)
-fi
+    AS_IF([test "x$ac_boost_path" != x],
+          [for i in "$ac_boost_path/lib/libboost_unit_test_framework.a" \
+                    "$ac_boost_path/lib/libboost_unit_test_framework-st.a" \
+                    "$ac_boost_path/libboost_unit_test_framework.a" \
+                    "$ac_boost_path/libboost_unit_test_framework-st.a"
+           do
+               AS_IF([test -f "$i"], [BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB=$i; break])
+           done],
+          [for i in /usr/lib/libboost_unit_test_framework-st.a \
+                    /usr/lib/libboost_unit_test_framework.a \
+                    /usr/lib64/libboost_unit_test_framework-st.a \
+                    /usr/lib64/libboost_unit_test_framework.a
+           do
+               AS_IF([test -f "$i"], [BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB=$i; break])
+           done])
+    AS_IF([test "x$BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB" != x],
+          [AC_MSG_NOTICE([support of automated tests enabled])],
+          [AC_MSG_ERROR([Tried to enable unit tests, but could not find Boost Unit Test
+framework static library candidate.  You can specify a custom location
+using --with-boost=/path/to/lib])])
+], [
+    AC_MSG_NOTICE([disabled support of automated tests])
+])
+AC_SUBST([BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB])
 
 AM_CONDITIONAL([AUTOTESTS], [test "x$ENABLE_TESTS" = xyes])
 CAIROMM_ARG_ENABLE_API_EXCEPTIONS
