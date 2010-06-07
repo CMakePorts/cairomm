@@ -1,3 +1,10 @@
+2010-06-07  Daisuke Nishikawa  <caffeine@m13.alpha-net.ne.jp>
+
+	Actually install cairomm-xlib-xrender-1.0.pc.
+
+	* configure.ac: Fix a typo in the check for xlib-xrender support in
+    cairo. Fixes bug #27066.
+
 2009-08-13  Daniel Elstner  <danielk@openismus.com>
 
 	Distribute mm-common documentation utilities
@@ -550,7 +557,7 @@
 
 2008-09-14  Murray Cumming  <murrayc@murrayc.com>
 
-	* cairomm/fontface.h: Improve (and complete) the documenation for 
+	* cairomm/fontface.h: Improve (and complete) the documenation for
 	the set_*_func() methods.
 	* cairomm/fontoptions.h:
 	* cairomm/scaledfont.h:
@@ -563,12 +570,12 @@
 
 2008-09-14  Murray Cumming  <murrayc@murrayc.com>
 
-	* cairomm/fontface.[h|cc]: Remove the useless/awkward get_*_func() 
+	* cairomm/fontface.[h|cc]: Remove the useless/awkward get_*_func()
 	methods. We do not have them in gtkmm either.
 
 2008-09-14  Murray Cumming  <murrayc@murrayc.com>
 
-	* cairomm/*.h: Added many missing . to documentation, 
+	* cairomm/*.h: Added many missing . to documentation,
 	and corrected some whitespace.
 
 2008-09-12  Jonathon Jongsma  <jonathon@gnome.org>
@@ -880,7 +887,7 @@
 
 2008-08-07  Murray Cumming  <murrayc@murrayc.com>
 
-	* MSVC/: Renamed to MSVC_Net2008, ready to be patched by Armin 
+	* MSVC/: Renamed to MSVC_Net2008, ready to be patched by Armin
 	or Cedric.
 
 2008-04-25  Jonathon Jongsma  <jjongsma@gnome.org>
@@ -909,14 +916,14 @@
 
 2008-04-11  Murray Cumming  <murrayc@murrayc.com>
 
-	* Add autoheader to autogen.sh, to create cairommconfig.h.in, to fix 
+	* Add autoheader to autogen.sh, to create cairommconfig.h.in, to fix
 	the build for me.
 
 2008-03-23  Murray Cumming  <murrayc@murrayc.com>
 
 	* cairomm/enums.h (FONT_TYPE_ATSUI, FONT_TYPE_QUARTZ):
-	Change the definition of FONT_TYPE_ATSUI from CAIRO_FONT_TYPE_ATSUI to 
-	CAIRO_FONT_TYPE_QUARTZ (the same numerical value) and document it as 
+	Change the definition of FONT_TYPE_ATSUI from CAIRO_FONT_TYPE_ATSUI to
+	CAIRO_FONT_TYPE_QUARTZ (the same numerical value) and document it as
 	deprecated. The others should be documented too.
 	Added FONT_TYPE_QUARTZ.
 
@@ -946,7 +953,7 @@
 	* examples/png_file/main.cc:
 	* examples/ps-surface/main.cc:
 	* examples/svg-surface/main.cc:
-	* examples/text-rotate/text-rotate.cc: Added includes of math.h to 
+	* examples/text-rotate/text-rotate.cc: Added includes of math.h to
 	fix the build with Sun Workshop 12. Bug #14558.
 
 2008-01-30  Jonathon Jongsma  <jjongsma@gnome.org>
@@ -1016,13 +1023,13 @@
 2007-07-21  Murray Cumming  <murrayc@murrayc.com>
 
 	* m4/reduced.m4: Added, containing CAIROMM_ARG_ENABLE_API_EXCEPTIONS().
-	* configure.in: Use CAIROMM_ARG_ENABLE_API_EXCEPTIONS() to add a 
+	* configure.in: Use CAIROMM_ARG_ENABLE_API_EXCEPTIONS() to add a
 	--enable-api-exceptions=yes/no option.
-	Used to generate a cairomm/cairommconfig.h config file, which 
+	Used to generate a cairomm/cairommconfig.h config file, which
 	defines (or not) CAIROMM_EXCEPTIONS_ENABLED.
 	* cairomm/cairommconfig.h.in: Added, used to generate cairommconfig.h
 	* cairomm/private.cc:
-	* cairomm/private.h: Use ifdef to replace throw_exception() with an empty 
+	* cairomm/private.h: Use ifdef to replace throw_exception() with an empty
 	implementation when exceptions are disabled.
 	This allows cairomm to be built when using CXXFLAGS=-fno-exceptions.
 
@@ -1049,8 +1056,8 @@
 2007-06-14  Murray Cumming  <murrayc@murrayc.com>
 
 	* cairomm/refptr.h: Added RefPtr(object, refcount) constructor
-	for use in cast_*(), so that the casted RefPtr shares the same 
-	refcount, avoiding an early deletion. I do not like making 
+	for use in cast_*(), so that the casted RefPtr shares the same
+	refcount, avoiding an early deletion. I do not like making
 	this constructor public, but I do not see another way.
 
 === 1.4.0 ===
@@ -1152,7 +1159,7 @@
 2007-04-16  Hugo Vincent  <hugo.vincent@gmail.com>
 
 	* Added QuartzSurface for MacOS X (when cairo is built with Quartz support),
-	similar to the existing Win32Surface and XlibSurface. These allow use of 
+	similar to the existing Win32Surface and XlibSurface. These allow use of
 	platform-specific features and data structures.
 
 2007-03-23  Jonathon Jongsma  <jjongsma@gnome.org>
@@ -1177,7 +1184,7 @@
 2007-03-22  Murray Cumming  <murrayc@murrayc@murrayc.com>
 
 	* cairomm/enums.h: Restored FORMAT_RGB16_565 and marked it as deprecated.
-	Note that CAIRO_FORMAT_RGB16_565 has not really been removed from cairo. 
+	Note that CAIRO_FORMAT_RGB16_565 has not really been removed from cairo.
 	It has just moved from the enum to a #define in cairo-deprecated.
 	* cairomm/context.cc:
 	* cairomm/context.h: Made get_dash() const.
@@ -1185,7 +1192,7 @@
 	(in Context, if not in other classes), and made it const.
 	Made copy_clip_rectangle_list() const.
 	* cairomm/pattern.cc:
-	* cairomm/pattern.h: Make the RadialGradient::get_radial_circles(), LinearGradient::get_linear_points(), 
+	* cairomm/pattern.h: Make the RadialGradient::get_radial_circles(), LinearGradient::get_linear_points(),
 	and Gradient::get_color_stops() methods const.
 	Added a non-const method overload of get_surface().
 	Correc the get_color_stops() implementation to match the declaration.
@@ -1243,9 +1250,9 @@
 
 2006-09-27  Murray Cumming  <murrayc@murrayc.com>
 
-	* cairomm/refptr.h: cast_static() and cast_dynamic(): 
-	Use the refcount_() accessor instead of the member variable, 
-	to avoid compilation errors, as we already do in the 
+	* cairomm/refptr.h: cast_static() and cast_dynamic():
+	Use the refcount_() accessor instead of the member variable,
+	to avoid compilation errors, as we already do in the
 	templated copy constructor.
 
 1.2.2:
@@ -1259,7 +1266,7 @@
 
 	* cairomm/win32_surface.cc: Explicitly cast Cairo::Format to
 	cairo_format_t.
-	
+
 2006-08-20  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* Makefile.am: fix up the release announcement template to explain what
@@ -1328,12 +1335,12 @@
 	as MSVC does not like non-const arguments as array size.
 	* examples/pdf-surface/main.cc, examples/png_file/main.cc,
 	examples/ps-surface/main.cc, examples/svg-surface/main.cc,
-	examples/text-rotate/text-rotate.cc: Define M_PI for MSVC. 
+	examples/text-rotate/text-rotate.cc: Define M_PI for MSVC.
 	* configure.in, Makefile.am: Generate Makefiles in the MSVC
-	subdirectories.  
+	subdirectories.
 	* .cvsignore: Added Eclipse .project to the list of ignored files.
 	* MSVC/*: Added project and resource files for Visual Studio 2005.
-	
+
 2006-08-18  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/context.cc:
@@ -1358,30 +1365,30 @@
 
 2006-07-11  Murray Cumming  <murrayc@murrayc.com>
 
-	* cairomm/refptr.h: unref(): Only delete the refcount int when the refcount has 	
+	* cairomm/refptr.h: unref(): Only delete the refcount int when the refcount has
 	reached 0, instead of deleting it every time. Thanks valgrind.
 
 2006-07-11  Murray Cumming  <murrayc@murrayc.com>
 
-	* cairomm/refptr.h: From-C-object Constructor: Added documentation explaining 
-	how/when to use it and when to do an extra reference(). This will help us, 
-	though it should rarely be necessary for an application developer to understand 
+	* cairomm/refptr.h: From-C-object Constructor: Added documentation explaining
+	how/when to use it and when to do an extra reference(). This will help us,
+	though it should rarely be necessary for an application developer to understand
 	it.
-	Made pCppRefcount_ mutable, so that refcount_() can be a const method so that 
+	Made pCppRefcount_ mutable, so that refcount_() can be a const method so that
 	the templated constructor compiles.
 	Added class documentation to explain why we even want to use this class.
 
 2006-07-05  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
-	* cairomm/refptr.h: copy constructors: initialize the pCppRefcount_ member 
-	variable, using a public refcount_() method when necessary to access a 
+	* cairomm/refptr.h: copy constructors: initialize the pCppRefcount_ member
+	variable, using a public refcount_() method when necessary to access a
 	different RefPtr<> specialization.
 
 2006-07-11  Murray Cumming  <murrayc@murrayc.com>
 
-	* cairomm/refptr.h: Use an int to reference-count the C++ object, and 
-	only reference/unreference the object (and hence the underlying C object) 
-	when receiving/deleting the C++ object. Without this, we never delete 
+	* cairomm/refptr.h: Use an int to reference-count the C++ object, and
+	only reference/unreference the object (and hence the underlying C object)
+	when receiving/deleting the C++ object. Without this, we never delete
 	the C++ object. Fixes bug #7442.
 
 2006-07-09  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
@@ -1402,22 +1409,22 @@
 	* cairomm/surface.cc:
 	* cairomm/surface.h:
 	* cairomm/xlib_surface.cc:
-	* cairomm/xlib_surface.h: Fix the generic text about reference-counted 
-	objects, because we no longer use copy constructors for this. And some 
+	* cairomm/xlib_surface.h: Fix the generic text about reference-counted
+	objects, because we no longer use copy constructors for this. And some
 	pedantic white space changes.
 
 2006-07-05  Murray Cumming  <murrayc@murrayc.com>
 
 	* cairomm/scaledfont.cc:
-	* cairomm/scaledfont.h: create(): Make the font_matrix and ctm 
-	parameters const (they are now const in the C API too). Maybe the font 
-	parameter should be const, but maybe there is a reason that it is not 
-	const in the C API. Pass FontOptions by const reference instead of 
+	* cairomm/scaledfont.h: create(): Make the font_matrix and ctm
+	parameters const (they are now const in the C API too). Maybe the font
+	parameter should be const, but maybe there is a reason that it is not
+	const in the C API. Pass FontOptions by const reference instead of
 	by value.
-	glyph_extents(): Pass the vector by const reference instead of by 
+	glyph_extents(): Pass the vector by const reference instead of by
 	value.
-	I would prefere to make all the extents() functions use return values 
-	instead of output parameters, but I suppose this might be slightly 
+	I would prefere to make all the extents() functions use return values
+	instead of output parameters, but I suppose this might be slightly
 	less efficient in some circumstances.
 
 2006-07-05  Murray Cumming  <murrayc@murrayc.com>
@@ -1428,8 +1435,8 @@
 	* cairomm/scaledfont.h:
 	* cairomm/surface.h:
 	* cairomm/win32_surface.h:
-	* cairomm/xlib_surface.h: Use @ instead of \ for doxygen 
-	commands, to be consistent with gtkmm, which uses it because it is the 
+	* cairomm/xlib_surface.h: Use @ instead of \ for doxygen
+	commands, to be consistent with gtkmm, which uses it because it is the
 	same as JavaDoc, with which some people are already familiar.
 
 2006-07-04  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
@@ -1481,7 +1488,7 @@
 2006-06-27  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/enums.h: Added enum types to support the new get_type() and SVG
-	Version API 
+	Version API
 	* cairomm/fontface.cc, cairomm/fontface.h: add new get_type() API
 	* cairomm/pattern.cc, cairomm/pattern.h: add new get_type() API
 	* cairomm/surface.cc, cairomm/surface.h: add new get_type() API and
@@ -1534,7 +1541,7 @@
 2006-05-08  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* cairomm/cairomm.h: Add doxygen API introduction test here.
-	* docs/reference/Doxyfile.in: 
+	* docs/reference/Doxyfile.in:
 	* docs/reference/Makefile.am:
 	* docs/reference/cairomm-header.html:
 	* docs/reference/cairomm.css:
@@ -1552,7 +1559,7 @@
 2006-04-20  Murray Cumming  <murrayc@murrayc.com>
 
 	* cairomm/context.cc:
-	* cairomm/context.h: mask(pattern) and mask(surface): Make the parameter 
+	* cairomm/context.h: mask(pattern) and mask(surface): Make the parameter
 	const, because I am fairly sure that the C function does not change it.
 
 2006-04-06  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
@@ -1595,7 +1602,7 @@
 
 	* configure.in: added tests for doxygen and graphviz which displays a
 	warning if the user has --enable-docs set but doesn't have doxygen or
-	graphviz installed.  
+	graphviz installed.
 
 2006-03-28  Danilo Piazzalunga  <danilopiazza@gmail.com>
 
@@ -1752,7 +1759,7 @@
 
 	* cairomm/context.h: Added a lot of documentation for the Cairo::Context
 	class taken from the cairo docs.  It's not complete, but the basics are all
-	covered now. 
+	covered now.
 	* docs/reference/Makefile.am: make use of existing Makefile variable
 	* NEWS: update for 0.5.0 release
 
@@ -1768,7 +1775,7 @@
 	* docs/reference/Doxyfile.in:
 	* docs/reference/Makefile.am:
 	* docs/reference/introduction.h: Added infrastructure to build and install
-	the API documentation for cairomm (based on libxml++ makefiles).  
+	the API documentation for cairomm (based on libxml++ makefiles).
 
 2006-01-27  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
@@ -1780,7 +1787,7 @@
 
 2006-01-27  Murray Cumming  <murrayc@murrayc.com>
 
-	* examples/pdf-surface/Makefile.am: Remove extra LDADD that was breaking 
+	* examples/pdf-surface/Makefile.am: Remove extra LDADD that was breaking
 	the distcheck.
 
 2006-01-26  Murray Cumming  <murrayc@murrayc.com>
@@ -1791,9 +1798,9 @@
 2006-01-25  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
 
 	* configure.in:
-	* examples/Makefile.am: 
-	* examples/pdf-surface/: 
-	* examples/ps-surface/: 
+	* examples/Makefile.am:
+	* examples/pdf-surface/:
+	* examples/ps-surface/:
 	* examples/svg-surface/: add examples for additional surfaces
 
 2006-01-24  Murray Cumming  <murrayc@murrayc.com>
@@ -1804,11 +1811,11 @@
 	* cairomm/xlib_surface.cc:
 	* cairomm/xlib_surface.h:
 	* cairomm/win32_surface.cc:
-	* cairomm/win32_surface.h: Moved XlibSurface and 
-	Win32Surface into separate files, not #included by 
-	the main cairomm.h file, so that developers do not need to 
-	suffer the Xlib.h or Windows namespace pollution unless they really need to. 
-	For instance, this fixes the gtkmm 2.9 build which was broken by the 
+	* cairomm/win32_surface.h: Moved XlibSurface and
+	Win32Surface into separate files, not #included by
+	the main cairomm.h file, so that developers do not need to
+	suffer the Xlib.h or Windows namespace pollution unless they really need to.
+	For instance, this fixes the gtkmm 2.9 build which was broken by the
 	Display struct in Xlib.h.
 
 2006-01-15  Jonathon Jongsma  <jonathon.jongsma@gmail.com>
@@ -1818,7 +1825,7 @@
 	types.  Cairo::Surface is now a base class for all of the other surface
 	types, and should not be used directly.  New Surface types include
 	ImageSurface, XlibSurface, Win32Surface, PdfSurface, PsSurface,
-	SvgSurface, and GlitzSurface.  
+	SvgSurface, and GlitzSurface.
 	Modified Surface::write_to_png() and Surface::write_to_png_stream() so
 	that they throw exceptions like the other functions instead of returning a
 	cairo_status_t value.
@@ -1853,9 +1860,9 @@
 2005-12-17  Murray Cumming  <murrayc@murrayc.com>
 
 	* cairomm/Makefile.am:
-	* cairomm/refptr.h: Add shared 
-	reference-counting smartpointer, using 
-	the reference-count in the object. A copy 
+	* cairomm/refptr.h: Add shared
+	reference-counting smartpointer, using
+	the reference-count in the object. A copy
 	of the tried and tested glibmm RefPtr.
 	* cairomm/context.cc:
 	* cairomm/context.h:
@@ -1864,22 +1871,22 @@
 	* cairomm/pattern.cc:
 	* cairomm/pattern.h:
 	* cairomm/surface.cc:
-	* cairomm/surface.h: Make constructors protected 
-	and add public static create() methods that return 
-	instances in RefPtr<>s. This allows reference-counted 
-	objects to be clearly const or non-const, and allows 
+	* cairomm/surface.h: Make constructors protected
+	and add public static create() methods that return
+	instances in RefPtr<>s. This allows reference-counted
+	objects to be clearly const or non-const, and allows
 	casting between related types.
 
 2005-12-17  Murray Cumming  <murrayc@murrayc.com>
 
 	* cairomm/context.cc:
-	* cairomm/context.h: Change set_dash(void) to 
-	unset_dash(). Change rotate_deg() to 
-	rotate_degrees(). Change identity_matrix() to 
-	set_identity_matrix(). Change new_path() to 
+	* cairomm/context.h: Change set_dash(void) to
+	unset_dash(). Change rotate_deg() to
+	rotate_degrees(). Change identity_matrix() to
+	set_identity_matrix(). Change new_path() to
 	clear_path().
 	* cairomm/fontface.cc:
-	* cairomm/fontface.h: Comment-out 
+	* cairomm/fontface.h: Comment-out
 	get/set_user_data(), because it seems useless.
 
 0.3.0:
@@ -1887,58 +1894,58 @@
 2005-12-08  Murray Cumming <murrayc@murrayc.com>
 
 	* cairomm/pattern.cc:
-	* cairomm/pattern.h: Create a hierarchy of pattern 
-	classes, as suggested by the C documentation, because 
+	* cairomm/pattern.h: Create a hierarchy of pattern
+	classes, as suggested by the C documentation, because
 	not all functions are meaningful for all pattern types.
 
 2005-12-07  Murray Cumming <murrayc@murrayc.com>
 
 	* cairomm/context.cc:
-	* cairomm/context.h: font_extents(), stroke_extents(), 
-	glyph_extents(), fill_extents(): Add get_ prefix and 	
+	* cairomm/context.h: font_extents(), stroke_extents(),
+	glyph_extents(), fill_extents(): Add get_ prefix and
 	make them const.
 
 2005-12-07  Murray Cumming <murrayc@murrayc.com>
 
 	* cairomm/context.cc:
-	* cairomm/context.h: Add typedef for Matrix, though we 
-	probably want to derive a class with a C++-like matrix 
+	* cairomm/context.h: Add typedef for Matrix, though we
+	probably want to derive a class with a C++-like matrix
 	API, with operator overloading.
 
 2005-12-07  Murray Cumming <murrayc@murrayc.com>
 
 	* cairomm/exception.cc:
-	* cairomm/exception.h: Rename to logic_error, because 
-	the cairo documentation says that most of them are 
-	programming errors, not runtime errors. Derive from 
+	* cairomm/exception.h: Rename to logic_error, because
+	the cairo documentation says that most of them are
+	programming errors, not runtime errors. Derive from
 	std::logic_error because of this.
 	* cairomm/private.cc:
-	* cairomm/private.h: Throw std::bad_alloc for memory 
-	errors, and std::io_base::failure for read/write runtime 
-	errors, as suggested by the cairo language-binding 
+	* cairomm/private.h: Throw std::bad_alloc for memory
+	errors, and std::io_base::failure for read/write runtime
+	errors, as suggested by the cairo language-binding
 	documentation.
 
 2005-12-07  Murray Cumming <murrayc@murrayc.com>
 
 	* cairomm/context.cc:
 	* cairomm/fontoptions.cc:
-	* cairomm/surface.cc: Check for errors in 
-	constructors, as per the error-handling advice in the 
+	* cairomm/surface.cc: Check for errors in
+	constructors, as per the error-handling advice in the
 	language bindings section of the cairo documentation.
 
 2005-12-07  Murray Cumming <murrayc@murrayc.com>
 
 	* cairomm/context.cc:
-	* cairomm/context.h: Change mask_surface() to 
-	mask() and set_source_surface() to set_source(), 
-	as per the method overloading advice in the 
+	* cairomm/context.h: Change mask_surface() to
+	mask() and set_source_surface() to set_source(),
+	as per the method overloading advice in the
 	language bindings section of the cairo documentation.
 
 0.2.0:
 
 2005-12-02  Murray Cumming <murrayc@murrayc.com>
 
-	* cairomm/cairomm.h: Put sensible stuff in here, 
+	* cairomm/cairomm.h: Put sensible stuff in here,
 	instead of my copy/paste stuff from libxml++.
 	* cairomm/context.cc:
 	* cairomm/context.h:
@@ -1957,4 +1964,3 @@
 	* cairomm/private.h:
 	* cairomm/surface.cc:
 	* cairomm/surface.h: Add LGPL comment headings.
-
