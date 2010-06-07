@@ -46,7 +46,7 @@ AC_SUBST([CAIROMM_MODULES], ['cairo >= 1.8.0 sigc++-2.0'])
 cairomm_allmodules=$CAIROMM_MODULES
 CAIROMM_INSTALL_PC='data/cairomm-1.0.pc'
 
-for cairomm_mod in ft pdf png ps svg xlib xlib-render \
+for cairomm_mod in ft pdf png ps svg xlib xlib-xrender \
                    win32 win32-font quartz quartz-font quartz-image
 do
   PKG_CHECK_EXISTS([cairo-$cairomm_mod],
