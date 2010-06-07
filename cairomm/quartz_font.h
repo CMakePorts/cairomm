@@ -46,6 +46,7 @@ public:
    */
   static RefPtr<QuartzFontFace> create(CGFontRef font);
 
+#ifndef __LP64__
   /** Creates a new font for the Quartz font backend based on an ATSUFontID.
    * This font can then be used with Context::set_font_face() or
    * ScaledFont::create().
@@ -55,11 +56,14 @@ public:
    * @since 1.8
    */
   static RefPtr<QuartzFontFace> create(ATSUFontID font_id);
+#endif
 
 
 protected:
   QuartzFontFace(CGFontRef font);
+#ifndef __LP64__
   QuartzFontFace(ATSUFontID font_id);
+#endif
 };
 
 }
