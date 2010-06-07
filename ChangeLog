@@ -5,6 +5,29 @@
 	* configure.ac: Fix a typo in the check for xlib-xrender support in
     cairo. Fixes bug #27066.
 
+2010-01-28  Daniel Elstner  <danielk@openismus.com>
+
+    Clean up configure.ac and add silent rules support
+
+    * configure.ac (AC_INIT): Specify correct URLs for bug reports and the
+    project home page.
+    (AM_SILENT_RULES): Call macro if defined.
+    (MM_PREREQ): Require mm-common 0.8.
+    (BOOST_UNIT_TEST_FRAMEWORK_STATIC_LIB): Rewrite the fragile shell code
+    of the boost check.
+
+2009-10-19  Jonathon Jongsma <jjongsma@gnome.org>
+
+    bump to 1.8.4, update NEWS
+
+2009-08-13  Jonathon Jongsma <jjongsma@gnome.org>
+
+    Don't force tests to be enabled when CAIROMM_DEVEL is defined
+
+    This was hacked in to ensure that I always built with tests enabled, but the
+    boost configure detection scripts are broken right now on my setup, so this just
+    hinders my ability to get things done.  remove it.
+
 2009-08-13  Daniel Elstner  <danielk@openismus.com>
 
 	Distribute mm-common documentation utilities
