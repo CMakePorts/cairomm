@@ -1041,19 +1041,21 @@ public:
    */
   inline const cobject* cobj() const { return m_cobject; }
  
-  #ifndef DOXYGEN_IGNORE_THIS
+#ifndef DOXYGEN_IGNORE_THIS
   ///For use only by the cairomm implementation.
   inline ErrorStatus get_status() const
   { return cairo_status(const_cast<cairo_t*>(cobj())); }
 
   void reference() const;
   void unreference() const;
-  #endif //DOXYGEN_IGNORE_THIS
+#endif //DOXYGEN_IGNORE_THIS
 
 protected:
-
- 
   cobject* m_cobject;
+
+private:
+  Context(const Context&);
+  Context& operator=(const Context&);
 };
 
 } // namespace Cairo

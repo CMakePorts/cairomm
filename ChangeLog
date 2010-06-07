@@ -1,5 +1,14 @@
 2010-06-07  Daniel Elstner  <danielk@openismus.com>
 
+	Disallow copying of Cairo::Context objects
+
+	* cairomm/context.h (Cairo::Context): Declare a private copy
+	constructor and assignment operator in order to explicitly prevent
+	objects from being copied by value.  That was never valid, and not
+	disallowing it seems to have been merely an oversight.
+
+2010-06-07  Daniel Elstner  <danielk@openismus.com>
+
 	Do not unnecessarily cast booleans to pointers
 
 	* cairomm/fontface.cc (USER_DATA_KEY_DEFAULT_TEXT_TO_GLYPHS): Put
