@@ -1,3 +1,15 @@
+2010-06-07  Daniel Elstner  <danielk@openismus.com>
+
+	Do not unnecessarily cast booleans to pointers
+
+	* cairomm/fontface.cc (USER_DATA_KEY_DEFAULT_TEXT_TO_GLYPHS): Put
+	dummy object into an anonymous namespace and make it static.
+	(UserFontFace::text_to_glyphs): Do not cast a boolean to a pointer
+	in order to indicate state via the font face's user data.  There are
+	fairly safe alternative casts to do this, but it is much simpler to
+	just take the address of any existing object to get a non-0 pointer.
+	(UserFontFace::UserFontFace): Remove unnecessary casts.
+
 2009-10-26  Armin Burgmeier  <armin@arbur.net>
 
 	* MSVC_Net2005/cairomm/cairomm.rc.in:

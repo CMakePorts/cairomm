@@ -22,10 +22,15 @@
 #include <cairomm/scaledfont.h>
 #include <cairomm/private.h>
 
-namespace Cairo
+namespace
 {
 
-const cairo_user_data_key_t USER_DATA_KEY_DEFAULT_TEXT_TO_GLYPHS =  {0};
+static const cairo_user_data_key_t USER_DATA_KEY_DEFAULT_TEXT_TO_GLYPHS =  {0};
+
+} // anonymous namespace
+
+namespace Cairo
+{
 
 FontFace::FontFace(cairo_font_face_t* cobject, bool has_reference)
 : m_cobject(0)
@@ -306,10 +311,12 @@ UserFontFace::text_to_glyphs(const RefPtr<ScaledFont>& /*scaled_font*/,
   // negative value for the size of the glyph array, which is a special value in
   // the C API that means: "ignore this function and call unicode_to_glyph
   // instead".  If this default virtual function is ever called, it will set a
-  // bool value in the user_data, which we can read back in the
+  // non-NULL value in the user_data, which we can read back in the
   // text_to_glyphs_cb and used as a signal to return -1 for the num_glyphs
   // parameter.
-  cairo_font_face_set_user_data(cobj(), &USER_DATA_KEY_DEFAULT_TEXT_TO_GLYPHS, reinterpret_cast<void*>(true), NULL);
+  // TODO: Is there a reentrancy requirement, and is this code reentrant?
+  cairo_font_face_set_user_data(cobj(), &USER_DATA_KEY_DEFAULT_TEXT_TO_GLYPHS,
+                                this, 0);
   return CAIRO_STATUS_SUCCESS;
 }
 
@@ -357,8 +364,7 @@ UserFontFace::UserFontFace()
   // store a pointer to the wrapper class in the user-data, so that when one of
   // the callback functions gets called (which has to be a plain-C function so
   // can't be a class member), we can get a reference to the wrapper class
-  cairo_font_face_set_user_data(m_cobject, &user_font_key,
-                                 (void*)this, (cairo_destroy_func_t) NULL);
+  cairo_font_face_set_user_data(m_cobject, &user_font_key, this, 0);
   cairo_user_font_face_set_init_func(cobj(), init_cb);
   cairo_user_font_face_set_render_glyph_func(cobj(), render_glyph_cb);
   cairo_user_font_face_set_unicode_to_glyph_func(cobj(), unicode_to_glyph_cb);
