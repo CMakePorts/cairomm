@@ -1,3 +1,9 @@
+2010-06-07  Augusto Jun Devegili  <monipol@gmx.com>
+
+	Put ifdefs around 32-bit-only API, to fix the build on 64-bit machines.
+
+	* cairomm/quartz_font.[h|cc]: Use #ifndef __LP64__, as cairo does.
+
 2010-06-07  Daisuke Nishikawa  <caffeine@m13.alpha-net.ne.jp>
 
 	Actually install cairomm-xlib-xrender-1.0.pc.
