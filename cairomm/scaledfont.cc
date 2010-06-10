@@ -24,6 +24,7 @@ namespace Cairo
 {
 
 ScaledFont::ScaledFont(cobject* cobj, bool has_reference)
+: m_cobject(0)
 {
   if(has_reference)
     m_cobject = cobj;
@@ -33,6 +34,7 @@ ScaledFont::ScaledFont(cobject* cobj, bool has_reference)
 
 ScaledFont::ScaledFont(const RefPtr<FontFace>& font_face, const cairo_matrix_t& font_matrix,
                        const cairo_matrix_t& ctm, const FontOptions& options)
+: m_cobject(0)
 {
   m_cobject =
     cairo_scaled_font_create(font_face->cobj(),
