@@ -82,6 +82,10 @@ protected:
   Pattern();
 
   cobject* m_cobject;
+
+private:
+  Pattern(const Pattern&);
+  Pattern& operator=(const Pattern&);
 };
 
 class SolidPattern : public Pattern

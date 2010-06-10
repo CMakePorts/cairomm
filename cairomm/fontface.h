@@ -93,6 +93,10 @@ public:
 protected:
 
   cobject* m_cobject;
+
+private:
+  FontFace(const FontFace&);
+  FontFace& operator=(const FontFace&);
 };
 
 

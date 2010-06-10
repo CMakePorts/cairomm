@@ -63,6 +63,10 @@ public:
 protected:
 
   cobject* m_cobject;
+
+private:
+  Path(const Path&);
+  Path& operator=(const Path&);
 };
 
 } // namespace Cairo

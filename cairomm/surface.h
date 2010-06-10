@@ -302,6 +302,10 @@ protected:
   /** The underlying C cairo surface type that is wrapped by this Surface
    */
   cobject* m_cobject;
+
+private:
+  Surface(const Surface&);
+  Surface& operator=(const Surface&);
 };
 
 /** @example image-surface.cc

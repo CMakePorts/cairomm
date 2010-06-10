@@ -41,6 +41,7 @@ FontOptions::FontOptions(cairo_font_options_t* cobject, bool take_ownership)
 }
 
 FontOptions::FontOptions(const FontOptions& src)
+: m_cobject(0)
 {
   //Reference-counting, instead of copying by value:
   if(!src.m_cobject)
