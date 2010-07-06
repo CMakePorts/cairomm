@@ -40,6 +40,7 @@
 #include <cairomm/matrix.h>
 #include <cairomm/path.h>
 #include <cairomm/pattern.h>
+#include <cairomm/region.h>
 #include <cairomm/scaledfont.h>
 #include <cairomm/surface.h>
 

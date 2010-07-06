@@ -230,6 +230,13 @@ typedef enum
     TEXT_CLUSTER_FLAG_BACKWARD = CAIRO_TEXT_CLUSTER_FLAG_BACKWARD /**< The clusters in the cluster array map to glyphs in the glyph array from end to start. */
 } TextClusterFlags;
 
+typedef enum
+{
+    REGION_OVERLAP_IN = CAIRO_REGION_OVERLAP_IN,		/**< completely inside region */
+    REGION_OVERLAP_OUT = CAIRO_REGION_OVERLAP_OUT,		/**< completely outside region */
+    REGION_OVERLAP_PART = CAIRO_REGION_OVERLAP_PART		/**< partly inside region */
+} RegionOverlap;
+
 } // namespace Cairo
 
 #endif //__CAIROMM_ENUMS_H

@@ -14,6 +14,7 @@ cairomm_cc =				\
 	private.cc			\
 	quartz_font.cc			\
 	quartz_surface.cc		\
+	region.cc \
 	scaledfont.cc			\
 	surface.cc			\
 	win32_font.cc			\
@@ -32,6 +33,7 @@ cairomm_public_h =			\
 	quartz_font.h			\
 	quartz_surface.h		\
 	refptr.h			\
+	region.h \
 	scaledfont.h			\
 	surface.h			\
 	types.h				\

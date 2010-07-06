@@ -30,6 +30,12 @@ namespace Cairo
 typedef cairo_rectangle_t Rectangle;
 
 /** See the <a
+ * href="http://cairographics.org/manual/cairo-context.html#cairo-rectangle-t">cairo_rectangle_int_t
+ * reference</a> in the cairo manual for more information
+ */
+typedef cairo_rectangle_int_t RectangleInt;
+
+/** See the <a
  * href="http://cairographics.org/manual/cairo-scaled-font.html#cairo-font-extents-t">cairo_font_extents_t
  * reference</a> in the cairo manual for more information
  */
