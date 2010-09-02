@@ -232,9 +232,12 @@ public:
    */
   void set_line_join(LineJoin line_join);
 
+#ifndef CAIROMM_DISABLE_DEPRECATED
   /**
    * Alternate version of set_dash().  You'll probably want to use the one that
    * takes a std::vector argument instead.
+   *
+   * @deprecated Instead use the version that takes a const dashes parameter.
    */
   void set_dash(std::valarray<double>& dashes, double offset);
 
@@ -254,8 +257,36 @@ public:
    * @param offset	an offset into the dash pattern at which the stroke should start
    *
    * @exception
+   *
+   * @deprecated Instead use the version that takes a const dashes parameter.
    */
   void set_dash(std::vector<double>& dashes, double offset);
+#endif //CAIROMM_DISABLE_DEPRECATED
+
+  /**
+   * Alternate version of set_dash().  You'll probably want to use the one that
+   * takes a std::vector argument instead.
+   */
+  void set_dash(const std::valarray<double>& dashes, double offset);
+
+  /** Sets the dash pattern to be used by stroke(). A dash pattern is specified
+   * by dashes, an array of positive values. Each value provides the user-space
+   * length of altenate "on" and "off" portions of the stroke. The offset
+   * specifies an offset into the pattern at which the stroke begins.
+   *
+   * If dashes is empty dashing is disabled.  If the size of dashes is 1, a
+   * symmetric pattern is assumed with alternating on and off portions of the
+   * size specified by the single value in dashes.
+   *
+   * It is invalid for any value in dashes to be negative, or for all values to
+   * be 0.  If this is the case, an exception will be thrown
+   *
+   * @param dashes	an array specifying alternate lengths of on and off portions
+   * @param offset	an offset into the dash pattern at which the stroke should start
+   *
+   * @exception
+   */
+  void set_dash(const std::vector<double>& dashes, double offset);
 
   /** This function disables a dash pattern that was set with set_dash()
    */

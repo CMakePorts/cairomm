@@ -1,8 +1,15 @@
 2010-09-02  Murray Cumming  <murrayc@murrayc.com>
 
+	Context: set_dash(): Make the dashes parameter const.
+
+	* cairomm/context.[h|cc]: set_dash(): Add versions that take a const
+  vector parameter, deprecating the old versions.
+
+2010-09-02  Murray Cumming  <murrayc@murrayc.com>
+
 	Context: Make some methods const, deprecating the non-const versions.
 
-	* cairomm/context.h: device_to_user(, device_to_user_distance(),
+	* cairomm/context.[h|cc]: device_to_user(, device_to_user_distance(),
   user_to_device(), user_to_device_distance(): Deprecate the non-const versions,
   adding const versions.
 

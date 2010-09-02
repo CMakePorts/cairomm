@@ -165,6 +165,18 @@ void Context::set_dash(std::vector<double>& dashes, double offset)
   check_object_status_and_throw_exception(*this);
 }
 
+void Context::set_dash(const std::valarray<double>& dashes, double offset)
+{
+  cairo_set_dash(cobj(), &dashes[0], dashes.size(), offset);
+  check_object_status_and_throw_exception(*this);
+}
+
+void Context::set_dash(const std::vector<double>& dashes, double offset)
+{
+  cairo_set_dash(cobj(), &dashes[0], dashes.size(), offset);
+  check_object_status_and_throw_exception(*this);
+}
+
 void Context::unset_dash()
 {
   cairo_set_dash(cobj(), NULL, 0, 0.0);
