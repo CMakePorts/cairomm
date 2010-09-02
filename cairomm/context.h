@@ -36,7 +36,7 @@
 namespace Cairo
 {
 
-/** Context is the main class used to draw in cairomm. 
+/** Context is the main class used to draw in cairomm.
  * In the simplest case, create a Context with its target Surface, set its
  * drawing options (line width, color, etc), create shapes with methods like
  * move_to() and line_to(), and then draw the shapes to the Surface using
@@ -70,7 +70,7 @@ public:
    * nested; each call to restore() restores the state from the matching paired
    * save().
    *
-   * It isn't necessary to clear all saved states before a cairo_t is freed. 
+   * It isn't necessary to clear all saved states before a cairo_t is freed.
    * Any saved states will be freed when the Context is destroyed.
    *
    * @sa restore()
@@ -99,7 +99,7 @@ public:
    * Note: The Pattern's transformation matrix will be locked to the user space
    * in effect at the time of set_source(). This means that further
    * modifications of the current transformation matrix will not affect the
-   * source pattern. 
+   * source pattern.
    *
    * @param source	a Pattern to be used as the source for subsequent drawing
    * operations.
@@ -162,7 +162,7 @@ public:
    *
    * @param surface  	a Surface to be used to set the source pattern
    * @param x  	User-space X coordinate for surface origin
-   * @param y  	User-space Y coordinate for surface origin 
+   * @param y  	User-space Y coordinate for surface origin
    */
   void set_source(const RefPtr<Surface>& surface, double x, double y);
 
@@ -209,7 +209,7 @@ public:
    * @param width	a line width, as a user-space value
    */
   void set_line_width(double width);
-  
+
   /** Sets the current line cap style within the cairo Context. See
    * LineCap for details about how the available line cap styles are drawn.
    *
@@ -232,11 +232,12 @@ public:
    */
   void set_line_join(LineJoin line_join);
 
-  /** 
+  /**
    * Alternate version of set_dash().  You'll probably want to use the one that
    * takes a std::vector argument instead.
    */
   void set_dash(std::valarray<double>& dashes, double offset);
+
   /** Sets the dash pattern to be used by stroke(). A dash pattern is specified
    * by dashes, an array of positive values. Each value provides the user-space
    * length of altenate "on" and "off" portions of the stroke. The offset
@@ -268,7 +269,7 @@ public:
    * takes place after any existing transformation.
    *
    * @param tx	amount to translate in the X direction
-   * @param ty	amount to translate in the Y direction 
+   * @param ty	amount to translate in the Y direction
    */
   void translate(double tx, double ty);
 
@@ -326,11 +327,14 @@ public:
    */
   void set_identity_matrix();
 
+#ifndef CAIROMM_DISABLE_DEPRECATED
   /** Transform a coordinate from user space to device space by multiplying the
    * given point by the current transformation matrix (CTM).
    *
    * @param x	X value of coordinate (in/out parameter)
    * @param y	Y value of coordinate (in/out parameter)
+   *
+   * @deprecated Use the const version.
    */
   void user_to_device(double& x, double& y);
 
@@ -340,6 +344,8 @@ public:
    *
    * @param dx	X component of a distance vector (in/out parameter)
    * @param dy	Y component of a distance vector (in/out parameter)
+   *
+   * @deprecated Use the const version.
    */
   void user_to_device_distance(double& dx, double& dy);
 
@@ -348,6 +354,8 @@ public:
    *
    * @param x	X value of coordinate (in/out parameter)
    * @param y	Y value of coordinate (in/out parameter)
+   *
+   * @deprecated Use the const version.
    */
   void device_to_user(double& x, double& y);
 
@@ -357,8 +365,45 @@ public:
    *
    * @param dx	X component of a distance vector (in/out parameter)
    * @param dy	Y component of a distance vector (in/out parameter)
+   *
+   * @deprecated Use the const version.
    */
   void device_to_user_distance(double& dx, double& dy);
+#endif //CAIROMM_DISABLE_DEPRECATED
+
+  /** Transform a coordinate from user space to device space by multiplying the
+   * given point by the current transformation matrix (CTM).
+   *
+   * @param x	X value of coordinate (in/out parameter)
+   * @param y	Y value of coordinate (in/out parameter)
+   */
+  void user_to_device(double& x, double& y) const;
+
+  /** Transform a distance vector from user space to device space. This
+   * function is similar to user_to_device() except that the translation
+   * components of the CTM will be ignored when transforming (dx,dy).
+   *
+   * @param dx	X component of a distance vector (in/out parameter)
+   * @param dy	Y component of a distance vector (in/out parameter)
+   */
+  void user_to_device_distance(double& dx, double& dy) const;
+
+  /** Transform a coordinate from device space to user space by multiplying the
+   * given point by the inverse of the current transformation matrix (CTM).
+   *
+   * @param x	X value of coordinate (in/out parameter)
+   * @param y	Y value of coordinate (in/out parameter)
+   */
+  void device_to_user(double& x, double& y) const;
+
+  /** Transform a distance vector from device space to user space. This
+   * function is similar to device_to_user() except that the translation
+   * components of the inverse CTM will be ignored when transforming (dx,dy).
+   *
+   * @param dx	X component of a distance vector (in/out parameter)
+   * @param dy	Y component of a distance vector (in/out parameter)
+   */
+  void device_to_user_distance(double& dx, double& dy) const;
 
   /** Clears the current path. After this call there will be no current point.
    */
@@ -625,9 +670,9 @@ public:
 
   /** A drawing operator that fills the current path according to the current
    * fill rule, (each sub-path is implicitly closed before being filled). After
-   * fill(), the current path will be cleared from the cairo context. 
+   * fill(), the current path will be cleared from the cairo context.
    *
-   * @sa set_fill_rule() 
+   * @sa set_fill_rule()
    * @sa fill_preserve()
    */
   void fill();
@@ -637,7 +682,7 @@ public:
    * Unlike fill(), fill_preserve() preserves the path within the
    * cairo Context.
    *
-   * @sa set_fill_rule() 
+   * @sa set_fill_rule()
    * @sa fill().
    */
   void fill_preserve();
@@ -685,7 +730,7 @@ public:
    * current fill rule.
    *
    * Unlike clip(), cairo_clip_preserve preserves the path within the cairo
-   * Context. 
+   * Context.
    *
    * @sa clip()
    * @sa set_fill_rule()
@@ -784,7 +829,7 @@ public:
    *
    * The current point is returned in the user-space coordinate system. If
    * there is no defined current point then x and y will both be set to 0.0.
-   * 
+   *
    * Most path construction functions alter the current point. See the
    * following for details on how they affect the current point: clear_path(),
    * move_to(), line_to(), curve_to(), arc(), rel_move_to(), rel_line_to(),
@@ -907,7 +952,7 @@ public:
    * be approximated with piecewise-linear approximations, (accurate to within
    * the current tolerance value). That is, the result is guaranteed to not have
    * any elements of type CAIRO_PATH_CURVE_TO which will instead be
-   * replaced by a series of CAIRO_PATH_LINE_TO elements. 
+   * replaced by a series of CAIRO_PATH_LINE_TO elements.
    *
    * @note The caller owns the Path object returned from this function.  The
    * Path object must be freed when you are finished with it.
@@ -916,7 +961,7 @@ public:
 
   /** Append the path onto the current path. The path may be either the return
    * value from one of copy_path() or copy_path_flat() or it may be constructed
-   * manually. 
+   * manually.
    *
    * @param path	path to be appended
    */
@@ -1040,7 +1085,7 @@ public:
   /** Gets a pointer to the base C type that is wrapped by the Context
    */
   inline const cobject* cobj() const { return m_cobject; }
- 
+
 #ifndef DOXYGEN_IGNORE_THIS
   ///For use only by the cairomm implementation.
   inline ErrorStatus get_status() const
