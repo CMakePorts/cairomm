@@ -1,3 +1,14 @@
+1.9.2 (unstable):
+
+* Context:
+  - set_dash(): Make the dashes parameter const.
+  - device_to_user(), device_to_user_distance(), user_to_device(),
+  user_to_device_distance(): Deprecate the non-const versions, adding const
+  versions.
+  (Murray Cumming)
+* Cleanup of most -Weffc++ warnings. Bug #28246.
+  (Ian Britten)
+
 1.9.1 (unstable):
 
 * Added Region.

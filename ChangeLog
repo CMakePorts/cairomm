@@ -1,3 +1,5 @@
+1.9.2:
+
 2010-09-02  Murray Cumming  <murrayc@murrayc.com>
 
 	Context: set_dash(): Make the dashes parameter const.
