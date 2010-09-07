@@ -16,8 +16,8 @@
  * 02110-1301, USA.
  */
 
-#ifndef __CAIROMM_REGION_H
-#define __CAIROMM_REGION_H
+#ifndef __CAIROMM_DEVICE_H
+#define __CAIROMM_DEVICE_H
 
 #include <cairomm/types.h>
 #include <cairomm/enums.h>
@@ -33,60 +33,27 @@ namespace Cairo
 /**
  * This is a reference-counted object that should be used via Cairo::RefPtr.
  */
-class Region
+class Device
 {
 public:
-
-  Region();
-
-  explicit Region(const RectangleInt& rectangle);
-
-  //TODO: wrapping cairo_region_create_rectangles()
-  //Region(const RectangleInt *rects, int count);
 
   /** Create a C++ wrapper for the C instance. This C++ instance should then be given to a RefPtr.
    * @param cobject The C instance.
    * @param has_reference Whether we already have a reference. Otherwise, the constructor will take an extra reference.
    */
-  explicit Region(cairo_region_t* cobject, bool has_reference = false);
+  explicit Device(cairo_device_t* cobject, bool has_reference = false);
 
-//TODO:
-//cairo_public cairo_region_t *
-//cairo_region_copy (const cairo_region_t *original);
+  virtual ~Device();
 
-  virtual ~Region();
+  DeviceType get_type() const;
 
-  RectangleInt get_extents() const;
+  //TODO: Documentation.
+  void flush();
 
-  int get_num_rectangles() const;
+  //TODO: Documentation.
+  void finish();
 
-  RectangleInt get_rectangle(int nth_rectangle) const;
-
-  bool empty() const;
-
-  RegionOverlap contains_rectangle(const RectangleInt& rectangle) const;
-
-  bool contains_point(int x, int y) const;
-
-  void translate(int dx, int dy);
-
-  ErrorStatus subtract(const RefPtr<Region>& other);
-
-  ErrorStatus subtract(const RectangleInt& rectangle);
-
-  ErrorStatus intersect(const RefPtr<Region>& other);
-
-  ErrorStatus intersect(const RectangleInt& rectangle);
-
-  //We don't call this method union() because that is a C++ keyword.
-
-  ErrorStatus do_union(const RefPtr<Region>& other);
-
-  ErrorStatus do_union(const RectangleInt& rectangle);
-
-
-
-  typedef cairo_region_t cobject;
+  typedef cairo_device_t cobject;
 
   inline cobject* cobj() { return m_cobject; }
   inline const cobject* cobj() const { return m_cobject; }
@@ -94,7 +61,7 @@ public:
   #ifndef DOXYGEN_IGNORE_THIS
   ///For use only by the cairomm implementation.
   inline ErrorStatus get_status() const
-  { return cairo_region_status(const_cast<cairo_region_t*>(cobj())); }
+  { return cairo_device_status(const_cast<cairo_device_t*>(cobj())); }
   #endif //DOXYGEN_IGNORE_THIS
 
   void reference() const;
@@ -107,6 +74,6 @@ protected:
 
 } // namespace Cairo
 
-#endif //__CAIROMM_REGION_H
+#endif //__CAIROMM_DEVICE_H
 
 // vim: ts=2 sw=2 et

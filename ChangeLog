@@ -1,3 +1,11 @@
+2010-09-07  Murray Cumming  <murrayc@murrayc.com>
+
+	Added Device class.
+
+	* cairomm/device.[h|cc]: Added these files, wrapping cairo_device_t.
+  * cairomm/filelist.am:
+  * cairomm/cairomm.h: Mention the new file.
+
 1.9.2:
 
 2010-09-02  Murray Cumming  <murrayc@murrayc.com>

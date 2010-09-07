@@ -5,6 +5,7 @@ cairomm_cc =				\
 	context_surface_quartz.cc	\
 	context_surface_win32.cc	\
 	context_surface_xlib.cc		\
+  device.cc \
 	exception.cc			\
 	fontface.cc			\
 	fontoptions.cc			\
@@ -24,6 +25,7 @@ cairomm_cc =				\
 cairomm_public_h =			\
 	cairomm.h			\
 	context.h			\
+  device.h \
 	enums.h				\
 	exception.h			\
 	fontface.h			\

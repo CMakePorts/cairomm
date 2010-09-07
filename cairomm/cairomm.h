@@ -33,6 +33,7 @@
 
 #include <cairommconfig.h>
 #include <cairomm/context.h>
+#include <cairomm/device.h>
 #include <cairomm/enums.h>
 #include <cairomm/exception.h>
 #include <cairomm/fontface.h>
