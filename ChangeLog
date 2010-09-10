@@ -1,3 +1,11 @@
+2010-09-10  Murray Cumming  <murrayc@murrayc-desktop>
+
+	Context, Surface: Add some new methods.
+
+	* cairomm/context.[h|cc]: Added in_clip().
+	* cairomm/surface.[h|cc]: Added get_mime_data(), set_mime_data(),
+  unset_mime_data().
+
 2010-09-07  Murray Cumming  <murrayc@murrayc.com>
 
 	Added Device class.

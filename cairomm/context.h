@@ -721,6 +721,7 @@ public:
   void show_page();
   bool in_stroke(double x, double y) const;
   bool in_fill(double x, double y) const;
+  bool in_clip(double x, double y) const;
   void get_stroke_extents(double& x1, double& y1, double& x2, double& y2) const;
   void get_fill_extents(double& x1, double& y1, double& x2, double& y2) const;
 

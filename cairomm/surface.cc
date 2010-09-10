@@ -89,6 +89,40 @@ void Surface::finish()
   check_object_status_and_throw_exception(*this);
 }
 
+const unsigned char* Surface::get_mime_data(const std::string& mime_type, unsigned long& length)
+{
+  const unsigned char* data = 0;
+  cairo_surface_get_mime_data(const_cast<cobject*>(cobj()), mime_type.c_str(), &data, &length);
+  check_object_status_and_throw_exception(*this);
+  return data;
+}
+
+
+static void on_cairo_destroy(void *data)
+{
+  Surface::SlotDestroy* slot = static_cast<Surface::SlotDestroy*>(data);
+  if(!slot)
+    return;
+
+  (*slot)();
+  delete slot;
+}
+
+void Surface::set_mime_data(const std::string& mime_type, unsigned char* data, unsigned long length, const SlotDestroy& slot_destroy)
+{
+  SlotDestroy* copy = new SlotDestroy(slot_destroy); //Deleted when the callback is called once.
+  cairo_surface_set_mime_data(const_cast<cobject*>(cobj()), mime_type.c_str(), data, length,
+    &on_cairo_destroy, copy);
+  check_object_status_and_throw_exception(*this);
+}
+
+void Surface::unset_mime_data(const std::string& mime_type)
+{
+  cairo_surface_set_mime_data(const_cast<cobject*>(cobj()), mime_type.c_str(),
+    0, 0, 0, 0);
+  check_object_status_and_throw_exception(*this);
+}
+
 void Surface::get_font_options(FontOptions& options) const
 {
   cairo_font_options_t* cfontoptions = cairo_font_options_create();

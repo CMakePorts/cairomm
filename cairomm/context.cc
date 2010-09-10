@@ -441,6 +441,13 @@ bool Context::in_fill(double x, double y) const
   return result;
 }
 
+bool Context::in_clip(double x, double y) const
+{
+  const bool result = cairo_in_clip(const_cast<cobject*>(cobj()), x, y);
+  check_object_status_and_throw_exception(*this);
+  return result;
+}
+
 void Context::get_stroke_extents(double& x1, double& y1, double& x2, double& y2) const
 {
   cairo_stroke_extents(const_cast<cobject*>(cobj()), &x1, &y1, &x2, &y2);
