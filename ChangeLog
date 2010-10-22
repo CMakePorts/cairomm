@@ -6,6 +6,8 @@
 	* cairomm/surface.[h|cc]: Added get_mime_data(), set_mime_data(),
   unset_mime_data().
 
+1.9.4:
+
 2010-09-07  Murray Cumming  <murrayc@murrayc.com>
 
 	Added Device class.
