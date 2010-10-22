@@ -136,10 +136,13 @@ AC_CONFIG_FILES([Makefile
                  data/cairomm-xlib-1.0.pc
                  data/cairomm-xlib-xrender-1.0.pc
                  MSVC_Net2005/cairomm/cairomm.rc
-                 MSVC_Net2008/cairomm/cairomm.rc])
+                 MSVC_Net2008/cairomm/cairomm.rc
+                 MSVC_Net2010/cairomm/cairomm.rc])
 
 AC_CONFIG_COMMANDS([MSVC_Net2005/cairomm/cairommconfig.h],
                    [cp -f cairommconfig.h MSVC_Net2005/cairomm/cairommconfig.h])
 AC_CONFIG_COMMANDS([MSVC_Net2008/cairomm/cairommconfig.h],
                    [cp -f cairommconfig.h MSVC_Net2008/cairomm/cairommconfig.h])
+AC_CONFIG_COMMANDS([MSVC_Net2010/cairomm/cairommconfig.h],
+                   [cp -f cairommconfig.h MSVC_Net2010/cairomm/cairommconfig.h])
 AC_OUTPUT

@@ -1,46 +1,22 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gendef", "gendef\gendef.vcproj", "{07324745-C9BE-4D65-B08A-9C88188C0C28}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gendef", "gendef\gendef.vcxproj", "{07324745-C9BE-4D65-B08A-9C88188C0C28}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cairomm-1.0", "cairomm\cairomm.vcproj", "{58B2B53C-C4FF-47FD-817B-095E45B7F7D4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{07324745-C9BE-4D65-B08A-9C88188C0C28} = {07324745-C9BE-4D65-B08A-9C88188C0C28}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cairomm-1.0", "cairomm\cairomm.vcxproj", "{58B2B53C-C4FF-47FD-817B-095E45B7F7D4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_pdf-surface", "examples\pdf-surface\pdf-surface.vcproj", "{129ECC08-6D30-4884-B824-4AF96EF0A45C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_pdf-surface", "examples\pdf-surface\pdf-surface.vcxproj", "{129ECC08-6D30-4884-B824-4AF96EF0A45C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_ps-surface", "examples\ps-surface\ps-surface.vcproj", "{CAE46373-7375-4607-AAB7-0EBA8F0E5B55}"
-	ProjectSection(ProjectDependencies) = postProject
-		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_ps-surface", "examples\ps-surface\ps-surface.vcxproj", "{CAE46373-7375-4607-AAB7-0EBA8F0E5B55}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_svg-surface", "examples\svg-surface\svg-surface.vcproj", "{BCA44D2B-1832-41F5-9EE9-FE1F709EE584}"
-	ProjectSection(ProjectDependencies) = postProject
-		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_svg-surface", "examples\svg-surface\svg-surface.vcxproj", "{BCA44D2B-1832-41F5-9EE9-FE1F709EE584}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_text-rotate", "examples\text-rotate\text-rotate.vcproj", "{F4D455E4-464D-49CC-A120-DB9B8AE0207E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_text-rotate", "examples\text-rotate\text-rotate.vcxproj", "{F4D455E4-464D-49CC-A120-DB9B8AE0207E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_image-surface", "examples\image-surface\image-surface.vcproj", "{7A33DBC5-A523-4E9C-8E13-792AE3B91055}"
-	ProjectSection(ProjectDependencies) = postProject
-		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_image-surface", "examples\image-surface\image-surface.vcxproj", "{7A33DBC5-A523-4E9C-8E13-792AE3B91055}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_toy-text", "examples\toy-text\toy-text.vcproj", "{6B6E3E73-0605-41E0-B7F9-1C62BBF92731}"
-	ProjectSection(ProjectDependencies) = postProject
-		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_toy-text", "examples\toy-text\toy-text.vcxproj", "{6B6E3E73-0605-41E0-B7F9-1C62BBF92731}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_user-font", "examples\user-font\user-font.vcproj", "{E7C7C350-509B-4091-8929-62E47818C254}"
-	ProjectSection(ProjectDependencies) = postProject
-		{58B2B53C-C4FF-47FD-817B-095E45B7F7D4} = {58B2B53C-C4FF-47FD-817B-095E45B7F7D4}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "examples_user-font", "examples\user-font\user-font.vcxproj", "{E7C7C350-509B-4091-8929-62E47818C254}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

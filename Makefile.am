@@ -33,14 +33,16 @@ nodist_pkgconfig_DATA = $(CAIROMM_INSTALL_PC)
 
 include $(srcdir)/MSVC_Net2005/filelist.am
 include $(srcdir)/MSVC_Net2008/filelist.am
+include $(srcdir)/MSVC_Net2010/filelist.am
 
 msvc_files = $(addprefix MSVC_Net2005/,$(msvc_net2005_data)) \
-             $(addprefix MSVC_Net2008/,$(msvc_net2008_data))
+             $(addprefix MSVC_Net2008/,$(msvc_net2008_data)) \
+             $(addprefix MSVC_Net2010/,$(msvc_net2010_data))
 
 dist_noinst_DATA = MAINTAINERS $(msvc_files)
 dist_noinst_SCRIPTS = autogen.sh
 
-DISTCLEANFILES = MSVC_Net2005/cairomm/cairommconfig.h MSVC_Net2008/cairomm/cairommconfig.h
+DISTCLEANFILES = MSVC_Net2005/cairomm/cairommconfig.h MSVC_Net2008/cairomm/cairommconfig.h MSVC_Net2010/cairomm/cairommconfig.h
 
 # Copied from cairo/Makefile.am:
 #

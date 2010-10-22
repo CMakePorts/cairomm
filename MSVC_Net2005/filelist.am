@@ -10,7 +10,6 @@ msvc_net2005_data = README \
                     cairomm/cairomm.vcproj \
                     examples/image-surface/image-surface.vcproj \
                     examples/pdf-surface/pdf-surface.vcproj \
-                    examples/png_file/png_file.vcproj \
                     examples/ps-surface/ps-surface.vcproj \
                     examples/svg-surface/svg-surface.vcproj \
                     examples/text-rotate/text-rotate.vcproj \
