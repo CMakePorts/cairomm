@@ -1,3 +1,59 @@
+2010-09-29  Armin Burgmeier  <armin@arbur.net>
+
+	Added support for 64 bit and Visual Studio 2010.
+
+	* MSVC_Net2008/.cvsignore:
+	* MSVC_Net2005/examples/png-file/png-file.vcproj:
+	* MSVC_Net2008/examples/png-file/png-file.vcproj: Removed.
+
+	* MSVC_Net2005/README:
+	* MSVC_Net2005/cairomm.sln:
+	* MSVC_Net2005/cairomm/cairomm.vcproj:
+	* MSVC_Net2005/examples/image-surface/image-surface.vcproj:
+	* MSVC_Net2005/examples/pdf-surface/pdf-surface.vcproj:
+	* MSVC_Net2005/examples/ps-surface/ps-surface.vcproj:
+	* MSVC_Net2005/examples/svg-surface/svg-surface.vcproj:
+	* MSVC_Net2005/examples/text-rotate/text-rotate.vcproj:
+	* MSVC_Net2005/examples/toy-text/toy-text.vcproj:
+	* MSVC_Net2005/examples/user-font/user-font.vcproj:
+	* MSVC_Net2005/gendef/gendef.vcproj:
+	* MSVC_Net2008/README:
+	* MSVC_Net2008/cairomm.sln:
+	* MSVC_Net2008/cairomm/cairomm.vcproj:
+	* MSVC_Net2008/examples/image-surface/image-surface.vcproj:
+	* MSVC_Net2008/examples/pdf-surface/pdf-surface.vcproj:
+	* MSVC_Net2008/examples/ps-surface/ps-surface.vcproj:
+	* MSVC_Net2008/examples/svg-surface/svg-surface.vcproj:
+	* MSVC_Net2008/examples/text-rotate/text-rotate.vcproj:
+	* MSVC_Net2008/examples/toy-text/toy-text.vcproj:
+	* MSVC_Net2008/examples/user-font/user-font.vcproj:
+	* MSVC_Net2008/gendef/gendef.vcproj:
+	* MSVC_Net2010/README:
+	* MSVC_Net2010/cairomm.sln:
+	* MSVC_Net2010/cairomm/cairomm.rc.in:
+	* MSVC_Net2010/cairomm/cairomm.vcxproj:
+	* MSVC_Net2010/cairomm/cairomm.vcxproj.filters:
+	* MSVC_Net2010/examples/image-surface/image-surface.vcxproj:
+	* MSVC_Net2010/examples/image-surface/image-surface.vcxproj.filters:
+	* MSVC_Net2010/examples/pdf-surface/pdf-surface.vcxproj:
+	* MSVC_Net2010/examples/pdf-surface/pdf-surface.vcxproj.filters:
+	* MSVC_Net2010/examples/ps-surface/ps-surface.vcxproj:
+	* MSVC_Net2010/examples/ps-surface/ps-surface.vcxproj.filters:
+	* MSVC_Net2010/examples/svg-surface/svg-surface.vcxproj:
+	* MSVC_Net2010/examples/svg-surface/svg-surface.vcxproj.filters:
+	* MSVC_Net2010/examples/text-rotate/text-rotate.vcxproj:
+	* MSVC_Net2010/examples/text-rotate/text-rotate.vcxproj.filters:
+	* MSVC_Net2010/examples/toy-text/toy-text.vcxproj:
+	* MSVC_Net2010/examples/toy-text/toy-text.vcxproj.filters:
+	* MSVC_Net2010/examples/user-font/user-font.vcxproj:
+	* MSVC_Net2010/examples/user-font/user-font.vcxproj.filters:
+	* MSVC_Net2010/filelist.am:
+	* MSVC_Net2010/gendef/gendef.cc:
+	* MSVC_Net2010/gendef/gendef.vcxproj:
+	* MSVC_Net2010/gendef/gendef.vcxproj.filters:
+	* Makefile.am:
+	* configure.ac: Added support for 64 bit and Visual Studio 2010.
+	
 2010-09-10  Murray Cumming  <murrayc@murrayc-desktop>
 
 	Context, Surface: Add some new methods.
@@ -2116,3 +2172,4 @@
 	* cairomm/private.h:
 	* cairomm/surface.cc:
 	* cairomm/surface.h: Add LGPL comment headings.
+
