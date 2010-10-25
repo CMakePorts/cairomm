@@ -16,6 +16,11 @@
  * 02110-1301, USA.
  */
 
+/* M_PI is defined in math.h in the case of Microsoft Visual C++ */
+#if defined(_MSC_VER)
+#define _USE_MATH_DEFINES
+#endif 
+
 #include <cairommconfig.h>
 #include <cairomm/context.h>
 #include <cairomm/context_private.h>
@@ -155,8 +160,11 @@ void Context::set_line_join(LineJoin line_join)
 
 void Context::set_dash(std::valarray<double>& dashes, double offset)
 {
-  cairo_set_dash(cobj(), &dashes[0], dashes.size(), offset);
-  check_object_status_and_throw_exception(*this);
+  std::vector<double> v(dashes.size());
+  for(size_t i = 0; i < dashes.size(); ++i)
+    v[i] = dashes[i];
+
+  set_dash(v, offset);
 }
 
 void Context::set_dash(std::vector<double>& dashes, double offset)
@@ -167,8 +175,11 @@ void Context::set_dash(std::vector<double>& dashes, double offset)
 
 void Context::set_dash(const std::valarray<double>& dashes, double offset)
 {
-  cairo_set_dash(cobj(), &dashes[0], dashes.size(), offset);
-  check_object_status_and_throw_exception(*this);
+  std::vector<double> v(dashes.size());
+  for(size_t i = 0; i < dashes.size(); ++i)
+    v[i] = dashes[i];
+
+  set_dash(v, offset);
 }
 
 void Context::set_dash(const std::vector<double>& dashes, double offset)
