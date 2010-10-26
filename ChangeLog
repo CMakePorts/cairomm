@@ -1,3 +1,5 @@
+1.9.6:
+
 2010-09-29  Armin Burgmeier  <armin@arbur.net>
 
 	Added support for 64 bit and Visual Studio 2010.
@@ -53,7 +55,7 @@
 	* MSVC_Net2010/gendef/gendef.vcxproj.filters:
 	* Makefile.am:
 	* configure.ac: Added support for 64 bit and Visual Studio 2010.
-	
+
 2010-09-10  Murray Cumming  <murrayc@murrayc-desktop>
 
 	Context, Surface: Add some new methods.
@@ -2172,4 +2174,3 @@
 	* cairomm/private.h:
 	* cairomm/surface.cc:
 	* cairomm/surface.h: Add LGPL comment headings.
-
