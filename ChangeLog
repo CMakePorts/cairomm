@@ -1,3 +1,13 @@
+2010-11-03  Murray Cumming  <murrayc@murrayc.com>
+
+	Context::arc(): Correct the documentation, as in the C documentation.
+
+	* cairomm/context.h: arc(): Update the documentation based on the latest
+	version of the cairo_arc() documentation, which was apparently fixed since
+	we last wrote the C++ documentation based on it.
+	This fixes bug #31345 (Christopher Head) about bad math in arc()
+	documentation.
+
 2010-09-29  Armin Burgmeier  <armin@arbur.net>
 
 	Added support for 64 bit and Visual Studio 2010.
