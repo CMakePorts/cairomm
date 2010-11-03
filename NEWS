@@ -1,3 +1,8 @@
+
+* Documentation:
+  - Context::arc(): Fix bug #31345 (Christopher Head) about bad math in arc()
+	documentation. (Murray Cumming)
+
 1.9.6 (unstable):
 
 * Context: Added in_clip().
