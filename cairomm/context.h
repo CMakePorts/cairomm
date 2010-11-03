@@ -483,21 +483,23 @@ public:
   void curve_to(double x1, double y1, double x2, double y2, double x3, double y3);
 
   /** Adds a circular arc of the given radius to the current path. The arc is
-   * centered at (xc, yc), begins at angle1 and proceeds in the direction of
-   * increasing angles to end at angle2. If angle2 is less than angle1 it will
-   * be progressively increased by 2*M_PI until it is greater than angle1.
+   * centered at (@a xc, @a yc), begins at @a angle1 and proceeds in the direction of
+   * increasing angles to end at @a angle2. If @a angle2 is less than @a angle1 it will
+   * be progressively increased by 2*M_PI until it is greater than @a angle1.
    *
    * If there is a current point, an initial line segment will be added to the
-   * path to connect the current point to the beginning of the arc.
+   * path to connect the current point to the beginning of the arc. If this
+   * initial line is undesired, it can be avoided by calling
+   * begin_new_sub_path() before calling arc().
    *
    * Angles are measured in radians. An angle of 0 is in the direction of the
-   * positive X axis (in user-space). An angle of M_PI radians (90 degrees) is
+   * positive X axis (in user-space). An angle of M_PI/2.0 radians (90 degrees) is
    * in the direction of the positive Y axis (in user-space). Angles increase
    * in the direction from the positive X axis toward the positive Y axis. So
    * with the default transformation matrix, angles increase in a clockwise
    * direction.
    *
-   * (To convert from degrees to radians, use degrees * (M_PI / 180.).)
+   * ( To convert from degrees to radians, use degrees * (M_PI / 180.0). )
    *
    * This function gives the arc in the direction of increasing angles; see
    * arc_negative() to get the arc in the direction of decreasing angles.
@@ -523,10 +525,10 @@ public:
    */
   void arc(double xc, double yc, double radius, double angle1, double angle2);
 
-  /** Adds a circular arc of the given radius to the current path. The arc is
-   * centered at (xc, yc), begins at angle1 and proceeds in the direction of
-   * decreasing angles to end at angle2. If angle2 is greater than angle1 it
-   * will be progressively decreased by 2*M_PI until it is greater than angle1.
+  /** Adds a circular arc of the given @a radius to the current path. The arc is
+   * centered at (@a xc, @a yc), begins at @a angle1 and proceeds in the direction of
+   * decreasing angles to end at @a angle2. If @a angle2 is greater than @a angle1 it
+   * will be progressively decreased by 2*M_PI until it is greater than @a angle1.
    *
    * See arc() for more details. This function differs only in the direction of
    * the arc between the two angles.
