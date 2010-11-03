@@ -1,3 +1,5 @@
+1.8.6:
+
 2010-11-03  Murray Cumming  <murrayc@murrayc.com>
 
 	Context::arc(): Correct the documentation, as in the C documentation.

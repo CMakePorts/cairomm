@@ -1,3 +1,19 @@
+1.8.6:
+
+* Documentation:
+  - Context::arc(): Fix bug #31345 (Christopher Head) about bad math in arc()
+	documentation. (Murray Cumming)
+* Build:
+  - Cleanup of most -Weffc++ warnings. Bug #28246.
+  (Ian Britten)
+  - Fix the MSVC build.
+  - Added support for Windows 64-bit and Visual Studio 2010.
+  (Armin Burgmeier)
+  - Fix the 64-bit build.
+  (Augusto Jun Devegil)
+  - Actually install cairomm-xlib-xrender-1.0.pc.
+  (Daisuke Nishikawa)
+
 1.8.4:
 
 * move to new mm-common build infrastructure
@@ -131,7 +147,7 @@
 
 1.4.4:
 
- * Added the --enable-api-exceptions=yes/no configure option, to allow 
+ * Added the --enable-api-exceptions=yes/no configure option, to allow
    cairomm to build when exceptions are disabled. For instance, when using
    CXXFLAGS=-fno-exceptions with g++.
 
@@ -187,28 +203,28 @@
   - enumerations are now wrapped within the Cairo namespace.  So, for example,
     CAIRO_FORMAT_ARGB32 becomes Cairo::FORMAT_ARGB32
 * Examples: added simple text example translated from Cairo.
-* Bugfixes for the Glitz and Windows backends. 
+* Bugfixes for the Glitz and Windows backends.
 * Build and installation improvements (Danilo Piazzalunga)
 
 0.5.0:
 
 * Surface:
-  - Created derived classes for PDF, PS, SVG, Glitz, 
-  X11 and Win32 surfaces, which are only available if your copy 
-  of cairo supports those surfaces. The X11 and Win32 Surface headers 
+  - Created derived classes for PDF, PS, SVG, Glitz,
+  X11 and Win32 surfaces, which are only available if your copy
+  of cairo supports those surfaces. The X11 and Win32 Surface headers
   must be #included explicitly.
   (Jonathon Jongsma)
-  - Added write_to_png() and write_to_png_stream(), available when PNG 
+  - Added write_to_png() and write_to_png_stream(), available when PNG
   support is available in Cairo.
   (Jonathon Jongsma)
 * Examples: Added PNG, PDF, PS, and SVG Surface examples.
   (Jonathon Jongsma)
 * Added API documentation generation with doxygen (Jonathon Jongsma)
- 
+
 0.4.0:
 
-* Add Cairo::RefPtr<> and use all reference-counted 
-  objects via it. Use the static create() methods 
+* Add Cairo::RefPtr<> and use all reference-counted
+  objects via it. Use the static create() methods
   instead of new for these classes.
 * Context:
   - Change set_dash(void) to unset_dash().
@@ -222,12 +238,11 @@
 * Context:
   - Change mask_surface() to mask() and
     set_source_surface() to set_source().
-  - Add typedef for Matrix, but a real Matrix 
+  - Add typedef for Matrix, but a real Matrix
   class would be nice.
 * Pattern: Created hierarchy of classes.
 * Check for errors in constructors.
-* Exception: Rename to logic_error, and throw 
-  std::bad_alloc or std::io_base::failure instead 
+* Exception: Rename to logic_error, and throw
+  std::bad_alloc or std::io_base::failure instead
   when appropriate.
   (Murray Cumming)
-
