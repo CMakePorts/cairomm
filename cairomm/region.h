@@ -23,7 +23,7 @@
 #include <cairomm/enums.h>
 #include <cairomm/refptr.h>
 #include <cairo.h>
-
+#include <vector>
 
 namespace Cairo
 {
@@ -44,8 +44,8 @@ private:
 
   explicit Region(const RectangleInt& rectangle);
 
-  //TODO: wrapping cairo_region_create_rectangles()
-  //Region(const RectangleInt *rects, int count);
+  explicit Region(const std::vector<RectangleInt>& rects);
+  Region(const RectangleInt *rects, int count);
 
 public:
   /** Create a C++ wrapper for the C instance. This C++ instance should then be given to a RefPtr.
@@ -56,6 +56,8 @@ public:
 
   static RefPtr<Region> create();
   static RefPtr<Region> create(const RectangleInt& rectangle);
+  static RefPtr<Region> create(const std::vector<RectangleInt>& rects);
+  static RefPtr<Region> create(const RectangleInt *rects, int count);
 
   /** allocates a new region object copied from the original */
   RefPtr<Region> copy() const;

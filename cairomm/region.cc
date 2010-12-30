@@ -18,6 +18,7 @@
 
 #include <cairomm/region.h>
 #include <cairomm/private.h>
+#include <algorithm>
 
 namespace Cairo
 {
@@ -30,6 +31,26 @@ Region::Region()
 
 Region::Region(const RectangleInt& rectangle)
 : m_cobject(cairo_region_create_rectangle(&rectangle))
+{
+  check_object_status_and_throw_exception (*this);
+}
+
+// less efficient but convenient
+Region::Region(const std::vector<RectangleInt>& rects) :
+  m_cobject(0)
+{
+  RectangleInt *carray = new RectangleInt[rects.size()];
+  std::copy(rects.begin(), rects.end(), carray);
+  m_cobject = cairo_region_create_rectangles (carray, rects.size());
+
+  delete[] carray;
+
+  check_object_status_and_throw_exception (*this);
+}
+
+// less convenient but more efficient
+Region::Region(const RectangleInt *rects, int count) :
+  m_cobject(cairo_region_create_rectangles (rects, count))
 {
   check_object_status_and_throw_exception (*this);
 }
@@ -53,6 +74,16 @@ RefPtr<Region> Region::create()
 RefPtr<Region> Region::create(const RectangleInt& rectangle)
 {
   return RefPtr<Region>(new Region(rectangle));
+}
+
+RefPtr<Region> Region::create(const std::vector<RectangleInt>& rects)
+{
+  return RefPtr<Region>(new Region(rects));
+}
+
+RefPtr<Region> Region::create(const RectangleInt *rects, int count)
+{
+  return RefPtr<Region>(new Region(rects, count));
 }
 
 RefPtr<Region> Region::copy() const
