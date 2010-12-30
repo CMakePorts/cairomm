@@ -70,19 +70,19 @@ public:
 
   void translate(int dx, int dy);
 
-  ErrorStatus subtract(const RefPtr<Region>& other);
+  void subtract(const RefPtr<Region>& other);
 
-  ErrorStatus subtract(const RectangleInt& rectangle);
+  void subtract(const RectangleInt& rectangle);
 
-  ErrorStatus intersect(const RefPtr<Region>& other);
+  void intersect(const RefPtr<Region>& other);
 
-  ErrorStatus intersect(const RectangleInt& rectangle);
+  void intersect(const RectangleInt& rectangle);
 
   //We don't call this method union() because that is a C++ keyword.
 
-  ErrorStatus do_union(const RefPtr<Region>& other);
+  void do_union(const RefPtr<Region>& other);
 
-  ErrorStatus do_union(const RectangleInt& rectangle);
+  void do_union(const RectangleInt& rectangle);
 
 
 
