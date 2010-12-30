@@ -182,6 +182,18 @@ void Region::do_union(const RectangleInt& rectangle)
   check_status_and_throw_exception (status);
 }
 
+void Region::do_xor(const RefPtr<Region>& other)
+{
+  ErrorStatus status = cairo_region_xor(m_cobject, (other ? other->cobj() : 0));
+  check_status_and_throw_exception (status);
+}
+
+void Region::do_xor(const RectangleInt& rectangle)
+{
+  ErrorStatus status = cairo_region_xor_rectangle(m_cobject, &rectangle);
+  check_status_and_throw_exception (status);
+}
+
 
 } //namespace Cairo
 

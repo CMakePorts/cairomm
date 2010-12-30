@@ -92,6 +92,10 @@ public:
 
   void do_union(const RectangleInt& rectangle);
 
+  void do_xor(const RefPtr<Region>& other);
+
+  void do_xor(const RectangleInt& rectangle);
+
 
 
   typedef cairo_region_t cobject;
