@@ -55,6 +55,11 @@ RefPtr<Region> Region::create(const RectangleInt& rectangle)
   return RefPtr<Region>(new Region(rectangle));
 }
 
+RefPtr<Region> Region::copy() const
+{
+  return RefPtr<Region> (new Region (cairo_region_copy (m_cobject), true));
+}
+
 Region::~Region()
 {
   if(m_cobject)

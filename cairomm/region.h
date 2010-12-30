@@ -57,9 +57,8 @@ public:
   static RefPtr<Region> create();
   static RefPtr<Region> create(const RectangleInt& rectangle);
 
-//TODO:
-//cairo_public cairo_region_t *
-//cairo_region_copy (const cairo_region_t *original);
+  /** allocates a new region object copied from the original */
+  RefPtr<Region> copy() const;
 
   virtual ~Region();
 
