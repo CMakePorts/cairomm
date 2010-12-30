@@ -25,11 +25,13 @@ namespace Cairo
 Region::Region()
 : m_cobject(cairo_region_create())
 {
+  check_object_status_and_throw_exception (*this);
 }
 
 Region::Region(const RectangleInt& rectangle)
 : m_cobject(cairo_region_create_rectangle(&rectangle))
 {
+  check_object_status_and_throw_exception (*this);
 }
 
 Region::Region(cairo_region_t* cobject, bool has_reference)
@@ -39,6 +41,18 @@ Region::Region(cairo_region_t* cobject, bool has_reference)
     m_cobject = cobject;
   else
     m_cobject = cairo_region_reference(cobject);
+
+  check_object_status_and_throw_exception (*this);
+}
+
+RefPtr<Region> Region::create()
+{
+  return RefPtr<Region>(new Region());
+}
+
+RefPtr<Region> Region::create(const RectangleInt& rectangle)
+{
+  return RefPtr<Region>(new Region(rectangle));
 }
 
 Region::~Region()

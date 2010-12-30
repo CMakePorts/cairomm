@@ -28,14 +28,17 @@
 namespace Cairo
 {
 
-//TODO: Documentation.
-
 /**
- * This is a reference-counted object that should be used via Cairo::RefPtr.
- */
+ * A Region represents a set of integer-aligned rectangles.
+ *
+ * It allows set-theoretical operations like do_union() and intersect() to be
+ * performed on them.
+ *
+ * Since: 1.10
+ **/
 class Region
 {
-public:
+private:
 
   Region();
 
@@ -44,11 +47,15 @@ public:
   //TODO: wrapping cairo_region_create_rectangles()
   //Region(const RectangleInt *rects, int count);
 
+public:
   /** Create a C++ wrapper for the C instance. This C++ instance should then be given to a RefPtr.
    * @param cobject The C instance.
    * @param has_reference Whether we already have a reference. Otherwise, the constructor will take an extra reference.
    */
   explicit Region(cairo_region_t* cobject, bool has_reference = false);
+
+  static RefPtr<Region> create();
+  static RefPtr<Region> create(const RectangleInt& rectangle);
 
 //TODO:
 //cairo_public cairo_region_t *
