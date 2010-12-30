@@ -29,12 +29,14 @@ namespace Cairo
 {
 
 /**
- * A Region represents a set of integer-aligned rectangles.
+ * A simple graphical data type representing an area of integer-aligned
+ * rectangles. They are often used on raster surfaces to track areas of
+ * interest, such as change or clip areas
  *
- * It allows set-theoretical operations like do_union() and intersect() to be
- * performed on them.
+ * It allows set-theoretical operations like union and intersect to be performed
+ * on them.
  *
- * Since: 1.10
+ * @since: 1.10
  **/
 class Region
 {
@@ -54,9 +56,13 @@ public:
    */
   explicit Region(cairo_region_t* cobject, bool has_reference = false);
 
+  /** Creates an empty Region object */
   static RefPtr<Region> create();
+  /** Creates a Region object containing @a rectangle */
   static RefPtr<Region> create(const RectangleInt& rectangle);
+  /** Creates a Region object containing the union of all given @a rects */
   static RefPtr<Region> create(const std::vector<RectangleInt>& rects);
+  /** Creates a Region object containing the union of all given @a rects */
   static RefPtr<Region> create(const RectangleInt *rects, int count);
 
   /** allocates a new region object copied from the original */
@@ -64,36 +70,56 @@ public:
 
   virtual ~Region();
 
+  /** Gets the bounding rectangle of the region */
   RectangleInt get_extents() const;
 
+  /** Gets the number of rectangles contained in the region */
   int get_num_rectangles() const;
 
+  /** Gets the nth rectangle from the region */
   RectangleInt get_rectangle(int nth_rectangle) const;
 
+  /** Checks whether the region is empty */
   bool empty() const;
 
+  /** Checks whether @a rectangle is inside, outside, or partially contained in
+   * the region */
   RegionOverlap contains_rectangle(const RectangleInt& rectangle) const;
 
+  /** Checks whether (x,y) is contained in the region */
   bool contains_point(int x, int y) const;
 
+  /** Translates the region by (dx,dy) */
   void translate(int dx, int dy);
 
+  /** Subtracts @a other from this region */
   void subtract(const RefPtr<Region>& other);
 
+  /** Subtracts @a rectangle from this region */
   void subtract(const RectangleInt& rectangle);
 
+  /** Sets the region to the intersection of this region with @a other */
   void intersect(const RefPtr<Region>& other);
 
+  /** Sets the region to the intersection of this region with @a rectangle */
   void intersect(const RectangleInt& rectangle);
 
   //We don't call this method union() because that is a C++ keyword.
 
+  /** Sets this region to the union of the region with @a other */
   void do_union(const RefPtr<Region>& other);
 
+  /** Sets this region to the union of the region with @a rectangle */
   void do_union(const RectangleInt& rectangle);
 
+  /** Sets this region to the exclusive difference of the region with @a other.
+   * That is, the region will contain all areas that are in the original region
+   * or in @a other, but not in both */
   void do_xor(const RefPtr<Region>& other);
 
+  /** Sets this region to the exclusive difference of the region with @a
+   * rectangle.  That is, the region will contain all areas that are in the
+   * original region or in @a rectangle, but not in both */
   void do_xor(const RectangleInt& rectangle);
 
 
