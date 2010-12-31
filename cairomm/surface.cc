@@ -239,6 +239,16 @@ void Surface::write_to_png(cairo_write_func_t write_func, void *closure)
 }
 #endif
 
+RefPtr<Device> Surface::get_device()
+{
+  cairo_device_t *d = cairo_surface_get_device (m_cobject);
+
+  if (!d)
+    return RefPtr<Device>();
+
+  return RefPtr<Device>(new Device(d, true));
+}
+
 void Surface::reference() const
 {
   cairo_surface_reference(const_cast<cobject*>(cobj()));

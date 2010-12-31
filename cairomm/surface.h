@@ -33,6 +33,7 @@
 #include <sigc++/slot.h>
 #include <cairomm/enums.h>
 #include <cairomm/exception.h>
+#include <cairomm/device.h>
 #include <cairomm/fontoptions.h>
 #include <cairomm/refptr.h>
 
@@ -306,6 +307,10 @@ public:
 
 #endif // CAIRO_HAS_PNG_FUNCTIONS
 
+  /** This function returns the device for a surface
+   * @return The device for this surface, or an empty RefPtr if the surface has
+   * no associated device */
+  RefPtr<Device> get_device();
 
   /** The underlying C cairo surface type
    */
