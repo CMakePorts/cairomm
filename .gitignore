@@ -32,6 +32,8 @@ stamp-h?
 /MSVC_Net2005/cairomm/cairommconfig.h
 /MSVC_Net2008/cairomm/cairomm.rc
 /MSVC_Net2008/cairomm/cairommconfig.h
+/MSVC_Net2010/cairomm/cairomm.rc
+/MSVC_Net2010/cairomm/cairommconfig.h
 
 /docs/doc-install.pl
 /docs/doc-postprocess.pl
