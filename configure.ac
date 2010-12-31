@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([cairomm], [1.9.7], [https://bugs.freedesktop.org/enter_bug.cgi?product=cairomm],
+AC_INIT([cairomm], [1.9.8], [https://bugs.freedesktop.org/enter_bug.cgi?product=cairomm],
         [cairomm], [http://www.cairographics.org/cairomm/])
 AC_PREREQ([2.62])
 
@@ -42,7 +42,7 @@ AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 PKG_PROG_PKG_CONFIG
 
-AC_SUBST([CAIROMM_MODULES], ['cairo >= 1.9.5 sigc++-2.0'])
+AC_SUBST([CAIROMM_MODULES], ['cairo >= 1.10.0 sigc++-2.0'])
 cairomm_allmodules=$CAIROMM_MODULES
 CAIROMM_INSTALL_PC='data/cairomm-1.0.pc'
 
