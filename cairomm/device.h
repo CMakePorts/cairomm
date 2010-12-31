@@ -36,6 +36,35 @@ namespace Cairo
 class Device
 {
 public:
+  /** A convenience class for acquiring a Device object in an exception-safe
+   * manner.  The device is automatically acquired when a Lock object is created
+   * and released when the Lock object is destroyed.  For example:
+   *
+   * @code
+   * void
+   * my_device_modifying_function (const RefPtr<Device>& device)
+   * {
+   *   // Ensure the device is properly reset
+   *   device->flush();
+   *
+   *   Device::Lock lock(device);
+   *   // Do the custom operations on the device here.
+   *   // But do not call any Cairo functions that might acquire devices.
+   *
+   * } // device is automatically released at the end of the function scope
+   * @endcode
+   */
+  class Lock
+  {
+  public:
+    /** Create a new Device lock for @a device */
+    Lock (const RefPtr<Device>& device);
+    Lock (const Lock& other);
+    ~Lock();
+
+  private:
+    RefPtr<Device> m_device;
+  };
 
   /** Create a C++ wrapper for the C instance. This C++ instance should then be given to a RefPtr.
    * @param cobject The C instance.

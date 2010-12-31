@@ -79,6 +79,24 @@ void Device::release()
   check_object_status_and_throw_exception(*this);
 }
 
+Device::Lock::Lock(const RefPtr<Device>& device) :
+  m_device(device)
+{
+  m_device->acquire();
+}
+
+Device::Lock::Lock (const Lock& other) :
+  m_device(other.m_device)
+{
+  m_device->acquire();
+}
+
+Device::Lock::~Lock()
+{
+  m_device->release();
+}
+
+
 } //namespace Cairo
 
 // vim: ts=2 sw=2 et
