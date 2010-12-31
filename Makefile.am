@@ -16,7 +16,7 @@
 ## along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 ACLOCAL_AMFLAGS = -I build ${ACLOCAL_FLAGS}
-DISTCHECK_CONFIGURE_FLAGS = --enable-warnings=fatal
+DISTCHECK_CONFIGURE_FLAGS = --enable-warnings=max
 
 if ENABLE_DOCUMENTATION
 doc_subdirs = docs
