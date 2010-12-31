@@ -53,6 +53,9 @@ public:
   //TODO: Documentation.
   void finish();
 
+  void acquire();
+  void release();
+
   typedef cairo_device_t cobject;
 
   inline cobject* cobj() { return m_cobject; }

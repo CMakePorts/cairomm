@@ -67,6 +67,18 @@ void Device::finish()
   check_object_status_and_throw_exception(*this);
 }
 
+void Device::acquire()
+{
+  ErrorStatus status = cairo_device_acquire(m_cobject);
+  check_status_and_throw_exception(status);
+}
+
+void Device::release()
+{
+  cairo_device_release(m_cobject);
+  check_object_status_and_throw_exception(*this);
+}
+
 } //namespace Cairo
 
 // vim: ts=2 sw=2 et
