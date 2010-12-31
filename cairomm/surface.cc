@@ -408,6 +408,33 @@ void PdfSurface::set_size(double width_in_points, double height_in_points)
   check_object_status_and_throw_exception(*this);
 }
 
+void PdfSurface::restrict_to_version(PdfVersion version)
+{
+  cairo_pdf_surface_restrict_to_version(cobj(), static_cast<cairo_pdf_version_t>(version));
+  check_object_status_and_throw_exception(*this);
+}
+
+const std::vector<PdfVersion> PdfSurface::get_versions()
+{
+  cairo_pdf_version_t const *versions;
+  int num_versions;
+  cairo_pdf_get_versions(&versions, &num_versions);
+
+  // Just copy the version array out into a std::vector.
+  std::vector<PdfVersion> vec;
+  for (int i = 0; i < num_versions; ++i)
+  {
+    vec.push_back(static_cast<PdfVersion>(versions[i]));
+  }
+  return vec;
+}
+
+std::string PdfSurface::version_to_string(PdfVersion version)
+{
+  const char *cstring = cairo_pdf_version_to_string(static_cast<cairo_pdf_version_t>(version));
+  return cstring ? std::string(cstring) : std::string();
+}
+
 #endif // CAIRO_HAS_PDF_SURFACE
 
 

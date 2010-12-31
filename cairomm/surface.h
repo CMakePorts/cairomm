@@ -520,6 +520,12 @@ public:
  * An example of using Cairo::PdfSurface class to render to PDF
  */
 
+typedef enum
+{
+  PDF_VERSION_1_4 = CAIRO_PDF_VERSION_1_4,
+  PDF_VERSION_1_5 = CAIRO_PDF_VERSION_1_5
+} PdfVersion;
+
 /** A PdfSurface provides a way to render PDF documents from cairo.  This
  * surface is not rendered to the screen but instead renders the drawing to a
  * PDF file on disk.
@@ -577,6 +583,32 @@ public:
  **/
   void set_size(double width_in_points, double height_in_points);
 
+  /**
+   * Restricts the generated PDF file to version. See get_versions() for a list
+   * of available version values that can be used here.
+   *
+   * This function should only be called before any drawing operations have been
+   * performed on the given surface. The simplest way to do this is to call this
+   * function immediately after creating the surface.
+   *
+   * @since 1.10
+   */
+  void restrict_to_version(PdfVersion version);
+
+  /** Retrieves the list of PDF versions supported by cairo. See
+   * restrict_to_version().
+   *
+   * @since 1.10
+   */
+  static const std::vector<PdfVersion> get_versions();
+
+  /** Get the string representation of the given version id. This function will
+   * return an empty string if version isn't valid. See get_versions()
+   * for a way to get the list of valid version ids.
+   *
+   * @since 1.10
+   */
+  static std::string version_to_string(PdfVersion version);
 };
 
 #endif  // CAIRO_HAS_PDF_SURFACE
