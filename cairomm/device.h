@@ -28,9 +28,27 @@
 namespace Cairo
 {
 
-//TODO: Documentation.
-
 /**
+ * Devices are the abstraction Cairo employs for the rendering system used by a
+ * cairo_surface_t. You can get the device of a surface using
+ * Surface::get_device().
+ *
+ * Devices are created using custom functions specific to the rendering system
+ * you want to use. See the documentation for the surface types for those
+ * functions.
+ *
+ * An important function that devices fulfill is sharing access to the rendering
+ * system between Cairo and your application. If you want to access a device
+ * directly that you used to draw to with Cairo, you must first call
+ * flush() to ensure that Cairo finishes all operations on the
+ * device and resets it to a clean state.
+ *
+ * Cairo also provides the functions acquire() and release() to synchronize
+ * access to the rendering system in a multithreaded environment. This is done
+ * internally, but can also be used by applications.  There is also a
+ * Device::Lock convenience class that allows the device to be acquired and
+ * released in an exception-safe manner.
+ *
  * This is a reference-counted object that should be used via Cairo::RefPtr.
  */
 class Device
@@ -74,15 +92,57 @@ public:
 
   virtual ~Device();
 
+  /** This function returns the type of the device */
   DeviceType get_type() const;
 
-  //TODO: Documentation.
+  /** Finish any pending operations for the device and also restore any
+   * temporary modifications cairo has made to the device's state. This function
+   * must be called before switching from using the device with Cairo to
+   * operating on it directly with native APIs. If the device doesn't support
+   * direct access, then this function does nothing.
+   *
+   * This function may acquire devices.
+   */
   void flush();
 
-  //TODO: Documentation.
+  /** This function finishes the device and drops all references to external
+   * resources. All surfaces, fonts and other objects created for this device
+   * will be finished, too. Further operations on the device will not affect the
+   * device but will instead trigger a DEVICE_FINISHED error.
+   *
+   * When the last reference to the device is dropped, cairo will call
+   * finish() if it hasn't been called already, before freeing the resources
+   * associated with the device.
+   *
+   * This function may acquire devices.
+   */
   void finish();
 
+  /** Acquires the device for the current thread. This function will block until
+   * no other thread has acquired the device.
+   *
+   * If no exception is thrown, you successfully acquired the device. From now
+   * on your thread owns the device and no other thread will be able to acquire
+   * it until a matching call to release(). It is allowed to recursively acquire
+   * the device multiple times from the same thread.
+   *
+   * @note It is recommended to use Device::Lock to acquire devices in an
+   * exception-safe manner, rather than acquiring and releasing the device
+   * manually.
+   *
+   * @warning You must never acquire two different devices at the same time
+   * unless this is explicitly allowed. Otherwise the possibility of deadlocks
+   * exist.
+   *
+   * @warning As various Cairo functions can acquire devices when called, these
+   * functions may also cause deadlocks when you call them with an acquired
+   * device. So you must not have a device acquired when calling them. These
+   * functions are marked in the documentation.
+   */
   void acquire();
+
+  /** Releases a device previously acquired using acquire().
+   */
   void release();
 
   typedef cairo_device_t cobject;
