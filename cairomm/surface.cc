@@ -266,6 +266,12 @@ RefPtr<Surface> Surface::create(const RefPtr<Surface> other, Content content, in
   return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
 }
 
+RefPtr<Surface> Surface::create(const RefPtr<Surface>& target, double x, double y, double width, double height)
+{
+  cairo_surface_t* cobject = cairo_surface_create_for_rectangle(target->cobj(), x, y, width, height);
+  check_status_and_throw_exception(cairo_surface_status(cobject));
+  return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
+}
 
 
 ImageSurface::ImageSurface(cairo_surface_t* cobject, bool has_reference)

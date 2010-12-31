@@ -343,6 +343,29 @@ public:
    */
   static RefPtr<Surface> create(const RefPtr<Surface> other, Content content, int width, int height);
 
+  /** Create a new surface that is a rectangle within the target surface. All
+   * operations drawn to this surface are then clipped and translated onto the
+   * target surface. Nothing drawn via this sub-surface outside of its bounds is
+   * drawn onto the target surface, making this a useful method for passing
+   * constrained child surfaces to library routines that draw directly onto the
+   * parent surface, i.e. with no further backend allocations, double buffering
+   * or copies.
+   *
+   * @Note The semantics of subsurfaces have not been finalized yet unless the
+   * rectangle is in full device units, is contained within the extents of the
+   * target surface, and the target or subsurface's device transforms are not
+   * changed.
+   *
+   * @param target an existing surface for which the sub-surface will point to
+   * @param x the x-origin of the sub-surface from the top-left of the target surface (in device-space units)
+   * @param y the y-origin of the sub-surface from the top-left of the target surface (in device-space units)
+   * @param width width of the sub-surface (in device-space units)
+   * @param height height of the sub-surface (in device-space units)
+   *
+   * @since 1.10
+   */
+  static RefPtr<Surface> create(const RefPtr<Surface>& target, double x, double y, double width, double height);
+
 protected:
   /** The underlying C cairo surface type that is wrapped by this Surface
    */
