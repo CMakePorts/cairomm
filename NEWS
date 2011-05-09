@@ -1,3 +1,9 @@
+1.10.0 (stable):
+
+* Documentation: Context::arc(): Correct the documentation, as in the C
+  documentation.
+  (Murray Cumming) Bug #31345 (Christopher Head)
+
 1.9.8 (unstable):
 
 * Surface:
