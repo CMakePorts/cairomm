@@ -35,6 +35,10 @@ struct ColorStop
 class Matrix;
 
 /**
+ * Cairo::Pattern is the paint with which cairo draws. The primary use of
+ * patterns is as the source for all cairo drawing operations, although they
+ * can also be used as masks, that is, as the brush too.
+ *
  * This is a reference-counted object that should be used via Cairo::RefPtr.
  */
 class Pattern
@@ -54,14 +58,54 @@ public:
 
   virtual ~Pattern();
 
+  /**
+   * Sets the pattern's transformation matrix to @matrix. This matrix is a
+   * transformation from user space to pattern space.
+   *
+   * When a pattern is first created it always has the identity matrix for its
+   * transformation matrix, which means that pattern space is initially
+   * identical to user space.
+   *
+   * Important: Please note that the direction of this transformation matrix is
+   * from user space to pattern space. This means that if you imagine the flow
+   * from a pattern to user space (and on to device space), then coordinates in
+   * that flow will be transformed by the inverse of the pattern matrix.
+   *
+   * For example, if you want to make a pattern appear twice as large as it
+   * does by default the correct code to use is:
+   *
+   * @code
+   * pattern->set_matrix(scaling_matrix(0.5, 0.5));
+   * @endcode
+   *
+   * Meanwhile, using values of 2.0 rather than 0.5 in the code above
+   * would cause the pattern to appear at half of its default size.
+   *
+   * Also, please note the discussion of the user-space locking semantics of
+   * set_source().
+   **/
   void set_matrix(const Matrix& matrix);
+
+  /**
+   * Returns the pattern's transformation matrix
+   */
   void get_matrix(Matrix& matrix) const;
-  /** @since 1.8
+
+  /**
+   * Returns the pattern's transformation matrix
+   * @since 1.8
    */
   Matrix get_matrix() const;
+
   /* To keep 1.6.x ABI  */
   void set_matrix(const cairo_matrix_t& matrix);
   void get_matrix(cairo_matrix_t& matrix) const;
+
+  /**
+   * Returns the type of the pattern
+   *
+   * @since 1.2
+   */
   PatternType get_type() const;
 
   typedef cairo_pattern_t cobject;
@@ -110,13 +154,30 @@ public:
    *
    * @since 1.4
    **/
-  void get_rgba (double& red, double& green,
-                 double& blue, double& alpha) const;
+  void get_rgba(double& red, double& green,
+                double& blue, double& alpha) const;
 
-  //TODO: Documentation
+  /**
+   * Creates a new Cairo::Pattern corresponding to an opaque color. The color
+   * components are floating point numbers in the range 0 to 1. If the values
+   * passed in are outside that range, they will be clamped.
+   *
+   * @param red red component of the color
+   * @param green green component of the color
+   * @param blue blue component of the color
+   */
   static RefPtr<SolidPattern> create_rgb(double red, double green, double blue);
 
-  //TODO: Documentation
+  /**
+   * Creates a new Cairo::Pattern corresponding to a translucent color. The color
+   * components are floating point numbers in the range 0 to 1. If the values
+   * passed in are outside that range, they will be clamped.
+   *
+   * @param red red component of the color
+   * @param green green component of the color
+   * @param blue blue component of the color
+   * @param alpha alpha component of the color
+   */
   static RefPtr<SolidPattern> create_rgba(double red, double green,
                                           double blue, double alpha);
 
@@ -140,27 +201,59 @@ public:
    */
   explicit SurfacePattern(cairo_pattern_t* cobject, bool has_reference = false);
 
+  /// @{
   /**
    * Gets the surface associated with this pattern
    *
    * @since 1.4
    **/
   RefPtr<const Surface> get_surface () const;
-
-  /**
-   * Gets the surface associated with this pattern
-   *
-   * @since 1.4
-   **/
   RefPtr<Surface> get_surface ();
+  /// @}
 
   virtual ~SurfacePattern();
 
+  /**
+   * Create a new Cairo::Pattern for the given surface.
+   */
   static RefPtr<SurfacePattern> create(const RefPtr<Surface>& surface);
 
+  /**
+   * Sets the mode to be used for drawing outside the area of a pattern. See
+   * Cairo::Extend for details on the semantics of each extend strategy.
+   *
+   * The default extend mode is Cairo::EXTEND_NONE for surface patterns.
+   *
+   * @param Cairo::Extend describing how the area outsize of the pattern will
+   *   be drawn
+   */
   void set_extend(Extend extend);
+
+  /**
+   * Gets the current extend mode See Cairo::Extend for details on the
+   * semantics of each extend strategy.
+   */
   Extend get_extend() const;
+
+  /**
+   * Sets the filter to be used for resizing when using this pattern.
+   * See Cairo::Filter for details on each filter.
+   *
+   * Note that you might want to control filtering even when you do not have an
+   * explicit Cairo::Pattern object, (for example when using
+   * Cairo::Context::set_source_surface()). In these cases, it is convenient to
+   * use Cairo::Context::get_source() to get access to the pattern that cairo
+   * creates implicitly.
+   *
+   * @param filter Cairo::Filter describing the filter to use for resizing the
+   *   pattern
+   */
   void set_filter(Filter filter);
+
+  /**
+   * Gets the current filter for a pattern. See Cairo::Filter for details on
+   * each filter.
+   */
   Filter get_filter() const;
 };
 
@@ -190,6 +283,12 @@ public:
    *
    * The color is specified in the same way as in Context::set_source_rgb().
    *
+   * If two (or more) stops are specified with identical offset values,
+   * they will be sorted according to the order in which the stops are
+   * added, (stops added earlier will compare less than stops added
+   * later). This can be useful for reliably making sharp color
+   * transitions instead of the typical blend.
+   *
    * @param offset an offset in the range [0.0 .. 1.0]
    * @param red red component of color
    * @param green green component of color
@@ -206,6 +305,12 @@ public:
    *
    * The color is specified in the same way as in Context::set_source_rgba().
    *
+   * If two (or more) stops are specified with identical offset values,
+   * they will be sorted according to the order in which the stops are
+   * added, (stops added earlier will compare less than stops added
+   * later). This can be useful for reliably making sharp color
+   * transitions instead of the typical blend.
+   *
    * @param offset an offset in the range [0.0 .. 1.0]
    * @param red red component of color
    * @param green green component of color
@@ -214,7 +319,7 @@ public:
    */
   void add_color_stop_rgba(double offset, double red, double green, double blue, double alpha);
 
-  /*
+  /**
    * Gets the color stops and offsets for this Gradient
    *
    * @since 1.4
@@ -251,11 +356,26 @@ public:
    * @since 1.4
    **/
   void get_linear_points(double &x0, double &y0,
-                          double &x1, double &y1) const;
+                         double &x1, double &y1) const;
 
   //TODO?: LinearGradient(cairo_pattern_t *target);
   virtual ~LinearGradient();
 
+  /**
+   * Create a new linear gradient Cairo::Pattern along the line defined by (x0,
+   * y0) and (x1, y1). Before using the gradient pattern, a number of color
+   * stops should be defined using Cairo::Gradient::add_color_stop_rgb() or
+   * Cairo::Gradient::add_color_stop_rgba().
+   *
+   * Note: The coordinates here are in pattern space. For a new pattern,
+   * pattern space is identical to user space, but the relationship between the
+   * spaces can be changed with Cairo::Pattern::set_matrix().
+   *
+   * @param x0 x coordinate of the start point
+   * @param y0 y coordinate of the start point
+   * @param x1 x coordinate of the end point
+   * @param y1 y coordinate of the end point
+   */
   static RefPtr<LinearGradient> create(double x0, double y0, double x1, double y1);
 };
 
@@ -274,6 +394,9 @@ public:
   explicit RadialGradient(cairo_pattern_t* cobject, bool has_reference = false);
 
   /**
+   * Gets the gradient endpoint circles for a radial gradient, each
+   * specified as a center coordinate and a radius.
+   *
    * @param x0 return value for the x coordinate of the center of the first (inner) circle
    * @param y0 return value for the y coordinate of the center of the first (inner) circle
    * @param r0 return value for the radius of the first (inner) circle
@@ -281,17 +404,33 @@ public:
    * @param y1 return value for the y coordinate of the center of the second (outer) circle
    * @param r1 return value for the radius of the second (outer) circle
    *
-   * Gets the gradient endpoint circles for a radial gradient, each
-   * specified as a center coordinate and a radius.
-   *
    * @since 1.4
-   **/
+   */
   void get_radial_circles(double& x0, double& y0, double& r0,
-                           double& x1, double& y1, double& r1) const;
+                          double& x1, double& y1, double& r1) const;
 
   //TODO?: RadialGradient(cairo_pattern_t *target);
   virtual ~RadialGradient();
 
+
+  /**
+   * Creates a new radial gradient #cairo_pattern_t between the two circles
+   * defined by (cx0, cy0, radius0) and (cx1, cy1, radius1). Before using the
+   * gradient pattern, a number of color stops should be defined using
+   * Cairo::Gradient::add_color_stop_rgb() or
+   * Cairo::Gradient::add_color_stop_rgba().
+   *
+   * @note The coordinates here are in pattern space. For a new pattern,
+   * pattern space is identical to user space, but the relationship between the
+   * spaces can be changed with Cairo::Pattern::set_matrix().
+   *
+   * @param cx0 x coordinate for the center of the start circle
+   * @param cy0 y coordinate for the center of the start circle
+   * @param radius0 radius of the start circle
+   * @param cx1 x coordinate for the center of the end circle
+   * @param cy1 y coordinate for the center of the end circle
+   * @param radius1 radius of the end circle
+   */
   static RefPtr<RadialGradient> create(double cx0, double cy0, double radius0, double cx1, double cy1, double radius1);
 };
 

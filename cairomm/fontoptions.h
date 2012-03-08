@@ -29,7 +29,11 @@
 namespace Cairo
 {
 
-/** How a font should be rendered.
+/**
+ * The font options specify how fonts should be rendered.  Most of the
+ * time the font options implied by a surface are just right and do not
+ * need any changes, but for pixel-based targets tweaking font options
+ * may result in superior output on a particular display.
  */
 class FontOptions
 {
@@ -80,9 +84,10 @@ public:
 
   /**
    * Sets the subpixel order for the font options object. The subpixel order
-   * specifies the order of color elements within each pixel on the display device
-   * when rendering with an antialiasing mode of ANTIALIAS_SUBPIXEL. See the
-   * documentation for SubpixelOrder for full details.
+   * specifies the order of color elements within each pixel on the display
+   * device when rendering with an antialiasing mode of
+   * Cairo::ANTIALIAS_SUBPIXEL. See the documentation for SubpixelOrder for
+   * full details.
    *
    * @param subpixel_order the new subpixel order.
    **/

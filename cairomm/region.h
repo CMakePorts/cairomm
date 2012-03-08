@@ -83,7 +83,8 @@ public:
   bool empty() const;
 
   /** Checks whether @a rectangle is inside, outside, or partially contained in
-   * the region */
+   * the region
+   */
   RegionOverlap contains_rectangle(const RectangleInt& rectangle) const;
 
   /** Checks whether (x,y) is contained in the region */

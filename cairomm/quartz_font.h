@@ -28,7 +28,10 @@
 namespace Cairo
 {
 
-/** Font support for Quartz (CGFont) fonts on OS X.
+/**
+ * The Quartz font backend is primarily used to render text on Apple
+ * MacOS X systems.  The CGFont API is used for the internal
+ * implementation of the font backend methods.
  *
  * @since 1.8
  */

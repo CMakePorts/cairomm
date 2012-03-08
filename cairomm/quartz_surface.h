@@ -36,6 +36,8 @@ namespace Cairo
  *
  * @note For this Surface to be available, cairo must have been compiled with
  * (native) Quartz support (requires Cairo > 1.4.0)
+ *
+ * @since 1.4
  */
 class QuartzSurface : public Surface
 {
@@ -47,6 +49,8 @@ public:
    * @param cobject The C instance.
    * @param has_reference whether we already have a reference. Otherwise, the
    * constructor will take an extra reference.
+   *
+   * @since 1.4
    */
   explicit QuartzSurface(cairo_surface_t* cobject, bool has_reference = false);
   virtual ~QuartzSurface();
@@ -55,24 +59,46 @@ public:
    * returns NULL if the surface is not a Quartz surface.
    *
    * @return CGContextRef or NULL if no CGContextRef available.
+   *
+   * @since 1.4
    */
   CGContextRef get_cg_context() const;
 
-  /** Creates a cairo surface that targets the given CGContext.
+  /**
+   * Creates a Quartz surface that wraps the given CGContext. The CGContext is
+   * assumed to be in the standard Cairo coordinate space (that is, with the
+   * origin at the upper left and the Y axis increasing downward). If the
+   * CGContext is in the Quartz coordinate space (with the origin at the bottom
+   * left), then it should be flipped before this function is called. The flip
+   * can be accomplished using a translate and a scale; for example:
+   *
+   * @code
+   * CGContextTranslateCTM (cgContext, 0.0, height);
+   * CGContextScaleCTM (cgContext, 1.0, -1.0);
+   * @endcode
+   *
+   * All Cairo operations are implemented in terms of Quartz operations,
+   * as long as Quartz-compatible elements are used (such as Quartz fonts).
    *
    * @param cg_context the CGContext to create a surface for
    * @return the newly created surface
+   *
+   * @since 1.4
    */
   static RefPtr<QuartzSurface> create(CGContextRef cg_context, int width, int height);
 
-  /** Creates a device-independent-bitmap surface not associated with any
-   * particular existing surface or device context. The created bitmap will be
-   * unititialized.
+  /**
+   * Creates a Quartz surface backed by a CGBitmap. The surface is created
+   * using the Device RGB (or Device Gray, for A8) color space. All Cairo
+   * operations, including those that require software rendering, will succeed
+   * on this surface.
    *
    * @param format format of pixels in the surface to create
    * @param width width of the surface, in pixels
    * @param height height of the surface, in pixels
    * @return the newly created surface
+   *
+   * @since 1.4
    */
   static RefPtr<QuartzSurface> create(Format format, int width, int height);
 

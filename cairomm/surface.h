@@ -65,6 +65,11 @@ namespace Cairo
  * different subtypes of cairo surface for different drawing backends.  This
  * class is a base class for all subtypes and should not be used directly
  *
+ * Most surface types allow accessing the surface without using Cairo
+ * functions. If you do this, keep in mind that it is mandatory that you call
+ * Cairo::Surface::flush() before reading from or writing to the surface and that
+ * you must use Cairo::Surface::mark_dirty() after modifying it.
+ *
  * Surfaces are reference-counted objects that should be used via Cairo::RefPtr.
  */
 class Surface
@@ -109,11 +114,15 @@ public:
 
   virtual ~Surface();
 
-  /** Return mime data previously attached to surface using the specified mime type. If no data has been attached with the given mime type then this returns 0.
+  /**
+   * Return mime data previously attached to surface using the specified mime
+   * type. If no data has been attached with the given mime type then this
+   * returns 0.
    *
    * @param mime_type The MIME type of the image data.
    * @param length This will be set to the length of the image data.
-   * @result The image data attached to the surface.
+   * @returns The image data attached to the surface.
+   * @since 1.10
    */
   const unsigned char* get_mime_data(const std::string& mime_type, unsigned long& length);
 
@@ -138,12 +147,15 @@ public:
    * it can handle. Caution: the associated MIME data will be discarded if you
    * draw on the surface afterwards. Use this function with care.
    *
-   * @param mime_type The MIME type of the image data.
-   * @param data The image data to attach to the surface.
-   * @param length The length of the image data.
-   * @param slot_destroy A callback slot that will be called when the Surface no longer needs the data. For instance, when the Surface is destroyed or when new image data is attached using the same MIME tpe.
+   * @param mime_type The MIME type of the image data. param data The image
+   * @data to attach to the surface. param length The length of the image data.
+   * @param slot_destroy A callback slot that will be called when the Surface
+   *   no longer needs the data. For instance, when the Surface is destroyed or
+   *   when new image data is attached using the same MIME tpe.
+   * @since 1.10
    */
-  void set_mime_data(const std::string& mime_type, unsigned char* data, unsigned long length, const SlotDestroy& slot_destroy);
+  void set_mime_data(const std::string& mime_type, unsigned char* data,
+                     unsigned long length, const SlotDestroy& slot_destroy);
 
   /** Remove the data from a surface. See set_mime_data().
    */
@@ -221,10 +233,34 @@ public:
    */
   void get_device_offset(double& x_offset, double& y_offset) const;
 
-  /** Sets the fallback resolution of the image in dots per inch
+  /**
+   * Set the horizontal and vertical resolution for image fallbacks.
+   *
+   * When certain operations aren't supported natively by a backend, cairo will
+   * fallback by rendering operations to an image and then overlaying that
+   * image onto the output. For backends that are natively vector-oriented,
+   * this function can be used to set the resolution used for these image
+   * fallbacks, (larger values will result in more detailed images, but also
+   * larger file sizes).
+   *
+   * Some examples of natively vector-oriented backends are the ps, pdf, and
+   * svg backends.
+   *
+   * For backends that are natively raster-oriented, image fallbacks are still
+   * possible, but they are always performed at the native device resolution.
+   * So this function has no effect on those backends.
+   *
+   * Note: The fallback resolution only takes effect at the time of completing
+   * a page (with Context::show_page() or Context::copy_page()) so there is
+   * currently no way to have more than one fallback resolution in effect on a
+   * single page.
+   *
+   * The default fallback resoultion is 300 pixels per inch in both dimensions.
    *
    * @param x_pixels_per_inch   Pixels per inch in the x direction
    * @param y_pixels_per_inch   Pixels per inch in the y direction
+   *
+   * @since 1.2
    */
   void set_fallback_resolution(double x_pixels_per_inch, double y_pixels_per_inch);
 
@@ -240,7 +276,8 @@ public:
 
   SurfaceType get_type() const;
 
-  /**This function returns the content type of surface which indicates whether
+  /**
+   * This function returns the content type of surface which indicates whether
    * the surface contains color and/or alpha information.
    *
    * @since 1.8
@@ -421,32 +458,39 @@ public:
    */
   int get_height() const;
 
+  /// @{
   /**
    * Get a pointer to the data of the image surface, for direct
    * inspection or modification.
    *
    * Return value: a pointer to the image data of this surface or NULL
    * if @surface is not an image surface.
+   *
+   * @since 1.2
    */
   unsigned char* get_data();
   const unsigned char* get_data() const;
+  /// @}
 
-  /** gets the format of the surface
+  /**
+   * Gets the format of the surface
+   * @since 1.2
    */
   Format get_format() const;
 
   /**
-   * Return value: the stride of the image surface in bytes (or 0 if
-   * @surface is not an image surface). The stride is the distance in
-   * bytes from the beginning of one row of the image data to the
-   * beginning of the next row.
+   * Returns the stride of the image surface in bytes (or 0 if surface is not
+   * an image surface). The stride is the distance in bytes from the beginning
+   * of one row of the image data to the beginning of the next row.
+   *
+   * @since 1.2
    */
   int get_stride() const;
 
   /**
-   * This function provides a stride value that will respect all
-   * alignment requirements of the accelerated image-rendering code
-   * within cairo. Typical usage will be of the form:
+   * This function provides a stride value that will respect all alignment
+   * requirements of the accelerated image-rendering code within cairo. Typical
+   * usage will be of the form:
    *
    * @code
    * int stride;
@@ -465,7 +509,7 @@ public:
    *
    * @since 1.6
    **/
-  static int format_stride_for_width (Cairo::Format format, int width);
+  static int format_stride_for_width(Cairo::Format format, int width);
 
   /**
    * Creates an image surface of the specified format and dimensions. Initially
@@ -576,6 +620,7 @@ public:
    * @param filename    The name of the PDF file to save the surface to
    * @param width_in_points   The width of the PDF document in points
    * @param height_in_points   The height of the PDF document in points
+   * @since 1.2
    */
   static RefPtr<PdfSurface> create(std::string filename, double width_in_points, double height_in_points);
 
@@ -586,7 +631,6 @@ public:
    * write data to an output stream
    * @param width_in_points   The width of the PDF document in points
    * @param height_in_points   The height of the PDF document in points
-   *
    * @since 1.8
    */
   static RefPtr<PdfSurface> create_for_stream(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);

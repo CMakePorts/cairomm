@@ -75,6 +75,9 @@ public:
   void set_user_data(const cairo_user_data_key_t *key, void *user_data, cairo_destroy_func_t destroy);
   */
 
+  /**
+   * Returns the type of the backend used to create a font face
+   */
   FontType get_type() const;
 
   typedef cairo_font_face_t cobject;

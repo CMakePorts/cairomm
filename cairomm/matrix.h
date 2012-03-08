@@ -112,8 +112,10 @@ public:
    * transformation matrices have inverses; if the matrix collapses points
    * together (it is degenerate), then it has no inverse and this function will
    * throw an exception.
+   *
+   * @exception
    */
-  void invert(); // throws exception
+  void invert();
 
   /** Multiplies the affine transformations in a and b together and stores the
    * result in this matrix. The effect of the resulting transformation is to first

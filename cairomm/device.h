@@ -50,6 +50,8 @@ namespace Cairo
  * released in an exception-safe manner.
  *
  * This is a reference-counted object that should be used via Cairo::RefPtr.
+ *
+ * @since 1.10
  */
 class Device
 {
