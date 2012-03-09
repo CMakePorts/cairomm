@@ -135,9 +135,9 @@ IGNORE_PREFIX          =
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
-HTML_HEADER            = "@abs_top_srcdir@/docs/reference/cairomm-header.html"
+HTML_HEADER            =
 HTML_FOOTER            =
-HTML_STYLESHEET        = "@abs_top_srcdir@/docs/reference/cairomm.css"
+HTML_STYLESHEET        = "@MMDOCTOOLDIR@/doxygen.css"
 HTML_ALIGN_MEMBERS     = YES
 HTML_DYNAMIC_SECTIONS  = NO
 GENERATE_DOCSET        = NO
@@ -161,8 +161,10 @@ QHG_LOCATION           =
 DISABLE_INDEX          = NO
 ENUM_VALUES_PER_LINE   = 1
 GENERATE_TREEVIEW      = NONE
+USE_INLINE_TREES       = NO
 TREEVIEW_WIDTH         = 250
 FORMULA_FONTSIZE       = 10
+SEARCHENGINE           = NO
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
 #---------------------------------------------------------------------------
@@ -178,6 +180,7 @@ PDF_HYPERLINKS         = YES
 USE_PDFLATEX           = YES
 LATEX_BATCHMODE        = NO
 LATEX_HIDE_INDICES     = NO
+LATEX_SOURCE_CODE      = NO
 #---------------------------------------------------------------------------
 # configuration options related to the RTF output
 #---------------------------------------------------------------------------
@@ -256,7 +259,7 @@ CLASS_DIAGRAMS         = NO
 MSCGEN_PATH            =
 HIDE_UNDOC_RELATIONS   = NO
 HAVE_DOT               = YES
-DOT_FONTNAME           = FreeSans
+DOT_FONTNAME           = Sans
 DOT_FONTSIZE           = 10
 DOT_FONTPATH           =
 CLASS_GRAPH            = YES
@@ -279,7 +282,3 @@ DOT_TRANSPARENT        = NO
 DOT_MULTI_TARGETS      = YES
 GENERATE_LEGEND        = YES
 DOT_CLEANUP            = YES
-#---------------------------------------------------------------------------
-# Options related to the search engine
-#---------------------------------------------------------------------------
-SEARCHENGINE           = NO
