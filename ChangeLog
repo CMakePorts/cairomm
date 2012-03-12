@@ -1,3 +1,11 @@
+2012-03-12  Murray Cumming  <murrayc@murrayc.com>
+
+	Fix linker problem with the examples.
+
+	* examples/Makefile.am: Add CAIROMM_LIBS.
+	This is needed now to a change in behaviour of the linker
+	in recent distro versions.
+
 2010-11-03  Mark Vender  <markv743@yahoo.co.uk>
 
 	Update the documentation.

@@ -11,7 +11,7 @@ check_PROGRAMS = surfaces/pdf-surface \
 AM_CPPFLAGS = -I$(top_builddir) $(if $(srcdir:.=),-I$(top_srcdir)) $(CAIROMM_CFLAGS)
 AM_CXXFLAGS = $(CAIROMM_WXXFLAGS)
 
-LDADD = $(top_builddir)/cairomm/libcairomm-$(CAIROMM_API_VERSION).la
+LDADD = $(CAIROMM_LIBS) $(top_builddir)/cairomm/libcairomm-$(CAIROMM_API_VERSION).la
 
 surfaces_pdf_surface_SOURCES = surfaces/pdf-surface.cc
 surfaces_ps_surface_SOURCES = surfaces/ps-surface.cc
