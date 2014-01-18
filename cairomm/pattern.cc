@@ -92,7 +92,18 @@ PatternType Pattern::get_type() const
   return static_cast<PatternType>(pattern_type);
 }
 
+void Pattern::set_extend(Extend extend)
+{
+  cairo_pattern_set_extend(m_cobject, (cairo_extend_t)extend);
+  check_object_status_and_throw_exception(*this);
+}
 
+Extend Pattern::get_extend() const
+{
+  const Extend result = static_cast<Extend>(cairo_pattern_get_extend(m_cobject));
+  check_object_status_and_throw_exception(*this);
+  return result;
+}
 
 SolidPattern::SolidPattern(cairo_pattern_t* cobject, bool has_reference)
 : Pattern(cobject, has_reference)
@@ -164,15 +175,12 @@ SurfacePattern::~SurfacePattern()
 
 void SurfacePattern::set_extend(Extend extend)
 {
-  cairo_pattern_set_extend(m_cobject, (cairo_extend_t)extend);
-  check_object_status_and_throw_exception(*this);
+  Pattern::set_extend(extend);
 }
 
 Extend SurfacePattern::get_extend() const
 {
-  const Extend result = static_cast<Extend>(cairo_pattern_get_extend(m_cobject));
-  check_object_status_and_throw_exception(*this);
-  return result;
+  return Pattern::get_extend();
 }
 
 void SurfacePattern::set_filter(Filter filter)

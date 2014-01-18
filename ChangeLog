@@ -1,3 +1,10 @@
+2014-01-18  Povilas Kanapickas  <povilas@radix.lt>
+
+	Add Pattern::{set_extend,get_extend}
+
+	* cairomm/pattern.{cc,h}: set_extend and get_extend functions apply not
+	only to surface patterns, but to linear and radial gradients too.
+
 2012-03-12  Mark Vender  <markv743@yahoo.co.uk>
 
 	Use GNOME style in the documentation
