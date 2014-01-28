@@ -64,6 +64,11 @@ RefPtr<ScaledFont> ScaledFont::create(const RefPtr<FontFace>& font_face, const c
 
 void ScaledFont::extents(FontExtents& extents) const
 {
+  get_extents(extents);
+}
+
+void ScaledFont::get_extents(FontExtents& extents) const
+{
   cairo_scaled_font_extents(m_cobject, static_cast<cairo_font_extents_t*>(&extents));
   check_object_status_and_throw_exception(*this);
 }
