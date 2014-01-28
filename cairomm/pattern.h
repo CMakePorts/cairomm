@@ -117,12 +117,15 @@ public:
    *
    * @param Cairo::Extend describing how the area outsize of the pattern will
    *   be drawn
+   *
+   * @since 1.12
    */
   void set_extend(Extend extend);
 
   /**
    * Gets the current extend mode See Cairo::Extend for details on the
    * semantics of each extend strategy.
+   * @since 1.12
    */
   Extend get_extend() const;
 
@@ -236,14 +239,17 @@ public:
    */
   static RefPtr<SurfacePattern> create(const RefPtr<Surface>& surface);
 
-  #ifndef DOXYGEN_IGNORE_THIS
-  /* The following two functions have been implemented in Pattern and are
-   * retained only because of API/ABI compatibility reasons.
+#ifndef CAIROMM_DISABLE_DEPRECATED
+  /**
+   * @deprecated Use Pattern::set_extend() instead.
    */
   void set_extend(Extend extend);
 
+  /**
+   *@deprecated Use Pattern::set_extend() instead.
+   */
   Extend get_extend() const;
-  #endif
+#endif //CAIROMM_DISABLE_DEPRECATED
 
   /**
    * Sets the filter to be used for resizing when using this pattern.
