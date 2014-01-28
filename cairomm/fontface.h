@@ -25,14 +25,6 @@
 #include <cairomm/types.h>
 #include <cairomm/refptr.h>
 
-/* following is required for OS X */
-
-#ifdef nil
-#undef nil
-#endif
-
-/* end OS X */
-
 #include <cairo.h>
 #ifdef CAIRO_HAS_FT_FONT
 #include <cairo-ft.h>

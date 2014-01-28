@@ -26,11 +26,14 @@
 
 #ifdef nil
 #undef nil
+#include <sigc++/slot.h>
+#define nil NULL
+#else
+#include <sigc++/slot.h>
 #endif
 
 /* end OS X */
 
-#include <sigc++/slot.h>
 #include <cairomm/enums.h>
 #include <cairomm/exception.h>
 #include <cairomm/device.h>
