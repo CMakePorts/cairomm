@@ -1,3 +1,18 @@
+1.11.1 (unstable):
+
+* Pattern: Add set_extend() and get_extend().
+  (Povilas Kanapickas) Bug #73775
+* ScaledFont: Add the missing get_extents() method implementation.
+  (Murray Cumming) Bug #53981 (cheshirekow)
+* Allow use from Objective-C instead of just allowing building.
+  (Anton Bachin) Bug #66328
+* Avoid dereferencing empty std::vector<>s.
+  (Murray Cumming) Bug #36020 (Robert Kurjata)
+* Documentation improvements.
+  (Mark Vender)
+* Fix linker problems in examples.
+  (Murray Cumming)
+
 1.10.0 (stable):
 
 * Documentation: Context::arc(): Correct the documentation, as in the C
