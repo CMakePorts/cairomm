@@ -44,6 +44,9 @@ dist_noinst_SCRIPTS = autogen.sh
 
 DISTCLEANFILES = MSVC_Net2005/cairomm/cairommconfig.h MSVC_Net2008/cairomm/cairommconfig.h MSVC_Net2010/cairomm/cairommconfig.h
 
+# Optional: auto-generate the ChangeLog file from the git log on make dist
+include $(top_srcdir)/build/dist-changelog.am
+
 # Copied from cairo/Makefile.am:
 #
 # Some custom targets to make it easier to release things.
