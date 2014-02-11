@@ -1,4 +1,4 @@
-1.11.1 (unstable):
+1.11.2 (unstable):
 
 * Pattern: Add set_extend() and get_extend().
   (Povilas Kanapickas) Bug #73775
