@@ -17,6 +17,7 @@
  */
 
 #include <cairomm/surface.h>
+#include <cairomm/script.h>
 #include <cairomm/private.h>
 
 namespace Cairo
@@ -246,7 +247,17 @@ RefPtr<Device> Surface::get_device()
   if (!d)
     return RefPtr<Device>();
 
-  return RefPtr<Device>(new Device(d, true));
+  cairo_surface_type_t surface_type = cairo_surface_get_type(m_cobject);
+  switch (surface_type)
+  {
+#if CAIRO_HAS_SCRIPT_SURFACE
+    case CAIRO_SURFACE_TYPE_SCRIPT:
+      return RefPtr<Script>(new Script(d, true /* has reference */));
+      break;
+#endif
+    default:
+      return RefPtr<Device>(new Device(d, true /* has reference */));
+  }
 }
 
 void Surface::reference() const

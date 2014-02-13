@@ -26,6 +26,7 @@
 #include <cairomm/context_private.h>
 #include <cairomm/private.h>
 #include <cairomm/surface.h>
+#include <cairomm/script_surface.h>
 #include <cairomm/scaledfont.h>
 
 /* M_PI is defined in math.h in the case of Microsoft Visual C++ */
@@ -834,6 +835,11 @@ RefPtr<Surface> get_surface_wrapper (cairo_surface_t* surface)
 #if CAIRO_HAS_QUARTZ_SURFACE
     case CAIRO_SURFACE_TYPE_QUARTZ:
       return wrap_surface_quartz(surface);
+      break;
+#endif
+#if CAIRO_HAS_SCRIPT_SURFACE
+    case CAIRO_SURFACE_TYPE_SCRIPT:
+      return RefPtr<ScriptSurface>(new ScriptSurface(surface, false));
       break;
 #endif
 #if CAIRO_HAS_WIN32_SURFACE

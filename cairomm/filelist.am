@@ -17,6 +17,8 @@ cairomm_cc =				\
 	quartz_surface.cc		\
 	region.cc \
 	scaledfont.cc			\
+    script.cc       \
+	script_surface.cc		\
 	surface.cc			\
 	win32_font.cc			\
 	win32_surface.cc		\
@@ -37,6 +39,8 @@ cairomm_public_h =			\
 	refptr.h			\
 	region.h \
 	scaledfont.h			\
+    script.h    \
+	script_surface.h    \
 	surface.h			\
 	types.h				\
 	win32_font.h			\
