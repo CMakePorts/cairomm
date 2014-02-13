@@ -468,6 +468,28 @@ public:
    */
   static RefPtr<FtFontFace> create(FcPattern* pattern);
 
+  /** Sets synthesis options to control how FreeType renders the glyphs for a
+   * particular font face. The given options are ORed with the currently active
+   * options.
+   *
+   * @param synth_flags A set of synthesis options to enable
+   * @since 1.12
+   */
+  void set_synthesize(FtSynthesize synth_flags);
+
+  /** Unsets the specified FreeType glypth synthesis options
+   *
+   * @param synth_flags A set of synthesis options to disable
+   * @since 1.12
+   */
+  void unset_synthesize(FtSynthesize synth_flags);
+
+  /** Returns currently activy FreeType glyph synthesis options
+   *
+   * @since 1.12
+   */
+  FtSynthesize get_synthesize() const;
+
 protected:
   FtFontFace(FT_Face face, int load_flags);
   FtFontFace(FcPattern* pattern);

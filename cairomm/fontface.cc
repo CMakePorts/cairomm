@@ -403,6 +403,21 @@ FtFontFace::FtFontFace(FcPattern* pattern) :
   check_status_and_throw_exception(cairo_font_face_status(m_cobject));
 }
 
+void FtFontFace::set_synthesize(FtSynthesize synth_flags)
+{
+  cairo_ft_font_face_set_synthesize(m_cobject, synth_flags);
+}
+
+void FtFontFace::unset_synthesize(FtSynthesize synth_flags)
+{
+  cairo_ft_font_face_unset_synthesize(m_cobject, synth_flags);
+}
+
+FtSynthesize FtFontFace::get_synthesize() const
+{
+  return (FtSynthesize)cairo_ft_font_face_get_synthesize(m_cobject);
+}
+
 #endif // CAIRO_HAS_FT_FONT
 
 } //namespace Cairo

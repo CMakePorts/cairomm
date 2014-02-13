@@ -20,6 +20,7 @@
 #define __CAIROMM_ENUMS_H
 
 #include <cairo.h>
+#include <cairo-ft.h>
 
 namespace Cairo
 {
@@ -808,6 +809,43 @@ typedef enum
      */
     REGION_OVERLAP_PART = CAIRO_REGION_OVERLAP_PART
 } RegionOverlap;
+
+/**
+ * A set of synthesis options to control how FreeType renders the glyphs for a
+ * particular font face.
+ *
+ * FreeType provides the ability to synthesize different glyphs from a base
+ * font, which is useful if you lack those glyphs from a true bold or oblique
+ * font.
+ *
+ * Individual synthesis features of a @c FtFontFace can be set using
+ * @c FtFontFace::set_synthesize(), or disabled using
+ * @c FtFontFace::unset_synthesize(). The currently enabled set of synthesis
+ * options can be queried with @c FtFontFace::get_synthesize().
+ *
+ * Note: that when synthesizing glyphs, the font metrics returned will only be
+ * estimates.
+ *
+ * @since 1.12
+ */
+enum FtSynthesize {
+
+    /// Embolden the glyphs (redraw with a pixel offset)
+    FT_SYNTHESIZE_BOLT = CAIRO_FT_SYNTHESIZE_BOLD,
+
+    /// Slant the glyph outline by 12 degrees to the right.
+    FT_SYNTHESIZE_OBLIQUE = CAIRO_FT_SYNTHESIZE_OBLIQUE
+};
+
+inline FtSynthesize operator|(FtSynthesize a, FtSynthesize b)
+{
+  return static_cast<FtSynthesize>(static_cast<int>(a) | static_cast<int>(b));
+}
+
+inline FtSynthesize operator&(FtSynthesize a, FtSynthesize b)
+{
+    return static_cast<FtSynthesize>(static_cast<int>(a) & static_cast<int>(b));
+}
 
 } // namespace Cairo
 
