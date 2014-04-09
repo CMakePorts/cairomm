@@ -201,6 +201,7 @@
     <ClCompile Include="..\..\cairomm\context_surface_quartz.cc" />
     <ClCompile Include="..\..\cairomm\context_surface_win32.cc" />
     <ClCompile Include="..\..\cairomm\context_surface_xlib.cc" />
+    <ClCompile Include="..\..\cairomm\device.cc" />
     <ClCompile Include="..\..\cairomm\exception.cc" />
     <ClCompile Include="..\..\cairomm\fontface.cc" />
     <ClCompile Include="..\..\cairomm\fontoptions.cc" />
@@ -208,8 +209,12 @@
     <ClCompile Include="..\..\cairomm\path.cc" />
     <ClCompile Include="..\..\cairomm\pattern.cc" />
     <ClCompile Include="..\..\cairomm\private.cc" />
+    <ClCompile Include="..\..\cairomm\quartz_font.cc" />
     <ClCompile Include="..\..\cairomm\quartz_surface.cc" />
+    <ClCompile Include="..\..\cairomm\region.cc" />
     <ClCompile Include="..\..\cairomm\scaledfont.cc" />
+    <ClCompile Include="..\..\cairomm\script.cc" />
+    <ClCompile Include="..\..\cairomm\script_surface.cc" />
     <ClCompile Include="..\..\cairomm\surface.cc" />
     <ClCompile Include="..\..\cairomm\win32_font.cc" />
     <ClCompile Include="..\..\cairomm\win32_surface.cc" />
@@ -218,6 +223,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\cairomm\cairomm.h" />
     <ClInclude Include="..\..\cairomm\context.h" />
+    <ClInclude Include="..\..\cairomm\context_private.h" />
+    <ClInclude Include="..\..\cairomm\device.h" />
     <ClInclude Include="..\..\cairomm\enums.h" />
     <ClInclude Include="..\..\cairomm\exception.h" />
     <ClInclude Include="..\..\cairomm\fontface.h" />
@@ -226,10 +233,15 @@
     <ClInclude Include="..\..\cairomm\path.h" />
     <ClInclude Include="..\..\cairomm\pattern.h" />
     <ClInclude Include="..\..\cairomm\private.h" />
+    <ClInclude Include="..\..\cairomm\quartz_font.h" />
     <ClInclude Include="..\..\cairomm\quartz_surface.h" />
     <ClInclude Include="..\..\cairomm\refptr.h" />
+    <ClInclude Include="..\..\cairomm\region.h" />
     <ClInclude Include="..\..\cairomm\scaledfont.h" />
+    <ClInclude Include="..\..\cairomm\script.h" />
+    <ClInclude Include="..\..\cairomm\script_surface.h" />
     <ClInclude Include="..\..\cairomm\surface.h" />
+    <ClInclude Include="..\..\cairomm\types.h" />
     <ClInclude Include="..\..\cairomm\win32_font.h" />
     <ClInclude Include="..\..\cairomm\win32_surface.h" />
     <ClInclude Include="..\..\cairomm\xlib_surface.h" />
