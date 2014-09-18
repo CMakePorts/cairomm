@@ -15,8 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\surfaces\image-surface.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="..\examples\surfaces\svg-surface.cc"><Filter>Source Files</Filter></ClCompile>
   </ItemGroup>
 </Project>

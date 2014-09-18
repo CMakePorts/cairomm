@@ -15,8 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\text\user-font.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="..\examples\text\text-rotate.cc"><Filter>Source Files</Filter></ClCompile>
   </ItemGroup>
 </Project>
