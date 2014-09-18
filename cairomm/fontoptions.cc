@@ -156,11 +156,13 @@ HintMetrics FontOptions::get_hint_metrics() const
 }
 
 #ifdef CAIRO_HAS_FT_FONT
+#ifdef CAIRO_HAS_FC_FONT
 void FontOptions::substitute(FcPattern* pattern)
 {
   cairo_ft_font_options_substitute(cobj(), pattern);
   check_object_status_and_throw_exception(*this);
 }
+#endif // CAIRO_HAS_FC_FONT
 #endif // CAIRO_HAS_FT_FONT
 
 } //namespace Cairo

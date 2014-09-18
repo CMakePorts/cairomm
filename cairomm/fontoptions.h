@@ -138,6 +138,7 @@ public:
   HintMetrics get_hint_metrics() const;
 
 #ifdef CAIRO_HAS_FT_FONT
+#ifdef CAIRO_HAS_FC_FONT
   /** Add options to a FcPattern based on a cairo_font_options_t font options
    * object. Options that are already in the pattern, are not overridden, so you
    * should call this function after calling FcConfigSubstitute() (the user's
@@ -149,6 +150,7 @@ public:
    * @since 1.8
    */
   void substitute(FcPattern* pattern);
+#endif // CAIRO_HAS_FC_FONT
 #endif // CAIRO_HAS_FT_FONT
 
   typedef cairo_font_options_t cobject;

@@ -436,6 +436,7 @@ public:
   static RefPtr<FtFontFace> create(FT_Face face, int load_flags);
   //TODO: Add a suitable default value for load_flags?
 
+#ifdef CAIRO_HAS_FC_FONT
   /** Creates a new font face for the FreeType font backend based on a
    * fontconfig pattern. This font can then be used with Context::set_font_face()
    * or FtScaledFont::create().
@@ -465,6 +466,7 @@ public:
    * @since 1.8
    */
   static RefPtr<FtFontFace> create(FcPattern* pattern);
+#endif // CAIRO_HAS_FC_FONT
 
   /** Sets synthesis options to control how FreeType renders the glyphs for a
    * particular font face. The given options are ORed with the currently active
@@ -490,7 +492,9 @@ public:
 
 protected:
   FtFontFace(FT_Face face, int load_flags);
+#ifdef CAIRO_HAS_FC_FONT
   FtFontFace(FcPattern* pattern);
+#endif // CAIRO_HAS_FC_FONT
 };
 
 #endif // CAIRO_HAS_FT_FONT

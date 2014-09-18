@@ -390,6 +390,7 @@ FtFontFace::FtFontFace(FT_Face face, int load_flags) :
   check_status_and_throw_exception(cairo_font_face_status(m_cobject));
 }
 
+#ifdef CAIRO_HAS_FC_FONT
 RefPtr<FtFontFace>
 FtFontFace::create(FcPattern* pattern)
 {
@@ -402,6 +403,7 @@ FtFontFace::FtFontFace(FcPattern* pattern) :
 {
   check_status_and_throw_exception(cairo_font_face_status(m_cobject));
 }
+#endif // CAIRO_HAS_FC_FONT
 
 void FtFontFace::set_synthesize(FtSynthesize synth_flags)
 {
