@@ -3,15 +3,17 @@
 msvc_net2008_data = README \
                     blank.cpp \
                     cairomm.sln \
-                    gendef/gendef.vcproj \
+                    cairomm-build-defines.vsprops \
+                    cairomm-version-paths.vsprops \
+                    gendef.vcproj \
                     gendef/gendef.cc \
                     cairomm/cairommconfig.h \
                     cairomm/cairomm.rc \
-                    cairomm/cairomm.vcproj \
-                    examples/image-surface/image-surface.vcproj \
-                    examples/pdf-surface/pdf-surface.vcproj \
-                    examples/ps-surface/ps-surface.vcproj \
-                    examples/svg-surface/svg-surface.vcproj \
-                    examples/text-rotate/text-rotate.vcproj \
-                    examples/toy-text/toy-text.vcproj \
-                    examples/user-font/user-font.vcproj
+                    cairomm.vcproj \
+                    image-surface.vcproj \
+                    pdf-surface.vcproj \
+                    ps-surface.vcproj \
+                    svg-surface.vcproj \
+                    text-rotate.vcproj \
+                    toy-text.vcproj \
+                    user-font.vcproj

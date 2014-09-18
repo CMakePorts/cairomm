@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="9.00"
+	Name="cairomm"
+	ProjectGUID="{58B2B53C-C4FF-47FD-817B-095E45B7F7D4}"
+	RootNamespace="cairomm"
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
+	>
+	<Platforms>
+		<Platform
+			Name="Win32"
+		/>
+		<Platform
+			Name="x64"
+		/>
+	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			ConfigurationType="2"
+			InheritedPropertySheets=".\cairomm-build-defines.vsprops"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				PreprocessorDefinitions="_DEBUG;$(CairoMMBuildDefs)"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="4"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+				Description="Generate cairomm def file"
+				CommandLine="$(OutDir)\gendef.exe $(DefDir)\$(ProjectName).def $(TargetFileName) $(IntDir)\*.obj"
+				ExcludedFromBuild="false"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="$(CPPDepLibsDebug)"
+				OutputFile="$(OutDir)\$(ProjectName)$(DebugDllSuffix).dll"
+				GenerateManifest="true"
+				ModuleDefinitionFile="$(IntDir)\$(ProjectName).def"
+				GenerateDebugInformation="true"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			ConfigurationType="2"
+			InheritedPropertySheets=".\cairomm-build-defines.vsprops"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCCLCompilerTool"
+				PreprocessorDefinitions="$(CairoMMBuildDefs)"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+				Description="Generate cairomm def file"
+				CommandLine="$(OutDir)\gendef.exe $(DefDir)\$(ProjectName).def $(TargetFileName) $(IntDir)\*.obj"
+				ExcludedFromBuild="false"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="$(CPPDepLibsRelease)"
+				OutputFile="$(OutDir)\$(ProjectName)$(ReleaseDllSuffix).dll"
+				GenerateManifest="true"
+				GenerateDebugInformation="true"
+				OptimizeReferences="2"
+				ModuleDefinitionFile="$(IntDir)\$(ProjectName).def"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug|x64"
+			ConfigurationType="2"
+			InheritedPropertySheets=".\cairomm-build-defines.vsprops"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				PreprocessorDefinitions="_DEBUG;$(CairoMMBuildDefs)"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+				Description="Generate cairomm def file"
+				CommandLine="$(OutDir)\gendef.exe $(DefDir)\$(ProjectName).def $(TargetFileName) $(IntDir)\*.obj"
+				ExcludedFromBuild="false"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="$(CPPDepLibsDebug)"
+				OutputFile="$(OutDir)\$(ProjectName)$(DebugDllSuffix).dll"
+				GenerateManifest="true"
+				ModuleDefinitionFile="$(IntDir)\$(ProjectName).def"
+				GenerateDebugInformation="true"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|x64"
+			ConfigurationType="2"
+			InheritedPropertySheets=".\cairomm-build-defines.vsprops"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				PreprocessorDefinitions="$(CairoMMBuildDefs)"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+				Description="Generate cairomm def file"
+				CommandLine="$(OutDir)\gendef.exe $(DefDir)\$(ProjectName).def $(TargetFileName) $(IntDir)\*.obj"
+				ExcludedFromBuild="false"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="$(CPPDepLibsRelease)"
+				OutputFile="$(OutDir)\$(ProjectName)$(ReleaseDllSuffix).dll"
+				GenerateManifest="true"
+				GenerateDebugInformation="true"
+				OptimizeReferences="2"
+				ModuleDefinitionFile="$(IntDir)\$(ProjectName).def"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
+			/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
+			<File RelativePath="..\cairomm\context.cc" />
+			<File RelativePath="..\cairomm\context_surface_quartz.cc" />
+			<File RelativePath="..\cairomm\context_surface_win32.cc" />
+			<File RelativePath="..\cairomm\context_surface_xlib.cc" />
+			<File RelativePath="..\cairomm\device.cc" />
+			<File RelativePath="..\cairomm\exception.cc" />
+			<File RelativePath="..\cairomm\fontface.cc" />
+			<File RelativePath="..\cairomm\fontoptions.cc" />
+			<File RelativePath="..\cairomm\matrix.cc" />
+			<File RelativePath="..\cairomm\path.cc" />
+			<File RelativePath="..\cairomm\pattern.cc" />
+			<File RelativePath="..\cairomm\private.cc" />
+			<File RelativePath="..\cairomm\quartz_font.cc" />
+			<File RelativePath="..\cairomm\quartz_surface.cc" />
+			<File RelativePath="..\cairomm\region.cc" />
+			<File RelativePath="..\cairomm\scaledfont.cc" />
+			<File RelativePath="..\cairomm\script.cc" />
+			<File RelativePath="..\cairomm\script_surface.cc" />
+			<File RelativePath="..\cairomm\surface.cc" />
+			<File RelativePath="..\cairomm\win32_font.cc" />
+			<File RelativePath="..\cairomm\win32_surface.cc" />
+			<File RelativePath="..\cairomm\xlib_surface.cc" />
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
+			<File RelativePath="..\cairomm\cairomm.h" />
+			<File RelativePath="..\cairomm\context.h" />
+			<File RelativePath="..\cairomm\context_private.h" />
+			<File RelativePath="..\cairomm\device.h" />
+			<File RelativePath="..\cairomm\enums.h" />
+			<File RelativePath="..\cairomm\exception.h" />
+			<File RelativePath="..\cairomm\fontface.h" />
+			<File RelativePath="..\cairomm\fontoptions.h" />
+			<File RelativePath="..\cairomm\matrix.h" />
+			<File RelativePath="..\cairomm\path.h" />
+			<File RelativePath="..\cairomm\pattern.h" />
+			<File RelativePath="..\cairomm\private.h" />
+			<File RelativePath="..\cairomm\quartz_font.h" />
+			<File RelativePath="..\cairomm\quartz_surface.h" />
+			<File RelativePath="..\cairomm\refptr.h" />
+			<File RelativePath="..\cairomm\region.h" />
+			<File RelativePath="..\cairomm\scaledfont.h" />
+			<File RelativePath="..\cairomm\script.h" />
+			<File RelativePath="..\cairomm\script_surface.h" />
+			<File RelativePath="..\cairomm\surface.h" />
+			<File RelativePath="..\cairomm\types.h" />
+			<File RelativePath="..\cairomm\win32_font.h" />
+			<File RelativePath="..\cairomm\win32_surface.h" />
+			<File RelativePath="..\cairomm\xlib_surface.h" />
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
+			<File RelativePath=".\cairomm\cairomm.rc" />
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>
