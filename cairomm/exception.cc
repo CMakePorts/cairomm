@@ -34,7 +34,7 @@ logic_error::logic_error(ErrorStatus status)
 {
 }
 
-logic_error::~logic_error() throw()
+logic_error::~logic_error() noexcept
 {}
 
 ErrorStatus logic_error::get_status_code() const
@@ -43,7 +43,7 @@ ErrorStatus logic_error::get_status_code() const
 }
 
 /*
-const char* logic_error::what() const throw()
+const char* logic_error::what() const noexcept
 {
   //Hopefully this is a const char* to a static string.
   return cairo_status_to_string((cairo_status_t)m_status);

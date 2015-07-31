@@ -31,9 +31,9 @@ class logic_error: public std::logic_error
 {
 public:
   explicit logic_error(ErrorStatus status);
-  virtual ~logic_error() throw();
+  virtual ~logic_error() noexcept;
 
-  //virtual const char* what() const throw();
+  //virtual const char* what() const noexcept;
   ErrorStatus get_status_code() const;
 
 private:
