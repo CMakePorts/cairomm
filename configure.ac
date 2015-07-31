@@ -67,7 +67,8 @@ MM_ARG_WITH_TAGFILE_DOC([libsigc++-2.0.tag], [sigc++-2.0])
 AC_LANG([C++])
 MM_ARG_ENABLE_WARNINGS([CAIROMM_WXXFLAGS],
                        [-Wall],
-                       [-pedantic -Wall -Wextra])
+                       [-pedantic -Wall -Wextra],
+                       [SIGCXX])
 
 AC_ARG_ENABLE([tests],
               [AS_HELP_STRING([--enable-tests], [enable automated tests [default=no]])],
