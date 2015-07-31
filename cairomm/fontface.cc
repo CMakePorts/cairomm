@@ -33,7 +33,7 @@ namespace Cairo
 {
 
 FontFace::FontFace(cairo_font_face_t* cobject, bool has_reference)
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   if(has_reference)
     m_cobject = cobject;

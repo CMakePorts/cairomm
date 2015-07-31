@@ -24,12 +24,12 @@ namespace Cairo
 {
 
 Pattern::Pattern()
-: m_cobject(0)
+: m_cobject(nullptr)
 {
 }
 
 Pattern::Pattern(cairo_pattern_t* cobject, bool has_reference)
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   if(has_reference)
     m_cobject = cobject;
@@ -146,7 +146,7 @@ SurfacePattern::SurfacePattern(const RefPtr<Surface>& surface)
 RefPtr<Surface>
 SurfacePattern::get_surface()
 {
-  cairo_surface_t* surface = 0;
+  cairo_surface_t* surface = nullptr;
   // we can ignore the return value since we know this is a surface pattern
   cairo_pattern_get_surface(const_cast<cairo_pattern_t*>(m_cobject), &surface);
   check_object_status_and_throw_exception(*this);

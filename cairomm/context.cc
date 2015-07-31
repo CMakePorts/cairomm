@@ -43,7 +43,7 @@ namespace Cairo
 {
 
 Context::Context(const RefPtr<Surface>& target)
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   m_cobject = cairo_create(target->cobj());
   check_object_status_and_throw_exception(*this);
@@ -55,7 +55,7 @@ RefPtr<Context> Context::create(const RefPtr<Surface>& target)
 }
 
 Context::Context(cairo_t* cobject, bool has_reference)
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   if(has_reference)
     m_cobject = cobject;
@@ -502,7 +502,7 @@ void Context::get_clip_extents(double& x1, double& y1, double& x2, double& y2) c
 
 void Context::copy_clip_rectangle_list(std::vector<Rectangle>& rectangles) const
 {
-  cairo_rectangle_list_t* c_list = 0;
+  cairo_rectangle_list_t* c_list = nullptr;
   // It would be nice if the cairo interface didn't copy it into a C array first
   // and just let us do the copying...
   c_list = cairo_copy_clip_rectangle_list(const_cast<cobject*>(const_cast<cobject*>(cobj())));

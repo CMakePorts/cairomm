@@ -25,14 +25,14 @@ namespace Cairo
 
 /*
 Path::Path()
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   m_cobject = cairo_path_create();
 }
 */
 
 Path::Path(cairo_path_t* cobject, bool take_ownership)
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   if(take_ownership)
     m_cobject = cobject;
@@ -48,7 +48,7 @@ Path::Path(const Path& src)
 {
   //Reference-counting, instead of copying by value:
   if(!src.m_cobject)
-    m_cobject = 0;
+    m_cobject = nullptr;
   else
     m_cobject = cairo_path_copy(src.m_cobject);
 }
@@ -74,7 +74,7 @@ Path& Path::operator=(const Path& src)
   if(m_cobject)
   {
     cairo_path_destroy(m_cobject);
-    m_cobject = 0;
+    m_cobject = nullptr;
   }
 
   if(!src.m_cobject)

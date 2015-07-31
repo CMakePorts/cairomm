@@ -23,14 +23,14 @@ namespace Cairo
 {
 
 FontOptions::FontOptions()
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   m_cobject = cairo_font_options_create();
   check_object_status_and_throw_exception(*this);
 }
 
 FontOptions::FontOptions(cairo_font_options_t* cobject, bool take_ownership)
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   if(take_ownership)
     m_cobject = cobject;
@@ -41,11 +41,11 @@ FontOptions::FontOptions(cairo_font_options_t* cobject, bool take_ownership)
 }
 
 FontOptions::FontOptions(const FontOptions& src)
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   //Reference-counting, instead of copying by value:
   if(!src.m_cobject)
-    m_cobject = 0;
+    m_cobject = nullptr;
   else
     m_cobject = cairo_font_options_copy(src.m_cobject);
 
@@ -72,7 +72,7 @@ FontOptions& FontOptions::operator=(const FontOptions& src)
   if(m_cobject)
   {
     cairo_font_options_destroy(m_cobject);
-    m_cobject = 0;
+    m_cobject = nullptr;
   }
 
   if(!src.m_cobject)

@@ -24,7 +24,7 @@ namespace Cairo
 {
 
 ScaledFont::ScaledFont(cobject* cobj, bool has_reference)
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   if(has_reference)
     m_cobject = cobj;
@@ -34,7 +34,7 @@ ScaledFont::ScaledFont(cobject* cobj, bool has_reference)
 
 ScaledFont::ScaledFont(const RefPtr<FontFace>& font_face, const cairo_matrix_t& font_matrix,
                        const cairo_matrix_t& ctm, const FontOptions& options)
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   m_cobject =
     cairo_scaled_font_create(font_face->cobj(),
@@ -152,8 +152,8 @@ ScaledFont::text_to_glyphs (double x,
 {
   int num_glyphs = -1;
   int num_clusters = -1;
-  cairo_glyph_t* c_glyphs = 0;
-  cairo_text_cluster_t* c_clusters = 0;
+  cairo_glyph_t* c_glyphs = nullptr;
+  cairo_text_cluster_t* c_clusters = nullptr;
   auto status = cairo_scaled_font_text_to_glyphs(cobj(), x, y,
                                                            utf8.c_str(),
                                                            utf8.size(),

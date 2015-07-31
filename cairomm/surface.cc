@@ -70,7 +70,7 @@ cairo_status_t write_func_wrapper(void* closure, const unsigned char* data, unsi
 }
 
 Surface::Surface(cairo_surface_t* cobject, bool has_reference)
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   if(has_reference)
     m_cobject = cobject;
@@ -92,7 +92,7 @@ void Surface::finish()
 
 const unsigned char* Surface::get_mime_data(const std::string& mime_type, unsigned long& length)
 {
-  const unsigned char* data = 0;
+  const unsigned char* data = nullptr;
   cairo_surface_get_mime_data(const_cast<cobject*>(cobj()), mime_type.c_str(), &data, &length);
   check_object_status_and_throw_exception(*this);
   return data;

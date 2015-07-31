@@ -87,7 +87,7 @@ void test_ft_scaled_font()
   auto face = Cairo::FtFontFace::create(resolved);
   BOOST_CHECK(face);
 
-  cairo_scaled_font_t* c_scaled_font = 0;
+  cairo_scaled_font_t* c_scaled_font = nullptr;
   int refcount = 0;
   {
     auto scaled_font =

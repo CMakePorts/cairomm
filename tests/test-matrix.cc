@@ -65,7 +65,7 @@ void test_invert()
   BOOST_CHECK_THROW(degenerate.invert(), std::logic_error);
 }
 
-cairo_matrix_t* test_matrix = 0;
+cairo_matrix_t* test_matrix = nullptr;
 static void foo(cairo_matrix_t* matrix)
 {
   test_matrix = matrix;

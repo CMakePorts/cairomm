@@ -185,7 +185,7 @@ T_CppObject* RefPtr<T_CppObject>::operator->() const
 template <class T_CppObject> inline
 RefPtr<T_CppObject>::RefPtr()
 :
-  pCppObject_(0),
+  pCppObject_(nullptr),
   pCppRefcount_(0)
 {}
 
@@ -207,11 +207,11 @@ void RefPtr<T_CppObject>::unref()
       if(pCppObject_)
       {
         delete pCppObject_;
-        pCppObject_ = 0;
+        pCppObject_ = nullptr;
       }
 
       delete pCppRefcount_;
-      pCppRefcount_ = 0;
+      pCppRefcount_ = nullptr;
     }
   }
 }

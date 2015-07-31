@@ -37,7 +37,7 @@ Region::Region(const RectangleInt& rectangle)
 
 // less efficient but convenient
 Region::Region(const std::vector<RectangleInt>& rects) :
-  m_cobject(0)
+  m_cobject(nullptr)
 {
   auto *carray = new RectangleInt[rects.size()];
   std::copy(rects.begin(), rects.end(), carray);
@@ -56,7 +56,7 @@ Region::Region(const RectangleInt *rects, int count) :
 }
 
 Region::Region(cairo_region_t* cobject, bool has_reference)
-: m_cobject(0)
+: m_cobject(nullptr)
 {
   if(has_reference)
     m_cobject = cobject;

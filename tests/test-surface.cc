@@ -22,7 +22,7 @@ void test_write_to_png_stream()
 
 void test_pdf_constructor_slot()
 {
-  test_slot_called = 0;
+  test_slot_called = nullptr;
   auto pdf = PdfSurface::create_for_stream(sigc::ptr_fun(&test_slot), 1, 1);
   pdf->show_page();
   pdf->finish();
