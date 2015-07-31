@@ -93,6 +93,7 @@ public:
    * @return the status code of the write operation
    */
   typedef sigc::slot<ErrorStatus, const unsigned char* /*data*/, unsigned int /*length*/> SlotWriteFunc;
+
   /**
    * This is the type of function which is called when a backend needs to read
    * data from an input stream. It is passed the buffer to read the data into
@@ -114,6 +115,9 @@ public:
    * constructor will take an extra reference.
    */
   explicit Surface(cairo_surface_t* cobject, bool has_reference = false);
+
+  Surface(const Surface&) = delete;
+  Surface& operator=(const Surface&) = delete;
 
   virtual ~Surface();
 
@@ -410,10 +414,6 @@ protected:
   /** The underlying C cairo surface type that is wrapped by this Surface
    */
   cobject* m_cobject;
-
-private:
-  Surface(const Surface&);
-  Surface& operator=(const Surface&);
 };
 
 /** @example image-surface.cc

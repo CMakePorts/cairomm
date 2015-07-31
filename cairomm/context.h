@@ -64,6 +64,9 @@ public:
    */
   explicit Context(cairo_t* cobject, bool has_reference = false);
 
+  Context(const Context&) = delete;
+  Context& operator=(const Context&) = delete;
+
   static RefPtr<Context> create(const RefPtr<Surface>& target);
 
   virtual ~Context();
@@ -1609,10 +1612,6 @@ public:
 
 protected:
   cobject* m_cobject;
-
-private:
-  Context(const Context&);
-  Context& operator=(const Context&);
 };
 
 } // namespace Cairo

@@ -40,7 +40,9 @@ class Path
 public:
   //Path();
   explicit Path(cairo_path_t* cobject, bool take_ownership = false);
-  //Path(const Path& src);
+
+  Path(const Path&) = delete;
+  Path& operator=(const Path&) = delete;
 
   virtual ~Path();
 
@@ -63,10 +65,6 @@ public:
 protected:
 
   cobject* m_cobject;
-
-private:
-  Path(const Path&);
-  Path& operator=(const Path&);
 };
 
 } // namespace Cairo

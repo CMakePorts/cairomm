@@ -65,6 +65,9 @@ public:
    */
   explicit ScaledFont(cobject* cobj, bool has_reference = false);
 
+  ScaledFont(const ScaledFont&) = delete;
+  ScaledFont& operator=(const ScaledFont&) = delete;
+
   virtual ~ScaledFont();
 
   /** Creates a ScaledFont object from a font face and matrices that describe
@@ -227,10 +230,6 @@ protected:
              const cairo_matrix_t& ctm, const FontOptions& options = FontOptions());
   /** The underlying C cairo object that is wrapped by this ScaledFont */
   cobject* m_cobject;
-
-private:
-  ScaledFont(const ScaledFont&);
-  ScaledFont& operator=(const ScaledFont&);
 };
 
 #ifdef CAIRO_HAS_FT_FONT

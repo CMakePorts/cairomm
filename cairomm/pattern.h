@@ -56,6 +56,9 @@ public:
    */
   explicit Pattern(cairo_pattern_t* cobject, bool has_reference = false);
 
+  Pattern(const Pattern&) = delete;
+  Pattern& operator=(const Pattern&) = delete;
+
   virtual ~Pattern();
 
   /**
@@ -147,10 +150,6 @@ protected:
   Pattern();
 
   cobject* m_cobject;
-
-private:
-  Pattern(const Pattern&);
-  Pattern& operator=(const Pattern&);
 };
 
 class SolidPattern : public Pattern
