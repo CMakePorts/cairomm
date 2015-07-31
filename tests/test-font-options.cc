@@ -18,19 +18,19 @@ void test_excercise()
   options.hash();
 
   options.set_antialias(Cairo::ANTIALIAS_SUBPIXEL);
-  Cairo::Antialias antialias = options.get_antialias();
+  auto antialias = options.get_antialias();
   BOOST_CHECK_EQUAL(Cairo::ANTIALIAS_SUBPIXEL, antialias);
 
   options.set_subpixel_order(Cairo::SUBPIXEL_ORDER_DEFAULT);
-  Cairo::SubpixelOrder order = options.get_subpixel_order();
+  auto order = options.get_subpixel_order();
   BOOST_CHECK_EQUAL(Cairo::SUBPIXEL_ORDER_DEFAULT, order);
 
   options.set_hint_style(Cairo::HINT_STYLE_SLIGHT);
-  Cairo::HintStyle hint_style = options.get_hint_style();
+  auto hint_style = options.get_hint_style();
   BOOST_CHECK_EQUAL(Cairo::HINT_STYLE_SLIGHT, hint_style);
 
   options.set_hint_metrics(Cairo::HINT_METRICS_OFF);
-  Cairo::HintMetrics metrics = options.get_hint_metrics();
+  auto metrics = options.get_hint_metrics();
   BOOST_CHECK_EQUAL(Cairo::HINT_METRICS_OFF, metrics);
 }
 

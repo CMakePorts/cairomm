@@ -8,9 +8,9 @@ const double TEXT_ORIGIN_X = 50.0;  // arbitrary
 
 int main(int, char**)
 {
-  Cairo::RefPtr<Cairo::ImageSurface> surface =
+  auto surface =
     Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, WIDTH, HEIGHT);
-  Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
+  auto cr = Cairo::Context::create(surface);
   // fill background in white
   cr->set_source_rgb(1.0, 1.0, 1.0);
   cr->paint();
@@ -23,7 +23,7 @@ int main(int, char**)
   // draw the text
   cr->move_to(TEXT_ORIGIN_X, TEXT_ORIGIN_Y);
   cr->set_source_rgb(0.8, 0.2, 0.2);
-  Cairo::RefPtr<Cairo::ToyFontFace> font =
+  auto font =
     Cairo::ToyFontFace::create("Bitstream Charter",
                                Cairo::FONT_SLANT_ITALIC,
                                Cairo::FONT_WEIGHT_BOLD);

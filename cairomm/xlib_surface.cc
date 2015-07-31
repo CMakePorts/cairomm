@@ -36,14 +36,14 @@ XlibSurface::~XlibSurface()
 
 RefPtr<XlibSurface> XlibSurface::create(Display* dpy, Drawable drawable, Visual* visual, int width, int height)
 {
-  cairo_surface_t* cobject = cairo_xlib_surface_create(dpy, drawable, visual, width, height);
+  auto cobject = cairo_xlib_surface_create(dpy, drawable, visual, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
 }
 
 RefPtr<XlibSurface> XlibSurface::create(Display* dpy, Pixmap bitmap, Screen* screen, int width, int height)
 {
-  cairo_surface_t* cobject = cairo_xlib_surface_create_for_bitmap(dpy, bitmap, screen, width, height);
+  auto cobject = cairo_xlib_surface_create_for_bitmap(dpy, bitmap, screen, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
 }
@@ -62,70 +62,70 @@ void XlibSurface::set_drawable(Drawable drawable, int width, int height)
 
 Drawable XlibSurface::get_drawable() const
 {
-  Drawable drawable = cairo_xlib_surface_get_drawable(m_cobject);
+  auto drawable = cairo_xlib_surface_get_drawable(m_cobject);
   check_object_status_and_throw_exception(*this);
   return drawable;
 }
 
 const Display* XlibSurface::get_display() const
 {
-  const Display* dpy = cairo_xlib_surface_get_display(m_cobject);
+  const auto dpy = cairo_xlib_surface_get_display(m_cobject);
   check_object_status_and_throw_exception(*this);
   return dpy;
 }
 
 Display* XlibSurface::get_display()
 {
-  Display* dpy = cairo_xlib_surface_get_display(m_cobject);
+  auto dpy = cairo_xlib_surface_get_display(m_cobject);
   check_object_status_and_throw_exception(*this);
   return dpy;
 }
 
 Screen* XlibSurface::get_screen()
 {
-  Screen* screen = cairo_xlib_surface_get_screen(m_cobject);
+  auto screen = cairo_xlib_surface_get_screen(m_cobject);
   check_object_status_and_throw_exception(*this);
   return screen;
 }
 
 const Screen* XlibSurface::get_screen() const
 {
-  const Screen* screen = cairo_xlib_surface_get_screen(m_cobject);
+  const auto screen = cairo_xlib_surface_get_screen(m_cobject);
   check_object_status_and_throw_exception(*this);
   return screen;
 }
 
 Visual* XlibSurface::get_visual()
 {
-  Visual* visual = cairo_xlib_surface_get_visual(m_cobject);
+  auto visual = cairo_xlib_surface_get_visual(m_cobject);
   check_object_status_and_throw_exception(*this);
   return visual;
 }
 
 const Visual* XlibSurface::get_visual() const
 {
-  const Visual* visual = cairo_xlib_surface_get_visual(m_cobject);
+  const auto visual = cairo_xlib_surface_get_visual(m_cobject);
   check_object_status_and_throw_exception(*this);
   return visual;
 }
 
 int XlibSurface::get_depth() const
 {
-  int depth = cairo_xlib_surface_get_depth(m_cobject);
+  auto depth = cairo_xlib_surface_get_depth(m_cobject);
   check_object_status_and_throw_exception(*this);
   return depth;
 }
 
 int XlibSurface::get_height() const
 {
-  int h = cairo_xlib_surface_get_height(m_cobject);
+  auto h = cairo_xlib_surface_get_height(m_cobject);
   check_object_status_and_throw_exception(*this);
   return h;
 }
 
 int XlibSurface::get_width() const
 {
-  int w = cairo_xlib_surface_get_width(m_cobject);
+  auto w = cairo_xlib_surface_get_width(m_cobject);
   check_object_status_and_throw_exception(*this);
   return w;
 }
@@ -139,7 +139,7 @@ XlibSurface::create_with_xrender_format (Display *dpy,
                                          int width,
                                          int height)
 {
-  cairo_surface_t* cobject =
+  auto cobject =
       cairo_xlib_surface_create_with_xrender_format(dpy, drawable,
                                                     screen, format,
                                                     width, height);

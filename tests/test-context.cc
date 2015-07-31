@@ -15,8 +15,8 @@ using namespace boost::unit_test;
 #include <cairomm/scaledfont.h>
 
 #define CREATE_CONTEXT(varname) \
-  Cairo::RefPtr<Cairo::Surface> surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 10, 10); \
-  Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surf);
+  auto surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 10, 10); \
+  auto cr = Cairo::Context::create(surf);
 
 void
 test_dashes ()
@@ -83,14 +83,14 @@ void
 test_source ()
 {
   CREATE_CONTEXT(cr);
-  Cairo::RefPtr<Cairo::Pattern> solid_pattern =
+  auto solid_pattern =
     Cairo::SolidPattern::create_rgb (1.0, 0.5, 0.25);
-  Cairo::RefPtr<Cairo::Pattern> gradient_pattern =
+  auto gradient_pattern =
     Cairo::LinearGradient::create (0.0, 0.0, 1.0, 1.0);
 
   cr->set_source (solid_pattern);
   {
-    Cairo::RefPtr<Cairo::SolidPattern> retrieved_solid =
+    auto retrieved_solid =
       Cairo::RefPtr<Cairo::SolidPattern>::cast_dynamic(cr->get_source ());
     BOOST_REQUIRE (retrieved_solid);
     double r, g, b, a;
@@ -100,15 +100,15 @@ test_source ()
     BOOST_CHECK_EQUAL (0.25, b);
 
     // now try for const objects..
-    Cairo::RefPtr<const Cairo::Context> cr2 = cr;
-    Cairo::RefPtr<const Cairo::SolidPattern> retrieved_solid2 =
+    auto cr2 = cr;
+    auto retrieved_solid2 =
       Cairo::RefPtr<const Cairo::SolidPattern>::cast_dynamic(cr2->get_source ());
     BOOST_REQUIRE (retrieved_solid2);
   }
 
   cr->set_source (gradient_pattern);
   {
-    Cairo::RefPtr<Cairo::LinearGradient> retrieved_linear =
+    auto retrieved_linear =
       Cairo::RefPtr<Cairo::LinearGradient>::cast_dynamic(cr->get_source ());
     BOOST_REQUIRE (retrieved_linear);
     double x0, x1, y0, y1;
@@ -121,7 +121,7 @@ test_source ()
 
   cr->set_source_rgb (1.0, 0.5, 0.25);
   {
-    Cairo::RefPtr<Cairo::SolidPattern> solid =
+    auto solid =
       Cairo::RefPtr<Cairo::SolidPattern>::cast_dynamic(cr->get_source ());
     BOOST_REQUIRE (solid);
     double rx, gx, bx, ax;
@@ -132,7 +132,7 @@ test_source ()
   }
   cr->set_source_rgba (0.1, 0.3, 0.5, 0.7);
   {
-    Cairo::RefPtr<Cairo::SolidPattern> solid =
+    auto solid =
       Cairo::RefPtr<Cairo::SolidPattern>::cast_dynamic(cr->get_source ());
     BOOST_REQUIRE (solid);
     double rx, gx, bx, ax;
@@ -225,7 +225,7 @@ test_matrix ()
   cr->set_matrix(matrix);
   cr->set_identity_matrix ();
   cr->get_matrix (matrix);
-  Cairo::Matrix m2 = cr->get_matrix ();
+  auto m2 = cr->get_matrix ();
 }
 
 void
@@ -299,22 +299,22 @@ test_current_point ()
 void
 test_target ()
 {
-  Cairo::RefPtr<Cairo::Surface> surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 10, 10); \
-  Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surf);
+  auto surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 10, 10); \
+  auto cr = Cairo::Context::create(surf);
 
-  Cairo::RefPtr<Cairo::ImageSurface> target_surface =
+  auto target_surface =
     Cairo::RefPtr<Cairo::ImageSurface>::cast_dynamic(cr->get_target ());
-  Cairo::RefPtr<Cairo::PdfSurface> bad_surface =
+  auto bad_surface =
     Cairo::RefPtr<Cairo::PdfSurface>::cast_dynamic(cr->get_target ());
   BOOST_CHECK (target_surface);
   BOOST_CHECK (!bad_surface);
 
   // now check for const objects...
-  Cairo::RefPtr<const Cairo::Context> cr2 = Cairo::Context::create(surf);
+  auto cr2 = Cairo::Context::create(surf);
 
-  Cairo::RefPtr<const Cairo::ImageSurface> target_surface2 =
+  auto target_surface2 =
     Cairo::RefPtr<const Cairo::ImageSurface>::cast_dynamic(cr2->get_target ());
-  Cairo::RefPtr<const Cairo::PdfSurface> bad_surface2 =
+  auto bad_surface2 =
     Cairo::RefPtr<const Cairo::PdfSurface>::cast_dynamic(cr2->get_target ());
   BOOST_CHECK (target_surface2);
   BOOST_CHECK (!bad_surface2);
@@ -323,12 +323,12 @@ test_target ()
 void test_scaled_font()
 {
   CREATE_CONTEXT (cr);
-  Cairo::RefPtr<Cairo::ToyFontFace> face = Cairo::ToyFontFace::create("sans",
+  auto face = Cairo::ToyFontFace::create("sans",
                                                                       Cairo::FONT_SLANT_NORMAL,
                                                                       Cairo::FONT_WEIGHT_NORMAL);
   Cairo::Matrix identity;
   cairo_matrix_init_identity(&identity);
-  Cairo::RefPtr<Cairo::ScaledFont> font = Cairo::ScaledFont::create(face,
+  auto font = Cairo::ScaledFont::create(face,
                                                                     identity,
                                                                     identity,
                                                                     Cairo::FontOptions());

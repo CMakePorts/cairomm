@@ -98,9 +98,9 @@ protected:
 
 int main(int, char**)
 {
-  Cairo::RefPtr<Cairo::ImageSurface> surface =
+  auto surface =
     Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, WIDTH, HEIGHT);
-  Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
+  auto cr = Cairo::Context::create(surface);
   // fill background in white
   cr->set_source_rgb(1.0, 1.0, 1.0);
   cr->paint();
@@ -113,7 +113,7 @@ int main(int, char**)
   // draw the text
   cr->move_to(TEXT_ORIGIN_X, TEXT_ORIGIN_Y);
   cr->set_source_rgb(0.8, 0.2, 0.2);
-  Cairo::RefPtr<BoxFontFace> font = BoxFontFace::create();
+  auto font = BoxFontFace::create();
   cr->set_font_face(font);
   cr->set_font_size(FONT_SIZE);
   cr->show_text("cairomm!");
@@ -121,7 +121,7 @@ int main(int, char**)
   // Now show it with the toy text API to demonstrate how the glyphs match up
   cr->move_to(TEXT_ORIGIN_X, TEXT_ORIGIN_Y);
   cr->set_source_rgba(0.2, 0.2, 0.2, 0.3);
-  Cairo::RefPtr<Cairo::ToyFontFace> toy_font =
+  auto toy_font =
     Cairo::ToyFontFace::create("Bitstream Charter",
                                Cairo::FONT_SLANT_NORMAL,
                                Cairo::FONT_WEIGHT_BOLD);

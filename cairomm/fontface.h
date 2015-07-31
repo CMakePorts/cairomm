@@ -190,7 +190,7 @@ protected:
  *
  * @code
  * {
- *   Cairo::RefPtr<MyUserFont> face = MyUserFont::create();
+ *   auto face = MyUserFont::create();
  *   cr->set_font_face(face);
  * }  // scope for demonstration purposes
  *

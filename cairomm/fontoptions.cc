@@ -96,7 +96,7 @@ void FontOptions::merge(const FontOptions& src)
 
 unsigned long FontOptions::hash() const
 {
-  const unsigned long result = cairo_font_options_hash(m_cobject);
+  const auto result = cairo_font_options_hash(m_cobject);
   check_object_status_and_throw_exception(*this);
   return result;
 }
@@ -109,7 +109,7 @@ void FontOptions::set_antialias(Antialias antialias)
 
 Antialias FontOptions::get_antialias() const
 {
-  const Antialias result = static_cast<Antialias>(cairo_font_options_get_antialias(m_cobject));
+  const auto result = static_cast<Antialias>(cairo_font_options_get_antialias(m_cobject));
   check_object_status_and_throw_exception(*this);
   return result;
 }
@@ -122,7 +122,7 @@ void FontOptions::set_subpixel_order(SubpixelOrder subpixel_order)
 
 SubpixelOrder FontOptions::get_subpixel_order() const
 {
-  const SubpixelOrder result = static_cast<SubpixelOrder>(cairo_font_options_get_subpixel_order(m_cobject));
+  const auto result = static_cast<SubpixelOrder>(cairo_font_options_get_subpixel_order(m_cobject));
   check_object_status_and_throw_exception(*this); 
   return result;
 }
@@ -135,7 +135,7 @@ void FontOptions::set_hint_style(HintStyle hint_style)
 
 HintStyle FontOptions::get_hint_style() const
 {
-  const HintStyle result = static_cast<HintStyle>(cairo_font_options_get_hint_style(m_cobject));
+  const auto result = static_cast<HintStyle>(cairo_font_options_get_hint_style(m_cobject));
   check_object_status_and_throw_exception(*this);
   return result;
 }
@@ -149,7 +149,7 @@ void FontOptions::set_hint_metrics(HintMetrics hint_metrics)
 
 HintMetrics FontOptions::get_hint_metrics() const
 {
-  const HintMetrics result =
+  const auto result =
       static_cast<HintMetrics>(cairo_font_options_get_hint_metrics(m_cobject));
   check_object_status_and_throw_exception(*this);
   return result;

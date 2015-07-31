@@ -36,7 +36,7 @@ RefPtr<ScriptSurface> ScriptSurface::create(const RefPtr<Script>& script,
                                             Content content,
                                             double width, double height)
 {
-  cairo_surface_t* cobject =
+  auto cobject =
         cairo_script_surface_create(script->cobj(), static_cast<cairo_content_t>(content),
                                     width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
@@ -47,7 +47,7 @@ RefPtr<ScriptSurface>
   ScriptSurface::create_for_target(const RefPtr<Script>& script,
                                    const RefPtr<Surface>& target)
 {
-  cairo_surface_t* cobject =
+  auto cobject =
         cairo_script_surface_create_for_target(script->cobj(), target->cobj());
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<ScriptSurface>(new ScriptSurface(cobject, true /* has reference */));

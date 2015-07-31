@@ -77,7 +77,7 @@ protected:
 void test_implement_text()
 {
   TestSetup setup;
-  RefPtr<ImplTextUserFont> font = ImplTextUserFont::create();
+  auto font = ImplTextUserFont::create();
   setup.cr->set_font_face(font);
   setup.cr->show_text("hello");
   BOOST_REQUIRE(font->count_text_to_glyphs > 0);
@@ -104,7 +104,7 @@ protected:
 void test_implement_unicode()
 {
   TestSetup setup;
-  RefPtr<ImplTextUserFont> font = ImplTextUserFont::create();
+  auto font = ImplTextUserFont::create();
   setup.cr->set_font_face(font);
   setup.cr->show_text("hello");
   BOOST_REQUIRE(font->count_text_to_glyphs > 0);
@@ -146,7 +146,7 @@ protected:
 void test_implement_both()
 {
   TestSetup setup;
-  RefPtr<ImplBothUserFont> font = ImplBothUserFont::create();
+  auto font = ImplBothUserFont::create();
   setup.cr->set_font_face(font);
   setup.cr->show_text("hello");
   // text_to_glyphs should take precedence
@@ -170,7 +170,7 @@ protected:
 void test_implement_neither()
 {
   TestSetup setup;
-  RefPtr<ImplNeitherUserFont> font = ImplNeitherUserFont::create();
+  auto font = ImplNeitherUserFont::create();
   setup.cr->set_font_face(font);
   setup.cr->show_text("hello");
   BOOST_REQUIRE(font->count_render_glyph > 0);
@@ -197,7 +197,7 @@ protected:
 void test_implement_init()
 {
   TestSetup setup;
-  RefPtr<ImplInitUserFont> font = ImplInitUserFont::create();
+  auto font = ImplInitUserFont::create();
   setup.cr->set_font_face(font);
   setup.cr->show_text("hello");
   BOOST_REQUIRE(font->count_init > 0);
@@ -263,7 +263,7 @@ protected:
 
 void test_user_font_exception()
 {
-  Cairo::RefPtr<ExceptionUserFont> font =
+  auto font =
     ExceptionUserFont::create(ExceptionUserFont::FLAG_INIT);
   BOOST_CHECK(font);
 

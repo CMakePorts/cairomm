@@ -34,7 +34,7 @@ Script::~Script()
 
 void Script::add_from_recording_surface(const RefPtr<ScriptSurface>& recording_surface)
 {
-  ErrorStatus status = cairo_script_from_recording_surface(m_cobject,
+  auto status = cairo_script_from_recording_surface(m_cobject,
                                                            recording_surface->cobj());
   check_status_and_throw_exception(status);
 }
@@ -56,7 +56,7 @@ void Script::write_comment(const std::string& comment)
 
 RefPtr<Script> Script::create(const std::string& filename)
 {
-  cairo_device_t* cobject = cairo_script_create(filename.c_str());
+  auto cobject = cairo_script_create(filename.c_str());
   check_status_and_throw_exception(cairo_device_status(cobject));
   return RefPtr<Script>(new Script(cobject, true /* has reference */));
 }
@@ -66,7 +66,7 @@ static cairo_user_data_key_t USER_DATA_KEY_DEVICE_WRITE_FUNC = {0};
 static void device_free_slot(void* data)
 {
   // FIXME: duplicates free_slot in surface.cc
-  Surface::SlotWriteFunc* slot = static_cast<Surface::SlotWriteFunc*>(data);
+  auto slot = static_cast<Surface::SlotWriteFunc*>(data);
   delete slot;
 }
 
@@ -76,7 +76,7 @@ cairo_status_t device_write_func_wrapper(void* closure, const unsigned char* dat
   // FIXME: duplicates free_slot in surface.cc
   if (!closure)
     return CAIRO_STATUS_WRITE_ERROR;
-  Surface::SlotWriteFunc* write_func = static_cast<Surface::SlotWriteFunc*>(closure);
+  auto write_func = static_cast<Surface::SlotWriteFunc*>(closure);
   return static_cast<cairo_status_t>((*write_func)(data, length));
 }
 
@@ -90,8 +90,8 @@ static void set_write_slot(cairo_device_t* surface,
 
 RefPtr<Script> Script::create_for_stream(const Surface::SlotWriteFunc& write_func)
 {
-  Surface::SlotWriteFunc* slot_copy = new Surface::SlotWriteFunc(write_func);
-  cairo_device_t* cobject = cairo_script_create_for_stream(device_write_func_wrapper,
+  auto slot_copy = new Surface::SlotWriteFunc(write_func);
+  auto cobject = cairo_script_create_for_stream(device_write_func_wrapper,
                                                            slot_copy);
   check_status_and_throw_exception(cairo_device_status(cobject));
   set_write_slot(cobject, slot_copy);

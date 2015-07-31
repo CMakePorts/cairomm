@@ -15,7 +15,7 @@ ErrorStatus test_slot(const unsigned char* /*data*/, unsigned int /*len*/)
 
 void test_write_to_png_stream()
 {
-  RefPtr<ImageSurface> surface = ImageSurface::create(FORMAT_ARGB32, 1, 1);
+  auto surface = ImageSurface::create(FORMAT_ARGB32, 1, 1);
   surface->write_to_png_stream(sigc::ptr_fun(test_slot));
   BOOST_CHECK(test_slot_called > 0);
 }
@@ -23,7 +23,7 @@ void test_write_to_png_stream()
 void test_pdf_constructor_slot()
 {
   test_slot_called = 0;
-  RefPtr<PdfSurface> pdf = PdfSurface::create_for_stream(sigc::ptr_fun(&test_slot), 1, 1);
+  auto pdf = PdfSurface::create_for_stream(sigc::ptr_fun(&test_slot), 1, 1);
   pdf->show_page();
   pdf->finish();
   BOOST_CHECK(test_slot_called > 0);
@@ -32,7 +32,7 @@ void test_pdf_constructor_slot()
 void test_ps_constructor_slot()
 {
   test_slot_called = 0;
-  RefPtr<PsSurface> ps = PsSurface::create_for_stream(sigc::ptr_fun(&test_slot), 1, 1);
+  auto ps = PsSurface::create_for_stream(sigc::ptr_fun(&test_slot), 1, 1);
   ps->show_page();
   ps->finish();
   BOOST_CHECK(test_slot_called > 0);
@@ -41,7 +41,7 @@ void test_ps_constructor_slot()
 void test_svg_constructor_slot()
 {
   test_slot_called = 0;
-  RefPtr<SvgSurface> svg = SvgSurface::create_for_stream(sigc::ptr_fun(&test_slot), 1, 1);
+  auto svg = SvgSurface::create_for_stream(sigc::ptr_fun(&test_slot), 1, 1);
   svg->show_page();
   svg->finish();
   BOOST_CHECK(test_slot_called > 0);
@@ -84,7 +84,7 @@ void test_create_from_png()
 
 void test_ps_eps()
 {
-  RefPtr<PsSurface> ps = PsSurface::create("test.ps", 1, 1);
+  auto ps = PsSurface::create("test.ps", 1, 1);
   // check the initial value
   bool result = ps->get_eps();
   // set it to the opposite value
@@ -95,16 +95,16 @@ void test_ps_eps()
 
 void test_content()
 {
-  RefPtr<ImageSurface> surface = ImageSurface::create(FORMAT_ARGB32, 1, 1);
+  auto surface = ImageSurface::create(FORMAT_ARGB32, 1, 1);
   BOOST_CHECK_EQUAL(surface->get_content(), CONTENT_COLOR_ALPHA);
-  RefPtr<Surface> similar = Surface::create(surface, CONTENT_ALPHA, 1, 1);
+  auto similar = Surface::create(surface, CONTENT_ALPHA, 1, 1);
   BOOST_REQUIRE(similar);
   BOOST_CHECK_EQUAL(similar->get_content(), CONTENT_ALPHA);
 }
 
 void test_fallback_resolution()
 {
-  RefPtr<ImageSurface> surface = ImageSurface::create(FORMAT_ARGB32, 1, 1);
+  auto surface = ImageSurface::create(FORMAT_ARGB32, 1, 1);
   double x, y;
   surface->get_fallback_resolution(x, y);
   const double new_x = 94, new_y = 123;
@@ -117,7 +117,7 @@ void test_fallback_resolution()
 void test_show_text_glyphs()
 {
   // image surface doesn't support show_text_glyphs
-  Cairo::RefPtr<Cairo::Surface> surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 10, 10); \
+  auto surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 10, 10); \
   BOOST_CHECK(!surf->has_show_text_glyphs());
   // but pdf surface should
   surf = Cairo::PdfSurface::create("test.pdf", 10.0, 10.0);

@@ -40,7 +40,7 @@ CGContextRef QuartzSurface::get_cg_context() const
 
 RefPtr<QuartzSurface> QuartzSurface::create(CGContextRef cg_context, int width, int height)
 {
-  cairo_surface_t* cobject = cairo_quartz_surface_create_for_cg_context(cg_context, 
+  auto cobject = cairo_quartz_surface_create_for_cg_context(cg_context, 
           width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<QuartzSurface>(new QuartzSurface(cobject, true /* has reference */));
@@ -48,7 +48,7 @@ RefPtr<QuartzSurface> QuartzSurface::create(CGContextRef cg_context, int width, 
 
 RefPtr<QuartzSurface> QuartzSurface::create(Format format, int width, int height)
 {
-  cairo_surface_t* cobject = cairo_quartz_surface_create((cairo_format_t)format, width, height);
+  auto cobject = cairo_quartz_surface_create((cairo_format_t)format, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   return RefPtr<QuartzSurface>(new QuartzSurface(cobject, true /* has reference */));
 }

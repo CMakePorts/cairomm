@@ -15,10 +15,10 @@
 
 int main()
 {
-    Cairo::RefPtr<Cairo::ImageSurface> surface =
+    auto surface =
         Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 600, 400);
 
-    Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
+    auto cr = Cairo::Context::create(surface);
 
     cr->save(); // save the state of the context
     cr->set_source_rgb(0.86, 0.85, 0.47);

@@ -90,8 +90,8 @@ void draw(Cairo::RefPtr<Cairo::Context> cr, int width, int height)
 
 int main (void)
 {
-    Cairo::RefPtr<Cairo::ImageSurface> surface = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, WIDTH, HEIGHT);
-    Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
+    auto surface = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, WIDTH, HEIGHT);
+    auto cr = Cairo::Context::create(surface);
     draw(cr, WIDTH, HEIGHT);
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
     const char* filename = "text-rotate.png";

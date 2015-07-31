@@ -74,8 +74,8 @@ static void foo(cairo_matrix_t* matrix)
 void test_cast()
 {
   // make sure that we can cast between C++ and C types without ill effect
-  Cairo::Matrix matrix = Cairo::identity_matrix();
-  cairo_matrix_t casted = (cairo_matrix_t) Cairo::identity_matrix();
+  auto matrix = Cairo::identity_matrix();
+  auto casted = (cairo_matrix_t) Cairo::identity_matrix();
   // check that it's equal to the identity matrix
   cairo_matrix_t identity;
   cairo_matrix_init_identity(&identity);
@@ -99,9 +99,9 @@ void test_cast()
 
 void test_multiply()
 {
-  Cairo::Matrix A = Cairo::scaling_matrix(2, 4);
-  Cairo::Matrix B = Cairo::translation_matrix(5.3, 1.2);
-  Cairo::Matrix C = A * B;
+  auto A = Cairo::scaling_matrix(2, 4);
+  auto B = Cairo::translation_matrix(5.3, 1.2);
+  auto C = A * B;
   Cairo::Matrix D;
   D.multiply(A, B);
   BOOST_CHECK_EQUAL(C, D);

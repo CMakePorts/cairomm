@@ -26,7 +26,7 @@ using namespace boost::unit_test;
 void
 test_create_toy ()
 {
-  Cairo::RefPtr<Cairo::ToyFontFace> toy =
+  auto toy =
     Cairo::ToyFontFace::create("sans",
                                Cairo::FONT_SLANT_ITALIC,
                                Cairo::FONT_WEIGHT_NORMAL);
@@ -36,7 +36,7 @@ test_create_toy ()
 
 void test_toy_getters ()
 {
-  Cairo::RefPtr<Cairo::ToyFontFace> toy =
+  auto toy =
     Cairo::ToyFontFace::create("sans",
                                Cairo::FONT_SLANT_ITALIC,
                                Cairo::FONT_WEIGHT_NORMAL);
@@ -49,19 +49,19 @@ void test_toy_getters ()
 #ifdef CAIRO_HAS_FT_FONT
 void test_ft_font_face()
 {
-  FcPattern* invalid = FcPatternCreate();
+  auto invalid = FcPatternCreate();
   Cairo::RefPtr<Cairo::FtFontFace> invalid_face;
   BOOST_CHECK_THROW(invalid_face = Cairo::FtFontFace::create(invalid), std::bad_alloc);
 
   // basically taken from the cairo test case -- we don't care what font we're
   // using so just create an empty pattern and do the minimal substitution to
   // get a valid pattern
-  FcPattern* pattern = FcPatternCreate();
+  auto pattern = FcPatternCreate();
   FcConfigSubstitute (NULL, pattern, FcMatchPattern);
   FcDefaultSubstitute (pattern);
   FcResult result;
-  FcPattern* resolved = FcFontMatch (NULL, pattern, &result);
-  Cairo::RefPtr<Cairo::FtFontFace> face = Cairo::FtFontFace::create(resolved);
+  auto resolved = FcFontMatch (NULL, pattern, &result);
+  auto face = Cairo::FtFontFace::create(resolved);
   BOOST_CHECK(face);
 
   // FIXME: test creating from a FT_Face

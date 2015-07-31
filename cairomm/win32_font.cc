@@ -78,7 +78,7 @@ Win32ScaledFont::create(const RefPtr<Win32FontFace>& font_face,
 
 void Win32ScaledFont::select_font(HDC hdc)
 {
-  ErrorStatus status = cairo_win32_scaled_font_select_font(cobj(), hdc);
+  auto status = cairo_win32_scaled_font_select_font(cobj(), hdc);
   check_status_and_throw_exception(status);
   check_object_status_and_throw_exception(*this);
 }
@@ -91,7 +91,7 @@ void Win32ScaledFont::done_font()
 
 double Win32ScaledFont::get_metrics_factor() const
 {
-  double val = cairo_win32_scaled_font_get_metrics_factor(const_cast<cairo_scaled_font_t*>(cobj()));
+  auto val = cairo_win32_scaled_font_get_metrics_factor(const_cast<cairo_scaled_font_t*>(cobj()));
   check_object_status_and_throw_exception(*this);
   return val;
 }

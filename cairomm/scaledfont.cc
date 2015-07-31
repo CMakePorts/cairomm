@@ -98,7 +98,7 @@ void ScaledFont::glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& ex
 
 RefPtr<FontFace> ScaledFont::get_font_face() const
 {
-  cairo_font_face_t* face = cairo_scaled_font_get_font_face(m_cobject);
+  auto face = cairo_scaled_font_get_font_face(m_cobject);
   check_object_status_and_throw_exception(*this);
   return RefPtr<FontFace>(new FontFace(face, false /* returned face doesn't have a reference */));
 }
@@ -137,7 +137,7 @@ void ScaledFont::get_ctm(cairo_matrix_t& ctm) const
 
 FontType ScaledFont::get_type() const
 {
-  cairo_font_type_t font_type = cairo_scaled_font_get_type(m_cobject);
+  auto font_type = cairo_scaled_font_get_type(m_cobject);
   check_object_status_and_throw_exception(*this);
   return static_cast<FontType>(font_type);
 }
@@ -154,7 +154,7 @@ ScaledFont::text_to_glyphs (double x,
   int num_clusters = -1;
   cairo_glyph_t* c_glyphs = 0;
   cairo_text_cluster_t* c_clusters = 0;
-  cairo_status_t status = cairo_scaled_font_text_to_glyphs(cobj(), x, y,
+  auto status = cairo_scaled_font_text_to_glyphs(cobj(), x, y,
                                                            utf8.c_str(),
                                                            utf8.size(),
                                                            &c_glyphs,
@@ -200,7 +200,7 @@ FtScaledFont::create(const RefPtr<FtFontFace>& font_face,
 
 FT_Face FtScaledFont::lock_face()
 {
-  FT_Face face = cairo_ft_scaled_font_lock_face(cobj());
+  auto face = cairo_ft_scaled_font_lock_face(cobj());
   check_object_status_and_throw_exception(*this);
   return face;
 }

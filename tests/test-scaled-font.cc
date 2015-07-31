@@ -9,10 +9,10 @@ using namespace Cairo;
 
 void test_construction()
 {
-  RefPtr<ToyFontFace> face = ToyFontFace::create("sans", FONT_SLANT_NORMAL, FONT_WEIGHT_NORMAL);
+  auto face = ToyFontFace::create("sans", FONT_SLANT_NORMAL, FONT_WEIGHT_NORMAL);
   Matrix identity;
   cairo_matrix_init_identity(&identity);
-  RefPtr<ScaledFont> font = ScaledFont::create(face, identity, identity, FontOptions());
+  auto font = ScaledFont::create(face, identity, identity, FontOptions());
   BOOST_REQUIRE(font);
 
   // now use the default argument for font_options
@@ -22,10 +22,10 @@ void test_construction()
 
 void test_text_to_glyphs()
 {
-  RefPtr<ToyFontFace> face = ToyFontFace::create("sans", FONT_SLANT_NORMAL, FONT_WEIGHT_NORMAL);
+  auto face = ToyFontFace::create("sans", FONT_SLANT_NORMAL, FONT_WEIGHT_NORMAL);
   Matrix identity;
   cairo_matrix_init_identity(&identity);
-  RefPtr<ScaledFont> font = ScaledFont::create(face, identity, identity, FontOptions());
+  auto font = ScaledFont::create(face, identity, identity, FontOptions());
   BOOST_REQUIRE(font);
 
   std::vector<Glyph> glyphs;
@@ -39,10 +39,10 @@ void test_text_to_glyphs()
 
 void test_scale_matrix()
 {
-  RefPtr<ToyFontFace> face = ToyFontFace::create("sans", FONT_SLANT_NORMAL, FONT_WEIGHT_NORMAL);
+  auto face = ToyFontFace::create("sans", FONT_SLANT_NORMAL, FONT_WEIGHT_NORMAL);
   Matrix m;
   cairo_matrix_init_scale(&m, 2.0, 4.0);
-  RefPtr<ScaledFont> font = ScaledFont::create(face, m, m, FontOptions());
+  auto font = ScaledFont::create(face, m, m, FontOptions());
   BOOST_REQUIRE(font);
 
   Matrix result;
@@ -55,14 +55,14 @@ void test_get_font_face()
   // this is to test for a bug where we were accidentally freeing the resulting
   // font face from a call to ScaledFont::get_font_face() when we didn't hold a
   // reference to it
-  RefPtr<ToyFontFace> face = ToyFontFace::create("sans", FONT_SLANT_NORMAL, FONT_WEIGHT_NORMAL);
+  auto face = ToyFontFace::create("sans", FONT_SLANT_NORMAL, FONT_WEIGHT_NORMAL);
   Matrix identity;
   cairo_matrix_init_identity(&identity);
-  RefPtr<ScaledFont> font = ScaledFont::create(face, identity, identity, FontOptions());
+  auto font = ScaledFont::create(face, identity, identity, FontOptions());
   BOOST_REQUIRE(font);
   const int refcount = cairo_font_face_get_reference_count(face->cobj());
   {
-    RefPtr<FontFace> got_face = font->get_font_face();
+    auto got_face = font->get_font_face();
   } // scope ensure that the font face is destroyed
   // after creating and destroying the FontFace in get_font_face, our reference
   // count should be the same
@@ -72,25 +72,25 @@ void test_get_font_face()
 #ifdef CAIRO_HAS_FT_FONT
 void test_ft_scaled_font()
 {
-  FcPattern* invalid = FcPatternCreate();
+  auto invalid = FcPatternCreate();
   Cairo::RefPtr<Cairo::FtFontFace> invalid_face;
   BOOST_CHECK_THROW(invalid_face = Cairo::FtFontFace::create(invalid), std::bad_alloc);
 
   // basically taken from the cairo test case -- we don't care what font we're
   // using so just create an empty pattern and do the minimal substitution to
   // get a valid pattern
-  FcPattern* pattern = FcPatternCreate();
+  auto pattern = FcPatternCreate();
   FcConfigSubstitute (NULL, pattern, FcMatchPattern);
   FcDefaultSubstitute (pattern);
   FcResult result;
-  FcPattern* resolved = FcFontMatch (NULL, pattern, &result);
-  Cairo::RefPtr<Cairo::FtFontFace> face = Cairo::FtFontFace::create(resolved);
+  auto resolved = FcFontMatch (NULL, pattern, &result);
+  auto face = Cairo::FtFontFace::create(resolved);
   BOOST_CHECK(face);
 
   cairo_scaled_font_t* c_scaled_font = 0;
   int refcount = 0;
   {
-    Cairo::RefPtr<Cairo::FtScaledFont> scaled_font =
+    auto scaled_font =
       FtScaledFont::create(face,
                            Cairo::identity_matrix(),
                            Cairo::identity_matrix(),

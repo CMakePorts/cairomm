@@ -20,10 +20,10 @@ int main()
     std::string filename = "image.pdf";
     int width = 600;
     int height = 400;
-    Cairo::RefPtr<Cairo::PdfSurface> surface =
+    auto surface =
         Cairo::PdfSurface::create(filename, width, height);
 
-    Cairo::RefPtr<Cairo::Context> cr = Cairo::Context::create(surface);
+    auto cr = Cairo::Context::create(surface);
 
     cr->save(); // save the state of the context
     cr->set_source_rgb(0.86, 0.85, 0.47);

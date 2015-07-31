@@ -75,7 +75,7 @@ void Matrix::rotate(double radians)
 
 void Matrix::invert()
 {
-  cairo_status_t status = cairo_matrix_invert(this);
+  auto status = cairo_matrix_invert(this);
   check_status_and_throw_exception(status);
 }
 
