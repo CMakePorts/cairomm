@@ -39,10 +39,10 @@ public:
     return Cairo::RefPtr<BoxFontFace>(new BoxFontFace());
   }
 
-  virtual Cairo::ErrorStatus
+  Cairo::ErrorStatus
     init(const Cairo::RefPtr<Cairo::ScaledFont>& /*scaled_font*/,
          const Cairo::RefPtr<Cairo::Context>& /*cr*/,
-         Cairo::FontExtents &extents)
+         Cairo::FontExtents &extents) override
   {
     double max = 0;
     for (unsigned int i = 0; i < sizeof (glyphs) / sizeof (GlyphBounds); ++i) {
@@ -55,9 +55,9 @@ public:
     return CAIRO_STATUS_SUCCESS;
   }
 
-  virtual Cairo::ErrorStatus
+  Cairo::ErrorStatus
   unicode_to_glyph (const Cairo::RefPtr<Cairo::ScaledFont>& /*scaled_font*/,
-                    unsigned long unicode, unsigned long& glyph)
+                    unsigned long unicode, unsigned long& glyph) override
   {
     glyph = 0;
     // yes this is a stupid an ineffienct way to do this but we only have a few
@@ -72,11 +72,11 @@ public:
     return CAIRO_STATUS_SUCCESS;
   }
 
-  virtual Cairo::ErrorStatus
+  Cairo::ErrorStatus
   render_glyph(const Cairo::RefPtr<Cairo::ScaledFont>& /*scaled_font*/,
                unsigned long glyph,
                const Cairo::RefPtr<Cairo::Context>& cr,
-               Cairo::TextExtents& metrics)
+               Cairo::TextExtents& metrics) override
   {
     // check that the glyph is in our table
     if (glyph >= 1 && glyph <= sizeof(glyphs)/sizeof(GlyphBounds)) {

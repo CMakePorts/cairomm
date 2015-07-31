@@ -56,11 +56,11 @@ class ImplTextUserFont: public NullRenderUserFont
 {
 public:
   static RefPtr<ImplTextUserFont> create() { return RefPtr<ImplTextUserFont>(new ImplTextUserFont());};
-  virtual ErrorStatus text_to_glyphs(const RefPtr<ScaledFont>& /*scaled_font*/,
+  ErrorStatus text_to_glyphs(const RefPtr<ScaledFont>& /*scaled_font*/,
                                      const std::string& /*utf8*/,
                                      std::vector<Glyph>& glyphs,
                                      std::vector<TextCluster>& /*clusters*/,
-                                     TextClusterFlags& /*cluster_flags*/)
+                                     TextClusterFlags& /*cluster_flags*/) override
   {
     ++count_text_to_glyphs;
     // return an arbitrary glyph
@@ -91,9 +91,9 @@ class ImplUnicodeUserFont: public NullRenderUserFont
 {
 public:
   static RefPtr<ImplUnicodeUserFont> create() { return RefPtr<ImplUnicodeUserFont>(new ImplUnicodeUserFont());};
-  virtual ErrorStatus unicode_to_glyph(const RefPtr<ScaledFont>& /*scaled_font*/,
+  ErrorStatus unicode_to_glyph(const RefPtr<ScaledFont>& /*scaled_font*/,
                                        unsigned long /*unicode*/,
-                                       unsigned long& /*glyph*/)
+                                       unsigned long& /*glyph*/) override
   { ++count_unicode_to_glyph;  return CAIRO_STATUS_SUCCESS;}
   int count_unicode_to_glyph;
 
@@ -118,17 +118,17 @@ class ImplBothUserFont: public NullRenderUserFont
 {
 public:
   static RefPtr<ImplBothUserFont> create() { return RefPtr<ImplBothUserFont>(new ImplBothUserFont());};
-  virtual ErrorStatus unicode_to_glyph(const RefPtr<ScaledFont>& /*scaled_font*/,
+  ErrorStatus unicode_to_glyph(const RefPtr<ScaledFont>& /*scaled_font*/,
                                        unsigned long /*unicode*/,
-                                       unsigned long& /*glyph*/)
+                                       unsigned long& /*glyph*/) override
   { ++count_unicode_to_glyph;  return CAIRO_STATUS_SUCCESS;}
   int count_unicode_to_glyph;
 
-  virtual ErrorStatus text_to_glyphs(const RefPtr<ScaledFont>& /*scaled_font*/,
+  ErrorStatus text_to_glyphs(const RefPtr<ScaledFont>& /*scaled_font*/,
                                      const std::string& /*utf8*/,
                                      std::vector<Glyph>& glyphs,
                                      std::vector<TextCluster>& /*clusters*/,
-                                     TextClusterFlags& /*cluster_flags*/)
+                                     TextClusterFlags& /*cluster_flags*/) override
   {
     ++count_text_to_glyphs;
     // return an arbitrary glyph
@@ -185,7 +185,7 @@ public:
   static RefPtr<ImplInitUserFont> create() { return RefPtr<ImplInitUserFont>(new ImplInitUserFont());};
   ErrorStatus init(const RefPtr<ScaledFont>& /*scaled_font*/,
                            const RefPtr<Context>& /*cr*/,
-                           FontExtents& /*extents*/)
+                           FontExtents& /*extents*/) override
   {++count_init; return CAIRO_STATUS_SUCCESS;}
 
   int count_init;
@@ -237,7 +237,7 @@ public:
   ErrorStatus
   init(const RefPtr<ScaledFont>& /*scaled_font*/,
                          const RefPtr<Context>& /*cr*/,
-                         FontExtents& /*extents*/)
+                         FontExtents& /*extents*/) override
   {
     count_init++;
     if (m_flags & FLAG_INIT)
