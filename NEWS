@@ -1,3 +1,22 @@
+1.11.4 (unstable):
+
+* Use (and require) C++11.
+  (Murray Cumming)
+* Add Script and ScriptSurface.
+  (Povilas Kanapickas)
+* Context: get_surface_wrapper(): Handle CAIRO_SURFACE_TYPE_SCRIPT,
+  returning a ScriptSurface.
+  (Povilas Kanapickas)
+* Surface: get_device(): Handle CAIRO_SURFACE_TYPE_SCRIPT,
+  returning a Script.
+  (Povilas Kanapickas)
+* Wrap cairo script device and script surface APIs.
+  (Povilas Kanapickas)
+* FtFontFace: Add get/set/unset_synthesize().
+  (Povilas Kanapickas)
+* Update MSVC.Net 2010 project files.
+  (David Weiß)
+
 1.11.2 (unstable):
 
 * Pattern: Add set_extend() and get_extend().
