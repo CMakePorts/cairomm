@@ -27,6 +27,7 @@
 namespace Cairo
 {
 
+//TODO: Use std::shared_ptr<> instead when we can break ABI.
 /** RefPtr<> is a reference-counting shared smartpointer.
  *
  * Reference counting means that a shared reference count is incremented each
