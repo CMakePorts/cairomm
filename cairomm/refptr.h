@@ -22,6 +22,7 @@
  * 02110-1301, USA.
  */
 
+#include <utility>
 
 namespace Cairo
 {
@@ -42,6 +43,10 @@ template <class T_CppObject>
 class RefPtr
 {
 public:
+  // Let the cast constructors and assignement operators access private data.
+  template <typename T_CastFrom>
+  friend class RefPtr;
+
   /** Default constructor
    *
    * Afterwards it will be null and use of -> will cause a segmentation fault.
@@ -66,6 +71,15 @@ public:
 
   ///  For use only in the internal implementation of sharedptr.
   explicit inline RefPtr(T_CppObject* pCppObject, int* refcount);
+
+  /** Move constructor
+   */
+  inline RefPtr(RefPtr&& src);
+
+  /** Move constructor (from different, but castable type).
+   */
+  template <class T_CastFrom>
+  inline RefPtr(RefPtr<T_CastFrom>&& src);
 
   /** Copy constructor
    *
@@ -96,6 +110,13 @@ public:
    */
   template <class T_CastFrom>
   inline RefPtr<T_CppObject>& operator=(const RefPtr<T_CastFrom>& src);
+
+  /// Move assignment operator:
+  inline RefPtr& operator=(RefPtr&& src);
+
+  /// Move assignment operator (from different, but castable type):
+  template <class T_CastFrom>
+  inline RefPtr& operator=(RefPtr<T_CastFrom>&& src);
 
   /// Tests whether the RefPtr<> point to the same underlying instance.
   inline bool operator==(const RefPtr<T_CppObject>& src) const;
@@ -251,6 +272,28 @@ RefPtr<T_CppObject>::RefPtr(const RefPtr<T_CppObject>& src)
     ++(*pCppRefcount_);
 }
 
+template <class T_CppObject> inline
+RefPtr<T_CppObject>::RefPtr(RefPtr&& src)
+:
+  pCppObject_ (src.pCppObject_),
+  pCppRefcount_ (src.pCppRefcount_)
+{
+  src.pCppObject_ = nullptr;
+  src.pCppRefcount_ = nullptr;
+}
+
+template <class T_CppObject>
+  template <class T_CastFrom>
+inline
+RefPtr<T_CppObject>::RefPtr(RefPtr<T_CastFrom>&& src)
+:
+  pCppObject_ (src.pCppObject_),
+  pCppRefcount_ (src.pCppRefcount_)
+{
+  src.pCppObject_ = nullptr;
+  src.pCppRefcount_ = nullptr;
+}
+
 // The templated ctor allows copy construction from any object that's
 // castable.  Thus, it does downcasts:
 //   base_ref = derived_ref
@@ -259,7 +302,8 @@ template <class T_CppObject>
 inline
 RefPtr<T_CppObject>::RefPtr(const RefPtr<T_CastFrom>& src)
 :
-  // A different RefPtr<> will not allow us access to pCppObject_.  We need
+  // Without the friend delaration,
+  // a different RefPtr<> will not allow us access to pCppObject_.  We need
   // to add a get_underlying() for this, but that would encourage incorrect
   // use, so we use the less well-known operator->() accessor:
   pCppObject_ (src.operator->()),
@@ -311,6 +355,30 @@ RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(const RefPtr<T_CppObject>& s
 
   RefPtr<T_CppObject> temp (src);
   this->swap(temp);
+  return *this;
+}
+
+template <class T_CppObject> inline
+RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(RefPtr&& src)
+{
+  RefPtr<T_CppObject> temp (std::move(src));
+  this->swap(temp);
+  src.pCppObject_ = nullptr;
+  src.pCppRefcount_ = nullptr;
+
+  return *this;
+}
+
+template <class T_CppObject>
+  template <class T_CastFrom>
+inline
+RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(RefPtr<T_CastFrom>&& src)
+{
+  RefPtr<T_CppObject> temp (std::move(src));
+  this->swap(temp);
+  src.pCppObject_ = nullptr;
+  src.pCppRefcount_ = nullptr;
+
   return *this;
 }
 
