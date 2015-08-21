@@ -2,8 +2,8 @@
 
 msvc_net2010_data = README \
                     cairomm.sln \
-                    cairo-build-defines.props \
-                    cairo-version-paths.props \
+                    cairomm-build-defines.props \
+                    cairomm-version-paths.props \
                     gendef.vcxproj \
                     gendef.vcxproj.filters \
                     gendef/gendef.cc \
