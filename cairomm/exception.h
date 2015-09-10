@@ -22,6 +22,11 @@
 #include <cairomm/enums.h>
 #include <stdexcept>
 
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
+#define _ALLOW_KEYWORD_MACROS 1
+#define noexcept _NOEXCEPT
+#endif
+
 namespace Cairo
 {
 
