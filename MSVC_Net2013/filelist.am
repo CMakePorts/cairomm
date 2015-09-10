@@ -1,6 +1,6 @@
 ## This file is part of cairomm
 
-msvc_net2010_data = README \
+msvc_net2013_data = README \
                     cairomm.sln \
                     cairomm-build-defines.props \
                     cairomm-version-paths.props \
