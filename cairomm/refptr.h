@@ -52,10 +52,10 @@ public:
    *
    * Afterwards it will be null and use of -> will cause a segmentation fault.
    */
-  inline RefPtr();
+  inline RefPtr() noexcept;
   
   /// Destructor - decrements reference count.
-  inline ~RefPtr();
+  inline ~RefPtr() noexcept;
 
   /** For use only in the internal implementation of cairomm, gtkmm, etc.
    *
@@ -68,69 +68,69 @@ public:
    * but a cairo_*_get_*() function requires the caller to manually reference the returned object.
    * In this case, you should call reference() on @a pCppObject before passing it to this constructor.
    */
-  explicit inline RefPtr(T_CppObject* pCppObject);
+  explicit inline RefPtr(T_CppObject* pCppObject) noexcept;
 
   ///  For use only in the internal implementation of sharedptr.
-  explicit inline RefPtr(T_CppObject* pCppObject, int* refcount);
+  explicit inline RefPtr(T_CppObject* pCppObject, int* refcount) noexcept;
 
   /** Move constructor
    */
-  inline RefPtr(RefPtr&& src);
+  inline RefPtr(RefPtr&& src) noexcept;
 
   /** Move constructor (from different, but castable type).
    */
   template <class T_CastFrom>
-  inline RefPtr(RefPtr<T_CastFrom>&& src);
+  inline RefPtr(RefPtr<T_CastFrom>&& src) noexcept;
 
   /** Copy constructor
    *
    * This increments the shared reference count.
    */
-  inline RefPtr(const RefPtr<T_CppObject>& src);
+  inline RefPtr(const RefPtr<T_CppObject>& src) noexcept;
 
   /** Copy constructor (from different, but castable type).
    *
    * Increments the reference count.
    */
   template <class T_CastFrom>
-  inline RefPtr(const RefPtr<T_CastFrom>& src);
+  inline RefPtr(const RefPtr<T_CastFrom>& src) noexcept;
 
   /** Swap the contents of two RefPtr<>.
    * This method swaps the internal pointers to T_CppObject.  This can be
    * done safely without involving a reference/unreference cycle and is
    * therefore highly efficient.
    */
-  inline void swap(RefPtr<T_CppObject>& other);
+  inline void swap(RefPtr<T_CppObject>& other) noexcept;
 
   /// Copy from another RefPtr:
-  inline RefPtr<T_CppObject>& operator=(const RefPtr<T_CppObject>& src);
+  inline RefPtr<T_CppObject>& operator=(const RefPtr<T_CppObject>& src) noexcept;
 
   /** Copy from different, but castable type).
    *
    * Increments the reference count.
    */
   template <class T_CastFrom>
-  inline RefPtr<T_CppObject>& operator=(const RefPtr<T_CastFrom>& src);
+  inline RefPtr<T_CppObject>& operator=(const RefPtr<T_CastFrom>& src) noexcept;
 
   /// Move assignment operator:
-  inline RefPtr& operator=(RefPtr&& src);
+  inline RefPtr& operator=(RefPtr&& src) noexcept;
 
   /// Move assignment operator (from different, but castable type):
   template <class T_CastFrom>
-  inline RefPtr& operator=(RefPtr<T_CastFrom>&& src);
+  inline RefPtr& operator=(RefPtr<T_CastFrom>&& src) noexcept;
 
   /// Tests whether the RefPtr<> point to the same underlying instance.
-  inline bool operator==(const RefPtr<T_CppObject>& src) const;
+  inline bool operator==(const RefPtr<T_CppObject>& src) const noexcept;
   
   /// See operator==().
-  inline bool operator!=(const RefPtr<T_CppObject>& src) const;
+  inline bool operator!=(const RefPtr<T_CppObject>& src) const noexcept;
 
   /** Dereferencing.
    *
    * Use the methods of the underlying instance like so:
    * <code>refptr->memberfun()</code>.
    */
-  inline T_CppObject* operator->() const;
+  inline T_CppObject* operator->() const noexcept;
 
   /** Test whether the RefPtr<> points to any underlying instance.
    *
@@ -140,10 +140,10 @@ public:
    *     do_something();
    * @endcode
    */
-  inline operator bool() const;
+  inline operator bool() const noexcept;
 
   /// Set underlying instance to 0, decrementing reference count of existing instance appropriately.
-  inline void clear();
+  inline void clear() noexcept;
 
 
   /** Dynamic cast to derived class.
@@ -154,7 +154,7 @@ public:
    * @endcode
    */
   template <class T_CastFrom>
-  static inline RefPtr<T_CppObject> cast_dynamic(const RefPtr<T_CastFrom>& src);
+  static inline RefPtr<T_CppObject> cast_dynamic(const RefPtr<T_CastFrom>& src) noexcept;
 
   /** Static cast to derived class.
    *
@@ -164,7 +164,7 @@ public:
    * @endcode
    */
   template <class T_CastFrom>
-  static inline RefPtr<T_CppObject> cast_static(const RefPtr<T_CastFrom>& src);
+  static inline RefPtr<T_CppObject> cast_static(const RefPtr<T_CastFrom>& src) noexcept;
 
   /** Cast to non-const.
    *
@@ -174,19 +174,19 @@ public:
    * @endcode
    */
   template <class T_CastFrom>
-  static inline RefPtr<T_CppObject> cast_const(const RefPtr<T_CastFrom>& src);
+  static inline RefPtr<T_CppObject> cast_const(const RefPtr<T_CastFrom>& src) noexcept;
 
 
 #ifndef DOXYGEN_IGNORE_THIS
 
   // Warning: This is for internal use only.  Do not manually modify the
   // reference count with this pointer.
-  inline int* refcount_() const { return pCppRefcount_; }
+  inline int* refcount_() const noexcept { return pCppRefcount_; }
 
 #endif // DOXYGEN_IGNORE_THIS
 
 private:
-  void unref();
+  void unref() noexcept;
 
   T_CppObject* pCppObject_;
   mutable int* pCppRefcount_;
@@ -199,26 +199,26 @@ private:
 // If it would come after them it wouldn't be inlined.
 
 template <class T_CppObject> inline
-T_CppObject* RefPtr<T_CppObject>::operator->() const
+T_CppObject* RefPtr<T_CppObject>::operator->() const noexcept
 {
   return pCppObject_;
 }
 
 template <class T_CppObject> inline
-RefPtr<T_CppObject>::RefPtr()
+RefPtr<T_CppObject>::RefPtr() noexcept
 :
   pCppObject_(nullptr),
   pCppRefcount_(0)
 {}
 
 template <class T_CppObject> inline
-RefPtr<T_CppObject>::~RefPtr()
+RefPtr<T_CppObject>::~RefPtr() noexcept
 {
   unref();
 }
 
 template <class T_CppObject> inline
-void RefPtr<T_CppObject>::unref()
+void RefPtr<T_CppObject>::unref() noexcept
 {
   if(pCppRefcount_)
   {
@@ -240,7 +240,7 @@ void RefPtr<T_CppObject>::unref()
 
 
 template <class T_CppObject> inline
-RefPtr<T_CppObject>::RefPtr(T_CppObject* pCppObject)
+RefPtr<T_CppObject>::RefPtr(T_CppObject* pCppObject) noexcept
 :
   pCppObject_(pCppObject),
   pCppRefcount_(0)
@@ -254,7 +254,7 @@ RefPtr<T_CppObject>::RefPtr(T_CppObject* pCppObject)
 
 //Used by cast_*() implementations:
 template <class T_CppObject> inline
-RefPtr<T_CppObject>::RefPtr(T_CppObject* pCppObject, int* refcount)
+RefPtr<T_CppObject>::RefPtr(T_CppObject* pCppObject, int* refcount) noexcept
 :
   pCppObject_(pCppObject),
   pCppRefcount_(refcount)
@@ -264,7 +264,7 @@ RefPtr<T_CppObject>::RefPtr(T_CppObject* pCppObject, int* refcount)
 }
 
 template <class T_CppObject> inline
-RefPtr<T_CppObject>::RefPtr(const RefPtr<T_CppObject>& src)
+RefPtr<T_CppObject>::RefPtr(const RefPtr<T_CppObject>& src) noexcept
 :
   pCppObject_ (src.pCppObject_),
   pCppRefcount_(src.pCppRefcount_)
@@ -274,7 +274,7 @@ RefPtr<T_CppObject>::RefPtr(const RefPtr<T_CppObject>& src)
 }
 
 template <class T_CppObject> inline
-RefPtr<T_CppObject>::RefPtr(RefPtr&& src)
+RefPtr<T_CppObject>::RefPtr(RefPtr&& src) noexcept
 :
   pCppObject_ (src.pCppObject_),
   pCppRefcount_ (src.pCppRefcount_)
@@ -286,7 +286,7 @@ RefPtr<T_CppObject>::RefPtr(RefPtr&& src)
 template <class T_CppObject>
   template <class T_CastFrom>
 inline
-RefPtr<T_CppObject>::RefPtr(RefPtr<T_CastFrom>&& src)
+RefPtr<T_CppObject>::RefPtr(RefPtr<T_CastFrom>&& src) noexcept
 :
   pCppObject_ (src.pCppObject_),
   pCppRefcount_ (src.pCppRefcount_)
@@ -301,7 +301,7 @@ RefPtr<T_CppObject>::RefPtr(RefPtr<T_CastFrom>&& src)
 template <class T_CppObject>
   template <class T_CastFrom>
 inline
-RefPtr<T_CppObject>::RefPtr(const RefPtr<T_CastFrom>& src)
+RefPtr<T_CppObject>::RefPtr(const RefPtr<T_CastFrom>& src) noexcept
 :
   // Without the friend delaration,
   // a different RefPtr<> will not allow us access to pCppObject_.  We need
@@ -315,7 +315,7 @@ RefPtr<T_CppObject>::RefPtr(const RefPtr<T_CastFrom>& src)
 }
 
 template <class T_CppObject> inline
-void RefPtr<T_CppObject>::swap(RefPtr<T_CppObject>& other)
+void RefPtr<T_CppObject>::swap(RefPtr<T_CppObject>& other) noexcept
 {
   T_CppObject *const temp = pCppObject_;
   int* temp_count = pCppRefcount_; 
@@ -328,7 +328,7 @@ void RefPtr<T_CppObject>::swap(RefPtr<T_CppObject>& other)
 }
 
 template <class T_CppObject> inline
-RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(const RefPtr<T_CppObject>& src)
+RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(const RefPtr<T_CppObject>& src) noexcept
 {
   // In case you haven't seen the swap() technique to implement copy
   // assignment before, here's what it does:
@@ -360,7 +360,7 @@ RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(const RefPtr<T_CppObject>& s
 }
 
 template <class T_CppObject> inline
-RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(RefPtr&& src)
+RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(RefPtr&& src) noexcept
 {
   RefPtr<T_CppObject> temp (std::move(src));
   this->swap(temp);
@@ -373,7 +373,7 @@ RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(RefPtr&& src)
 template <class T_CppObject>
   template <class T_CastFrom>
 inline
-RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(RefPtr<T_CastFrom>&& src)
+RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(RefPtr<T_CastFrom>&& src) noexcept
 {
   RefPtr<T_CppObject> temp (std::move(src));
   this->swap(temp);
@@ -386,7 +386,7 @@ RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(RefPtr<T_CastFrom>&& src)
 template <class T_CppObject>
   template <class T_CastFrom>
 inline
-RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(const RefPtr<T_CastFrom>& src)
+RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(const RefPtr<T_CastFrom>& src) noexcept
 {
   RefPtr<T_CppObject> temp (src);
   this->swap(temp);
@@ -394,25 +394,25 @@ RefPtr<T_CppObject>& RefPtr<T_CppObject>::operator=(const RefPtr<T_CastFrom>& sr
 }
 
 template <class T_CppObject> inline
-bool RefPtr<T_CppObject>::operator==(const RefPtr<T_CppObject>& src) const
+bool RefPtr<T_CppObject>::operator==(const RefPtr<T_CppObject>& src) const noexcept
 {
   return (pCppObject_ == src.pCppObject_);
 }
 
 template <class T_CppObject> inline
-bool RefPtr<T_CppObject>::operator!=(const RefPtr<T_CppObject>& src) const
+bool RefPtr<T_CppObject>::operator!=(const RefPtr<T_CppObject>& src) const noexcept
 {
   return (pCppObject_ != src.pCppObject_);
 }
 
 template <class T_CppObject> inline
-RefPtr<T_CppObject>::operator bool() const
+RefPtr<T_CppObject>::operator bool() const noexcept
 {
   return (pCppObject_ != 0);
 }
 
 template <class T_CppObject> inline
-void RefPtr<T_CppObject>::clear()
+void RefPtr<T_CppObject>::clear() noexcept
 {
   RefPtr<T_CppObject> temp; // swap with an empty RefPtr<> to clear *this
   this->swap(temp);
@@ -421,7 +421,7 @@ void RefPtr<T_CppObject>::clear()
 template <class T_CppObject>
   template <class T_CastFrom>
 inline
-RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_dynamic(const RefPtr<T_CastFrom>& src)
+RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_dynamic(const RefPtr<T_CastFrom>& src) noexcept
 {
   T_CppObject *const pCppObject = dynamic_cast<T_CppObject*>(src.operator->());
 
@@ -434,7 +434,7 @@ RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_dynamic(const RefPtr<T_CastFrom>& 
 template <class T_CppObject>
   template <class T_CastFrom>
 inline
-RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_static(const RefPtr<T_CastFrom>& src)
+RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_static(const RefPtr<T_CastFrom>& src) noexcept
 {
   T_CppObject *const pCppObject = static_cast<T_CppObject*>(src.operator->());
 
@@ -444,7 +444,7 @@ RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_static(const RefPtr<T_CastFrom>& s
 template <class T_CppObject>
   template <class T_CastFrom>
 inline
-RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_const(const RefPtr<T_CastFrom>& src)
+RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_const(const RefPtr<T_CastFrom>& src) noexcept
 {
   T_CppObject *const pCppObject = const_cast<T_CppObject*>(src.operator->());
 
@@ -455,7 +455,7 @@ RefPtr<T_CppObject> RefPtr<T_CppObject>::cast_const(const RefPtr<T_CastFrom>& sr
 
 /** @relates Glib::RefPtr */
 template <class T_CppObject> inline
-void swap(RefPtr<T_CppObject>& lhs, RefPtr<T_CppObject>& rhs)
+void swap(RefPtr<T_CppObject>& lhs, RefPtr<T_CppObject>& rhs) noexcept
 {
   lhs.swap(rhs);
 }
