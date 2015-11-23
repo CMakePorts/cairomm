@@ -208,7 +208,7 @@ template <class T_CppObject> inline
 RefPtr<T_CppObject>::RefPtr() noexcept
 :
   pCppObject_(nullptr),
-  pCppRefcount_(0)
+  pCppRefcount_(nullptr)
 {}
 
 template <class T_CppObject> inline
@@ -243,7 +243,7 @@ template <class T_CppObject> inline
 RefPtr<T_CppObject>::RefPtr(T_CppObject* pCppObject) noexcept
 :
   pCppObject_(pCppObject),
-  pCppRefcount_(0)
+  pCppRefcount_(nullptr)
 {
   if(pCppObject)
   {
@@ -408,7 +408,7 @@ bool RefPtr<T_CppObject>::operator!=(const RefPtr<T_CppObject>& src) const noexc
 template <class T_CppObject> inline
 RefPtr<T_CppObject>::operator bool() const noexcept
 {
-  return (pCppObject_ != 0);
+  return (pCppObject_ != nullptr);
 }
 
 template <class T_CppObject> inline
