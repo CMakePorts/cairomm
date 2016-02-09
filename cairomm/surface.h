@@ -451,7 +451,7 @@ public:
    */
   explicit ImageSurface(cairo_surface_t* cobject, bool has_reference = false);
 
-  virtual ~ImageSurface();
+  ~ImageSurface() override;
 
   /** Gets the width of the ImageSurface in pixels
    */
@@ -615,7 +615,7 @@ public:
    * constructor will take an extra reference.
    */
   explicit PdfSurface(cairo_surface_t* cobject, bool has_reference = false);
-  virtual ~PdfSurface();
+  ~PdfSurface() override;
 
   /** Creates a PdfSurface with a specified dimensions that will be saved as
    * the given filename
@@ -718,7 +718,7 @@ public:
    * constructor will take an extra reference.
    */
   explicit PsSurface(cairo_surface_t* cobject, bool has_reference = false);
-  virtual ~PsSurface();
+  ~PsSurface() override;
 
   /** Creates a PsSurface with a specified dimensions that will be saved as the
    * given filename
@@ -873,7 +873,7 @@ public:
    * constructor will take an extra reference.
    */
   explicit SvgSurface(cairo_surface_t* cobject, bool has_reference = false);
-  virtual ~SvgSurface();
+  ~SvgSurface() override;
 
 
   /** Creates a SvgSurface with a specified dimensions that will be saved as the
@@ -962,7 +962,7 @@ public:
    */
   explicit GlitzSurface(cairo_surface_t* cobject, bool has_reference = false);
 
-  virtual ~GlitzSurface();
+  ~GlitzSurface() override;
 
   /** Creates a new GlitzSurface
    *

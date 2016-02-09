@@ -47,7 +47,7 @@ public:
    * @since 1.12
    */
   explicit ScriptSurface(cairo_surface_t* cobject, bool has_reference = false);
-  virtual ~ScriptSurface();
+  ~ScriptSurface() override;
 
   /**
    *  Create a new surface that will emit its rendering through script.

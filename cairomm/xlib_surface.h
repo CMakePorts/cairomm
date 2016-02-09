@@ -57,7 +57,7 @@ public:
    * constructor will take an extra reference.
    */
   explicit XlibSurface(cairo_surface_t* cobject, bool has_reference = false);
-  virtual ~XlibSurface();
+  ~XlibSurface() override;
 
   /** Creates an Xlib surface that draws to the given drawable. The way that
    * colors are represented in the drawable is specified by the provided

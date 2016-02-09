@@ -208,7 +208,7 @@ class UserFontFace : public FontFace
 {
 public:
 
-  virtual ~UserFontFace();
+  ~UserFontFace() override;
 
   /*
   static RefPtr<UserFontFace> create();

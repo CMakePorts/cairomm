@@ -202,7 +202,7 @@ public:
                                           double blue, double alpha);
 
   //TODO?: SolidPattern(cairo_pattern_t *target);
-  virtual ~SolidPattern();
+  ~SolidPattern() override;
 };
 
 class SurfacePattern : public Pattern
@@ -231,7 +231,7 @@ public:
   RefPtr<Surface> get_surface ();
   /// @}
 
-  virtual ~SurfacePattern();
+  ~SurfacePattern() override;
 
   /**
    * Create a new Cairo::Pattern for the given surface.
@@ -287,7 +287,7 @@ public:
    */
   explicit Gradient(cairo_pattern_t* cobject, bool has_reference = false);
 
-  virtual ~Gradient();
+  ~Gradient() override;
 
   /**
    * Adds an opaque color stop to a gradient pattern. The offset
@@ -374,7 +374,7 @@ public:
                          double &x1, double &y1) const;
 
   //TODO?: LinearGradient(cairo_pattern_t *target);
-  virtual ~LinearGradient();
+  ~LinearGradient() override;
 
   /**
    * Create a new linear gradient Cairo::Pattern along the line defined by (x0,
@@ -425,7 +425,7 @@ public:
                           double& x1, double& y1, double& r1) const;
 
   //TODO?: RadialGradient(cairo_pattern_t *target);
-  virtual ~RadialGradient();
+  ~RadialGradient() override;
 
 
   /**

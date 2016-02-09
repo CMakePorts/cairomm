@@ -53,7 +53,7 @@ public:
    * @since 1.4
    */
   explicit QuartzSurface(cairo_surface_t* cobject, bool has_reference = false);
-  virtual ~QuartzSurface();
+  ~QuartzSurface() override;
 
   /** Returns the CGContextRef associated with this surface, or NULL if none. Also
    * returns NULL if the surface is not a Quartz surface.

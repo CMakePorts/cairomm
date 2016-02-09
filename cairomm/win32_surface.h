@@ -52,7 +52,7 @@ public:
    * constructor will take an extra reference.
    */
   explicit Win32Surface(cairo_surface_t* cobject, bool has_reference = false);
-  virtual ~Win32Surface();
+  ~Win32Surface() override;
 
   /** Returns the HDC associated with this surface, or NULL if none. Also
    * returns NULL if the surface is not a win32 surface.
@@ -128,7 +128,7 @@ class Win32PrintingSurface : public Surface
 {
 public:
   explicit Win32PrintingSurface(cairo_surface_t* cobject, bool has_reference = false);
-  virtual ~Win32PrintingSurface();
+  ~Win32PrintingSurface() override;
 
   /** Creates a cairo surface that targets the given DC. The DC will be queried
    * for its initial clip extents, and this will be used as the size of the

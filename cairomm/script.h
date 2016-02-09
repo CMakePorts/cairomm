@@ -69,7 +69,7 @@ public:
    * @since 1.12
    */
   explicit Script(cairo_device_t* cobject, bool has_reference = false);
-  virtual ~Script();
+  ~Script() override;
 
   /**
    * Converts the record operations in recording_surface into a script.
