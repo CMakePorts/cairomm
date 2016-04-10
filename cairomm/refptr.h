@@ -140,7 +140,7 @@ public:
    *     do_something();
    * @endcode
    */
-  inline operator bool() const noexcept;
+  inline explicit operator bool() const noexcept;
 
   /// Set underlying instance to 0, decrementing reference count of existing instance appropriately.
   inline void clear() noexcept;
