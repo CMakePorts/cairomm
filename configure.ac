@@ -30,7 +30,7 @@ AM_MAINTAINER_MODE
 AC_ARG_VAR([ACLOCAL_FLAGS], [aclocal flags, e.g. -I <macro dir>])
 
 MM_PREREQ([0.8])
-MM_INIT_MODULE([cairomm-1.0])
+MM_INIT_MODULE([cairomm-1.14])
 MM_CONFIG_DOCTOOL_DIR([docs])
 
 # http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
@@ -46,7 +46,7 @@ PKG_PROG_PKG_CONFIG
 
 AC_SUBST([CAIROMM_MODULES], ['cairo >= 1.10.0 sigc++-2.0 >= 2.5.1'])
 cairomm_allmodules=$CAIROMM_MODULES
-CAIROMM_INSTALL_PC='data/cairomm-1.0.pc'
+CAIROMM_INSTALL_PC='data/cairomm-1.14.pc'
 
 for cairomm_mod in ft pdf png ps svg xlib xlib-xrender \
                    win32 win32-font quartz quartz-font quartz-image
@@ -54,7 +54,7 @@ do
   PKG_CHECK_EXISTS([cairo-$cairomm_mod],
   [
     cairomm_allmodules="$cairomm_allmodules cairo-$cairomm_mod"
-    CAIROMM_INSTALL_PC="$CAIROMM_INSTALL_PC data/cairomm-$cairomm_mod-1.0.pc"
+    CAIROMM_INSTALL_PC="$CAIROMM_INSTALL_PC data/cairomm-$cairomm_mod-1.14.pc"
   ])
 done
 AC_SUBST([CAIROMM_INSTALL_PC])
@@ -125,19 +125,19 @@ AC_CONFIG_FILES([Makefile
                  examples/Makefile
                  docs/Makefile
                  docs/reference/Doxyfile
-                 data/cairomm-1.0.pc
-                 data/cairomm-ft-1.0.pc
-                 data/cairomm-pdf-1.0.pc
-                 data/cairomm-png-1.0.pc
-                 data/cairomm-ps-1.0.pc
-                 data/cairomm-quartz-1.0.pc
-                 data/cairomm-quartz-font-1.0.pc
-                 data/cairomm-quartz-image-1.0.pc
-                 data/cairomm-svg-1.0.pc
-                 data/cairomm-win32-1.0.pc
-                 data/cairomm-win32-font-1.0.pc
-                 data/cairomm-xlib-1.0.pc
-                 data/cairomm-xlib-xrender-1.0.pc
+                 data/cairomm-1.14.pc
+                 data/cairomm-ft-1.14.pc
+                 data/cairomm-pdf-1.14.pc
+                 data/cairomm-png-1.14.pc
+                 data/cairomm-ps-1.14.pc
+                 data/cairomm-quartz-1.14.pc
+                 data/cairomm-quartz-font-1.14.pc
+                 data/cairomm-quartz-image-1.14.pc
+                 data/cairomm-svg-1.14.pc
+                 data/cairomm-win32-1.14.pc
+                 data/cairomm-win32-font-1.14.pc
+                 data/cairomm-xlib-1.14.pc
+                 data/cairomm-xlib-xrender-1.14.pc
                  MSVC_Net2013/cairomm/cairomm.rc])
 
 AC_CONFIG_COMMANDS([MSVC_Net2013/cairomm/cairommconfig.h],
