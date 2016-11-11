@@ -92,7 +92,7 @@ public:
    * @param length the amount of data to write
    * @return the status code of the write operation
    */
-  typedef sigc::slot<ErrorStatus, const unsigned char* /*data*/, unsigned int /*length*/> SlotWriteFunc;
+  typedef sigc::slot<ErrorStatus(const unsigned char* /*data*/, unsigned int /*length*/)> SlotWriteFunc;
 
   /**
    * This is the type of function which is called when a backend needs to read
@@ -105,7 +105,7 @@ public:
    * @param length the amount of data to read
    * @return the status code of the read operation
    */
-  typedef sigc::slot<ErrorStatus, unsigned char* /*data*/, unsigned int /*length*/> SlotReadFunc;
+  typedef sigc::slot<ErrorStatus(unsigned char* /*data*/, unsigned int /*length*/)> SlotReadFunc;
 
   /** Create a C++ wrapper for the C instance. This C++ instance should then be
    * given to a RefPtr.
@@ -137,7 +137,7 @@ public:
   /** For instance,
    * void on_destroy();
    */
-  typedef sigc::slot<void> SlotDestroy;
+  typedef sigc::slot<void()> SlotDestroy;
 
   /** Attach an image in the format mime_type to surface. To remove the data from
    * a surface, call unset_mime_data() with same mime type.

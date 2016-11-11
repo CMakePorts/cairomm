@@ -44,7 +44,7 @@ AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 PKG_PROG_PKG_CONFIG
 
-AC_SUBST([CAIROMM_MODULES], ['cairo >= 1.10.0 sigc++-2.0 >= 2.5.1'])
+AC_SUBST([CAIROMM_MODULES], ['cairo >= 1.10.0 sigc++-3.0 >= 2.5.1'])
 cairomm_allmodules=$CAIROMM_MODULES
 CAIROMM_INSTALL_PC='data/cairomm-1.14.pc'
 
@@ -62,7 +62,7 @@ PKG_CHECK_MODULES([CAIROMM], [$cairomm_allmodules])
 
 MM_ARG_ENABLE_DOCUMENTATION
 MM_ARG_WITH_TAGFILE_DOC([libstdc++.tag], [mm-common-libstdc++])
-MM_ARG_WITH_TAGFILE_DOC([libsigc++-2.0.tag], [sigc++-2.0])
+MM_ARG_WITH_TAGFILE_DOC([libsigc++-3.0.tag], [sigc++-3.0])
 
 AC_LANG([C++])
 MM_ARG_ENABLE_WARNINGS([CAIROMM_WXXFLAGS],
