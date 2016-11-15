@@ -1,3 +1,9 @@
+1.15.1 (unstable):
+
+* First release of the cairomm-1.16 API/ABI that installs
+  in parallel with cairomm-1.0.
+  This uses libsigc++-3.0 instead of libsigc++-2.0.
+
 1.13.1 (unstable):
 
 * Added RecordingSurface, wrapping cairo_recording_surface.
