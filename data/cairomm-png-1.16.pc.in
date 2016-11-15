@@ -1,4 +1,4 @@
 Name: cairomm-png
 Description: C++ wrapper for cairo - png support
-Requires: cairomm-1.14 cairo-png
+Requires: cairomm-1.16 cairo-png
 Version: @PACKAGE_VERSION@

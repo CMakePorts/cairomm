@@ -20,11 +20,11 @@ include $(srcdir)/filelist.am
 AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir) -I. $(CAIROMM_CFLAGS)
 AM_CXXFLAGS = $(CAIROMM_WXXFLAGS)
 
-lib_LTLIBRARIES = libcairomm-1.14.la
+lib_LTLIBRARIES = libcairomm-1.16.la
 
-libcairomm_1_14_la_SOURCES = $(cairomm_cc) $(cairomm_private_h)
-libcairomm_1_14_la_LDFLAGS = -no-undefined -version-info $(CAIROMM_SO_VERSION)
-libcairomm_1_14_la_LIBADD  = $(CAIROMM_LIBS)
+libcairomm_1_16_la_SOURCES = $(cairomm_cc) $(cairomm_private_h)
+libcairomm_1_16_la_LDFLAGS = -no-undefined -version-info $(CAIROMM_SO_VERSION)
+libcairomm_1_16_la_LIBADD  = $(CAIROMM_LIBS)
 
 cairomm_includedir = $(includedir)/$(CAIROMM_MODULE_NAME)/cairomm
 cairomm_include_HEADERS = $(cairomm_public_h)
