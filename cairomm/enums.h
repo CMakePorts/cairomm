@@ -761,11 +761,6 @@ typedef enum
     FONT_TYPE_WIN32 = CAIRO_FONT_TYPE_WIN32,
 
     /**
-     * @deprecated Use FONT_TYPE_QUARTZ instead.
-     */
-    FONT_TYPE_ATSUI = CAIRO_FONT_TYPE_QUARTZ,
-
-    /**
      * The font is of type Quartz
      * @since 1.6
      */

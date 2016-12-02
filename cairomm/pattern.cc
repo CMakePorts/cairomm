@@ -161,16 +161,6 @@ SurfacePattern::~SurfacePattern()
 {
 }
 
-void SurfacePattern::set_extend(Extend extend)
-{
-  Pattern::set_extend(extend);
-}
-
-Extend SurfacePattern::get_extend() const
-{
-  return Pattern::get_extend();
-}
-
 void SurfacePattern::set_filter(Filter filter)
 {
   cairo_pattern_set_filter(m_cobject, (cairo_filter_t)filter);

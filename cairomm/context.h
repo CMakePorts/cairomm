@@ -260,37 +260,6 @@ public:
    */
   void set_line_join(LineJoin line_join);
 
-#ifndef CAIROMM_DISABLE_DEPRECATED
-  /**
-   * Alternate version of set_dash().  You'll probably want to use the one that
-   * takes a std::vector argument instead.
-   *
-   * @deprecated Instead use the version that takes a const dashes parameter.
-   */
-  void set_dash(std::valarray<double>& dashes, double offset);
-
-  /** Sets the dash pattern to be used by stroke(). A dash pattern is specified
-   * by dashes, an array of positive values. Each value provides the user-space
-   * length of altenate "on" and "off" portions of the stroke. The offset
-   * specifies an offset into the pattern at which the stroke begins.
-   *
-   * If dashes is empty dashing is disabled.  If the size of dashes is 1, a
-   * symmetric pattern is assumed with alternating on and off portions of the
-   * size specified by the single value in dashes.
-   *
-   * It is invalid for any value in dashes to be negative, or for all values to
-   * be 0.  If this is the case, an exception will be thrown
-   *
-   * @param dashes	an array specifying alternate lengths of on and off portions
-   * @param offset	an offset into the dash pattern at which the stroke should start
-   *
-   * @exception
-   *
-   * @deprecated Instead use the version that takes a const dashes parameter.
-   */
-  void set_dash(std::vector<double>& dashes, double offset);
-#endif //CAIROMM_DISABLE_DEPRECATED
-
   /**
    * Alternate version of set_dash().  You'll probably want to use the one that
    * takes a std::vector argument instead.
@@ -412,50 +381,6 @@ public:
    * aligned and one user-space unit will transform to one device-space unit.
    */
   void set_identity_matrix();
-
-#ifndef CAIROMM_DISABLE_DEPRECATED
-  /** Transform a coordinate from user space to device space by multiplying the
-   * given point by the current transformation matrix (CTM).
-   *
-   * @param x	X value of coordinate (in/out parameter)
-   * @param y	Y value of coordinate (in/out parameter)
-   *
-   * @deprecated Use the const version.
-   */
-  void user_to_device(double& x, double& y);
-
-  /** Transform a distance vector from user space to device space. This
-   * function is similar to user_to_device() except that the translation
-   * components of the CTM will be ignored when transforming (dx,dy).
-   *
-   * @param dx	X component of a distance vector (in/out parameter)
-   * @param dy	Y component of a distance vector (in/out parameter)
-   *
-   * @deprecated Use the const version.
-   */
-  void user_to_device_distance(double& dx, double& dy);
-
-  /** Transform a coordinate from device space to user space by multiplying the
-   * given point by the inverse of the current transformation matrix (CTM).
-   *
-   * @param x	X value of coordinate (in/out parameter)
-   * @param y	Y value of coordinate (in/out parameter)
-   *
-   * @deprecated Use the const version.
-   */
-  void device_to_user(double& x, double& y);
-
-  /** Transform a distance vector from device space to user space. This
-   * function is similar to device_to_user() except that the translation
-   * components of the inverse CTM will be ignored when transforming (dx,dy).
-   *
-   * @param dx	X component of a distance vector (in/out parameter)
-   * @param dy	Y component of a distance vector (in/out parameter)
-   *
-   * @deprecated Use the const version.
-   */
-  void device_to_user_distance(double& dx, double& dy);
-#endif //CAIROMM_DISABLE_DEPRECATED
 
   /** Transform a coordinate from user space to device space by multiplying the
    * given point by the current transformation matrix (CTM).

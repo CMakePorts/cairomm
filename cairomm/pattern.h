@@ -234,18 +234,6 @@ public:
    */
   static RefPtr<SurfacePattern> create(const RefPtr<Surface>& surface);
 
-#ifndef CAIROMM_DISABLE_DEPRECATED
-  /**
-   * @deprecated Use Pattern::set_extend() instead.
-   */
-  void set_extend(Extend extend);
-
-  /**
-   *@deprecated Use Pattern::set_extend() instead.
-   */
-  Extend get_extend() const;
-#endif //CAIROMM_DISABLE_DEPRECATED
-
   /**
    * Sets the filter to be used for resizing when using this pattern.
    * See Cairo::Filter for details on each filter.

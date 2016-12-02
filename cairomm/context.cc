@@ -159,23 +159,6 @@ void Context::set_line_join(LineJoin line_join)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::set_dash(std::valarray<double>& dashes, double offset)
-{
-  std::vector<double> v(dashes.size());
-  for(size_t i = 0; i < dashes.size(); ++i)
-    v[i] = dashes[i];
-
-  set_dash(v, offset);
-}
-
-void Context::set_dash(std::vector<double>& dashes, double offset)
-{
-  cairo_set_dash(cobj(),
-    (dashes.empty() ? 0 : &dashes[0]),
-    dashes.size(), offset);
-  check_object_status_and_throw_exception(*this);
-}
-
 void Context::set_dash(const std::valarray<double>& dashes, double offset)
 {
   std::vector<double> v(dashes.size());
@@ -247,24 +230,10 @@ void Context::set_identity_matrix()
   check_object_status_and_throw_exception(*this);
 }
 
-//deprecated:
-void Context::user_to_device(double& x, double& y)
-{
-  const Context* constThis = this;
-  constThis->user_to_device(x, y);
-}
-
 void Context::user_to_device(double& x, double& y) const
 {
   cairo_user_to_device(const_cast<cobject*>(cobj()), &x, &y);
   check_object_status_and_throw_exception(*this);
-}
-
-//deprecated:
-void Context::user_to_device_distance(double& dx, double& dy)
-{
-  const Context* constThis = this;
-  constThis->user_to_device_distance(dx, dy);
 }
 
 void Context::user_to_device_distance(double& dx, double& dy) const
@@ -273,24 +242,10 @@ void Context::user_to_device_distance(double& dx, double& dy) const
   check_object_status_and_throw_exception(*this);
 }
 
-//deprecated:
-void Context::device_to_user(double& x, double& y)
-{
-  const Context* constThis = this;
-  constThis->device_to_user(x, y);
-}
-
 void Context::device_to_user(double& x, double& y) const
 {
   cairo_device_to_user(const_cast<cobject*>(cobj()), &x, &y);
   check_object_status_and_throw_exception(*this);
-}
-
-//deprecated:
-void Context::device_to_user_distance(double& dx, double& dy)
-{
-  const Context* constThis = this;
-  constThis->device_to_user_distance(dx, dy);
 }
 
 void Context::device_to_user_distance(double& dx, double& dy) const

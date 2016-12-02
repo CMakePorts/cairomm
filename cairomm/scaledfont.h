@@ -100,11 +100,6 @@ public:
    * */
   void get_extents(FontExtents& extents) const;
 
-  /** @deprecated Use get_extents() instead
-   * @since 1.2
-   * */
-  void extents(FontExtents& extents) const;
-
   /** Gets the extents for a string of text. The extents describe a user-space
    * rectangle that encloses the "inked" portion of the text drawn at the origin
    * (0,0) (as it would be drawn by Context::show_text() if the cairo graphics
@@ -126,10 +121,6 @@ public:
    * @since 1.8
    */
   void get_text_extents(const std::string& utf8, TextExtents& extents) const;
-  /** @deprecated Use get_text_extents() instead
-   * @since 1.2
-   * */
-  void text_extents(const std::string& utf8, TextExtents& extents) const;
 
   /** Gets the extents for an array of glyphs. The extents describe a user-space
    * rectangle that encloses the "inked" portion of the glyphs, (as they would
@@ -147,11 +138,6 @@ public:
    * @since 1.8
    **/
   void get_glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents);
-
-  /** @deprecated Use get_glyph_extents() instead
-   * @since 1.2
-   * */
-  void glyph_extents(const std::vector<Glyph>& glyphs, TextExtents& extents);
 
   /** The FontFace with which this ScaledFont was created.
    * @since 1.2

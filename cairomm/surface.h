@@ -346,9 +346,6 @@ public:
    */
   void write_to_png_stream(const SlotWriteFunc& write_func);
 
-  /** @deprecated Use write_to_png_stream instead */
-  void write_to_png(cairo_write_func_t write_func, void *closure);
-
 #endif // CAIRO_HAS_PNG_FUNCTIONS
 
   /** This function returns the device for a surface
@@ -576,8 +573,6 @@ public:
    * contents of the PNG image file.
    */
   static RefPtr<ImageSurface> create_from_png_stream(const SlotReadFunc& read_func);
-  /** @deprecated Use create_from_png_stream instead */
-  static RefPtr<ImageSurface> create_from_png(cairo_read_func_t read_func, void *closure);
 
 #endif // CAIRO_HAS_PNG_FUNCTIONS
 
@@ -738,8 +733,6 @@ public:
    * @since 1.8
    */
   static RefPtr<PdfSurface> create_for_stream(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
-  /** @deprecated use PdfSurface::create_for_stream() instead */
-  static RefPtr<PdfSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
 /**
  * Changes the size of a PDF surface for the current (and subsequent) pages.
@@ -841,8 +834,6 @@ public:
    * @since 1.8
    */
   static RefPtr<PsSurface> create_for_stream(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
-  /** @deprecated use PsSurface::create_for_stream() instead */
-  static RefPtr<PsSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
   /**
    * Changes the size of a PostScript surface for the current (and
@@ -997,9 +988,6 @@ public:
    * @since 1.8
    */
   static RefPtr<SvgSurface> create_for_stream(const SlotWriteFunc& write_func, double width_in_points, double height_in_points);
-
-  /** @deprecated Use SvgSurface::create_for_stream() instead */
-  static RefPtr<SvgSurface> create(cairo_write_func_t write_func, void *closure, double width_in_points, double height_in_points);
 
   /**
    * Restricts the generated SVG file to the given version. See get_versions()
