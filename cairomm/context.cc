@@ -235,19 +235,7 @@ void Context::transform(const Matrix& matrix)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::transform(const cairo_matrix_t& matrix)
-{
-  cairo_transform(cobj(), &matrix);
-  check_object_status_and_throw_exception(*this);
-}
-
 void Context::set_matrix(const Matrix& matrix)
-{
-  cairo_set_matrix(cobj(), &matrix);
-  check_object_status_and_throw_exception(*this);
-}
-
-void Context::set_matrix(const cairo_matrix_t& matrix)
 {
   cairo_set_matrix(cobj(), &matrix);
   check_object_status_and_throw_exception(*this);
@@ -540,19 +528,7 @@ void Context::set_font_matrix(const Matrix& matrix)
   check_object_status_and_throw_exception(*this);
 }
 
-void Context::set_font_matrix(const cairo_matrix_t& matrix)
-{
-  cairo_set_font_matrix(cobj(), &matrix);
-  check_object_status_and_throw_exception(*this);
-}
-
 void Context::get_font_matrix(Matrix& matrix) const
-{
-  cairo_get_font_matrix(const_cast<cobject*>(cobj()), &matrix);
-  check_object_status_and_throw_exception(*this);
-}
-
-void Context::get_font_matrix(cairo_matrix_t& matrix) const
 {
   cairo_get_font_matrix(const_cast<cobject*>(cobj()), &matrix);
   check_object_status_and_throw_exception(*this);
@@ -784,12 +760,6 @@ Context::get_dash(std::vector<double>& dashes, double& offset) const
 }
 
 void Context::get_matrix(Matrix& matrix)
-{
-  cairo_get_matrix(cobj(), &matrix);
-  check_object_status_and_throw_exception(*this);
-}
-
-void Context::get_matrix(cairo_matrix_t& matrix)
 {
   cairo_get_matrix(cobj(), &matrix);
   check_object_status_and_throw_exception(*this);

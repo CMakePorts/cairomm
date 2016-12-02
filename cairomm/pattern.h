@@ -100,10 +100,6 @@ public:
    */
   Matrix get_matrix() const;
 
-  /* To keep 1.6.x ABI  */
-  void set_matrix(const cairo_matrix_t& matrix);
-  void get_matrix(cairo_matrix_t& matrix) const;
-
   /**
    * Returns the type of the pattern
    *
