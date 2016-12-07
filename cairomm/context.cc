@@ -637,7 +637,7 @@ RefPtr<const Pattern> Context::get_source() const
 {
   auto pattern = cairo_get_source(const_cast<cobject*>(cobj()));
   check_object_status_and_throw_exception(*this);
-  return RefPtr<const Pattern>::cast_const (get_pattern_wrapper (pattern));
+  return get_pattern_wrapper(pattern);
 }
 
 double Context::get_tolerance() const
@@ -798,7 +798,7 @@ RefPtr<const Surface> Context::get_target() const
 {
   auto surface = cairo_get_target(const_cast<cobject*>(cobj()));
   check_object_status_and_throw_exception(*this);
-  return RefPtr<const Surface>::cast_const (get_surface_wrapper (surface));
+  return get_surface_wrapper(surface);
 }
 
 Path* Context::copy_path() const
