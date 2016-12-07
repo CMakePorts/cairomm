@@ -58,7 +58,7 @@ RefPtr<Script> Script::create(const std::string& filename)
 {
   auto cobject = cairo_script_create(filename.c_str());
   check_status_and_throw_exception(cairo_device_status(cobject));
-  return RefPtr<Script>(new Script(cobject, true /* has reference */));
+  return make_refptr_for_instance<Script>(new Script(cobject, true /* has reference */));
 }
 
 static cairo_user_data_key_t USER_DATA_KEY_DEVICE_WRITE_FUNC = {0};
@@ -95,7 +95,7 @@ RefPtr<Script> Script::create_for_stream(const Surface::SlotWriteFunc& write_fun
                                                            slot_copy);
   check_status_and_throw_exception(cairo_device_status(cobject));
   set_write_slot(cobject, slot_copy);
-  return RefPtr<Script>(new Script(cobject, true /* has reference */));
+  return make_refptr_for_instance<Script>(new Script(cobject, true /* has reference */));
 }
 
 #endif // CAIRO_HAS_SCRIPT_SURFACE

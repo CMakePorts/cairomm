@@ -50,7 +50,7 @@ RefPtr<Win32Surface> Win32Surface::create(HDC hdc)
 {
   auto cobject = cairo_win32_surface_create(hdc);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<Win32Surface>(new Win32Surface(cobject, true /* has reference */));
+  return make_refptr_for_instance<Win32Surface>(new Win32Surface(cobject, true /* has reference */));
 }
 
 RefPtr<Win32Surface> Win32Surface::create(Format format, int width, int height)
@@ -62,7 +62,7 @@ RefPtr<Win32Surface> Win32Surface::create_with_dib(Format format, int width, int
 {
   auto cobject = cairo_win32_surface_create_with_dib((cairo_format_t)format, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<Win32Surface>(new Win32Surface(cobject, true /* has reference */));
+  return make_refptr_for_instance<Win32Surface>(new Win32Surface(cobject, true /* has reference */));
 }
 
 RefPtr<Win32Surface> Win32Surface::create_with_ddb(HDC hdc, Format format, int width, int height)
@@ -70,7 +70,7 @@ RefPtr<Win32Surface> Win32Surface::create_with_ddb(HDC hdc, Format format, int w
   auto cobject =
     cairo_win32_surface_create_with_ddb(hdc, (cairo_format_t)format, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<Win32Surface>(new Win32Surface(cobject, true /* has reference */));
+  return make_refptr_for_instance<Win32Surface>(new Win32Surface(cobject, true /* has reference */));
 }
 
 Win32PrintingSurface::Win32PrintingSurface(cairo_surface_t* cobject, bool has_reference)
@@ -87,7 +87,7 @@ RefPtr<Win32PrintingSurface> Win32PrintingSurface::create(HDC hdc)
 {
   auto cobject = cairo_win32_surface_create(hdc);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<Win32PrintingSurface>(new Win32PrintingSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<Win32PrintingSurface>(new Win32PrintingSurface(cobject, true /* has reference */));
 }
 
 #endif // CAIRO_HAS_WIN32_SURFACE

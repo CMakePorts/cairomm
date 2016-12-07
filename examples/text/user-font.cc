@@ -36,7 +36,7 @@ public:
   // and return it with a RefPtr
   static Cairo::RefPtr<BoxFontFace> create()
   {
-    return Cairo::RefPtr<BoxFontFace>(new BoxFontFace());
+    return Cairo::make_refptr_for_instance<BoxFontFace>(new BoxFontFace());
   }
 
   Cairo::ErrorStatus

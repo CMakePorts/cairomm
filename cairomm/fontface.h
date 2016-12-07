@@ -164,7 +164,7 @@ protected:
  *
  * public:
  *   static Cairo::RefPtr<MyUserFont> create() {
- *     return Cairo::RefPtr<MyUserFont>(new MyUserFont);
+ *     return Cairo::make_refptr_for_instance<MyUserFont>(new MyUserFont);
  *
  * protected:
  *   // implement render_glyph() and any other virtual functions you want to override

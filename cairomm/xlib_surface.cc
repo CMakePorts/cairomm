@@ -38,14 +38,14 @@ RefPtr<XlibSurface> XlibSurface::create(Display* dpy, Drawable drawable, Visual*
 {
   auto cobject = cairo_xlib_surface_create(dpy, drawable, visual, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
 }
 
 RefPtr<XlibSurface> XlibSurface::create(Display* dpy, Pixmap bitmap, Screen* screen, int width, int height)
 {
   auto cobject = cairo_xlib_surface_create_for_bitmap(dpy, bitmap, screen, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
 }
 
 void XlibSurface::set_size(int width, int height)
@@ -144,7 +144,7 @@ XlibSurface::create_with_xrender_format (Display *dpy,
                                                     screen, format,
                                                     width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<XlibSurface>(new XlibSurface(cobject, true /* has reference */));
 }
 
 XRenderPictFormat*

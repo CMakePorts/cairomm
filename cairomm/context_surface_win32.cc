@@ -29,9 +29,9 @@ namespace Private
 RefPtr<Surface> wrap_surface_win32(cairo_surface_t* surface)
 {
 #if CAIRO_HAS_WIN32_SURFACE
-    return RefPtr<Win32Surface>(new Win32Surface(surface, false /* does not have reference */));
+    return make_refptr_for_instance<Win32Surface>(new Win32Surface(surface, false /* does not have reference */));
 #else
-    return RefPtr<Surface>(new Surface(surface, false /* does not have reference */));
+    return make_refptr_for_instance<Surface>(new Surface(surface, false /* does not have reference */));
 #endif
 }
 

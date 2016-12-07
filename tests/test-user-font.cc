@@ -55,7 +55,7 @@ protected:
 class ImplTextUserFont: public NullRenderUserFont
 {
 public:
-  static RefPtr<ImplTextUserFont> create() { return RefPtr<ImplTextUserFont>(new ImplTextUserFont());};
+  static RefPtr<ImplTextUserFont> create() { return make_refptr_for_insance<ImplTextUserFont>(new ImplTextUserFont());};
   ErrorStatus text_to_glyphs(const RefPtr<ScaledFont>& /*scaled_font*/,
                                      const std::string& /*utf8*/,
                                      std::vector<Glyph>& glyphs,
@@ -90,7 +90,7 @@ void test_implement_text()
 class ImplUnicodeUserFont: public NullRenderUserFont
 {
 public:
-  static RefPtr<ImplUnicodeUserFont> create() { return RefPtr<ImplUnicodeUserFont>(new ImplUnicodeUserFont());};
+  static RefPtr<ImplUnicodeUserFont> create() { return make_refptr_for_instance<ImplUnicodeUserFont>(new ImplUnicodeUserFont());};
   ErrorStatus unicode_to_glyph(const RefPtr<ScaledFont>& /*scaled_font*/,
                                        unsigned long /*unicode*/,
                                        unsigned long& /*glyph*/) override
@@ -117,7 +117,7 @@ void test_implement_unicode()
 class ImplBothUserFont: public NullRenderUserFont
 {
 public:
-  static RefPtr<ImplBothUserFont> create() { return RefPtr<ImplBothUserFont>(new ImplBothUserFont());};
+  static RefPtr<ImplBothUserFont> create() { return make_refptr_for_instance<ImplBothUserFont>(new ImplBothUserFont());};
   ErrorStatus unicode_to_glyph(const RefPtr<ScaledFont>& /*scaled_font*/,
                                        unsigned long /*unicode*/,
                                        unsigned long& /*glyph*/) override
@@ -161,7 +161,7 @@ void test_implement_both()
 class ImplNeitherUserFont: public NullRenderUserFont
 {
 public:
-  static RefPtr<ImplNeitherUserFont> create() { return RefPtr<ImplNeitherUserFont>(new ImplNeitherUserFont());};
+  static RefPtr<ImplNeitherUserFont> create() { return make_refptr_for_instance<ImplNeitherUserFont>(new ImplNeitherUserFont());};
 
 protected:
   ImplNeitherUserFont() : NullRenderUserFont() {}
@@ -182,7 +182,7 @@ void test_implement_neither()
 class ImplInitUserFont: public NullRenderUserFont
 {
 public:
-  static RefPtr<ImplInitUserFont> create() { return RefPtr<ImplInitUserFont>(new ImplInitUserFont());};
+  static RefPtr<ImplInitUserFont> create() { return make_refptr_for_instance<ImplInitUserFont>(new ImplInitUserFont());};
   ErrorStatus init(const RefPtr<ScaledFont>& /*scaled_font*/,
                            const RefPtr<Context>& /*cr*/,
                            FontExtents& /*extents*/) override
@@ -207,7 +207,7 @@ void test_implement_init()
 class ExceptionUserFont : public UserFontFace
 {
 public:
-  static RefPtr<ExceptionUserFont> create(int flags) { return RefPtr<ExceptionUserFont>(new ExceptionUserFont(flags));};
+  static RefPtr<ExceptionUserFont> create(int flags) { return make_refptr_for_instance<ExceptionUserFont>(new ExceptionUserFont(flags));};
 
   ErrorStatus
   render_glyph(const RefPtr<ScaledFont>& /*scaled_font*/,

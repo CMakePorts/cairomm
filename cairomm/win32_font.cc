@@ -44,17 +44,17 @@ Win32FontFace::Win32FontFace(LOGFONTW* logfont, HFONT font) :
 
 RefPtr<Win32FontFace> Win32FontFace::create(LOGFONTW* logfont)
 {
-  return RefPtr<Win32FontFace>(new Win32FontFace(logfont));
+  return make_refptr_for_instance<Win32FontFace>(new Win32FontFace(logfont));
 }
 
 RefPtr<Win32FontFace> Win32FontFace::create(HFONT font)
 {
-  return RefPtr<Win32FontFace>(new Win32FontFace(font));
+  return make_refptr_for_instance<Win32FontFace>(new Win32FontFace(font));
 }
 
 RefPtr<Win32FontFace> Win32FontFace::create(LOGFONTW* logfont, HFONT font)
 {
-  return RefPtr<Win32FontFace>(new Win32FontFace(logfont, font));
+  return make_refptr_for_instance<Win32FontFace>(new Win32FontFace(logfont, font));
 }
 
 // ScaledFont
@@ -72,7 +72,7 @@ Win32ScaledFont::create(const RefPtr<Win32FontFace>& font_face,
                         const Matrix& font_matrix, const Matrix& ctm,
                         const FontOptions& options)
 {
-  return RefPtr<Win32ScaledFont>(new Win32ScaledFont(font_face, font_matrix,
+  return make_refptr_for_instance<Win32ScaledFont>(new Win32ScaledFont(font_face, font_matrix,
                                                      ctm, options));
 }
 

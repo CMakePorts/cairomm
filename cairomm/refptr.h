@@ -460,8 +460,14 @@ void swap(RefPtr<T_CppObject>& lhs, RefPtr<T_CppObject>& rhs) noexcept
   lhs.swap(rhs);
 }
 
-} // namespace Cairo
+template <class T_CppObject>
+RefPtr<T_CppObject>
+make_refptr_for_instance(T_CppObject* object)
+{
+  return RefPtr<T_CppObject>(object);
+}
 
+} // namespace Cairo
 
 #endif /* _cairo_REFPTR_H */
 

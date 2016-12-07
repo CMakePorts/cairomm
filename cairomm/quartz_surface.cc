@@ -43,14 +43,14 @@ RefPtr<QuartzSurface> QuartzSurface::create(CGContextRef cg_context, int width, 
   auto cobject = cairo_quartz_surface_create_for_cg_context(cg_context, 
           width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<QuartzSurface>(new QuartzSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<QuartzSurface>(new QuartzSurface(cobject, true /* has reference */));
 }
 
 RefPtr<QuartzSurface> QuartzSurface::create(Format format, int width, int height)
 {
   auto cobject = cairo_quartz_surface_create((cairo_format_t)format, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<QuartzSurface>(new QuartzSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<QuartzSurface>(new QuartzSurface(cobject, true /* has reference */));
 }
 
 #endif // CAIRO_HAS_QUARTZ_SURFACE

@@ -114,14 +114,14 @@ RefPtr<SolidPattern> SolidPattern::create_rgb(double red, double green, double b
 {
   auto cobject = cairo_pattern_create_rgb(red, green, blue);
   check_status_and_throw_exception(cairo_pattern_status(cobject)); 
-  return RefPtr<SolidPattern>(new SolidPattern(cobject, true /* has reference */));
+  return make_refptr_for_instance<SolidPattern>(new SolidPattern(cobject, true /* has reference */));
 }
 
 RefPtr<SolidPattern> SolidPattern::create_rgba(double red, double green, double blue, double alpha)
 {
   cairo_pattern_t* cobject  = cairo_pattern_create_rgba(red, green, blue, alpha);
   check_status_and_throw_exception(cairo_pattern_status(cobject));
-  return RefPtr<SolidPattern>(new SolidPattern(cobject, true /* has reference */));
+  return make_refptr_for_instance<SolidPattern>(new SolidPattern(cobject, true /* has reference */));
 }
 
 
@@ -138,7 +138,7 @@ SurfacePattern::get_surface()
   // we can ignore the return value since we know this is a surface pattern
   cairo_pattern_get_surface(const_cast<cairo_pattern_t*>(m_cobject), &surface);
   check_object_status_and_throw_exception(*this);
-  return RefPtr<Surface>(new Surface(surface, false /* does not have reference */));
+  return make_refptr_for_instance<Surface>(new Surface(surface, false /* does not have reference */));
 }
 
 RefPtr<const Surface>
@@ -149,7 +149,7 @@ SurfacePattern::get_surface() const
 
 RefPtr<SurfacePattern> SurfacePattern::create(const RefPtr<Surface>& surface)
 {
-  return RefPtr<SurfacePattern>(new SurfacePattern(surface));
+  return make_refptr_for_instance<SurfacePattern>(new SurfacePattern(surface));
 }
 
 SurfacePattern::SurfacePattern(cairo_pattern_t* cobject, bool has_reference)
@@ -242,7 +242,7 @@ LinearGradient::get_linear_points(double &x0, double &y0,
 
 RefPtr<LinearGradient> LinearGradient::create(double x0, double y0, double x1, double y1)
 {
-  return RefPtr<LinearGradient>(new LinearGradient(x0, y0, x1, y1));
+  return make_refptr_for_instance<LinearGradient>(new LinearGradient(x0, y0, x1, y1));
 }
 
 LinearGradient::LinearGradient(cairo_pattern_t* cobject, bool has_reference)
@@ -275,7 +275,7 @@ RadialGradient::get_radial_circles(double& x0, double& y0, double& r0,
 
 RefPtr<RadialGradient> RadialGradient::create(double cx0, double cy0, double radius0, double cx1, double cy1, double radius1)
 {
-  return RefPtr<RadialGradient>(new RadialGradient(cx0, cy0, radius0, cx1, cy1, radius1));
+  return make_refptr_for_instance<RadialGradient>(new RadialGradient(cx0, cy0, radius0, cx1, cy1, radius1));
 }
 
 RadialGradient::RadialGradient(cairo_pattern_t* cobject, bool has_reference)

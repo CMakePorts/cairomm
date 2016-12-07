@@ -246,11 +246,11 @@ RefPtr<Device> Surface::get_device()
   {
 #if CAIRO_HAS_SCRIPT_SURFACE
     case CAIRO_SURFACE_TYPE_SCRIPT:
-      return RefPtr<Script>(new Script(d, true /* has reference */));
+      return make_refptr_for_instance<Script>(new Script(d, true /* has reference */));
       break;
 #endif
     default:
-      return RefPtr<Device>(new Device(d, true /* has reference */));
+      return make_refptr_for_instance<Device>(new Device(d, true /* has reference */));
   }
 }
 
@@ -268,14 +268,14 @@ RefPtr<Surface> Surface::create(const RefPtr<Surface> other, Content content, in
 {
   auto cobject = cairo_surface_create_similar(other->cobj(), (cairo_content_t)content, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
+  return make_refptr_for_instance<Surface>(new Surface(cobject, true /* has reference */));
 }
 
 RefPtr<Surface> Surface::create(const RefPtr<Surface>& target, double x, double y, double width, double height)
 {
   auto cobject = cairo_surface_create_for_rectangle(target->cobj(), x, y, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<Surface>(new Surface(cobject, true /* has reference */));
+  return make_refptr_for_instance<Surface>(new Surface(cobject, true /* has reference */));
 }
 
 
@@ -292,14 +292,14 @@ RefPtr<ImageSurface> ImageSurface::create(Format format, int width, int height)
 {
   auto cobject = cairo_image_surface_create((cairo_format_t)format, width, height);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
 }
 
 RefPtr<ImageSurface> ImageSurface::create(unsigned char* data, Format format, int width, int height, int stride)
 {
   auto cobject = cairo_image_surface_create_for_data(data, (cairo_format_t)format, width, height, stride);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
 }
 
 #ifdef CAIRO_HAS_PNG_FUNCTIONS
@@ -308,7 +308,7 @@ RefPtr<ImageSurface> ImageSurface::create_from_png(std::string filename)
 {
   auto cobject = cairo_image_surface_create_from_png(filename.c_str());
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
 }
 
 RefPtr<ImageSurface> ImageSurface::create_from_png_stream(const SlotReadFunc& read_func)
@@ -318,7 +318,7 @@ RefPtr<ImageSurface> ImageSurface::create_from_png_stream(const SlotReadFunc& re
     cairo_image_surface_create_from_png_stream(&read_func_wrapper, slot_copy);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   set_read_slot(cobject, slot_copy);
-  return RefPtr<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<ImageSurface>(new ImageSurface(cobject, true /* has reference */));
 }
 
 #endif // CAIRO_HAS_PNG_FUNCTIONS
@@ -378,14 +378,14 @@ RefPtr<RecordingSurface> RecordingSurface::create(Content content)
 {
   auto cobject = cairo_recording_surface_create((cairo_content_t)content, NULL);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<RecordingSurface>(new RecordingSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<RecordingSurface>(new RecordingSurface(cobject, true /* has reference */));
 }
 
 RefPtr<RecordingSurface> RecordingSurface::create(const Rectangle& extents, Content content)
 {
   auto cobject = cairo_recording_surface_create((cairo_content_t)content, &extents);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<RecordingSurface>(new RecordingSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<RecordingSurface>(new RecordingSurface(cobject, true /* has reference */));
 }
 
 Rectangle RecordingSurface::ink_extents() const
@@ -425,7 +425,7 @@ RefPtr<PdfSurface> PdfSurface::create(std::string filename, double width_in_poin
 {
   auto cobject = cairo_pdf_surface_create(filename.c_str(), width_in_points, height_in_points);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<PdfSurface>(new PdfSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<PdfSurface>(new PdfSurface(cobject, true /* has reference */));
 }
 
 RefPtr<PdfSurface> PdfSurface::create_for_stream(const SlotWriteFunc& write_func, double
@@ -437,7 +437,7 @@ RefPtr<PdfSurface> PdfSurface::create_for_stream(const SlotWriteFunc& write_func
                                         width_in_points, height_in_points);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   set_write_slot(cobject, slot_copy);
-  return RefPtr<PdfSurface>(new PdfSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<PdfSurface>(new PdfSurface(cobject, true /* has reference */));
 }
 
 void PdfSurface::set_size(double width_in_points, double height_in_points)
@@ -493,7 +493,7 @@ RefPtr<PsSurface> PsSurface::create(std::string filename, double width_in_points
 {
   auto cobject = cairo_ps_surface_create(filename.c_str(), width_in_points, height_in_points);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<PsSurface>(new PsSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<PsSurface>(new PsSurface(cobject, true /* has reference */));
 }
 
 RefPtr<PsSurface> PsSurface::create_for_stream(const SlotWriteFunc& write_func, double
@@ -505,7 +505,7 @@ RefPtr<PsSurface> PsSurface::create_for_stream(const SlotWriteFunc& write_func, 
                                        width_in_points, height_in_points);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   set_write_slot(cobject, slot_copy);
-  return RefPtr<PsSurface>(new PsSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<PsSurface>(new PsSurface(cobject, true /* has reference */));
 }
 
 void PsSurface::set_size(double width_in_points, double height_in_points)
@@ -594,7 +594,7 @@ RefPtr<SvgSurface> SvgSurface::create(std::string filename, double width_in_poin
 {
   auto cobject = cairo_svg_surface_create(filename.c_str(), width_in_points, height_in_points);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<SvgSurface>(new SvgSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<SvgSurface>(new SvgSurface(cobject, true /* has reference */));
 }
 
 RefPtr<SvgSurface> SvgSurface::create_for_stream(const SlotWriteFunc& write_func,
@@ -607,7 +607,7 @@ RefPtr<SvgSurface> SvgSurface::create_for_stream(const SlotWriteFunc& write_func
                                         width_in_points, height_in_points);
   check_status_and_throw_exception(cairo_surface_status(cobject));
   set_write_slot(cobject, slot_copy);
-  return RefPtr<SvgSurface>(new SvgSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<SvgSurface>(new SvgSurface(cobject, true /* has reference */));
 }
 
 void SvgSurface::restrict_to_version(SvgVersion version)
@@ -658,7 +658,7 @@ RefPtr<GlitzSurface> GlitzSurface::create(glitz_surface_t *surface)
 {
   auto cobject = cairo_glitz_surface_create(surface);
   check_status_and_throw_exception(cairo_surface_status(cobject));
-  return RefPtr<GlitzSurface>(new GlitzSurface(cobject, true /* has reference */));
+  return make_refptr_for_instance<GlitzSurface>(new GlitzSurface(cobject, true /* has reference */));
 }
 
 #endif // CAIRO_HAS_GLITZ_SURFACE

@@ -29,9 +29,9 @@ namespace Private
 RefPtr<Surface> wrap_surface_quartz(cairo_surface_t* surface)
 {
 #if CAIRO_HAS_QUARTZ_SURFACE
-    return RefPtr<QuartzSurface>(new QuartzSurface(surface, false /* does not have reference */));
+    return make_refptr_for_instance<QuartzSurface>(new QuartzSurface(surface, false /* does not have reference */));
 #else
-    return RefPtr<Surface>(new Surface(surface, false /* does not have reference */));
+    return make_refptr_for_instance<Surface>(new Surface(surface, false /* does not have reference */));
 #endif
 }
 

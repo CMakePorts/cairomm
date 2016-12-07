@@ -51,7 +51,7 @@ Context::Context(const RefPtr<Surface>& target)
 
 RefPtr<Context> Context::create(const RefPtr<Surface>& target)
 {
-  return RefPtr<Context>(new Context(target));
+  return make_refptr_for_instance<Context>(new Context(target));
 }
 
 Context::Context(cairo_t* cobject, bool has_reference)
@@ -511,7 +511,7 @@ RefPtr<ScaledFont> Context::get_scaled_font()
 {
   auto font = cairo_get_scaled_font(cobj());
   check_object_status_and_throw_exception(*this);
-  return RefPtr<ScaledFont>(new ScaledFont(font, false /* does not have reference */));
+  return make_refptr_for_instance<ScaledFont>(new ScaledFont(font, false /* does not have reference */));
 }
 
 void Context::show_text(const std::string& utf8)
@@ -546,14 +546,14 @@ RefPtr<FontFace> Context::get_font_face()
 {
   auto cfontface = cairo_get_font_face(cobj());
   check_object_status_and_throw_exception(*this);
-  return RefPtr<FontFace>(new FontFace(cfontface, false /* does not have reference */));
+  return make_refptr_for_instance<FontFace>(new FontFace(cfontface, false /* does not have reference */));
 }
 
 RefPtr<const FontFace> Context::get_font_face() const
 {
   auto cfontface = cairo_get_font_face(const_cast<cobject*>(cobj()));
   check_object_status_and_throw_exception(*this);
-  return RefPtr<const FontFace>(new FontFace(cfontface, false /* does not have reference */));
+  return make_refptr_for_instance<const FontFace>(new FontFace(cfontface, false /* does not have reference */));
 }
 
 void Context::get_font_extents(FontExtents& extents) const
@@ -610,19 +610,19 @@ static RefPtr<Pattern> get_pattern_wrapper (cairo_pattern_t* pattern)
   switch (pattern_type)
   {
     case CAIRO_PATTERN_TYPE_SOLID:
-      return RefPtr<SolidPattern>(new SolidPattern(pattern, false /* does not have reference */));
+      return make_refptr_for_instance<SolidPattern>(new SolidPattern(pattern, false /* does not have reference */));
       break;
     case CAIRO_PATTERN_TYPE_SURFACE:
-      return RefPtr<SurfacePattern>(new SurfacePattern(pattern, false /* does not have reference */));
+      return make_refptr_for_instance<SurfacePattern>(new SurfacePattern(pattern, false /* does not have reference */));
       break;
     case CAIRO_PATTERN_TYPE_LINEAR:
-      return RefPtr<LinearGradient>(new LinearGradient(pattern, false /* does not have reference */));
+      return make_refptr_for_instance<LinearGradient>(new LinearGradient(pattern, false /* does not have reference */));
       break;
     case CAIRO_PATTERN_TYPE_RADIAL:
-      return RefPtr<RadialGradient>(new RadialGradient(pattern, false /* does not have reference */));
+      return make_refptr_for_instance<RadialGradient>(new RadialGradient(pattern, false /* does not have reference */));
       break;
     default:
-      return RefPtr<Pattern>(new Pattern(pattern, false /* does not have reference */));
+      return make_refptr_for_instance<Pattern>(new Pattern(pattern, false /* does not have reference */));
   }
 }
 
@@ -735,16 +735,16 @@ RefPtr<Surface> get_surface_wrapper (cairo_surface_t* surface)
   switch (surface_type)
   {
     case CAIRO_SURFACE_TYPE_IMAGE:
-      return RefPtr<ImageSurface>(new ImageSurface(surface, false /* does not have reference */));
+      return make_refptr_for_instance<ImageSurface>(new ImageSurface(surface, false /* does not have reference */));
       break;
 #if CAIRO_HAS_PDF_SURFACE
     case CAIRO_SURFACE_TYPE_PDF:
-      return RefPtr<PdfSurface>(new PdfSurface(surface, false /* does not have reference */));
+      return make_refptr_for_instance<PdfSurface>(new PdfSurface(surface, false /* does not have reference */));
       break;
 #endif
 #if CAIRO_HAS_PS_SURFACE
     case CAIRO_SURFACE_TYPE_PS:
-      return RefPtr<PsSurface>(new PsSurface(surface, false /* does not have reference */));
+      return make_refptr_for_instance<PsSurface>(new PsSurface(surface, false /* does not have reference */));
       break;
 #endif
 #if CAIRO_HAS_XLIB_SURFACE
@@ -754,7 +754,7 @@ RefPtr<Surface> get_surface_wrapper (cairo_surface_t* surface)
 #endif
 #if CAIRO_HAS_GLITZ_SURFACE
     case CAIRO_SURFACE_TYPE_GLITZ:
-      return RefPtr<GlitzSurface>(new GlitzSurface(surface, false /* does not have reference */));
+      return make_refptr_for_instance<GlitzSurface>(new GlitzSurface(surface, false /* does not have reference */));
       break;
 #endif
 #if CAIRO_HAS_QUARTZ_SURFACE
@@ -764,7 +764,7 @@ RefPtr<Surface> get_surface_wrapper (cairo_surface_t* surface)
 #endif
 #if CAIRO_HAS_SCRIPT_SURFACE
     case CAIRO_SURFACE_TYPE_SCRIPT:
-      return RefPtr<ScriptSurface>(new ScriptSurface(surface, false));
+      return make_refptr_for_instance<ScriptSurface>(new ScriptSurface(surface, false));
       break;
 #endif
 #if CAIRO_HAS_WIN32_SURFACE
@@ -774,7 +774,7 @@ RefPtr<Surface> get_surface_wrapper (cairo_surface_t* surface)
 #endif
 #if CAIRO_HAS_SVG_SURFACE
     case CAIRO_SURFACE_TYPE_SVG:
-      return RefPtr<SvgSurface>(new SvgSurface(surface, false /* does not have reference */));
+      return make_refptr_for_instance<SvgSurface>(new SvgSurface(surface, false /* does not have reference */));
       break;
 #endif
     // the following surfaces are not directly supported in cairomm yet
@@ -783,7 +783,7 @@ RefPtr<Surface> get_surface_wrapper (cairo_surface_t* surface)
     case CAIRO_SURFACE_TYPE_BEOS:
     case CAIRO_SURFACE_TYPE_XCB:
     default:
-      return RefPtr<Surface>(new Surface(surface, false /* does not have reference */));
+      return make_refptr_for_instance<Surface>(new Surface(surface, false /* does not have reference */));
   }
 }
 

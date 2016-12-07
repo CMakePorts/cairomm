@@ -32,7 +32,7 @@ QuartzFontFace::QuartzFontFace(CGFontRef font) :
 
 RefPtr<QuartzFontFace> QuartzFontFace::create(CGFontRef font)
 {
-  return RefPtr<QuartzFontFace>(new QuartzFontFace(font));
+  return make_refptr_for_instance<QuartzFontFace>(new QuartzFontFace(font));
 }
 
 
@@ -45,7 +45,7 @@ QuartzFontFace::QuartzFontFace(ATSUFontID font_id) :
 
 RefPtr<QuartzFontFace> QuartzFontFace::create(ATSUFontID font_id)
 {
-  return RefPtr<QuartzFontFace>(new QuartzFontFace(font_id));
+  return make_refptr_for_instance<QuartzFontFace>(new QuartzFontFace(font_id));
 }
 #endif
 

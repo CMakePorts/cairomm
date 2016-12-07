@@ -53,7 +53,7 @@ ScaledFont::~ScaledFont()
 RefPtr<ScaledFont> ScaledFont::create(const RefPtr<FontFace>& font_face, const Matrix& font_matrix,
     const Matrix& ctm, const FontOptions& options)
 {
-  return RefPtr<ScaledFont>(new ScaledFont(font_face, font_matrix, ctm, options));
+  return make_refptr_for_instance<ScaledFont>(new ScaledFont(font_face, font_matrix, ctm, options));
 }
 
 void ScaledFont::get_extents(FontExtents& extents) const
@@ -66,7 +66,7 @@ RefPtr<FontFace> ScaledFont::get_font_face() const
 {
   auto face = cairo_scaled_font_get_font_face(m_cobject);
   check_object_status_and_throw_exception(*this);
-  return RefPtr<FontFace>(new FontFace(face, false /* returned face doesn't have a reference */));
+  return make_refptr_for_instance<FontFace>(new FontFace(face, false /* returned face doesn't have a reference */));
 }
 
 void ScaledFont::get_font_options(FontOptions& options) const
@@ -148,7 +148,7 @@ FtScaledFont::create(const RefPtr<FtFontFace>& font_face,
                      const Matrix& font_matrix, const Matrix& ctm,
                      const FontOptions& options)
 {
-  return RefPtr<FtScaledFont>(new FtScaledFont(font_face, font_matrix, ctm, options));
+  return make_refptr_for_instance<FtScaledFont>(new FtScaledFont(font_face, font_matrix, ctm, options));
 }
 
 FT_Face FtScaledFont::lock_face()

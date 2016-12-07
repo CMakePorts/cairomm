@@ -68,27 +68,27 @@ Region::Region(cairo_region_t* cobject, bool has_reference)
 
 RefPtr<Region> Region::create()
 {
-  return RefPtr<Region>(new Region());
+  return make_refptr_for_instance<Region>(new Region());
 }
 
 RefPtr<Region> Region::create(const RectangleInt& rectangle)
 {
-  return RefPtr<Region>(new Region(rectangle));
+  return make_refptr_for_instance<Region>(new Region(rectangle));
 }
 
 RefPtr<Region> Region::create(const std::vector<RectangleInt>& rects)
 {
-  return RefPtr<Region>(new Region(rects));
+  return make_refptr_for_instance<Region>(new Region(rects));
 }
 
 RefPtr<Region> Region::create(const RectangleInt *rects, int count)
 {
-  return RefPtr<Region>(new Region(rects, count));
+  return make_refptr_for_instance<Region>(new Region(rects, count));
 }
 
 RefPtr<Region> Region::copy() const
 {
-  return RefPtr<Region> (new Region (cairo_region_copy (m_cobject), true));
+  return make_refptr_for_instance<Region>(new Region (cairo_region_copy (m_cobject), true));
 }
 
 Region::~Region()
