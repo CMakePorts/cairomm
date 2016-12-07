@@ -1,3 +1,9 @@
+1.15.2 (unstable):
+(Distros should probably not package this yet.)
+
+* Remove deprecated API.
+  (Murray Cumming)
+
 1.15.1 (unstable):
 
 * First release of the cairomm-1.16 API/ABI that installs
