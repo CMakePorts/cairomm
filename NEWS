@@ -1,3 +1,12 @@
+1.15.3 (unstable):
+(Distros should probably not package this yet.)
+
+* RefPtr: This is now an alias for std::shared_ptr<>.
+  These should be instatiated via
+  Cairo::make_refptr_for_instance(), though that should
+  never be necessary anyway outside of the cairomm
+  implementation itself.
+
 1.15.2 (unstable):
 (Distros should probably not package this yet.)
 
