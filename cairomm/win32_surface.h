@@ -84,6 +84,8 @@ public:
    */
   static RefPtr<Win32Surface> create(HDC hdc);
 
+  static RefPtr<Win32Surface> create(Format format, int width, int height);
+
   /** Creates a device-independent-bitmap surface not associated with any
    * particular existing surface or device context. The created bitmap will be
    * unititialized.
